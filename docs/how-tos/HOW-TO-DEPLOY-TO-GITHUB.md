@@ -7,7 +7,7 @@
 
 ## 🔐 Prerequisites
 
-- GitHub account (`OutletBot` email `alexanderfigueroalaptop@gmail.com`)
+- GitHub account (`username` email `emailhere`)
 - Project folder: `C:/Users/Figue/Desktop/windsurf/windsurf-project-Up-Keep/`
 - Git installed (Windows installer puts it in PATH)
 - Browser for GitHub authentication (Edge/Chrome)
