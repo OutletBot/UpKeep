@@ -8,8 +8,8 @@
     "speed": 115
   },
   "ability": {
-    "name": "Planchette Overwatch",
-    "description": "If this robot begins its turn on the bench, allied robots gain +1 MP for that turn."
+    "name": "Spiritual Guidance",
+    "description": "Channels otherworldly messages to influence the flow of battle through mystical forces."
   },
   "image": "robots/ouija-bot/images/happy.png",
   "attacks": {
@@ -31,7 +31,7 @@
         "moveName": "Séance Slash",
         "moveType": "White",
         "size": 40,
-        "damage": "70+",
+        "damage": 70,
         "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
       },
       {
@@ -59,7 +59,7 @@
         "moveName": "Séance Slash",
         "moveType": "White",
         "size": 40,
-        "damage": "70+",
+        "damage": 70,
         "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
       },
       {
@@ -87,7 +87,7 @@
         "moveName": "Séance Slash",
         "moveType": "White",
         "size": 40,
-        "damage": "70+",
+        "damage": 70,
         "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
       },
       {
@@ -146,7 +146,7 @@
         "moveName": "Séance Slash",
         "moveType": "White",
         "size": 40,
-        "damage": "70+",
+        "damage": 70,
         "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
       },
       {

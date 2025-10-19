@@ -766,3 +766,58 @@ app.storeToBattleRobotMap = {
 
 **Session 3 Status:** ✅ Complete  
 **Overall Progress:** Three major systems complete, ready for AI implementation! 🎮⚡🤖
+
+---
+
+# Session 4 Notes - October 18, 2025
+
+**Time:** 9:52 PM - 11:00 PM  
+**Duration:** ~1 hour  
+**Focus:** GitHub Pages deployment, documentation workflow, proof-of-concept mobile testing
+
+---
+
+## Summary
+
+Published the project to GitHub Pages as a proof-of-concept, documented the full deployment workflow, and verified the site on Android. Established repeatable git commands for future updates and ensured documentation reflects new processes.
+
+---
+
+## Tasks Completed
+
+- **Created** `docs/how-tos/HOW-TO-DEPLOY-TO-GITHUB.md` detailing one-time setup, routine updates, Android testing, troubleshooting, and quick-reference cheatsheet
+- **Updated** `docs/how-tos/PROJECT-MASTER-GUIDE.md` related docs section to include the new deployment guide
+- **Initialized & pushed** full repo (`~200 MB`) to GitHub (`OutletBot/UpKeep`), authenticated via browser, and enabled GitHub Pages (`main` / `/`)
+- **Verified** live site at `https://outletbot.github.io/UpKeep/` on Android (noted expected functionality gaps due to service worker scope/assets)
+- **Committed** documentation changes with `git commit -m "Document GitHub deployment workflow"` and pushed to remote
+- **Configured** Git line endings (`git config core.autocrlf true`) to reduce future warnings
+
+---
+
+## Key Insights
+
+- **GitHub Pages latency:** First build of large repos (~200 MB) can take several minutes; wait before assuming failure
+- **Service worker scope:** Some PWA features may not behave identically on Pages (needs future adjustments for production parity)
+- **Documentation importance:** Having a dedicated deploy guide prevents forgetting the multi-step process (repo creation, Pages, Android testing)
+- **Line endings:** Setting `core.autocrlf true` avoids recurring CRLF/LF warnings on Windows
+
+---
+
+## Testing & Verification
+
+- **Desktop & Android:** Confirmed site loads at `https://outletbot.github.io/UpKeep/`
+- **Hard refresh:** Required on Android after deployment to bypass cache
+- **Git status:** Clean after commit/push (no pending changes)
+
+---
+
+## Follow-Up TODO
+
+- [ ] Investigate service worker and asset path adjustments for full functionality on GitHub Pages
+- [ ] Evaluate reducing bundle size or using CI/CD for faster deploys
+- [ ] Consider staging branch for future live testing (e.g., `gh-pages` workflow)
+
+---
+
+**Session 4 Status:** ✅ Complete  
+**Overall Progress:** Deployment pipeline documented and verified; groundwork laid for future production-ready hosting.

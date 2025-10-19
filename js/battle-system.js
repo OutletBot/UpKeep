@@ -5,6 +5,7 @@
             debugger: {
                 enabled: false,
                 panelOpen: false,
+                bonusSpinEnabled: false,
                 selectedPlayerMove: null,
                 selectedOpponentMove: null,
                 selectedPlayerBonusMove: null,
@@ -69,6 +70,19 @@
                     toggle.classList.remove('active');
                     console.log('🚶 FREE MOVEMENT MODE DISABLED - Normal movement rules apply');
                     this.addToHistory('🚶 Free Movement Mode: OFF - Normal movement restored', 'info', this.currentControlTeam);
+                }
+            },
+            
+            // Toggle bonus spin forcing
+            toggleBonusSpinMode() {
+                this.debugger.bonusSpinEnabled = !this.debugger.bonusSpinEnabled;
+                const toggle = document.getElementById('bonusSpinToggle');
+                if (this.debugger.bonusSpinEnabled) {
+                    toggle.classList.add('active');
+                    console.log('🌀 BONUS SPIN FORCING ENABLED - Respin outcomes will be forced');
+                } else {
+                    toggle.classList.remove('active');
+                    console.log('🌀 BONUS SPIN FORCING DISABLED - Respins will be random');
                 }
             },
             
@@ -215,6 +229,25 @@
                 }
                 
                 this.updateDebuggerStatus();
+            },
+            
+            // Select a bonus spin move in the debugger
+            selectDebuggerBonusMove(side, index, element) {
+                // Deselect all moves in this column
+                const container = element.parentElement;
+                container.querySelectorAll('.move-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Select this move
+                element.classList.add('selected');
+                
+                // Store selection
+                if (side === 'player') {
+                    this.debugger.selectedPlayerBonusMove = index;
+                    console.log(`🌀 Player BONUS move selected: index ${index}`);
+                } else {
+                    this.debugger.selectedOpponentBonusMove = index;
+                    console.log(`🌀 Opponent BONUS move selected: index ${index}`);
+                }
             },
             
             // Update debugger status message
@@ -5680,7 +5713,7 @@
                 // Execute AFTER initial wheel animations complete
                 
                 // Check if attacker spun Psycho Cut
-                if (attackerSpin.moveName === 'Psycho Cut') {
+                if (attackerSpin.moveName === 'Psycho Cut' || attackerSpin.moveName === 'Séance Slash') {
                     console.log(`\n🌀 ═══════════════════════════════════════`);
                     console.log(`🌀 PSYCHO CUT TRIGGERED: ${attacker.name}`);
                     console.log(`🌀 Executing bonus spin mechanic...`);
@@ -5696,12 +5729,21 @@
                     
                     // Execute bonus spin
                     let bonusSpinData;
-                    if (this.debugger.enabled) {
+                    if (this.debugger.bonusSpinEnabled) {
                         console.log(`🛠️ DEBUGGER MODE: Check for forced bonus spin`);
-                        // In debugger mode, we need a way to force the bonus spin
-                        // For now, let it spin randomly - could add UI control later
-                        bonusSpinData = this.spinWheelWithPosition(attacker.wheel);
-                        console.log(`🛠️ Bonus spin (random): ${bonusSpinData.segment.moveName}`);
+                        // Determine if attacker is player or opponent
+                        const attackerIsPlayer = attackerTeamForLog === 'player';
+                        const bonusMoveIndex = attackerIsPlayer ? 
+                            this.debugger.selectedPlayerBonusMove : 
+                            this.debugger.selectedOpponentBonusMove;
+                        
+                        if (bonusMoveIndex !== null) {
+                            bonusSpinData = this.forceWheelPosition(attacker.wheel, bonusMoveIndex);
+                            console.log(`🛠️ Forced bonus spin: ${bonusSpinData.segment.moveName}`);
+                        } else {
+                            bonusSpinData = this.spinWheelWithPosition(attacker.wheel);
+                            console.log(`🛠️ Bonus spin (no selection, random): ${bonusSpinData.segment.moveName}`);
+                        }
                     } else {
                         bonusSpinData = this.spinWheelWithPosition(attacker.wheel);
                     }
@@ -5725,9 +5767,9 @@
                     await this.delay(2000); // Wait for bonus spin animation
                     
                     // Check result and apply bonus
-                    if (bonusSpin.moveName === 'Psycho Cut') {
-                        // JACKPOT! Double Psycho Cut = +50 damage bonus
-                        console.log(`✨ JACKPOT! Bonus spin landed on Psycho Cut again!`);
+                    if (bonusSpin.moveName === attackerSpin.moveName) {
+                        // JACKPOT! Double spin = +50 damage bonus
+                        console.log(`✨ JACKPOT! Bonus spin landed on ${attackerSpin.moveName} again!`);
                         console.log(`💥 Applying +50 damage bonus (70 → 120)`);
                         
                         // Modify the original spin object's damage
@@ -5774,7 +5816,7 @@
                 }
                 
                 // Check if defender spun Psycho Cut
-                if (defenderSpin.moveName === 'Psycho Cut') {
+                if (defenderSpin.moveName === 'Psycho Cut' || defenderSpin.moveName === 'Séance Slash') {
                     console.log(`\n🌀 ═══════════════════════════════════════`);
                     console.log(`🌀 PSYCHO CUT TRIGGERED: ${defender.name}`);
                     console.log(`🌀 Executing bonus spin mechanic...`);
@@ -5790,12 +5832,21 @@
                     
                     // Execute bonus spin
                     let bonusSpinData;
-                    if (this.debugger.enabled) {
+                    if (this.debugger.bonusSpinEnabled) {
                         console.log(`🛠️ DEBUGGER MODE: Check for forced bonus spin`);
-                        // In debugger mode, we need a way to force the bonus spin
-                        // For now, let it spin randomly - could add UI control later
-                        bonusSpinData = this.spinWheelWithPosition(defender.wheel);
-                        console.log(`🛠️ Bonus spin (random): ${bonusSpinData.segment.moveName}`);
+                        // Determine if defender is player or opponent
+                        const defenderIsPlayer = defenderTeamForLog === 'player';
+                        const bonusMoveIndex = defenderIsPlayer ? 
+                            this.debugger.selectedPlayerBonusMove : 
+                            this.debugger.selectedOpponentBonusMove;
+                        
+                        if (bonusMoveIndex !== null) {
+                            bonusSpinData = this.forceWheelPosition(defender.wheel, bonusMoveIndex);
+                            console.log(`🛠️ Forced bonus spin: ${bonusSpinData.segment.moveName}`);
+                        } else {
+                            bonusSpinData = this.spinWheelWithPosition(defender.wheel);
+                            console.log(`🛠️ Bonus spin (no selection, random): ${bonusSpinData.segment.moveName}`);
+                        }
                     } else {
                         bonusSpinData = this.spinWheelWithPosition(defender.wheel);
                     }
@@ -5819,9 +5870,9 @@
                     await this.delay(2000); // Wait for bonus spin animation
                     
                     // Check result and apply bonus
-                    if (bonusSpin.moveName === 'Psycho Cut') {
-                        // JACKPOT! Double Psycho Cut = +50 damage bonus
-                        console.log(`✨ JACKPOT! Bonus spin landed on Psycho Cut again!`);
+                    if (bonusSpin.moveName === defenderSpin.moveName) {
+                        // JACKPOT! Double spin = +50 damage bonus
+                        console.log(`✨ JACKPOT! Bonus spin landed on ${defenderSpin.moveName} again!`);
                         console.log(`💥 Applying +50 damage bonus (70 → 120)`);
                         
                         // Modify the original spin object's damage
@@ -6769,6 +6820,7 @@
                 // List of moves with special effects
                 const specialEffectMoves = [
                     'Psychic Shove',
+                    'Planchette Push',
                     'Annihilate',
                     // Add more special effect moves here as needed
                 ];
@@ -6784,6 +6836,7 @@
                 
                 switch (moveName) {
                     case 'Psychic Shove':
+                    case 'Planchette Push':
                         await this.handlePsychicShove(winnerPointId, loserPointId, result);
                         break;
                     case 'Annihilate':

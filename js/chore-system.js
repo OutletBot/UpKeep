@@ -2197,16 +2197,15 @@
             startCircuitBreakerBattle() {
                 console.log("Starting Circuit Breaker battle from menu...");
                 
-                // Close Circuit Breaker menu
+                // Close Circuit Breaker menu and open ChoreBot Hangar for team selection
                 const menu = document.getElementById('circuitBreakerMenu');
                 if (menu) {
                     menu.classList.remove('active');
                 }
                 
-                // Battle Mode stays active (already set in openCircuitBreakerMenu)
-                // Start the battle system (which will show team selection)
-                this.openBattleSystem();
-                console.log("Circuit Breaker battle started - launching team selection");
+                // Open ChoreBot Hangar as the team selection screen
+                this.openChorebotHangar();
+                console.log("Circuit Breaker battle started - opening ChoreBot Hangar for team selection");
             },
 
             // ============================================
@@ -2730,8 +2729,16 @@
             
             updateSaveButtonState() {
                 const saveBtn = document.getElementById('deckSaveBtn');
+                const battleBtn = document.getElementById('deckBattleBtn');
+                
+                const hasSixRobots = this.data.currentDeck.length === 6;
+                
                 if (saveBtn) {
-                    saveBtn.disabled = this.data.currentDeck.length !== 6;
+                    saveBtn.disabled = !hasSixRobots;
+                }
+                
+                if (battleBtn) {
+                    battleBtn.disabled = !hasSixRobots;
                 }
             },
             
@@ -2837,6 +2844,53 @@
                 
                 console.log('[HANGAR] Deck loaded successfully from slot:', deckIndex);
                 alert(`✅ Loaded deck: "${savedDeck.name}"`);
+            },
+            
+            startBattleFromHangar() {
+                console.log('[HANGAR] Starting battle from ChoreBot Hangar');
+                
+                // Validate deck has exactly 6 robots
+                if (this.data.currentDeck.length !== 6) {
+                    alert('⚠️ You need exactly 6 robots in your deck to start battle!');
+                    console.log('[HANGAR] Battle start failed - deck does not have 6 robots');
+                    return;
+                }
+                
+                // Close the hangar
+                this.closeChorebotHangar();
+                
+                // Set player team from current deck
+                const playerTeam = [...this.data.currentDeck];
+                TeamManager.selectedTeam = playerTeam;
+                console.log('[HANGAR] Player team set:', playerTeam);
+                
+                // Set opponent team as a copy of player's team with '-opp' suffix for unique IDs
+                const opponentTeam = this.data.currentDeck.map(robotId => robotId + '-opp');
+                TeamManager.opponentTeam = opponentTeam;
+                console.log('[HANGAR] Opponent team set (mirror match with -opp suffix):', opponentTeam);
+                
+                // Hide all other views
+                document.querySelectorAll('.view').forEach(view => {
+                    view.classList.remove('active');
+                });
+                
+                // Show battle view with battle game phase (skip team selection)
+                document.getElementById('battleView').classList.add('active');
+                
+                // Hide UI elements during battle
+                this.hideBattleUIElements();
+                
+                // Go straight to battle game phase
+                this.showBattleGamePhase();
+                
+                // Initialize battle with both teams after a short delay
+                setTimeout(() => {
+                    BattleSystem.initializeBattleWithTeams(playerTeam, opponentTeam);
+                    BattleSystem.enableDebugMode();
+                    console.log('[HANGAR] Battle initialized with teams on board!');
+                }, 500);
+                
+                console.log('[HANGAR] Battle started successfully!');
             },
             
             showTeamSelectionPhase() {

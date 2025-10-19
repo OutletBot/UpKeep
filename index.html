@@ -528,11 +528,19 @@
             </div>
         </div>
         
-        <!-- Psycho Cut Bonus Spin Controls -->
+        <!-- Bonus Spin Controls (Works for ANY respin moves) -->
         <div class="debugger-bonus-spin-section" id="debuggerBonusSpinSection" style="display: none;">
             <div class="bonus-spin-header">
-                <span style="font-weight: bold; color: #ff00ff;">🌀 PSYCHO CUT BONUS SPIN</span>
-                <span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">Force bonus roll outcome</span>
+                <span style="font-weight: bold; color: #ff00ff;">🌀 BONUS SPIN CONTROL</span>
+                <span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">Force respin outcomes (any move)</span>
+            </div>
+            <div class="debugger-toggle-container" style="margin-top: 10px; margin-bottom: 10px;">
+                <span class="debugger-toggle-label">Force Bonus Spin:</span>
+                <div class="toggle-switch" id="bonusSpinToggle" onclick="GameBoard.toggleBonusSpinMode()">
+                    <div class="toggle-slider"></div>
+                    <span class="toggle-text-off">OFF</span>
+                    <span class="toggle-text-on">ON</span>
+                </div>
             </div>
             
             <div class="debugger-columns" style="margin-top: 10px;">
@@ -1293,9 +1301,10 @@
             
             <!-- Menu Buttons -->
             <div class="cb-menu-buttons">
-                <!-- START BATTLE - Active (Custom Image) -->
-                <button class="cb-menu-btn cb-btn-image" onclick="app.startCircuitBreakerBattle()">
+                <!-- START BATTLE - Coming Soon (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
                     <img src="Imag/Battle/Start-Battle.png" alt="Start Battle" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
                 </button>
                 
                 <!-- VIEW MY ROBOTS - Active (Custom Image) -->
@@ -1324,6 +1333,11 @@
                 <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
                     <img src="Imag/Battle/Lobby.png" alt="Lobby" class="cb-btn-custom-img">
                     <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- DEBUGGER MODE - Active (Temporary Start Battle) -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.startCircuitBreakerBattle()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 3px solid #FFD700;">
+                    <span style="font-size: 24px; font-weight: bold; color: #FFD700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">⚙️ DEBUGGER MODE</span>
                 </button>
                 
                 <!-- EXIT - Active (Custom Image) -->
@@ -1442,6 +1456,9 @@
                     </div>
                 </div>
                 <div class="deck-actions">
+                    <button class="deck-btn deck-battle-btn" id="deckBattleBtn" disabled onclick="app.startBattleFromHangar()">
+                        ⚔️ START BATTLE
+                    </button>
                     <button class="deck-btn deck-save-btn" id="deckSaveBtn" disabled onclick="app.saveDeck()">
                         💾 SAVE
                     </button>

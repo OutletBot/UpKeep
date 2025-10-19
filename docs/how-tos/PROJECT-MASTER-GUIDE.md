@@ -1,7 +1,7 @@
 # 🎯 UP-KEEP PROJECT - MASTER DOCUMENTATION
 
-**Last Updated:** October 18, 2025 (AI Battle Simulator Added)  
-**Version:** 2.0 (Component-Based Architecture)
+**Last Updated:** October 19, 2025 (Ouija-Bot Mechanics & Debugger Enhancements)  
+**Version:** 2.1 (Component-Based Architecture + Battle Debugger)
 
 ---
 
@@ -14,8 +14,9 @@
 5. [JavaScript Architecture](#javascript-architecture)
 6. [Data Flow & Connections](#data-flow--connections)
 7. [Adding New Content](#adding-new-content)
-8. [System Dependencies](#system-dependencies)
-9. [Troubleshooting](#troubleshooting)
+8. [Battle System Features](#battle-system-features)
+9. [System Dependencies](#system-dependencies)
+10. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -975,6 +976,107 @@ Add entry to `robots/unified-registry.json`:
 
 ---
 
+## ⚔️ BATTLE SYSTEM FEATURES
+
+### Circuit Breaker Main Menu
+
+**Menu Structure** (8 buttons):
+1. **START BATTLE** - Disabled (coming soon - future implementation)
+2. **VIEW MY ROBOTS** - Active (opens ChoreBot Hangar)
+3. **STORY MODE** - Disabled (coming soon)
+4. **BATTLE AI** - Active (opens AI difficulty selector)
+5. **RANKED BATTLE** - Disabled (coming soon)
+6. **BATTLE WITH FRIENDS** - Disabled (coming soon)
+7. **⚙️ DEBUGGER MODE** - Active (temporary battle start button)
+8. **EXIT** - Active (closes menu)
+
+**Current Battle Flow:**
+- Click **⚡ Circuit Breaker bubble** → Opens Circuit Breaker menu
+- Click **⚙️ DEBUGGER MODE** → Opens ChoreBot Hangar for team selection
+- Select 6 robots → Click "START BATTLE" → Battle begins with debugger enabled
+
+### Ouija-Bot Special Moves
+
+**Planchette Push** (Purple move, 2 stars):
+- **Mechanic:** Knockback + Wait status
+- **Implementation:** Uses same handler as Mewtwo's Psychic Shove
+- **Effect:** Knocks opponent in straight line, applies Wait to all affected robots
+- **File:** Added to `specialEffectMoves` array in `battle-system.js`
+
+**Séance Slash** (White move, 70 damage):
+- **Mechanic:** Bonus spin for potential +50 damage
+- **Implementation:** Uses same logic as Mewtwo's Psycho Cut
+- **Effect:** Spin again - if Séance Slash is spun, deals 120 damage (70 + 50)
+- **File:** Added to bonus spin trigger checks in `battle-system.js`
+
+**⚠️ CRITICAL:** Damage values in `battle-data.json` must be **numbers**, not strings!
+```json
+// ❌ WRONG (causes comparison failures)
+"damage": "70+"
+
+// ✅ CORRECT (numeric comparison works)
+"damage": 70
+```
+
+### Battle Debugger System
+
+**Purpose:** Test battle scenarios with full control over outcomes
+
+**Features:**
+1. **Force Battle Outcome** toggle - Control initial spin results
+2. **Force Bonus Spin** toggle - Control respin outcomes (NEW)
+3. **Free Movement Mode** - Instant teleportation for setup
+4. **Show All Robots** - Display entire robot roster
+5. **Status Effect Manager** - Add/remove status effects during battle
+
+**Bonus Spin Forcing:**
+- Works for **ANY respin moves** (Psycho Cut, Séance Slash, future moves)
+- Separate toggle from main debugger (can be used independently)
+- Player and Opponent bonus move selection columns
+- Automatically detects which side is attacking/defending
+- Falls back to random if toggle OFF or no move selected
+
+**Accessing Debugger:**
+- Click **⚙️ button** (top-right during battle) to open panel
+- Enable toggles and select moves before battle
+- Forced outcomes execute automatically during battle
+
+**Technical Notes:**
+- Debugger state stored in `BattleSystem.debugger` object
+- Selection indices stored in memory (not persisted)
+- Console logs show forced vs random outcomes
+
+### Special Move Implementation Pattern
+
+**To add a new knockback move:**
+```javascript
+// 1. Add to specialEffectMoves array (battle-system.js ~line 6772)
+const specialEffectMoves = [
+    'Psychic Shove',
+    'Planchette Push',
+    'YOUR_NEW_MOVE',  // Add here
+];
+
+// 2. Add case to switch statement (~line 6788)
+case 'Psychic Shove':
+case 'Planchette Push':
+case 'YOUR_NEW_MOVE':  // Add here
+    await this.handlePsychicShove(winnerPointId, loserPointId, result);
+    break;
+```
+
+**To add a new bonus spin move:**
+```javascript
+// Add to trigger checks (battle-system.js ~lines 5716, 5819)
+if (attackerSpin.moveName === 'Psycho Cut' || 
+    attackerSpin.moveName === 'Séance Slash' ||
+    attackerSpin.moveName === 'YOUR_NEW_RESPIN_MOVE') {  // Add here
+    // Bonus spin logic executes
+}
+```
+
+---
+
 ## 🔧 SYSTEM DEPENDENCIES
 
 ### File Dependencies Map:
@@ -1108,6 +1210,14 @@ sw.js
 - **Solution 2:** Unregister SW in DevTools → Application → Service Workers
 - **Solution 3:** Change cache version in `sw.js`
 
+**Problem: "JSON changes not reflecting in battle"**
+- **Cause:** Browser aggressively caches JSON files
+- **Solution 1:** Hard refresh (Ctrl+Shift+R)
+- **Solution 2:** F12 → Application → Clear storage → Clear site data
+- **Solution 3:** Restart dev server and clear cache
+- **Verification:** Check console logs for actual loaded values
+- **Example:** Damage showing as "70+" string instead of 70 number
+
 **Problem: "Battle mode bubble not visible"**
 - **Check 1:** Are you on the main dashboard screen?
 - **Check 2:** Hard refresh (Ctrl+Shift+R) to clear CSS cache
@@ -1167,13 +1277,45 @@ Settings → Save Game → Download backup
 - `robots/MIGRATION_STATUS.md` - Component migration notes
 - `robots/_template/INSTRUCTIONS.md` - New robot template
 - `docs/` - Historical development notes
+- `docs/2025-10-19/` - October 19 session documentation:
+  - `SESSION-SUMMARY.md` - High-level summary
+  - `CONVERSATION-CONTINUATION.md` - Detailed conversation log
+  - `TECHNICAL-IMPLEMENTATION-GUIDE.md` - Implementation guide
 - `docs/how-tos/HOW-TO-DEPLOY-TO-GITHUB.md` - GitHub Pages deploy & update guide
 
 ---
 
-**Last Updated:** October 18, 2025  
+**Last Updated:** October 19, 2025  
 **Maintained by:** Development Team  
-**Version:** 2.0 (Component-Based Architecture)
+**Version:** 2.1 (Component-Based Architecture + Battle Debugger)
+
+**Recent Changes (Oct 19, 2025):**
+- ✅ **Ouija-Bot Battle Mechanics Fully Implemented:**
+  - Planchette Push: Knockback + Wait status (mirrors Psychic Shove)
+  - Séance Slash: Bonus spin mechanic with +50 damage on double-spin (mirrors Psycho Cut)
+  - Fixed damage value bug: Changed "70+" string to 70 numeric in battle-data.json
+  - Both moves now fully functional in battle scenarios
+  
+- ✅ **Battle Debugger Bonus Spin System:**
+  - Added "Force Bonus Spin" toggle (independent from main debugger)
+  - Implemented bonus move selection for Player and Opponent
+  - Works for ANY respin moves (Psycho Cut, Séance Slash, future moves)
+  - Automatic team detection (player vs opponent as attacker/defender)
+  - Falls back to random when toggle OFF or no selection
+  - Console logs show forced vs random outcomes
+  
+- ✅ **Circuit Breaker Menu Restructure:**
+  - START BATTLE button → disabled with "COMING SOON" badge
+  - Created ⚙️ DEBUGGER MODE button (temporary battle start)
+  - DEBUGGER MODE positioned at bottom (before EXIT)
+  - Purple gradient with gold border styling
+  - Maintains development workflow while planning proper battle flow
+
+- ✅ **Documentation Created for Oct 19, 2025:**
+  - SESSION-SUMMARY.md: High-level overview of all changes
+  - CONVERSATION-CONTINUATION.md: Detailed conversation log
+  - TECHNICAL-IMPLEMENTATION-GUIDE.md: Implementation details and patterns
+  - Updated PROJECT-MASTER-GUIDE.md with new Battle System Features section
 
 **Recent Changes (Oct 18, 2025):**
 - ✅ Created Circuit Breaker main menu system (complete battle game hub)

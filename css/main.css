@@ -6959,6 +6959,25 @@ margin: 0;
     cursor: not-allowed;
 }
 
+.deck-battle-btn {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.deck-battle-btn:not(:disabled):hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+.deck-battle-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .deck-load-btn {
     background: rgba(59, 130, 246, 0.2);
     border-color: rgba(59, 130, 246, 0.5);

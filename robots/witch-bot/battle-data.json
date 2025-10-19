@@ -5,8 +5,8 @@
   "role": "Scout",
   "type": "Psychic",
   "ability": {
-    "name": "Magical Escape",
-    "description": "Can quickly teleport away from danger using witch magic."
+    "name": "Mystic Hex",
+    "description": "This robot channels dark magic to influence the battlefield."
   },
   "attacks": {
     "basic": [
