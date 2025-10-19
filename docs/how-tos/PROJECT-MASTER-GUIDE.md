@@ -1167,6 +1167,7 @@ Settings → Save Game → Download backup
 - `robots/MIGRATION_STATUS.md` - Component migration notes
 - `robots/_template/INSTRUCTIONS.md` - New robot template
 - `docs/` - Historical development notes
+- `docs/how-tos/HOW-TO-DEPLOY-TO-GITHUB.md` - GitHub Pages deploy & update guide
 
 ---
 
