@@ -1,0 +1,19 @@
+{
+  "id": "MEGAROCKETMAN",
+  "purchasable": true,
+  "cost": 150,
+  "unlockRequirements": [],
+  "description": "A heroic robot programmed for peace, order, and cleanliness!",
+  "imagePaths": {
+    "happy": "robots/mega-rocket-man/images/happy.png",
+    "sad": "robots/mega-rocket-man/images/sad.png",
+    "thinking": "robots/mega-rocket-man/images/thinking.png",
+    "shadow": "robots/mega-rocket-man/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/MegaRocketMan/Mega.png",
+    "sad": "Imag/Achivments/Images/MegaRocketMan/Mega-mad (1).png",
+    "thinking": "Imag/Achivments/Images/MegaRocketMan/Mega-low.png",
+    "shadow": "Imag/Achivments/Images/MegaRocketMan/Mega-Shadow.png"
+  }
+}

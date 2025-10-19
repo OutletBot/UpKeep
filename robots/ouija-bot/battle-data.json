@@ -1,0 +1,217 @@
+{
+  "mp": 2,
+  "role": "Controller",
+  "stats": {
+    "hp": 120,
+    "attack": 130,
+    "defense": 95,
+    "speed": 115
+  },
+  "ability": {
+    "name": "Planchette Overwatch",
+    "description": "If this robot begins its turn on the bench, allied robots gain +1 MP for that turn."
+  },
+  "image": "robots/ouija-bot/images/happy.png",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Planchette Push",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 2,
+        "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+      },
+      {
+        "moveName": "Ethereal Escape",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "This robot moves 2 spaces away"
+      },
+      {
+        "moveName": "Séance Slash",
+        "moveType": "White",
+        "size": 40,
+        "damage": "70+",
+        "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Planchette Push",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 2,
+        "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+      },
+      {
+        "moveName": "Ethereal Escape",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "This robot moves 2 spaces away"
+      },
+      {
+        "moveName": "Séance Slash",
+        "moveType": "White",
+        "size": 40,
+        "damage": "70+",
+        "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      }
+    ],
+    "confused": [
+      {
+        "moveName": "Planchette Push",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 2,
+        "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+      },
+      {
+        "moveName": "Ethereal Escape",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "This robot moves 2 spaces away"
+      },
+      {
+        "moveName": "Séance Slash",
+        "moveType": "White",
+        "size": 40,
+        "damage": "70+",
+        "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      }
+    ],
+    "paralyzed_list": [
+      {
+        "paralyzed_0": [
+          {
+            "moveName": "Planchette Push",
+            "moveType": "Purple",
+            "size": 32,
+            "stars": 2,
+            "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+          },
+          {
+            "moveName": "Ethereal Escape",
+            "moveType": "Blue",
+            "size": 16,
+            "effect": "This robot moves 2 spaces away"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 40,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          }
+        ]
+      }
+    ],
+    "asleep": [
+      {
+        "moveName": "Planchette Push",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 2,
+        "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+      },
+      {
+        "moveName": "Ethereal Escape",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "This robot moves 2 spaces away"
+      },
+      {
+        "moveName": "Séance Slash",
+        "moveType": "White",
+        "size": 40,
+        "damage": "70+",
+        "effect": "Spin again - if Séance Slash is spun, it deals +50 damage"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 32,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 40,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      }
+    ],
+    "burned_list": [
+      {
+        "burned_0": [
+          {
+            "moveName": "Planchette Push",
+            "moveType": "Purple",
+            "size": 32,
+            "stars": 2,
+            "effect": "The battle opponent robot is knocked as far back as possible in a straight line. Any robots it collides with are also knocked back. All affected robots gain Wait."
+          },
+          {
+            "moveName": "Ethereal Escape",
+            "moveType": "Blue",
+            "size": 16,
+            "effect": "This robot moves 2 spaces away"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 40,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          }
+        ]
+      }
+    ]
+  }
+}

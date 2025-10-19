@@ -1,0 +1,43 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "The season of the witch is upon us! Ready to brew up some cleanliness?",
+    "My pumpkin spice circuits are fully engaged! Let's illuminate this chore list!",
+    "Beware the decay! We must maintain the peace. Report for duty, fellow ghoul-fighter!",
+    "Don't worry, the only thing spooky here is the thought of leaving chores undone.",
+    "Time to carve out a perfect day! What's our first frighteningly fun task?"
+  ],
+  "success": [
+    "Chore complete! We put the boo in bootifully clean!",
+    "Mission accomplished! That mess is officially a goner!",
+    "We swept up that task faster than a headless horseman through the night!",
+    "Yes! That freshness meter is absolutely fang-tastic!",
+    "Looks like we sealed that chore away for another year!"
+  ],
+  "achievement": [
+    "A chillingly cool achievement! My internal light is burning brighter!",
+    "More Bolts! I'm feeling like a fully charged Frankenstein!",
+    "This is better than finding a haunted house full of candy! Excellent progress!",
+    "Keep it up, and you'll be the Lord of the Gourd-ians of Upkeep!"
+  ],
+  "broken": [
+    "Oh, woe is me! My pumpkin guts are spilling out... systems are degrading...",
+    "Help! I'm melting! I need a repair before I become a sad, squishy, seasonal tragedy!",
+    "My flame is dimming... I'm suffering a severe case of critical candlemolt! Fix me!",
+    "Warning! I'm beginning to rot! This is my final haunting plea for maintenance!"
+  ],
+  "random": [
+    "Did you know the best way to clean is to use a little 'Hocus Pocus'?",
+    "Watch out for the zombies... or maybe just the overflowing laundry basket!",
+    "Sometimes I float around making scary noises... just to see if the dust runs away.",
+    "I always save the candy corn for last! It's the tastiest part of my belt.",
+    "My favorite movie is 'The Nightmare Before Task-mas!'"
+  ],
+  "mad": [
+    "By the sacred stem! This ghastly mess is simply un-boo-lievable!",
+    "This disarray is a total fright! My internal gears are grinding like skeletons!",
+    "I am the Jack-o'-Bot! And you have disturbed my eternal rest! Clean up, NOW!",
+    "My patience is thinning like a vampire's shadow! Rectify this disorder immediately!",
+    "Don't make me use my spooky laser beam on that dust pile!"
+  ]
+}

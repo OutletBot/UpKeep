@@ -1,0 +1,268 @@
+﻿Project Chimera - Core Systems Design Document
+
+
+
+
+Section I: The Strategic Framework
+
+
+This section establishes the foundational rules of engagement for the Project Chimera dueling system. It defines the ultimate objectives of a duel, the environment where combat takes place, and the inviolable sequence of actions a Commander can take during their turn. A complete understanding of these principles is prerequisite to mastering advanced tactics and strategies.
+
+
+1.1 Victory & Defeat Conditions
+
+
+A duel is concluded when a Commander achieves one of three distinct victory conditions. The existence of multiple paths to victory necessitates a flexible and adaptive strategy, as a singular focus on one objective can leave a Commander vulnerable to another. Effective play requires the constant evaluation of all three victory pathways.1
+* Goal Point Capture: The primary and most direct method of winning is to move one of your active Robot Units onto the opponent's designated Goal Point, which is located at the center of their back row. The duel ends immediately upon a unit occupying this space, resulting in a decisive victory for the aggressor.1 This condition rewards offensive pressure and strategic maneuvering.
+* Time Out: In standard League Matches, each Commander is allotted a five-minute timer. This timer counts down exclusively during that Commander's own turn. If a Commander's timer expires and reaches zero, they are declared the loser by Time Out, irrespective of the current board state.1 This mechanic pressures Commanders to make decisions efficiently and punishes overly cautious or indecisive play, introducing a critical tempo element to the duel.
+* System Lock Victory: A Commander can secure victory through a "System Lock" (also known as a "WaitWin") if, at the beginning of their opponent's turn, the opponent has no legal moves available. This scenario is typically engineered by achieving two objectives simultaneously: blocking both of the opponent's Entry Points with your units and deactivating all of their remaining units on the field. This leaves the opponent with no units to move on the board and no way to deploy new ones from their Bench, forcing a concession.1 This condition rewards a methodical, control-oriented strategy focused on attrition and board denial.
+The interplay between these three conditions creates a complex strategic landscape. An aggressive "rush" strategy aimed at a quick Goal Capture must be executed with speed and precision to avoid a loss by Time Out. Conversely, a slow, defensive strategy focused on board control and achieving a System Lock must be robust enough to repel offensive pushes from the opponent. This dynamic forms a strategic triangle of Aggression, Tempo, and Control. A Commander cannot focus on one of these pillars without considering the others. An aggressive Commander must be mindful of their own clock, while a control-focused Commander must be able to defend against rapid assaults. True mastery of the game lies in understanding which strategic posture is most effective against a given opponent and being able to pivot between offensive and defensive operations as the game state evolves.
+
+
+1.2 The Battlefield Grid: Zones and Terminology
+
+
+The duel takes place on a symmetrical game board, referred to as the Battlefield Grid. The grid is composed of specific zones and points connected by routes. A precise understanding of this layout and its associated terminology is fundamental to strategic positioning and command.1
+* Field of Play: The main combat area consists of 26 discrete points. These points are connected by lines that define the pathways for unit movement.1
+* Routes: The lines connecting the points on the Field of Play. Robot Units may only travel between points that are directly connected by a Route.1
+* Goal Point: Each Commander has one Goal Point, located at the center of the row of points closest to them. This point serves as the primary target for the opposing Commander and the final line of defense for the player.1
+* Entry Points: Each Commander has two Entry Points, situated at the corners of their back row. These are the only points through which a Commander can move a Robot Unit from their Bench onto the Field of Play. An Entry Point cannot be used if it is occupied by any unit, whether friendly or opposing. Controlling these points is a key strategic objective, as it restricts the opponent's ability to deploy reinforcements.1
+* Bench: Located off the main board, the Bench is the reserve area where all six of a Commander's Robot Units begin the duel. Units that are repaired and cycled out of the Repair Bay also return to the Bench.1
+* Repair Bay: Also located off the board, the Repair Bay is where Robot Units are sent after being "Deactivated" (Knocked Out) in combat. It has a limited capacity, a mechanic that is central to managing defeated units and controlling the tempo of the duel.1
+
+
+1.3 Turn Structure and Phase Progression
+
+
+A duel is turn-based, with a random spinner at the start of the match determining which Commander takes the first turn. Each turn follows a strict and irreversible sequence of phases. Performing an action in a later phase prevents the Commander from returning to an earlier one for the remainder of that turn. This rigid structure establishes a core principle of "action commitment," elevating the importance of careful planning before any unit is moved.1
+The turn sequence is as follows:
+1. Module Phase: At the beginning of the turn, the Commander may choose to use one of their single-use Support Modules. These Modules provide powerful, strategic effects that can alter the rules of the game for a short period.1
+2. Subroutine Phase: The Commander may choose to activate a Subroutine (Ability) on one of their units, if applicable. Many activated Subroutines will end the turn immediately upon use.1
+3. Movement Phase: The Commander must select one Robot Unit on the board or on their Bench to move. This is the mandatory action of the turn. Once a unit is selected and its movement is confirmed, the Module and Subroutine Phases are concluded for that turn.1
+4. Combat Phase: If a unit's movement ends on a point adjacent to an opposing unit, the Commander may choose to initiate a battle. The turn ends immediately after the battle is resolved. If the Commander chooses not to battle, or if their move does not end adjacent to an opponent, their turn ends after the movement is complete.1
+A notable rule applies to the very first turn of the game: the Robot Unit moved by the first Commander has its Mobility Points (MP) reduced by one for that move only. This serves to slightly temper the first-player advantage.1
+The irreversible nature of the turn sequence forces strategic foresight. A Commander cannot react to a failed move by then deciding to use a Support Module to correct it. They must anticipate the potential outcomes of the turn, commit their most powerful, rule-altering resources during the Module Phase, and then execute their move. This makes the Module Phase a critical moment of strategic signaling. For example, activating a Module that allows for a re-spin in combat clearly signals an intent to engage in a high-stakes battle, potentially forcing the opponent into a defensive reaction even before the actual move is made.
+
+
+Section II: Core Gameplay Mechanics
+
+
+This section details the fundamental actions that drive gameplay. It covers the protocols for unit movement and deployment, the system for resolving combat, the process for managing deactivated units, and the advanced tactical systems that provide additional layers of strategic depth.
+
+
+2.1 Unit Movement and Deployment Protocols
+
+
+Movement across the Battlefield Grid is governed by a Robot Unit's core attributes and the state of the board. Mastering these protocols is essential for establishing board control and executing tactical maneuvers.1
+* Mobility Points (MP): Each Robot Unit has a Mobility Point (MP) stat, which typically ranges from 1 to 3. This value dictates the maximum number of steps a unit can move along the connected Routes in a single turn. For example, a unit with 3 MP can move 1, 2, or 3 steps.1
+* Deployment: Moving a unit from the Bench onto one of the Commander's two available Entry Points costs 1 MP and constitutes the unit's move for that turn.1
+* Blocking: Units cannot move through points occupied by other units, regardless of whether they are friendly or opposing. This fundamental rule creates chokepoints, defensive formations, and opportunities for tactical blockade.1
+
+
+2.2 Combat Resolution: The Combat Dial and Color Hierarchy
+
+
+When a Commander initiates a battle by moving a unit adjacent to an opposing unit, the outcome is determined not by unit types or elemental affinities, but by a spin of each participating unit's "Combat Dial" (formerly Data Disk). Each dial is divided into colored segments representing different protocols or actions. The interaction between these colors follows a strict hierarchical system, transforming a probabilistic event into a calculable risk assessment.1
+The definitive hierarchy of protocol colors is: Blue > Gold > Purple > White > Red.
+* Red (Malfunction): Represents a failed action or a miss. A Malfunction automatically loses to any opposing protocol of any other color. If both units spin Malfunction, the result is a draw, and the battle ends with no effect.1
+* White (Standard Strike): A standard damage-dealing attack, indicated by a numerical value. When a White protocol battles another White or a Gold protocol, the one with the higher damage value wins, and the loser is Deactivated. If the damage values are equal, the result is a draw. A White protocol loses to a Purple or Blue protocol.1
+* Gold (Priority Strike): Functions identically to a White protocol in terms of dealing damage and comparing values against other White or Gold protocols. Its key distinction is that it has priority over and defeats Purple protocols.1
+* Purple (System Warfare): These protocols represent unique, non-damaging effects, such as inflicting status conditions, displacing other units, or altering the board state. Purple protocols are ranked by a star rating (from ⋆ to ⋆⋆⋆). A Purple protocol defeats any White protocol. When two Purple protocols clash, the one with the higher star rating wins. If the star ratings are equal, the result is a draw. A Purple protocol loses to a Gold or Blue protocol.1
+* Blue (Evasive Protocol): These protocols, such as Dodge or Protect, have the highest priority in the hierarchy. A Blue protocol defeats White, Gold, and Purple protocols. The most common outcome of a Blue protocol is a "wash," where the battle ends with no effect and no units are moved or deactivated. If both units spin Blue, the result is a draw.1
+For absolute clarity, especially for AI-driven analysis, the interactions are codified in the following matrix.
+Table 2.1: Combat Interaction Matrix
+Attacker / Defender
+	Red (Malfunction)
+	White (Standard Strike)
+	Purple (System Warfare)
+	Gold (Priority Strike)
+	Blue (Evasive Protocol)
+	Red (Malfunction)
+	Draw
+	Defender Wins
+	Defender Wins
+	Defender Wins
+	Defender Wins
+	White (Standard Strike)
+	Attacker Wins
+	Higher Damage Wins (Draw if Equal)
+	Defender Wins
+	Higher Damage Wins (Draw if Equal)
+	Defender Wins
+	Purple (System Warfare)
+	Attacker Wins
+	Attacker Wins
+	Higher Star Rating Wins (Draw if Equal)
+	Defender Wins
+	Defender Wins
+	Gold (Priority Strike)
+	Attacker Wins
+	Higher Damage Wins (Draw if Equal)
+	Attacker Wins
+	Higher Damage Wins (Draw if Equal)
+	Defender Wins
+	Blue (Evasive Protocol)
+	Attacker Wins
+	Attacker Wins
+	Attacker Wins
+	Attacker Wins
+	Draw
+	
+
+2.3 Deactivation and the Repair Bay Cycle
+
+
+The unit that loses a battle is "Deactivated" and is immediately moved from the board to its owner's Repair Bay. The management of this cycle is a critical strategic sub-game focused on resource attrition and tempo control.1
+* Repair Bay Capacity: The Repair Bay has a maximum capacity of two units. This limitation is a key mechanic, not merely a holding area.1
+* Unit Cycling: When a third unit is Deactivated and sent to the Repair Bay, the unit that has been in the Repair Bay the longest is immediately moved to that Commander's Bench. This prevents a Commander from indefinitely storing defeated units off-board.1
+* Rebooting Timer: The unit returning to the Bench from the Repair Bay is afflicted with the "Rebooting: 1" status. This means the Commander cannot select that unit to move on their next turn. This mechanic introduces a strategic delay to the re-entry of repaired units, preventing players from immediately recycling their most powerful assets.1
+The limited capacity of the Repair Bay can be weaponized. A skilled Commander can intentionally target and deactivate three of an opponent's units in rapid succession. This action forces a "Repair Bay Clog," compelling the opponent to receive a unit back on their Bench—a unit they may not want or need at that moment. Furthermore, this unit returns with a "Rebooting" penalty, rendering it useless for one turn. This creates a significant tempo disadvantage for the defending Commander. The aggressor can use this window of opportunity, where the opponent has effectively one fewer deployable unit, to press an advantage, capture a critical Entry Point, or make a decisive push for the goal. This transforms simple combat from a mere exchange of pieces into a sophisticated tool for manipulating the opponent's resource pipeline and deployment tempo.
+
+
+2.4 Advanced Tactical Systems: Surrounding and Status Effects
+
+
+Beyond basic movement and combat, several advanced mechanics provide additional layers of strategic depth, allowing for complex tactical plays that can shift the momentum of a duel.1
+* Surrounding: A Robot Unit can be instantly Deactivated without a battle if it becomes surrounded. A surround occurs when all adjacent points connected to the target unit's space are occupied by the opponent's units. The surrounded unit is immediately sent to the Repair Bay. This is an extremely powerful tactic for removing a formidable defensive unit, such as a goalie on the Goal Point, without engaging in a risky, luck-based battle.1
+* Status Effects: Certain protocols, primarily Purple System Warfare attacks, can inflict persistent negative status effects on a target unit. These conditions remain on the unit and alter its performance in subsequent battles until it is cured. A unit is cured of all status effects when it is Deactivated and sent to the Repair Bay.1 A glossary of these effects is essential for accurate threat assessment.
+Table 2.2: System Status Effects Glossary
+Status Effect
+	Description
+	Poison
+	At the end of this unit's turn, if it did not battle, spin its Combat Dial. If it lands on a White or Gold attack, that attack's damage is reduced by 20.
+	Noxious
+	Functions as Poison, but the damage reduction is 40 instead of 20.
+	Paralysis
+	This unit's Combat Dial gains an additional 'Malfunction' segment, which replaces its largest non-Malfunction segment.
+	Burn
+	All of this unit's White and Gold attacks have their damage values reduced by 20.
+	Confusion
+	Before this unit battles, spin its Combat Dial. If it lands on a White or Gold attack, it attacks itself with that move. The battle against the opponent is cancelled.
+	Sleep
+	This unit cannot be selected to move or initiate an attack. At the start of its owner's turn, the owner may spend their move action to attempt to wake it up by spinning its dial; any result other than Malfunction removes this status.
+	Frozen
+	This unit cannot be selected to move or initiate an attack. It cannot be woken up manually. It is automatically cured after it has been on the field for 3 of its owner's turns.
+	
+
+Section III: Robot Unit Architecture
+
+
+This section defines the game pieces themselves—the Robot Units. It breaks down their core attributes, explains the composition of their Combat Dials, categorizes them into strategic roles, and details the process for in-game upgrades.
+
+
+3.1 Anatomy of a Robot Unit: Core Attributes
+
+
+Each Robot Unit in the game is defined by a set of key attributes that determine its role and effectiveness in a duel. This standardized data structure is essential for cataloging and analyzing all units within the game system.1
+* Rarity: Units are categorized by rarity, which generally correlates with their power, complexity, and strategic potential. The tiers are Common (C), Uncommon (UC), Rare (R), EX (Extremely Rare), and UX (Ultra EX).1
+* Mobility Points (MP): This value (1, 2, or 3) dictates how many steps a unit can move on the board in a single turn. It is the primary determinant of a unit's strategic role.1
+* Subroutine (Ability): Many units possess a unique Subroutine, which can be a passive effect that is always active or an activated effect that a Commander can choose to use during their Subroutine Phase. Subroutines often define a unit's strategic niche and potential for synergistic team compositions.1
+* Combat Dial (Data Disk): The spin wheel that determines a unit's action in battle. It is composed of various colored protocol segments, each with a specific effect and size.1
+The following stat block serves as the definitive template for all Robot Units and is populated with re-themed examples to illustrate different archetypes.
+Table 3.1: Standardized Robot Unit Stat Block (Template and Examples)
+Attribute
+	Template
+	Example: Volt Striker V-PKA
+	Example: Aqua Shell A-SQT
+	Example: Hunter Drone J-LTS
+	Name:
+	Unit Name
+	Volt Striker V-PKA
+	Aqua Shell A-SQT
+	Hunter Drone J-LTS
+	Rarity:
+	C/UC/R/EX/UX
+	R
+	UC
+	EX
+	MP:
+	1/2/3
+	3
+	3
+	3
+	Subroutine:
+	Subroutine Name & Effect
+	None
+	None
+	Phasing Protocol: If this unit is Deactivated, it is removed from the duel instead of being sent to the Repair Bay.
+	Combat Dial:
+	List of Protocols, Effects, & Damage
+	- Thunder Shock (White) - 30 Dmg - Quick Strike (Gold) - 50 Dmg - Static Field (Purple) - ⋆ - The battle opponent becomes Paralyzed. - Thunder Cannon (White) - 100 Dmg - Dodge (Blue) - Malfunction (Red)
+	- Withdraw (Blue) - Bubble Shot (White) - 20 Dmg - Malfunction (Red)
+	- Luster Purge (White) - 120 Dmg - Psy-Blade (White) - 60 Dmg - Dragon Breath (White) - 80 Dmg - Dodge (Blue)
+	
+
+3.2 The Combat Dial: Composition and Calibration
+
+
+The Combat Dial is the heart of a Robot Unit's combat potential. Its composition is the primary factor in assessing a unit's strengths, weaknesses, and statistical reliability.1
+* Segment Size: The "Size" of each protocol segment on the dial corresponds to its probability of being landed on during a spin. The total size of all segments on a standard Combat Dial is 96. Therefore, a protocol with a size of 24 has a 24/96, or 25%, chance of occurring. This allows for precise calculation of combat odds.1
+* Calibration (Leveling Up): Commanders can "fuse" duplicate units or special items (like Power Cubes and Rare Metals) into a unit to increase its level. When a unit levels up, the Commander can choose to increase the size of one of its protocol segments by 1. This point is taken directly from one of the unit's Red (Malfunction) segments. This process allows Commanders to permanently improve a unit's combat consistency by increasing the probability of its useful protocols while decreasing its chance of malfunctioning.1
+
+
+3.3 Strategic Archetypes and Battlefield Roles
+
+
+Robot Units can be broadly categorized into strategic roles based on their stats, particularly their MP and Combat Dial composition. A well-balanced squad typically includes units from multiple archetypes to ensure tactical flexibility.1
+* Runners (3 MP): These are high-mobility units used to apply early-game pressure, secure strategic points like the opponent's Entry Points, and execute rapid "Goal Rush" strategies. Their speed also makes them effective at setting up surrounds. Examples include the Volt Striker V-PKA and Hunter Drone J-LTS.1
+* Fighters (2 MP): These units form the core of most squads, offering a balance between solid mobility and strong combat capabilities. They are responsible for controlling the center of the board, initiating key battles, and serving as the primary offensive force in prolonged engagements. Most premier attackers fall into this category.1
+* Defenders/Goalies (1 MP): With the lowest mobility, these units are designed for defensive roles. They are typically placed on the Goal Point or other critical defensive positions. Their strength lies in their Combat Dials, which often feature high-damage attacks, large Blue segments (like the Aqua Shell A-SQT's massive "Withdraw" protocol), or powerful Purple effects that make them extremely difficult to dislodge in a battle.1
+* Support: These units are valued not for their individual combat prowess but for their Subroutines or protocols that enhance the entire team. Their effects can define a squad's overall strategy. For example, a unit with a Subroutine that passively boosts the damage of all friendly units of a certain type would be a cornerstone of a synergistic team build.1
+
+
+3.4 Mid-Duel Upgrade Protocols
+
+
+The Upgrade Protocol is a powerful mechanic that allows a unit to transform into a stronger form mid-duel, but it often comes with significant strategic trade-offs.1
+* Mechanics: To enable an upgrade, a Commander must own the units for each stage of the upgrade line. In the squad editor, the upgraded forms are "set" behind the base form. During a duel, after the base form deactivates an opposing unit, the Commander is given the option to execute the Upgrade Protocol.1
+* Benefits: For each stage of an upgrade, the unit receives a permanent bonus of +10 damage to all of its White and Gold attacks and an additional star (⋆) to all of its Purple protocols. A unit that has undergone two upgrade stages would have a +20 damage bonus and a ⋆⋆ bonus to its System Warfare protocols.1
+* The Strategic Trade-Off: An upgrade is not always a straightforward improvement. A significant trade-off often exists between mobility and power. For instance, a 3 MP Runner might upgrade into a 2 MP Fighter. This is not a simple "power up" but a fundamental alteration of the unit's strategic role. In the early game, the 3 MP base form's mobility is paramount for securing board position. In the late game, the 2 MP upgraded form's superior combat power might be necessary to break through a fortified defense. The decision to upgrade is therefore entirely context-sensitive and depends on the game state. A Commander must assess whether the immediate board presence of the faster, un-upgraded unit is more valuable than the long-term combat potential of its slower, more powerful form. This prevents the game from devolving into a simple race to achieve the most powerful units and instead rewards flexible, situational decision-making.
+
+
+Section IV: Strategic Assets: Support Modules ("Plates")
+
+
+Support Modules are single-use, consumable assets that a Commander can include in their roster. They are the primary tool for manipulating the game's core rules, mitigating the inherent randomness of combat, and executing powerful, often game-altering, tactical plays.
+
+
+4.1 Module Functionality and Strategic Application
+
+
+Modules are played during the Module Phase at the start of a Commander's turn. The judicious selection of Modules during squad building and their timely application during a duel are hallmarks of advanced play, representing a Commander's ability to inject a moment of controlled certainty into an otherwise unpredictable system.1
+* Squad Composition: A Commander can include up to six unique Support Modules in their roster alongside their six Robot Units.1
+* Single-Use: Each Module can only be used once per duel.1
+* Strategic Purpose: Modules serve as the primary tool for players to manage risk and override the game's rigid rules. They can directly counter the element of chance, alter the statistical probabilities of winning a battle, or break the standard rules of movement and commitment.1
+
+
+4.2 Foundational Module Catalogue and Effects
+
+
+The following is a list of foundational Module types, re-themed for Project Chimera, with their precise effects. This serves as a starting point for the full catalogue of strategic assets available to Commanders.1
+* "Recalculate Trajectory" (formerly Double Chance): After a combat spin, you may discard this module to re-spin your unit's Combat Dial once. The result of the second spin is final. This is a direct tool for mitigating bad luck in a critical battle.
+* "Overcharge" (formerly X Attack): Choose one friendly Robot Unit on the field. For the duration of this turn, that unit gains +30 damage to all its White and Gold attacks. This module alters combat probabilities in your favor.
+* "Teleport Swap" (formerly Pokémon Switch): Choose two friendly Robot Units on the field. They immediately swap positions. This action does not count as a move and does not end your turn. This is a powerful tool for repositioning units, rescuing a threatened unit, or setting up a surprise attack on the Goal Point.
+* "Hurdle Jump": Choose one of your Robot Units on the field. For this turn only, that unit may move through points occupied by other friendly and opposing units. This module breaks the fundamental rule of blocking, allowing for unexpected flanking maneuvers.
+
+
+Section V: Design Philosophy and Strategic Synthesis
+
+
+This final section articulates the high-level design principles of Project Chimera, synthesizing the previously detailed mechanics into a coherent strategic whole. This context is crucial for understanding why the rules are structured as they are and for guiding the development of high-level strategic analysis.
+
+
+5.1 The Central Tension: Deterministic Positioning vs. Probabilistic Combat
+
+
+The core gameplay experience of Project Chimera arises from the interplay between two distinct mechanics: deterministic positioning and probabilistic combat. A Commander has complete and precise control over which unit to move and where to place it on the board, a process governed by clear, unwavering rules. However, once a battle is initiated, the outcome is resolved through the luck-based system of the Combat Dial spin.1
+This fundamental conflict establishes risk mitigation as the paramount skill for any Commander. The game is not won by those who are merely lucky in battle, but by those who can expertly manipulate the board state to their advantage. The game's design, which originated from a developer renowned for its expertise in AI for complex strategy games like Shogi, is intentionally built to be a calculable system.1 Shogi is a game of perfect information with zero randomness. The selection of this developer implies a design philosophy that prioritizes calculable strategy over pure chance. Therefore, the randomness of combat should be viewed as a known variable to be managed, not a purely chaotic element. The game is won by using deterministic actions—movement, surrounding, Module use—to manipulate the game state to a point where the probabilistic combat outcomes are overwhelmingly in one's favor. The ultimate skill is not in getting lucky spins, but in making luck irrelevant.
+
+
+5.2 Key Pillars of High-Level Play: Board Control, Risk Mitigation, and Unit Synergy
+
+
+Mastery of the game requires a deep understanding of how the game's mechanics give rise to a complex strategic environment built upon three core pillars.1
+* Board Control vs. Aggression: At the highest level, the game presents a constant tension between two opposing philosophies. An aggressive Commander may focus on a "Goal Rush," using high-MP runners to apply immediate pressure and aim for a quick Goal Capture victory. A control-oriented Commander will focus on securing strategic points, establishing a defensive formation, blocking the opponent's Entry Points, and slowly grinding the opponent down towards a System Lock victory. A successful Commander must be able to identify which strategy is most effective against a given opponent and be able to pivot between offensive and defensive postures as the game state evolves.
+* Risk Management: Given that combat resolution is probabilistic, the defining skill of an expert Commander is the management of risk. Every decision to initiate a battle is a calculated gamble. Before attacking, a Commander must consider the Combat Dials of both units, the potential outcomes, and whether the reward of winning the battle outweighs the risk of losing it. The best players use deterministic movement to create situations where they either avoid risk entirely (e.g., by surrounding a key target) or force the opponent into battles where the odds are heavily stacked against them. Support Modules serve as the ultimate risk management tool, allowing a Commander to spend a limited resource to override chance at a critical moment.
+* Squad Synergy: A winning strategy is not executed by six individual units, but by a cohesive team. Squad building is a crucial element of the game where Commanders must select units and Modules that complement one another. A synergistic squad is built around a coherent game plan. For example, a squad featuring a Support unit that boosts the damage of all other units is designed to leverage this team-wide buff to overwhelm opponents. A squad built around inflicting status effects might include units with powerful System Warfare protocols and Modules that can capitalize on a paralyzed or confused opponent. The synergy between units, their subroutines, and the chosen modules is what elevates a collection of strong pieces into a formidable and unified strategy.
+Works cited
+1. DUEL-RUNDOWN.txt

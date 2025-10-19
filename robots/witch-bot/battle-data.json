@@ -1,0 +1,267 @@
+{
+  "name": "Witch-Bot",
+  "rarity": "R",
+  "mp": 2,
+  "role": "Scout",
+  "type": "Psychic",
+  "ability": {
+    "name": "Magical Escape",
+    "description": "Can quickly teleport away from danger using witch magic."
+  },
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "None"
+      },
+      {
+        "moveName": "Hex Strike",
+        "moveType": "White",
+        "size": 16,
+        "damage": 20,
+        "effect": "The battle opponent gains Wait 3"
+      },
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Crystal Ball Vision",
+        "moveType": "Blue",
+        "size": 20,
+        "effect": "This robot switches places with its battle opponent"
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "None"
+      },
+      {
+        "moveName": "Hex Strike",
+        "moveType": "White",
+        "size": 16,
+        "damage": 20,
+        "effect": "The battle opponent gains Wait 3"
+      },
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Crystal Ball Vision",
+        "moveType": "Blue",
+        "size": 20,
+        "effect": "This robot switches places with its battle opponent"
+      }
+    ],
+    "confused": [
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "None"
+      },
+      {
+        "moveName": "Hex Strike",
+        "moveType": "White",
+        "size": 16,
+        "damage": 20,
+        "effect": "The battle opponent gains Wait 3"
+      },
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Crystal Ball Vision",
+        "moveType": "Blue",
+        "size": 20,
+        "effect": "This robot switches places with its battle opponent"
+      }
+    ],
+    "paralyzed_list": [
+      {
+        "paralyzed_0": [
+          {
+            "moveName": "Broom Flight",
+            "moveType": "Purple",
+            "size": 28,
+            "stars": 3,
+            "effect": "This robot moves 2 steps away"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 4,
+            "effect": "None"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          },
+          {
+            "moveName": "Broom Flight",
+            "moveType": "Purple",
+            "size": 28,
+            "stars": 3,
+            "effect": "This robot moves 2 steps away"
+          },
+          {
+            "moveName": "Crystal Ball Vision",
+            "moveType": "Blue",
+            "size": 20,
+            "effect": "This robot switches places with its battle opponent"
+          }
+        ]
+      }
+    ],
+    "asleep": [
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "None"
+      },
+      {
+        "moveName": "Hex Strike",
+        "moveType": "White",
+        "size": 16,
+        "damage": 20,
+        "effect": "The battle opponent gains Wait 3"
+      },
+      {
+        "moveName": "Broom Flight",
+        "moveType": "Purple",
+        "size": 28,
+        "stars": 3,
+        "effect": "This robot moves 2 steps away"
+      },
+      {
+        "moveName": "Crystal Ball Vision",
+        "moveType": "Blue",
+        "size": 20,
+        "effect": "This robot switches places with its battle opponent"
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 28,
+        "effect": "None"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "None"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 28,
+        "effect": "None"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 20,
+        "effect": "None"
+      }
+    ],
+    "burned_list": [
+      {
+        "burned_0": [
+          {
+            "moveName": "Broom Flight",
+            "moveType": "Purple",
+            "size": 28,
+            "stars": 3,
+            "effect": "This robot moves 2 steps away"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 4,
+            "effect": "None"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          },
+          {
+            "moveName": "Broom Flight",
+            "moveType": "Purple",
+            "size": 28,
+            "stars": 3,
+            "effect": "This robot moves 2 steps away"
+          },
+          {
+            "moveName": "Crystal Ball Vision",
+            "moveType": "Blue",
+            "size": 20,
+            "effect": "This robot switches places with its battle opponent"
+          }
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "hp": 90,
+    "attack": 55,
+    "defense": 50,
+    "speed": 70
+  }
+}

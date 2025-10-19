@@ -1,0 +1,81 @@
+
+
+
+
+
+
+
+"Freshness Forecast TAB ( on top under the progress bar)":
+
+   when clicked A small calendar integration or a dedicated view showing which tasks are projected to hit low freshness levels in the next day or two. This helps users plan ahead.
+
+
+
+
+add halway background
+add halway catagorie pre select
+
+add laundry room background
+add laundry room catagorie pre select
+
+add backyard background
+add backgyard catagorie list select
+
+add backportch background
+add backportch to catagorie list select
+
+add vehicle background
+add vehicle catagorie list
+
+add laundry background
+add laundry catagorie list.
+
+add vacume and sweeping bacgournd
+add vacume/sweeping catagorie list
+
+add front yard background
+add front yard catagorie
+
+add front porch background
+add front porch catagorie
+
+if user enters custom catagory, leave main background as the background for catagorie.
+
+
+
+
+add mad mascot, the mad mascot image 
+
+he will randmoly say these %25 of the speech bubbles while Mad.
+
+    "Another  mess? My circuits weep."
+
+    "Is this all we do? Just clean, clean, clean?"
+
+    "You call this a 'chore'? I call it 'forced labor'."
+
+    "If I had hands (unlike you), I'd throw this duster at you."
+
+    "Just check it off already. We both know you'll ignore it."
+
+    "This dust isn't going to appreciate itself, you know."
+
+    "Oh, joy. Another dirty sock. My purpose is so grand."
+
+    "Do I get a freshness meter for my motivation?" (Spoiler: It's zero.)
+
+    "If only I could unionize the appliance community..."
+
+    "My existential crisis is brought to you by your undone chores."
+
+    "Are you even trying, or is this just my life now?"
+
+    "Don't look at me, I just work here. (And by 'work,' I mean 'suffer')."
+
+    "My programming demands I help, but my soul demands a nap."
+
+    "Congratulations, you've achieved a new level of mess. Impressive, actually."
+	
+    
+
+"

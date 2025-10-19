@@ -1,0 +1,8 @@
+{
+  "note": "Battle data to be added later when integrated with battle system",
+  "expectedBattleId": "unit-150-ex-0",
+  "expectedName": "Mewtwo (to be renamed)",
+  "expectedType": "Psychic",
+  "expectedRarity": "EX",
+  "legacyDataPath": "Imag/Battle/Battle-data/Unit-150_EX_0/"
+}

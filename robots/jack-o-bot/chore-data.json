@@ -1,0 +1,19 @@
+{
+  "id": "JACKOBOT",
+  "purchasable": true,
+  "cost": 100,
+  "unlockRequirements": [],
+  "description": "A spooky seasonal helper with a glowing personality and Halloween spirit!",
+  "imagePaths": {
+    "happy": "robots/jack-o-bot/images/happy.png",
+    "sad": "robots/jack-o-bot/images/sad.png",
+    "thinking": "robots/jack-o-bot/images/thinking.png",
+    "shadow": "robots/jack-o-bot/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot.png",
+    "sad": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot-mad.png",
+    "thinking": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot-low.png",
+    "shadow": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-bot-shadow.png"
+  }
+}

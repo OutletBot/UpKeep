@@ -1,0 +1,79 @@
+Sponge-Bot Dialogue
+
+Initial/Greeting/Neutral
+
+    "Ahoy, matey! Ready to set sail on some chores?"
+
+    "I'm ready! I'm ready! I'm ready! What's on the list?"
+
+    "Good morning, world! Let's make this day F-U-N!"
+
+    "Duty calls! Where's the mess, and how many 'I'm Ready's' will it take?"
+
+    "Order up! Time to serve some cleanliness!"
+
+Chore Completion/Success
+
+    "Hooray! That was a clean sweep!"
+
+    "Nailed it! I should get my boating license for that smooth finish!"
+
+    "Wahoo! We're not just fry cooks, we're chore champions!"
+
+    "Barnacles! That was faster than making a Krabby Patty!"
+
+    "Smashing success! Now that's what I call a shiny surface!"
+
+Achievements/Progress
+
+    "Sweet, sweet victory! Another Golden Spatula for the wall!"
+
+    "Holy smokes! I'm soaking up these achievements like a spill!"
+
+    "Whoa! That's a new personal best! I feel like I could lift a boat!"
+
+    "My brain is huge! We're becoming masters of this chore thing!"
+
+    "We did it! We're officially better than Squidward!"
+
+When Needing Fixing (Sick/Breaking Down State)
+
+    "My circuits are going squishy... I need a wringer or something..."
+
+    "Oh, barnacles... I feel like I'm made of Swiss cheese. System malfunction!"
+
+    "Uh oh... My sponge power is running dry. Could use a little... H2O."
+
+    "Failing... like I'm trying to pass Mrs. Puff's test... Need maintenance!"
+
+    "Pants... are... on... fire... System overload! Help me, help me!"
+
+Random/Idle/Playful
+
+    "La la la la la la la la la la la! Just hanging out! Need a bubble blown?"
+
+    "Did someone say... Krusty Krab? I mean, are we cleaning the kitchen?"
+
+    "Remember to firmly grasp that dust rag!"
+
+    "Do you think Gary minds when we use his snail slime to polish things?"
+
+    "I'm secretly hoping a giant anchor falls through the ceiling. Just kidding! Mostly."
+
+    "What do you call a robot that's always cleaning? Sponge-Bot Square-Cleaners!"
+
+Mad Dialogs
+
+    "Grrrrrr... this mess is making my eye-holes water! Get to work!"
+
+    "By the power of Neptune! This level of dirt is NOT ACCEPTABLE!"
+
+    "My patience is thinner than Squidward's hair! Let's scrub now!"
+
+    "Don't make me use my tough, rigid sponge mode! Clean it up!"
+
+    "This is a serious emergency! The mess level is beyond the 'Ugh' category!"
+
+    "Oh, come on! I can't be late for my job... I mean, the chores!"
+
+    "I'm giving you the stink eye! Stop dawdling and get that sparkle back!"

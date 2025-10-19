@@ -1,0 +1,35 @@
+
+
+### App Name: **Upkeep**
+
+### Tagline: **Track the true state of your chores.**
+
+### The Core Concept
+
+Upkeep is a cleaning and chore management app designed to solve a problem that standard to-do lists ignore: chores are never truly "done." Instead of just checking off a task and forgetting it, Upkeep provides a dynamic, visual representation of your home's level of cleanliness, encouraging you to maintain your space before tasks become overwhelming.
+
+The app is built around a unique "decay" system. Every completed chore has a progress bar that slowly depletes over time, creating a real-time dashboard of what actually needs your attention.
+
+### How It Works
+
+The user experience is designed to be clean, intuitive, and focused on visual feedback.
+
+**1. The Main Dashboard:**
+The home screen is dominated by a single, large progress bar showing your **Overall Maintenance Score** from 0-100%. This gives you an immediate, at-a-glance understanding of how well you're keeping up with everything in your life.
+
+**2. Categories:**
+Users create their own categories to organize their chores (e.g., "Kitchen," "Bathroom," "Weekly Tasks"). Each category has its own dedicated 0-100% progress bar on its page, so you can easily see which areas of your home need the most work.
+
+**3. Tasks and the "Freshness Meter":**
+Within each category, users add individual tasks to a checklist. This is where the core mechanic comes into play:
+* Each task has its own small 0-100% progress bar called a **Freshness Meter**.
+* When you complete a task—like "Wipe down kitchen counters"—you check it off, and its Freshness Meter fills to 100%.
+* Over a period of time that you can customize, the meter will slowly deplete. For example, the "Wipe counters" task might lose its freshness over 2 days, while "Clean the windows" might take 2 months.
+* This depletion visually signals that the task is gradually needing to be done again.
+
+**The Interconnected System:**
+The magic of the app is how everything is connected.
+* As a task's **Freshness Meter** depletes, it lowers the overall progress bar for its **Category**.
+* As the **Category's** progress bar goes down, it lowers the **Overall Maintenance Score** on the main dashboard.
+
+This creates a gentle but persistent motivation. To keep your main score high, you need to "top off" the tasks whose Freshness Meters are running low, encouraging consistent upkeep. It helps you answer the question "What's the most important thing I should clean right now?" just by looking at the app.

@@ -1,0 +1,157 @@
+{
+  "name": "Clown Bot",
+  "rarity": "EX",
+  "mp": 2,
+  "role": "Vanguard",
+  "type": "Ghost / Poison",
+  "description": "EX rarity unit with 2 movement points. A mischievous clown robot with terrifying spectral abilities.",
+  "image": "robots/clown-bot/images/happy.png",
+  "ability": {
+    "name": "Contagious Terror",
+    "description": "Can spread fear and paralysis to multiple opponents in succession."
+  },
+  "wheel": [
+    {
+      "moveName": "Contagious Terror",
+      "moveType": "Purple",
+      "size": 32,
+      "stars": 4,
+      "effect": "The battle opponent, and a succession of opposing Pokémon adjacent to it, gain Wait 3"
+    },
+    {
+      "moveName": "Dodge",
+      "moveType": "Blue",
+      "size": 16,
+      "effect": "Defensive move"
+    },
+    {
+      "moveName": "Night Shade",
+      "moveType": "White",
+      "size": 40,
+      "damage": 120,
+      "effect": "High damage spectral attack"
+    },
+    {
+      "moveName": "Miss",
+      "moveType": "Red",
+      "size": 8,
+      "effect": "None"
+    }
+  ],
+  "statusWheels": {
+    "poisoned": [
+      {
+        "moveName": "Contagious Terror",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing Pokémon adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Night Shade",
+        "moveType": "White",
+        "size": 40,
+        "damage": 120,
+        "effect": "High damage spectral attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "paralyzed": [
+      {
+        "moveName": "Contagious Terror",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing Pokémon adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 40,
+        "effect": "Paralyzed - cannot use Night Shade"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "burned": [
+      {
+        "moveName": "Contagious Terror",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing Pokémon adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 40,
+        "effect": "Burned - cannot use Night Shade"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 32,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 40,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "Frozen - all moves disabled"
+      }
+    ]
+  },
+  "stats": {
+    "hp": 130,
+    "attack": 120,
+    "defense": 85,
+    "speed": 90
+  }
+}

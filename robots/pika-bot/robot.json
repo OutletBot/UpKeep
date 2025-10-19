@@ -1,0 +1,14 @@
+{
+  "id": "pika-bot",
+  "battleId": "unit-025-r-0",
+  "name": "Pika-Bot",
+  "number": 25,
+  "rarity": "R",
+  "type": "Electric",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": false,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "notes": "Battle data to be added later"
+}

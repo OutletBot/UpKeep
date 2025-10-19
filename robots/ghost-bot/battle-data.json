@@ -1,0 +1,221 @@
+{
+  "mp": 3,
+  "role": "Scout",
+  "stats": {
+    "hp": 85,
+    "attack": 70,
+    "defense": 60,
+    "speed": 95
+  },
+  "ability": {
+    "name": "Phantom Phase",
+    "description": "Can pass through solid matter and create spectral bonds with opponents."
+  },
+  "image": "robots/ghost-bot/images/happy.png",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Spectral Link",
+        "moveType": "White",
+        "size": 32,
+        "damage": 0,
+        "effect": "If this robot is knocked out, so is the battle opponent"
+      },
+      {
+        "moveName": "Phantom Scare",
+        "moveType": "White",
+        "size": 48,
+        "damage": 20,
+        "effect": "Ethereal energy startles opponent"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Spectral Link",
+        "moveType": "White",
+        "size": 32,
+        "damage": 0,
+        "effect": "If this robot is knocked out, so is the battle opponent"
+      },
+      {
+        "moveName": "Phantom Scare",
+        "moveType": "White",
+        "size": 48,
+        "damage": 20,
+        "effect": "Ethereal energy startles opponent"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      }
+    ],
+    "confused": [
+      {
+        "moveName": "Spectral Link",
+        "moveType": "White",
+        "size": 32,
+        "damage": 0,
+        "effect": "If this robot is knocked out, so is the battle opponent"
+      },
+      {
+        "moveName": "Phantom Scare",
+        "moveType": "White",
+        "size": 48,
+        "damage": 20,
+        "effect": "Ethereal energy startles opponent"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      }
+    ],
+    "paralyzed_list": [
+      {
+        "paralyzed_0": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 32,
+            "effect": "Paralyzed - cannot use Spectral Link"
+          },
+          {
+            "moveName": "Phantom Scare",
+            "moveType": "White",
+            "size": 48,
+            "damage": 20,
+            "effect": "Ethereal energy startles opponent"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          }
+        ]
+      },
+      {
+        "paralyzed_1": [
+          {
+            "moveName": "Spectral Link",
+            "moveType": "White",
+            "size": 32,
+            "damage": 0,
+            "effect": "If this robot is knocked out, so is the battle opponent"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 48,
+            "effect": "Paralyzed - cannot use Phantom Scare"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          }
+        ]
+      }
+    ],
+    "asleep": [
+      {
+        "moveName": "Spectral Link",
+        "moveType": "White",
+        "size": 32,
+        "damage": 0,
+        "effect": "If this robot is knocked out, so is the battle opponent"
+      },
+      {
+        "moveName": "Phantom Scare",
+        "moveType": "White",
+        "size": 48,
+        "damage": 20,
+        "effect": "Ethereal energy startles opponent"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 32,
+        "effect": "Frozen - cannot move"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 48,
+        "effect": "Frozen - cannot attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "None"
+      }
+    ],
+    "burned_list": [
+      {
+        "burned_0": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 32,
+            "effect": "Burned - cannot use Spectral Link"
+          },
+          {
+            "moveName": "Phantom Scare",
+            "moveType": "White",
+            "size": 48,
+            "damage": 20,
+            "effect": "Ethereal energy startles opponent"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          }
+        ]
+      },
+      {
+        "burned_1": [
+          {
+            "moveName": "Spectral Link",
+            "moveType": "White",
+            "size": 32,
+            "damage": 0,
+            "effect": "If this robot is knocked out, so is the battle opponent"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 48,
+            "effect": "Burned - cannot use Phantom Scare"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 16,
+            "effect": "None"
+          }
+        ]
+      }
+    ]
+  }
+}

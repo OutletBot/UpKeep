@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#65D46E">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Upkeep - Track the true state of your chores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/debug.css">
+</head>
+<body>
+    <svg style="display: none;">
+        <symbol id="icon-plus" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+        </symbol>
+        <symbol id="icon-back" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </symbol>
+        <symbol id="icon-edit" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 6a2 2 0 11-4 0 2 2 0 014 0zM12 6a2 2 0 11-4 0 2 2 0 014 0zM14 6a2 2 0 11-4 0 2 2 0 014 0z" />
+        </symbol>
+        <symbol id="icon-checkmark" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </symbol>
+        <symbol id="icon-snooze" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+        </symbol>
+    </svg>
+
+    <!-- Currency Display -->
+    <div class="currency-display" id="currencyDisplay">
+        <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="currency-display-bolt">
+        <img src="Imag/Achivments/Images/Finished Images/X.png" alt="x" class="currency-display-x">
+        <span class="currency-display-amount" id="currencyAmount">0</span>
+    </div>
+    
+    <!-- Missions Bubble -->
+    <div class="missions-bubble" id="missionsBubble" onclick="app.openMissions()">
+        <img src="Imag/Achivments/Images/Finished Images/Missions.png" alt="Missions">
+    </div>
+    
+    <button class="settings-btn" id="settingsBtn" onclick="app.showSettingsModal()"><img src="Imag/Settings.png" alt="Settings"></button>
+    
+    <div class="app">
+        <div id="dashboardView" class="view active">
+            <div class="header">
+                <div class="header-top">
+                    <div style="visibility: hidden; width: 36px;"></div>
+                    <div></div>
+                    <div style="visibility: hidden; width: 36px;"></div>
+                </div>
+            </div>
+
+            <div class="content-top">
+                <img src="Imag/LOGO.png" alt="Upkeep" class="app-logo">
+                <div class="score-card">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                        <div class="score-value-inner" id="overallScore">0%</div>
+                    </div>
+                    <div class="save-file-name" id="saveFileDisplay">Default Save</div>
+                </div>
+            </div>
+
+            <div class="content-bottom">
+                <div class="category-list" id="categoryList"></div>
+            </div>
+
+            <button class="fab" onclick="app.showAddCategoryModal()"><img src="Imag/Add.png" alt="Add Category"></button>
+        </div>
+
+        <div id="categoryView" class="view">
+            <div class="header">
+                <div class="header-top">
+                    <button class="back-btn" onclick="app.showDashboard()"><img src="Imag/Back.png" alt="Back"></button>
+                    <div style="flex: 1; text-align: center;">
+                        <h1 id="categoryTitle">Category</h1>
+                    </div>
+                    <button class="edit-btn-img" onclick="app.showEditCategoryModal()"><img src="Imag/edit-category.png" alt="Edit Category"></button>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="section-header">
+                    <div class="section-title">Tasks</div>
+                    <button class="fab" onclick="app.showAddTaskModal()"><img src="Imag/Add.png" alt="Add Task"></button>
+                </div>
+                <div class="task-list" id="taskList"></div>
+            </div>
+        </div>
+
+        <!-- Battle System View -->
+        <div id="battleView" class="view">
+            <div class="header">
+                <div class="header-top">
+                    <button class="back-btn" onclick="app.exitBattleSystem()"><img src="Imag/Back.png" alt="Back"></button>
+                    <div style="display: none;">
+                        <h1 id="battleTitle">🤖 Team Selection</h1>
+                        <div class="tagline" id="battleSubtitle">Choose 6 robots for battle</div>
+                    </div>
+                    <div style="width: 50px;"></div>
+                </div>
+            </div>
+
+            <!-- Team Selection Phase -->
+            <div id="teamSelectionPhase" class="battle-phase">
+                <div class="content" style="padding-top: 80px;">
+                    <!-- Active Squad (Fixed Header) -->
+                    <div class="active-squad-header">
+                        <div class="squad-title">
+                            <h3>Active Squad</h3>
+                            <div class="squad-counter">
+                                <span id="teamCount">0</span>/6 Robots
+                            </div>
+                        </div>
+                        <div class="active-squad-slots" id="selectedTeamGrid">
+                            <div class="squad-slot empty" data-slot="0">
+                                <div class="slot-number">1</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                            <div class="squad-slot empty" data-slot="1">
+                                <div class="slot-number">2</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                            <div class="squad-slot empty" data-slot="2">
+                                <div class="slot-number">3</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                            <div class="squad-slot empty" data-slot="3">
+                                <div class="slot-number">4</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                            <div class="squad-slot empty" data-slot="4">
+                                <div class="slot-number">5</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                            <div class="squad-slot empty" data-slot="5">
+                                <div class="slot-number">6</div>
+                                <div class="slot-label">Empty</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Robot Bay (Main Content) -->
+                    <div class="robot-bay-container">
+                        <div class="bay-header">
+                            <h3>🤖 Robot Bay</h3>
+                            <div class="bay-subtitle">Select robots for your squad</div>
+                        </div>
+                        <div class="robot-bay-grid" id="robotsGrid">
+                            <!-- Robot cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Deploy Button (Fixed Footer) -->
+                    <div class="deploy-footer">
+                        <button class="deploy-button" id="startBattleBtn" onclick="app.startBattleWithTeam()" disabled>
+                            <span class="deploy-text">Deploy for Battle</span>
+                            <span class="deploy-icon">⚔️</span>
+                        </button>
+                        <div class="deploy-actions">
+                            <button class="action-btn" onclick="TeamManager.clearTeam(); app.updateTeamSelectionUI()">Clear All</button>
+                            <button class="action-btn" onclick="TeamManager.autoFillTeam(); app.updateTeamSelectionUI()">Auto-Fill</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battle Game Phase -->
+            <div id="battleGamePhase" class="battle-phase" style="display: none;">
+            <div class="battle-content">
+                <!-- Opponent Zone (Above Game Field) -->
+                <div id="opponent-zone" class="player-zone opponent-player" data-team="opponent" data-zone="opponent-area">
+                    <div id="opponent-repair-bay" class="repair-bay" data-type="repair-bay" data-capacity="2" data-team="opponent">
+                        <div id="opponent-repair-slot-1" class="repair-slot" data-slot="opponent-repair-1" data-occupied="false" data-robot-id="" data-position="slot-1">
+                            <span class="repair-icon">🔧</span>
+                        </div>
+                        <div id="opponent-repair-slot-2" class="repair-slot" data-slot="opponent-repair-2" data-occupied="false" data-robot-id="" data-position="slot-2">
+                            <span class="repair-icon">🔧</span>
+                        </div>
+                    </div>
+                    <div id="opponent-bench-section" class="bench-section" data-type="bench" data-capacity="6">
+                        <div class="bench-row primary">
+                            <div id="opponent-bench-slot-3" class="bench-slot" data-slot="opponent-bench-3" data-occupied="false" data-robot-id="" data-position="primary-1"></div>
+                            <div id="opponent-bench-slot-4" class="bench-slot" data-slot="opponent-bench-4" data-occupied="false" data-robot-id="" data-position="primary-2"></div>
+                            <div id="opponent-bench-slot-5" class="bench-slot" data-slot="opponent-bench-5" data-occupied="false" data-robot-id="" data-position="primary-3"></div>
+                            <div id="opponent-bench-slot-6" class="bench-slot" data-slot="opponent-bench-6" data-occupied="false" data-robot-id="" data-position="primary-4"></div>
+                        </div>
+                        <div class="bench-row secondary">
+                            <div id="opponent-bench-slot-1" class="bench-slot offset-1" data-slot="opponent-bench-1" data-occupied="false" data-robot-id="" data-position="secondary-left"></div>
+                            <div id="opponent-bench-slot-2" class="bench-slot offset-2" data-slot="opponent-bench-2" data-occupied="false" data-robot-id="" data-position="secondary-right"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Central Game Field -->
+                <div class="game-field">
+                    
+                    <!-- ========================================== -->
+                    <!-- FIRST TURN SPINNER OVERLAY -->
+                    <!-- ========================================== -->
+                    <div class="first-turn-spinner-overlay" id="firstTurnSpinner" style="display: none;">
+                        <div class="spinner-backdrop"></div>
+                        
+                        <div class="spinner-container">
+                            <div class="spinner-title">WHO GOES FIRST?</div>
+                            
+                            <!-- Spinning Wheel -->
+                            <div class="first-turn-wheel-wrapper">
+                                <!-- Static Pointer at 12 o'clock -->
+                                <div class="spinner-pointer"></div>
+                                
+                                <div class="first-turn-wheel" id="firstTurnWheel">
+                                    <div class="wheel-segments" id="firstTurnWheelSegments"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Result Text -->
+                            <div class="spinner-result" id="spinnerResult"></div>
+                        </div>
+                    </div>
+                    
+
+                    <svg viewBox="0 0 665 700" class="battle-board-svg" preserveAspectRatio="xMidYMid meet">
+                        <!-- Definitions -->
+                        <defs>
+                            <!-- Space Image Pattern -->
+                            <pattern id="spacePattern" x="0" y="0" width="1" height="1" patternContentUnits="objectBoundingBox">
+                                <image href="Imag/Battle/Space.png" x="0" y="0" width="1" height="1" preserveAspectRatio="xMidYMid slice"/>
+                            </pattern>
+                        </defs>
+                        
+                        <!-- Route Lines -->
+                        <!-- Outer Rectangle Routes -->
+                        <line class="route" x1="67" y1="100" x2="599" y2="100" />
+                        <line class="route" x1="67" y1="600" x2="599" y2="600" />
+                        <line class="route" x1="67" y1="100" x2="67" y2="600" />
+                        <line class="route" x1="599" y1="100" x2="599" y2="600" />
+
+                        <!-- Inner Square Routes (Perfect Square) -->
+                        <line class="route" x1="200" y1="250" x2="466" y2="250" />
+                        <line class="route" x1="200" y1="450" x2="466" y2="450" />
+                        <line class="route" x1="200" y1="250" x2="200" y2="450" />
+                        <line class="route" x1="466" y1="250" x2="466" y2="450" />
+
+                        <!-- Diagonal Routes -->
+                        <line class="route" x1="67" y1="100" x2="200" y2="250" />
+                        <line class="route" x1="599" y1="100" x2="466" y2="250" />
+                        <line class="route" x1="67" y1="600" x2="200" y2="450" />
+                        <line class="route" x1="599" y1="600" x2="466" y2="450" />
+
+                        <!-- Special Routes: R points adjacent to Goals connect to inner square -->
+                        <!-- Top row: R point to the left of Goal connects to top middle of inner square -->
+                        <line class="route" x1="266" y1="100" x2="333" y2="250" />
+                        <!-- Bottom row: R point to the right of Goal connects to bottom middle of inner square -->
+                        <line class="route" x1="399" y1="600" x2="333" y2="450" />
+
+                        <!-- Horizontal connecting routes for outer rectangle -->
+                        <line class="route" x1="67" y1="100" x2="166" y2="100" />
+                        <line class="route" x1="166" y1="100" x2="266" y2="100" />
+                        <line class="route" x1="266" y1="100" x2="333" y2="100" />
+                        <line class="route" x1="333" y1="100" x2="399" y2="100" />
+                        <line class="route" x1="399" y1="100" x2="499" y2="100" />
+                        <line class="route" x1="499" y1="100" x2="599" y2="100" />
+                        
+                        <line class="route" x1="67" y1="600" x2="166" y2="600" />
+                        <line class="route" x1="166" y1="600" x2="266" y2="600" />
+                        <line class="route" x1="266" y1="600" x2="333" y2="600" />
+                        <line class="route" x1="333" y1="600" x2="399" y2="600" />
+                        <line class="route" x1="399" y1="600" x2="499" y2="600" />
+                        <line class="route" x1="499" y1="600" x2="599" y2="600" />
+
+                        <!-- Vertical connecting routes for outer rectangle -->
+                        <line class="route" x1="67" y1="100" x2="67" y2="224" />
+                        <line class="route" x1="67" y1="224" x2="67" y2="350" />
+                        <line class="route" x1="67" y1="350" x2="67" y2="476" />
+                        <line class="route" x1="67" y1="476" x2="67" y2="600" />
+                        
+                        <line class="route" x1="599" y1="100" x2="599" y2="224" />
+                        <line class="route" x1="599" y1="224" x2="599" y2="350" />
+                        <line class="route" x1="599" y1="350" x2="599" y2="476" />
+                        <line class="route" x1="599" y1="476" x2="599" y2="600" />
+
+                        <!-- Space Images for Standard Points (70x70 for better clickability) -->
+                        <!-- Top row images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="131" y="65" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-top-1" href="Imag/Battle/Movable-space.png" x="131" y="65" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="231" y="65" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-top-2" href="Imag/Battle/Movable-space.png" x="231" y="65" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="364" y="65" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-top-3" href="Imag/Battle/Movable-space.png" x="364" y="65" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="464" y="65" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-top-4" href="Imag/Battle/Movable-space.png" x="464" y="65" width="70" height="70"/>
+                        
+                        <!-- Left column images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="32" y="189" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-left-1" href="Imag/Battle/Movable-space.png" x="32" y="189" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="32" y="315" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-left-2" href="Imag/Battle/Movable-space.png" x="32" y="315" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="32" y="441" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-left-3" href="Imag/Battle/Movable-space.png" x="32" y="441" width="70" height="70"/>
+                        
+                        <!-- Right column images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="564" y="189" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-right-1" href="Imag/Battle/Movable-space.png" x="564" y="189" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="564" y="315" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-right-2" href="Imag/Battle/Movable-space.png" x="564" y="315" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="564" y="441" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-right-3" href="Imag/Battle/Movable-space.png" x="564" y="441" width="70" height="70"/>
+                        
+                        <!-- Bottom row images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="131" y="565" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-bottom-1" href="Imag/Battle/Movable-space.png" x="131" y="565" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="231" y="565" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-bottom-2" href="Imag/Battle/Movable-space.png" x="231" y="565" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="364" y="565" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-bottom-3" href="Imag/Battle/Movable-space.png" x="364" y="565" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="464" y="565" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-bottom-4" href="Imag/Battle/Movable-space.png" x="464" y="565" width="70" height="70"/>
+                        
+                        <!-- Inner square corner images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="165" y="215" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-tl" href="Imag/Battle/Movable-space.png" x="165" y="215" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="431" y="215" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-tr" href="Imag/Battle/Movable-space.png" x="431" y="215" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="165" y="415" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-bl" href="Imag/Battle/Movable-space.png" x="165" y="415" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="431" y="415" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-br" href="Imag/Battle/Movable-space.png" x="431" y="415" width="70" height="70"/>
+                        
+                        <!-- Inner square midpoint images -->
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="298" y="215" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-top" href="Imag/Battle/Movable-space.png" x="298" y="215" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="298" y="415" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-bottom" href="Imag/Battle/Movable-space.png" x="298" y="415" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="165" y="315" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-left" href="Imag/Battle/Movable-space.png" x="165" y="315" width="70" height="70"/>
+                        <image class="space-background-image" href="Imag/Battle/Space.png" x="431" y="315" width="70" height="70" opacity="0.9"/>
+                        <image class="movable-space-image" data-point="point-inner-right" href="Imag/Battle/Movable-space.png" x="431" y="315" width="70" height="70"/>
+                        
+                        <!-- Standard Points (22 total) -->
+                        <!-- Top row: (E)(R)(R)(G)(R)(R)(E) -->
+                        <circle id="point-top-1" class="point standard-point" cx="166" cy="100" r="7" data-type="route" data-position="top-1" data-x="166" data-y="100" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-top-2" class="point standard-point" cx="266" cy="100" r="7" data-type="route" data-position="top-2" data-x="266" data-y="100" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-top-3" class="point standard-point" cx="399" cy="100" r="7" data-type="route" data-position="top-3" data-x="399" data-y="100" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-top-4" class="point standard-point" cx="499" cy="100" r="7" data-type="route" data-position="top-4" data-x="499" data-y="100" data-occupied="false" data-team="neutral"/>
+                        
+                        <!-- Left column: 3 R points -->
+                        <circle id="point-left-1" class="point standard-point" cx="67" cy="224" r="7" data-type="route" data-position="left-1" data-x="67" data-y="224" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-left-2" class="point standard-point" cx="67" cy="350" r="7" data-type="route" data-position="left-2" data-x="67" data-y="350" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-left-3" class="point standard-point" cx="67" cy="476" r="7" data-type="route" data-position="left-3" data-x="67" data-y="476" data-occupied="false" data-team="neutral"/>
+                        
+                        <!-- Right column: 3 R points -->
+                        <circle id="point-right-1" class="point standard-point" cx="599" cy="224" r="7" data-type="route" data-position="right-1" data-x="599" data-y="224" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-right-2" class="point standard-point" cx="599" cy="350" r="7" data-type="route" data-position="right-2" data-x="599" data-y="350" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-right-3" class="point standard-point" cx="599" cy="476" r="7" data-type="route" data-position="right-3" data-x="599" data-y="476" data-occupied="false" data-team="neutral"/>
+                        
+                        <!-- Bottom row: (E)(R)(R)(G)(R)(R)(E) -->
+                        <circle id="point-bottom-1" class="point standard-point" cx="166" cy="600" r="7" data-type="route" data-position="bottom-1" data-x="166" data-y="600" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-bottom-2" class="point standard-point" cx="266" cy="600" r="7" data-type="route" data-position="bottom-2" data-x="266" data-y="600" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-bottom-3" class="point standard-point" cx="399" cy="600" r="7" data-type="route" data-position="bottom-3" data-x="399" data-y="600" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-bottom-4" class="point standard-point" cx="499" cy="600" r="7" data-type="route" data-position="bottom-4" data-x="499" data-y="600" data-occupied="false" data-team="neutral"/>
+                        
+                        <!-- Inner square corners -->
+                        <circle id="point-inner-tl" class="point standard-point" cx="200" cy="250" r="7" data-type="inner" data-position="inner-top-left" data-x="200" data-y="250" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-tr" class="point standard-point" cx="466" cy="250" r="7" data-type="inner" data-position="inner-top-right" data-x="466" data-y="250" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-bl" class="point standard-point" cx="200" cy="450" r="7" data-type="inner" data-position="inner-bottom-left" data-x="200" data-y="450" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-br" class="point standard-point" cx="466" cy="450" r="7" data-type="inner" data-position="inner-bottom-right" data-x="466" data-y="450" data-occupied="false" data-team="neutral"/>
+                        
+                        <!-- Inner square midpoints -->
+                        <circle id="point-inner-top" class="point standard-point" cx="333" cy="250" r="7" data-type="inner" data-position="inner-top-mid" data-x="333" data-y="250" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-bottom" class="point standard-point" cx="333" cy="450" r="7" data-type="inner" data-position="inner-bottom-mid" data-x="333" data-y="450" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-left" class="point standard-point" cx="200" cy="350" r="7" data-type="inner" data-position="inner-left-mid" data-x="200" data-y="350" data-occupied="false" data-team="neutral"/>
+                        <circle id="point-inner-right" class="point standard-point" cx="466" cy="350" r="7" data-type="inner" data-position="inner-right-mid" data-x="466" data-y="350" data-occupied="false" data-team="neutral"/>
+
+                        <!-- Goal Points (2 total) -->
+                        <!-- Goal space images (always visible) - 70x70px -->
+                        <image class="goal-space-image" data-goal="goal-opponent" href="Imag/Battle/Goal-space.png" x="298" y="65" width="70" height="70"/>
+                        <image class="goal-space-image" data-goal="goal-player" href="Imag/Battle/Goal-space.png" x="298" y="565" width="70" height="70"/>
+                        
+                        <g id="goal-opponent" class="goal-point" data-type="goal" data-team="opponent" data-position="top-goal" data-x="333" data-y="100">
+                            <circle class="point" cx="333" cy="100" r="12" data-occupied="false"/>
+                            <path class="goal-triangle" d="M 333 90 L 343 110 L 323 110 Z"/>
+                        </g>
+                        <g id="goal-player" class="goal-point" data-type="goal" data-team="player" data-position="bottom-goal" data-x="333" data-y="600">
+                            <circle class="point" cx="333" cy="600" r="12" data-occupied="false"/>
+                            <path class="goal-triangle" d="M 333 610 L 343 590 L 323 590 Z"/>
+                        </g>
+
+                        <!-- Corner "Entry" Points (4 total) -->
+                        <!-- Entry space images (always visible) - 70x70px for better visibility -->
+                        <image class="entry-space-image" data-entry="entry-top-left" href="Imag/Battle/Entrey-space.png" x="32" y="65" width="70" height="70"/>
+                        <image class="entry-space-image" data-entry="entry-top-right" href="Imag/Battle/Entrey-space.png" x="564" y="65" width="70" height="70"/>
+                        <image class="entry-space-image" data-entry="entry-bottom-left" href="Imag/Battle/Entrey-space.png" x="32" y="565" width="70" height="70"/>
+                        <image class="entry-space-image" data-entry="entry-bottom-right" href="Imag/Battle/Entrey-space.png" x="564" y="565" width="70" height="70"/>
+                        
+                        <g id="entry-top-left" class="entry-point" data-type="entry" data-position="top-left" data-x="67" data-y="100" data-team="neutral" data-spawn-point="true">
+                            <circle class="entry-ring" cx="67" cy="100" r="20"/>
+                            <circle class="entry-ring" cx="67" cy="100" r="15"/>
+                            <circle class="point" cx="67" cy="100" r="10" data-occupied="false"/>
+                            <circle class="entry-inner" cx="67" cy="100" r="4"/>
+                            <line class="pokeball-line" x1="55" y1="100" x2="79" y2="100"/>
+                        </g>
+                        <g id="entry-top-right" class="entry-point" data-type="entry" data-position="top-right" data-x="599" data-y="100" data-team="neutral" data-spawn-point="true">
+                            <circle class="entry-ring" cx="599" cy="100" r="20"/>
+                            <circle class="entry-ring" cx="599" cy="100" r="15"/>
+                            <circle class="point" cx="599" cy="100" r="10" data-occupied="false"/>
+                            <circle class="entry-inner" cx="599" cy="100" r="4"/>
+                            <line class="pokeball-line" x1="587" y1="100" x2="611" y2="100"/>
+                        </g>
+                        <g id="entry-bottom-left" class="entry-point" data-type="entry" data-position="bottom-left" data-x="67" data-y="600" data-team="neutral" data-spawn-point="true">
+                            <circle class="entry-ring" cx="67" cy="600" r="20"/>
+                            <circle class="entry-ring" cx="67" cy="600" r="15"/>
+                            <circle class="point" cx="67" cy="600" r="10" data-occupied="false"/>
+                            <circle class="entry-inner" cx="67" cy="600" r="4"/>
+                            <line class="pokeball-line" x1="55" y1="600" x2="79" y2="600"/>
+                        </g>
+                        <g id="entry-bottom-right" class="entry-point" data-type="entry" data-position="bottom-right" data-x="599" data-y="600" data-team="neutral" data-spawn-point="true">
+                            <circle class="entry-ring" cx="599" cy="600" r="20"/>
+                            <circle class="entry-ring" cx="599" cy="600" r="15"/>
+                            <circle class="point" cx="599" cy="600" r="10" data-occupied="false"/>
+                            <circle class="entry-inner" cx="599" cy="600" r="4"/>
+                            <line class="pokeball-line" x1="587" y1="600" x2="611" y2="600"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- User Zone (Below Game Field) -->
+                <div id="player-zone" class="player-zone user-player" data-team="player" data-zone="player-area">
+                    <div id="bench-section" class="bench-section" data-type="bench" data-capacity="6">
+                        <div class="bench-row secondary">
+                            <div id="bench-slot-1" class="bench-slot offset-1" data-slot="bench-1" data-occupied="false" data-robot-id="" data-position="secondary-left"></div>
+                            <div id="bench-slot-2" class="bench-slot offset-2" data-slot="bench-2" data-occupied="false" data-robot-id="" data-position="secondary-right"></div>
+                        </div>
+                        <div class="bench-row primary">
+                            <div id="bench-slot-3" class="bench-slot" data-slot="bench-3" data-occupied="false" data-robot-id="" data-position="primary-1"></div>
+                            <div id="bench-slot-4" class="bench-slot" data-slot="bench-4" data-occupied="false" data-robot-id="" data-position="primary-2"></div>
+                            <div id="bench-slot-5" class="bench-slot" data-slot="bench-5" data-occupied="false" data-robot-id="" data-position="primary-3"></div>
+                            <div id="bench-slot-6" class="bench-slot" data-slot="bench-6" data-occupied="false" data-robot-id="" data-position="primary-4"></div>
+                        </div>
+                    </div>
+                    <div id="player-repair-bay" class="repair-bay" data-type="repair-bay" data-capacity="2" data-team="player">
+                        <div id="player-repair-slot-1" class="repair-slot" data-slot="player-repair-1" data-occupied="false" data-robot-id="" data-position="slot-1">
+                            <span class="repair-icon">🔧</span>
+                        </div>
+                        <div id="player-repair-slot-2" class="repair-slot" data-slot="player-repair-2" data-occupied="false" data-robot-id="" data-position="slot-2">
+                            <span class="repair-icon">🔧</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Turn Button -->
+    <button id="end-turn-btn" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: 3px solid #fff;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        display: none;
+    " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        🔄 End Turn
+    </button>
+
+
+    <!-- Battle Scenario Debugger -->
+    <div class="debug-toggle-icon" id="debugToggleIcon" onclick="GameBoard.toggleDebugger()">
+        ⚙️
+    </div>
+    
+    <div class="battle-debugger-panel" id="battleDebuggerPanel">
+        <div class="debugger-header">
+            <div class="debugger-title-row">
+                <div class="debugger-title">⚙️ BATTLE SCENARIO DEBUGGER</div>
+                <button class="debugger-minimize-btn" onclick="GameBoard.minimizeDebugger()" title="Minimize">−</button>
+            </div>
+            <div class="debugger-toggle-container">
+                <span class="debugger-toggle-label">Force Battle Outcome:</span>
+                <div class="toggle-switch" id="debuggerToggle" onclick="GameBoard.toggleDebuggerMode()">
+                    <span class="toggle-text-off">OFF</span>
+                    <span class="toggle-text-on">ON</span>
+                </div>
+            </div>
+            <div class="debugger-toggle-container">
+                <span class="debugger-toggle-label">Free Movement Mode:</span>
+                <div class="toggle-switch" id="freeMovementToggle" onclick="GameBoard.toggleFreeMovementMode()">
+                    <div class="toggle-slider"></div>
+                    <span class="toggle-text-off">OFF</span>
+                    <span class="toggle-text-on">ON</span>
+                </div>
+            </div>
+            <div class="debugger-toggle-container">
+                <span class="debugger-toggle-label">Show All Robots:</span>
+                <div class="toggle-switch" id="showAllRobotsToggle" onclick="GameBoard.toggleShowAllRobots()">
+                    <div class="toggle-slider"></div>
+                    <span class="toggle-text-off">OFF</span>
+                    <span class="toggle-text-on">ON</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="debugger-columns">
+            <div class="debugger-column">
+                <div class="column-header" id="playerColumnHeader">Player Robot</div>
+                <div id="playerMovesList"></div>
+            </div>
+            
+            <div class="debugger-column">
+                <div class="column-header" id="opponentColumnHeader">Opponent Robot</div>
+                <div id="opponentMovesList"></div>
+            </div>
+        </div>
+        
+        <!-- Psycho Cut Bonus Spin Controls -->
+        <div class="debugger-bonus-spin-section" id="debuggerBonusSpinSection" style="display: none;">
+            <div class="bonus-spin-header">
+                <span style="font-weight: bold; color: #ff00ff;">🌀 PSYCHO CUT BONUS SPIN</span>
+                <span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">Force bonus roll outcome</span>
+            </div>
+            
+            <div class="debugger-columns" style="margin-top: 10px;">
+                <div class="debugger-column">
+                    <div class="column-header">Player Bonus Spin</div>
+                    <div id="playerBonusMovesList"></div>
+                </div>
+                
+                <div class="debugger-column">
+                    <div class="column-header">Opponent Bonus Spin</div>
+                    <div id="opponentBonusMovesList"></div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px; font-size: 12px; opacity: 0.7;">
+                💡 Only applies if initial spin is Psycho Cut
+            </div>
+        </div>
+        
+        <!-- Status Effect Manager -->
+        <div class="debugger-status-manager" id="debuggerStatusManager" style="display: none;">
+            <div class="status-manager-header">
+                <span class="status-manager-title">🧪 STATUS EFFECT MANAGER</span>
+            </div>
+            
+            <div class="status-manager-columns">
+                <div class="status-manager-column">
+                    <div class="status-column-header" id="playerStatusHeader">Player Robot</div>
+                    <div class="status-effects-list" id="playerStatusEffects">
+                        <div class="no-status-message">No active status effects</div>
+                    </div>
+                    <div class="status-add-section">
+                        <select class="status-select" id="playerStatusSelect">
+                            <option value="">+ Add Status Effect</option>
+                            <option value="poison">🧪 Poison (-20 dmg)</option>
+                            <option value="noxious">☠️ Noxious (-40 dmg)</option>
+                            <option value="burn">🔥 Burn (-10 dmg)</option>
+                            <option value="sleep">💤 Sleep</option>
+                            <option value="frozen">🧊 Frozen</option>
+                            <option value="paralysis">⚡ Paralysis</option>
+                            <option value="confusion">😵 Confusion</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="status-manager-column">
+                    <div class="status-column-header" id="opponentStatusHeader">Opponent Robot</div>
+                    <div class="status-effects-list" id="opponentStatusEffects">
+                        <div class="no-status-message">No active status effects</div>
+                    </div>
+                    <div class="status-add-section">
+                        <select class="status-select" id="opponentStatusSelect">
+                            <option value="">+ Add Status Effect</option>
+                            <option value="poison">🧪 Poison (-20 dmg)</option>
+                            <option value="noxious">☠️ Noxious (-40 dmg)</option>
+                            <option value="burn">🔥 Burn (-10 dmg)</option>
+                            <option value="sleep">💤 Sleep</option>
+                            <option value="frozen">🧊 Frozen</option>
+                            <option value="paralysis">⚡ Paralysis</option>
+                            <option value="confusion">😵 Confusion</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="debugger-status" id="debuggerStatus">
+            Awaiting battle initiation...
+        </div>
+    </div>
+
+    <!-- Battle Overlay Modal -->
+    <div id="battleOverlay">
+        <div class="battle-modal">
+            <div class="battle-modal-header">
+                <!-- Title removed to save space -->
+            </div>
+            
+            <div class="battle-combatants">
+                <div class="combatant player">
+                    <img id="battlePlayerImage" src="" alt="Player Robot" class="combatant-image">
+                    <div class="combatant-name" id="battlePlayerName">Player Robot</div>
+                    <div class="combatant-role" id="battlePlayerRole">Role</div>
+                </div>
+                
+                <div class="battle-vs">VS</div>
+                
+                <div class="combatant opponent">
+                    <img id="battleOpponentImage" src="" alt="Opponent Robot" class="combatant-image">
+                    <div class="combatant-name" id="battleOpponentName">Opponent Robot</div>
+                    <div class="combatant-role" id="battleOpponentRole">Role</div>
+                </div>
+            </div>
+            
+            <!-- Spinning Wheels Section -->
+            <div class="battle-wheels" id="battleWheels" style="display: none;">
+                <div class="wheel-container" id="attackerWheelContainer">
+                    <div class="wheel-label attacker" id="attackerWheelLabel">OPPONENT</div>
+                    <div class="spinning-wheel" id="attackerWheel">
+                        <div class="wheel-segments" id="attackerWheelSegments"></div>
+                        <div class="wheel-pointer">▼</div>
+                    </div>
+                    <div class="wheel-result" id="attackerWheelResult">
+                        <div class="move-name">Spinning...</div>
+                        <div class="move-power"></div>
+                    </div>
+                    <!-- Move list always visible -->
+                    <div class="battle-wheel-moves-list" id="attackerMovesList" style="display: block;">
+                        <!-- Detailed move list populated dynamically -->
+                    </div>
+                </div>
+                
+                <!-- VS divider removed to save space -->
+                
+                <div class="wheel-container" id="defenderWheelContainer">
+                    <div class="wheel-label defender" id="defenderWheelLabel">PLAYER</div>
+                    <div class="spinning-wheel" id="defenderWheel">
+                        <div class="wheel-segments" id="defenderWheelSegments"></div>
+                        <div class="wheel-pointer">▼</div>
+                    </div>
+                    <div class="wheel-result" id="defenderWheelResult">
+                        <div class="move-name">Spinning...</div>
+                        <div class="move-power"></div>
+                    </div>
+                    <!-- Move list always visible -->
+                    <div class="battle-wheel-moves-list" id="defenderMovesList" style="display: block;">
+                        <!-- Detailed move list populated dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="battle-action-buttons">
+                <button class="battle-action-btn attack" onclick="GameBoard.executeBattle()">
+                    ⚔️ Attack!
+                </button>
+                <button class="battle-action-btn cancel" onclick="GameBoard.cancelBattle()">
+                    ↩️ Cancel
+                </button>
+            </div>
+            
+            <div class="battle-result" id="battleResult">
+                <div class="battle-result-title" id="battleResultTitle">Victory!</div>
+                <div class="battle-result-details" id="battleResultDetails">
+                    Your robot won the battle!
+                </div>
+                <button class="battle-continue-btn" onclick="GameBoard.closeBattleResult()">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Combat Dial Info Overlay -->
+    <div id="combatDialOverlay">
+        <div class="combat-dial-modal">
+            <button class="combat-dial-close-btn" onclick="BattleSystem.closeCombatDialInfo()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="combat-dial-header">
+                <img id="combatDialRobotImage" src="" alt="Robot" class="combat-dial-robot-image">
+                <div class="combat-dial-robot-info">
+                    <div class="combat-dial-robot-name" id="combatDialRobotName">Robot Name</div>
+                    <div class="combat-dial-robot-role" id="combatDialRobotRole">Role</div>
+                    <div class="combat-dial-robot-stats" id="combatDialRobotStats">MP: 2</div>
+                </div>
+            </div>
+            
+            <div class="combat-dial-ability" id="combatDialAbility">
+                <div class="combat-dial-ability-name">Ability Name</div>
+                <div class="combat-dial-ability-desc">Ability description</div>
+            </div>
+            
+            <div class="combat-dial-content">
+                <div class="combat-dial-wheel-visual">
+                    <div class="combat-dial-title">⚔️ Combat Wheel</div>
+                    <div class="combat-dial-wheel-container" id="combatDialWheelContainer">
+                        <!-- Visual wheel will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="combat-dial-moves-section">
+                    <div class="combat-dial-title">📋 Move Details</div>
+                    <div class="combat-dial-wheel-display" id="combatDialWheelDisplay">
+                        <!-- Wheel segments will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="combat-dial-footer">
+                Hold another robot to view their Combat Dial
+            </div>
+        </div>
+    </div>
+
+    <!-- Turn Indicator -->
+    <div class="turn-indicator" id="turnIndicator">
+        🎮 Your Turn
+    </div>
+
+    <!-- Shared Mascot (appears on all screens) -->
+    <div class="mascot-container-global">
+        <div class="speech-bubble" id="speechBubble">Hello!</div>
+        <div class="thought-bubble" id="thoughtBubble">Hmm...</div>
+        <img src="Imag/mascot.png" alt="Upkeep Mascot" class="mascot-image" id="mascotImage" onclick="app.mascotGreet()">
+    </div>
+
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">New Category</div>
+                <button class="close-btn" onclick="app.closeModal('addCategoryModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <form onsubmit="app.addCategory(event)">
+                <div class="form-group">
+                    <label class="form-label">Choose a Category</label>
+                    <select class="form-select" id="categorySelect" onchange="app.handleCategorySelect()" required>
+                        <option value="">-- Select from common categories --</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Bathroom">Bathroom</option>
+                        <option value="Bedroom">Bedroom</option>
+                        <option value="Guest Bedroom">Guest Bedroom</option>
+                        <option value="Living Room">Living Room</option>
+                        <option value="Hallway">Hallway</option>
+                        <option value="Laundry Room">Laundry Room</option>
+                        <option value="Backyard">Backyard</option>
+                        <option value="Back Porch">Back Porch</option>
+                        <option value="Vehicle">Vehicle</option>
+                        <option value="Vacuum & Sweeping">Vacuum & Sweeping</option>
+                        <option value="Front Yard">Front Yard</option>
+                        <option value="Front Porch">Front Porch</option>
+                        <option value="custom">✏️ Custom Category</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customCategoryGroup" style="display: none;">
+                    <label class="form-label">Custom Category Name</label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="e.g., Laundry Room">
+                </div>
+                <button type="submit" class="btn-primary">Create Category</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Edit Category</div>
+                <button class="close-btn" onclick="app.closeModal('editCategoryModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <form onsubmit="app.updateCategory(event)">
+                <div class="form-group">
+                    <label class="form-label">Category Name</label>
+                    <input type="text" class="form-input" id="editCategoryName" required>
+                </div>
+                <button type="submit" class="btn-primary">Update Category</button>
+                <button type="button" class="btn-danger" onclick="app.deleteCategory()">Delete Category</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addTaskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">New Task</div>
+                <button class="close-btn" onclick="app.closeModal('addTaskModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <form onsubmit="app.addTask(event)">
+                <div class="form-group">
+                    <label class="form-label">Task Name</label>
+                    <input type="text" class="form-input" id="taskName" placeholder="e.g., Wipe counters" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Decay Time</label>
+                    <div class="time-unit-group">
+                        <input type="number" class="form-input" id="taskDecayValue" min="1" value="7" required>
+                        <select class="form-select" id="taskDecayUnit">
+                            <option value="hours">Hours</option>
+                            <option value="days" selected>Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Create Task</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editTaskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Edit Task</div>
+                <button class="close-btn" onclick="app.closeModal('editTaskModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <form onsubmit="app.updateTask(event)">
+                <div class="form-group">
+                    <label class="form-label">Task Name</label>
+                    <input type="text" class="form-input" id="editTaskName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Decay Time</label>
+                    <div class="time-unit-group">
+                        <input type="number" class="form-input" id="editTaskDecayValue" min="1" required>
+                        <select class="form-select" id="editTaskDecayUnit">
+                            <option value="hours">Hours</option>
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Update Task</button>
+                <button type="button" class="btn-danger" onclick="app.deleteTask()">Delete Task</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Backup & Restore</div>
+                <button class="close-btn" onclick="app.closeModal('settingsModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            
+            <!-- Save & Load Card -->
+            <div class="settings-card">
+                <div style="display: flex; gap: 4px; justify-content: center; align-items: center;">
+                    <button type="button" class="save-load-img-btn" onclick="app.showSaveFileSelect()">
+                        <img src="Imag/Save.png" alt="Save">
+                    </button>
+                    <button type="button" class="save-load-img-btn" onclick="app.showLoadFileSelect()">
+                        <img src="Imag/load.png" alt="Load">
+                    </button>
+                </div>
+                <div class="settings-card-subtitle" id="lastSavedText" style="text-align: center; margin-top: 12px;">Last saved: Never</div>
+            </div>
+            
+            <!-- Export/Import/Manage Card -->
+            <div class="settings-card">
+                <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+                    <div style="display: flex; gap: 4px; justify-content: center; align-items: center;">
+                        <button type="button" class="backup-btn-large" onclick="app.exportToFile()">
+                            <img src="Imag/Export.png" alt="Export">
+                        </button>
+                        <button type="button" class="backup-btn-large" onclick="app.importFromFile()">
+                            <img src="Imag/Import.png" alt="Import">
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 4px; justify-content: center; align-items: center;">
+                        <button type="button" class="backup-btn-large" onclick="app.createNewSaveFile()">
+                            <img src="Imag/Achivments/Images/Finished Images/New-File-button.png" alt="New Save">
+                        </button>
+                        <button type="button" class="backup-btn-large" onclick="app.showManageSaves()">
+                            <img src="Imag/View-Saves.png" alt="View All Saves">
+                        </button>
+                    </div>
+                </div>
+                <p style="font-size: 11px; color: var(--text-secondary); text-align: center; margin-top: 12px;">Export creates a .upkeep file you can save anywhere</p>
+            </div>
+            
+            <!-- Logbook Card -->
+            <div class="settings-card">
+                <button type="button" class="backup-btn-large" onclick="app.openLogbook()" style="width: 100%;">
+                    <img src="Imag/LogBook.png" alt="Logbook">
+                </button>
+                <p style="font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 12px;">View your activity history</p>
+            </div>
+            
+            <!-- Voice Settings Card -->
+            <div class="settings-card">
+                <div class="settings-card-title">Mascot Voice</div>
+                <div class="voice-toggle" onclick="app.toggleTTSSwitch()">
+                    <span style="font-size: 15px; font-weight: 500;">Enable Voice</span>
+                    <div class="toggle-switch" id="ttsToggleSwitch">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+                
+                <div id="voiceSettings" style="display: none;">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label class="form-label" style="font-size: 14px; margin-bottom: 8px;">Voice Style</label>
+                        <select class="form-select" id="voiceStyle" onchange="app.updateVoiceSettings()">
+                            <option value="robotic">🤖 Robotic</option>
+                            <option value="friendly">😊 Friendly</option>
+                            <option value="calm">😌 Calm</option>
+                            <option value="excited">🎉 Excited</option>
+                            <option value="custom">⚙️ Custom</option>
+                        </select>
+                    </div>
+                    
+                    <div id="customVoiceSettings" style="display: none;">
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label class="form-label" style="font-size: 13px; margin-bottom: 6px;">
+                                Pitch: <span id="pitchValue">1.5</span>
+                            </label>
+                            <input type="range" id="voicePitch" min="0.5" max="2.0" step="0.1" value="1.5" 
+                                   onchange="app.updateVoiceSettings()" oninput="app.updatePitchDisplay()"
+                                   style="width: 100%; cursor: pointer;">
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                <span>Low</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label class="form-label" style="font-size: 13px; margin-bottom: 6px;">
+                                Speed: <span id="rateValue">1.2</span>
+                            </label>
+                            <input type="range" id="voiceRate" min="0.5" max="2.0" step="0.1" value="1.2" 
+                                   onchange="app.updateVoiceSettings()" oninput="app.updateRateDisplay()"
+                                   style="width: 100%; cursor: pointer;">
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                <span>Slow</span>
+                                <span>Fast</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn-primary" style="margin-top: 12px; padding: 12px;" onclick="app.testVoice()">🔊 Test Voice</button>
+                </div>
+                
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Let the mascot speak messages out loud</p>
+            </div>
+            
+            <!-- Scrappy Voice Settings Card -->
+            <div class="settings-card">
+                <div class="settings-card-title">🔧 Scrappy's Voice</div>
+                <p style="font-size: 13px; color: var(--text-secondary); text-align: center; margin-bottom: 16px;">Store manager voice settings</p>
+                
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px; margin-bottom: 6px;">
+                        Pitch: <span id="scrappyPitchValue">0.8</span>
+                    </label>
+                    <input type="range" id="scrappyPitch" min="0.5" max="2.0" step="0.1" value="0.8" 
+                           onchange="app.updateScrappyVoiceSettings()" oninput="app.updateScrappyPitchDisplay()"
+                           style="width: 100%; cursor: pointer;">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                        <span>Low (Gruff)</span>
+                        <span>High (Squeaky)</span>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px; margin-bottom: 6px;">
+                        Speed: <span id="scrappyRateValue">0.9</span>
+                    </label>
+                    <input type="range" id="scrappyRate" min="0.5" max="2.0" step="0.1" value="0.9" 
+                           onchange="app.updateScrappyVoiceSettings()" oninput="app.updateScrappyRateDisplay()"
+                           style="width: 100%; cursor: pointer;">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                        <span>Slow (Mechanical)</span>
+                        <span>Fast (Energetic)</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn-primary" style="margin-top: 12px; padding: 12px;" onclick="app.testScrappyVoice()">🔊 Test Scrappy's Voice</button>
+                
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Customize the store manager's voice</p>
+            </div>
+            
+            <!-- Battle System Card (Temporary) -->
+            <div class="settings-card">
+                <div class="settings-card-title">⚔️ Battle System</div>
+                <button type="button" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600;" onclick="app.openCombatTester()">
+                    🎯 Test Combat System
+                </button>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Data Disk combat testing</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- File Select Modal for Save -->
+    <div class="file-select-modal" id="saveFileSelectModal">
+        <div class="file-select-content">
+            <div class="file-select-title">Save Progress</div>
+            <input type="text" class="new-file-input" id="newSaveFileName" placeholder="Enter new save name...">
+            <button class="btn-save" style="margin-bottom: 20px;" onclick="app.createNewSave()">Create New Save</button>
+            <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-secondary);">Or overwrite existing:</div>
+            <div id="saveFileList"></div>
+            <button class="btn-load" style="margin-top: 12px;" onclick="app.closeSaveFileSelect()">Cancel</button>
+        </div>
+    </div>
+    
+    <!-- File Select Modal for Load -->
+    <div class="file-select-modal" id="loadFileSelectModal">
+        <div class="file-select-content">
+            <div class="file-select-title">Load Progress</div>
+            <div id="loadFileList"></div>
+            <button class="btn-danger" style="margin-top: 12px;" onclick="app.closeLoadFileSelect()">Cancel</button>
+        </div>
+    </div>
+    
+    <!-- Manage Saves Modal -->
+    <div class="file-select-modal" id="manageSavesModal">
+        <div class="file-select-content">
+            <div class="file-select-title">Manage Save Slots</div>
+            <div id="manageSavesList"></div>
+            <button class="btn-load" style="margin-top: 12px;" onclick="app.closeManageSaves()">Close</button>
+        </div>
+    </div>
+    
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".upkeep,.json" style="display: none;" onchange="app.handleImportFile(event)">
+    
+    <!-- Logbook Modal -->
+    <div class="logbook-modal" id="logbookModal">
+        <div class="logbook-content">
+            <div class="logbook-header">
+                <div class="logbook-icon">
+                    <img src="Imag/LogBook.png" alt="Logbook">
+                </div>
+                <div class="logbook-title">
+                    <h2>Activity Log</h2>
+                </div>
+                <button class="logbook-close" onclick="app.closeLogbook()">&times;</button>
+            </div>
+            <div class="logbook-body" id="logbookBody">
+                <!-- Log entries will be inserted here -->
+            </div>
+            <div class="logbook-footer">
+                <button class="logbook-btn logbook-btn-clear" onclick="app.clearLogbook()">Clear Log</button>
+                <button class="logbook-btn logbook-btn-close" onclick="app.closeLogbook()">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Snooze Modal -->
+    <div class="snooze-modal" id="snoozeModal">
+        <div class="snooze-modal-content">
+            <div class="snooze-icon">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="snooze-modal-title">Snooze Task</div>
+            <div class="snooze-label">Snooze for</div>
+            <div class="snooze-input-group">
+                <input type="number" class="snooze-input" id="snoozeAmount" min="1" value="24" placeholder="Enter amount">
+                <select class="snooze-unit-select" id="snoozeUnit">
+                    <option value="hours">Hours</option>
+                    <option value="days">Days</option>
+                    <option value="weeks">Weeks</option>
+                </select>
+            </div>
+            <div class="snooze-buttons">
+                <button class="snooze-cancel-btn" onclick="app.closeSnoozeModal()">Cancel</button>
+                <button class="snooze-confirm-btn" onclick="app.confirmSnooze()">Snooze</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Robot Select Bubble (Right side, bottom) -->
+    <div class="robot-select-bubble" id="robotSelectBubble" onclick="app.openRobotSelect()">
+        <img src="Imag/Achivments/Images/Finished Images/Robot-Select-Bubble.png" alt="Robot Select">
+    </div>
+    
+    <!-- Battle Mode Bubble (Left side, higher) - Circuit Breakers -->
+    <div class="battle-mode-bubble" id="battleModeBubble" onclick="app.openCircuitBreakerMenu()">
+        <img src="Imag/Battle/CB-button.png" alt="Circuit Breakers" class="cb-button-icon">
+    </div>
+    
+    <!-- Robot Store Bubble (Left side, lower) -->
+    <div class="robot-store-bubble" id="robotStoreBubble" onclick="app.openRobotStore()">
+        <img src="Imag/Achivments/Images/Finished Images/Store-Bubble.png" alt="Robot Store">
+    </div>
+    
+    
+    <!-- Robot Select Modal -->
+    <div class="robot-select-modal" id="robotSelectModal">
+        <div class="robot-select-content">
+            <div class="robot-select-header">
+                <img src="Imag/Achivments/Images/Finished Images/Robot-Select.png" alt="Robot Select" class="robot-select-logo">
+                <button class="robot-select-close" onclick="app.closeRobotSelect()">&times;</button>
+            </div>
+            <div class="robot-select-body">
+                <div class="robot-select-grid" id="robotSelectGrid">
+                    <!-- Robot cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Robot Store Modal -->
+    <div class="robot-store-modal" id="robotStoreModal">
+        <div class="robot-store-content">
+            <div class="robot-store-header">
+                <h2><img src="Imag/Achivments/Images/Finished Images/Robot-Factory-Logo.png" alt="Robot Factory" class="robot-factory-logo"></h2>
+                <button class="robot-store-close" onclick="app.closeRobotStore()">&times;</button>
+            </div>
+            <div class="robot-store-body">
+                <div class="robot-store-grid" id="robotStoreGrid">
+                    <!-- Robot store cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Store Currency Display (Global) -->
+    <div class="store-currency-display" id="storeCurrencyDisplay" style="display: none;">
+        <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="store-currency-bolt">
+        <span class="store-currency-amount" id="storeCurrencyAmount">0</span>
+        <span class="store-currency-label">Bolt</span>
+    </div>
+    
+    <!-- Scrappy Character (Global) -->
+    <div class="scrappy-container" id="scrappyContainer" style="display: none;">
+        <img src="Imag/Achivments/Images/Finished Images/Store manager/Scrappy.png" 
+             alt="Scrappy" 
+             id="scrappyImage" 
+             class="scrappy-image"
+             onclick="app.scrappyInteraction()">
+        <div class="scrappy-speech-bubble" id="scrappySpeechBubble"></div>
+    </div>
+    
+    <!-- Purchase Confirmation Modal -->
+    <div class="purchase-confirm-modal" id="purchaseConfirmModal">
+        <div class="purchase-confirm-content">
+            <div class="purchase-confirm-icon">🤖</div>
+            <div class="purchase-confirm-title">Purchase Robot?</div>
+            <div class="purchase-confirm-message">Are you sure you want to purchase this mystery robot?</div>
+            <div class="purchase-confirm-cost">
+                <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="purchase-confirm-cost-bolt">
+                <img src="Imag/Achivments/Images/Finished Images/X.png" alt="x" class="purchase-confirm-cost-x">
+                <span id="purchaseConfirmCost">100</span>
+            </div>
+            <div class="purchase-confirm-buttons">
+                <button class="purchase-confirm-btn purchase-confirm-btn-no" onclick="app.cancelPurchase()">No</button>
+                <button class="purchase-confirm-btn purchase-confirm-btn-yes" onclick="app.confirmPurchase()">Yes</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Robot Reveal Modal -->
+    <div class="robot-reveal-modal" id="robotRevealModal">
+        <div class="robot-reveal-content">
+            <div class="robot-reveal-title">New Robot Unlocked!</div>
+            <img id="robotRevealImage" src="" alt="New Robot" class="robot-reveal-image">
+            <div class="robot-reveal-name" id="robotRevealName">Robot Name</div>
+            <button class="robot-reveal-btn" onclick="app.closeReveal()">Awesome!</button>
+        </div>
+    </div>
+    
+    <!-- Missions Modal -->
+    <div class="missions-modal" id="missionsModal">
+        <div class="missions-content">
+            <div class="missions-header">
+                <h2><img src="Imag/Achivments/Images/Finished Images/Missions-Logo.png" alt="Missions" class="missions-logo"></h2>
+                <button class="missions-close" onclick="app.closeMissions()">&times;</button>
+            </div>
+            <div class="missions-body" id="missionsBody">
+                <!-- Mission content will be populated by JavaScript -->
+            </div>
+            <div class="missions-tabs">
+                <button class="mission-tab active" id="dailyTab" onclick="app.switchMissionTab('daily')">Daily</button>
+                <button class="mission-tab" id="achievementsTab" onclick="app.switchMissionTab('achievements')">Achievements</button>
+                <button class="mission-tab" id="mysteryTab" onclick="app.switchMissionTab('mystery')">Daily Mystery Pick</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mystery Pick Result Modal -->
+    <div class="mystery-result-modal" id="mysteryResultModal">
+        <div class="mystery-result-content">
+            <div class="mystery-result-title">🎉 Congratulations!</div>
+            <div class="mystery-result-prize" id="mysteryResultPrize">
+                <img id="mysteryResultImage" src="" alt="Prize" class="mystery-result-prize-image">
+                <div id="mysteryResultText" class="mystery-result-prize-text">Prize Text</div>
+            </div>
+            <button class="mystery-result-btn" onclick="app.closeMysteryResult()">Awesome!</button>
+        </div>
+    </div>
+    
+    <!-- Combat Tester Modal -->
+    <div class="combat-tester-modal" id="combatTesterModal">
+        <div class="combat-tester-content">
+            <div class="combat-tester-header">
+                <h2>🎯 Data Disk Combat Tester</h2>
+                <button class="combat-tester-close" onclick="app.closeCombatTester()">&times;</button>
+            </div>
+            <div class="combat-tester-body">
+                <div class="combat-setup">
+                    <div class="robot-selector">
+                        <h3>Attacker Robot</h3>
+                        <select id="attackerSelect" class="robot-select-dropdown">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <div class="robot-info" id="attackerInfo">
+                            <!-- Robot details populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="vs-divider">
+                        <div class="vs-text">VS</div>
+                        <button class="battle-btn" onclick="app.runCombatTest()">⚔️ BATTLE!</button>
+                        <button class="import-btn" onclick="app.importBattleData()" style="margin-top: 10px; background: #059669; font-size: 12px; padding: 8px 12px;">📦 Import All Battle Data</button>
+                    </div>
+                    
+                    <div class="robot-selector">
+                        <h3>Defender Robot</h3>
+                        <select id="defenderSelect" class="robot-select-dropdown">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <div class="robot-info" id="defenderInfo">
+                            <!-- Robot details populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="combat-results" id="combatResults" style="display: none;">
+                    <h3>🏆 Battle Results</h3>
+                    <div class="battle-outcome" id="battleOutcome">
+                        <!-- Battle results populated by JavaScript -->
+                    </div>
+                    <div class="spin-details" id="spinDetails">
+                        <!-- Spin details populated by JavaScript -->
+                    </div>
+                    <button class="stats-btn" onclick="app.showVisualBattle()" style="margin-top: 15px;">🎬 Watch Visual Battle</button>
+                </div>
+                
+                <div class="combat-stats" id="combatStats">
+                    <h3>📊 Combat Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Battles Simulated:</span>
+                            <span class="stat-value" id="totalBattles">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Attacker Wins:</span>
+                            <span class="stat-value" id="attackerWins">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Defender Wins:</span>
+                            <span class="stat-value" id="defenderWins">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Draws:</span>
+                            <span class="stat-value" id="draws">0</span>
+                        </div>
+                    </div>
+                    <div class="stats-actions">
+                        <button class="stats-btn" onclick="app.runMultipleBattles(100)">🔄 Run 100 Battles</button>
+                        <button class="stats-btn" onclick="app.resetCombatStats()">🧽 Reset Stats</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Circuit Breaker Main Menu -->
+    <div class="circuit-breaker-menu" id="circuitBreakerMenu">
+        <div class="cb-menu-container">
+            <!-- Circuit Breaker Logo -->
+            <div class="cb-logo-container">
+                <img src="Imag/Battle/CB-Logo.png" alt="Circuit Breaker" class="cb-logo">
+            </div>
+            
+            <!-- Menu Buttons -->
+            <div class="cb-menu-buttons">
+                <!-- START BATTLE - Active (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.startCircuitBreakerBattle()">
+                    <img src="Imag/Battle/Start-Battle.png" alt="Start Battle" class="cb-btn-custom-img">
+                </button>
+                
+                <!-- VIEW MY ROBOTS - Active (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.openChorebotHangar()">
+                    <img src="Imag/Battle/Chore-Bots-button.png" alt="View My Robots" class="cb-btn-custom-img">
+                </button>
+                
+                <!-- STORY MODE - Placeholder (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Story-Mode-button.png" alt="Story Mode" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- BATTLE AI - Active (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.openAIBattleSelector()">
+                    <img src="Imag/Battle/VS-AI.png" alt="Battle AI" class="cb-btn-custom-img">
+                </button>
+                
+                <!-- RANKED BATTLE - Placeholder (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Ranked.png" alt="Ranked Battle" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- BATTLE WITH FRIENDS - Placeholder (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Lobby.png" alt="Lobby" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- EXIT - Active (Custom Image) -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-exit-img" onclick="app.closeCircuitBreakerMenu()">
+                    <img src="Imag/Battle/Exit.png" alt="Exit" class="cb-btn-custom-img">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Battle Simulator Selection Screen -->
+    <div class="ai-battle-selector" id="aiBattleSelector">
+        <div class="ai-selector-container">
+            <!-- Exit Button (Top Left) -->
+            <button class="ai-exit-btn" onclick="app.closeAIBattleSelector()">
+                <img src="Imag/Battle/Exit.png" alt="Exit" class="ai-exit-img">
+            </button>
+
+            <!-- Title with VS AI Image -->
+            <div class="ai-title-container">
+                <img src="Imag/Battle/VS-AI.png" alt="VS AI" class="ai-title-img">
+            </div>
+            
+            <!-- AI Difficulty Buttons -->
+            <div class="ai-difficulty-list">
+                <!-- TUTORIAL -->
+                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                    <div class="ai-btn-content">
+                        <div class="ai-btn-icon">🎓</div>
+                        <div class="ai-btn-text">TUTORIAL</div>
+                    </div>
+                    <span class="ai-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- EASY -->
+                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                    <div class="ai-btn-content">
+                        <div class="ai-btn-icon">★☆☆</div>
+                        <div class="ai-btn-text">EASY</div>
+                    </div>
+                    <span class="ai-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- MEDIUM -->
+                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                    <div class="ai-btn-content">
+                        <div class="ai-btn-icon">★★☆</div>
+                        <div class="ai-btn-text">MEDIUM</div>
+                    </div>
+                    <span class="ai-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- HARD -->
+                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                    <div class="ai-btn-content">
+                        <div class="ai-btn-icon">★★★</div>
+                        <div class="ai-btn-text">HARD</div>
+                    </div>
+                    <span class="ai-btn-badge">COMING SOON</span>
+                </button>
+                
+                <!-- GEMINI -->
+                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                    <div class="ai-btn-content">
+                        <div class="ai-btn-icon">💎</div>
+                        <div class="ai-btn-text">GEMINI</div>
+                    </div>
+                    <span class="ai-btn-badge">COMING SOON</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ChoreBot Hangar Modal -->
+    <div class="chorebot-hangar-modal" id="chorebotHangarModal">
+        <div class="hangar-container">
+            <!-- Header -->
+            <div class="hangar-header">
+                <h1 class="hangar-title">⚡ CHORE-BOT HANGAR</h1>
+                <button class="hangar-close-btn" onclick="app.closeChorebotHangar()">✕</button>
+            </div>
+
+            <!-- Robot Collection (Floating Bubbles) -->
+            <div class="hangar-collection" id="hangarCollection">
+                <!-- Dynamically populated with owned robots -->
+            </div>
+
+            <!-- Deck Builder Bar (Bottom) -->
+            <div class="hangar-deck-bar">
+                <div class="deck-title">ACTIVE DECK</div>
+                <div class="deck-slots" id="deckSlots">
+                    <!-- 6 deck slots -->
+                    <div class="deck-slot" data-slot="0">
+                        <div class="slot-number">1</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                    <div class="deck-slot" data-slot="1">
+                        <div class="slot-number">2</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                    <div class="deck-slot" data-slot="2">
+                        <div class="slot-number">3</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                    <div class="deck-slot" data-slot="3">
+                        <div class="slot-number">4</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                    <div class="deck-slot" data-slot="4">
+                        <div class="slot-number">5</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                    <div class="deck-slot" data-slot="5">
+                        <div class="slot-number">6</div>
+                        <div class="slot-empty">EMPTY</div>
+                    </div>
+                </div>
+                <div class="deck-actions">
+                    <button class="deck-btn deck-save-btn" id="deckSaveBtn" disabled onclick="app.saveDeck()">
+                        💾 SAVE
+                    </button>
+                    <button class="deck-btn deck-load-btn" onclick="app.showLoadDeckMenu()">
+                        📂 LOAD
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unit Inspection Modal (for Hangar) -->
+    <div class="hangar-inspection-modal" id="hangarInspectionModal">
+        <div class="inspection-content">
+            <button class="inspection-close-btn" onclick="app.closeHangarInspection()">✕</button>
+            <div id="hangarInspectionData">
+                <!-- Dynamically populated with robot stats -->
+            </div>
+            <button class="inspection-add-btn" id="inspectionAddBtn" onclick="app.addRobotToDeckFromInspection()">
+                ✚ ADD TO TEAM
+            </button>
+        </div>
+    </div>
+
+    <!-- Load Deck Modal -->
+    <div class="load-deck-modal" id="loadDeckModal">
+        <div class="load-deck-content">
+            <div class="load-deck-header">
+                <h2>📂 LOAD DECK</h2>
+                <button class="load-deck-close-btn" onclick="app.closeLoadDeckMenu()">✕</button>
+            </div>
+            <div class="load-deck-list" id="loadDeckList">
+                <!-- Dynamically populated with saved decks -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- V-Mount Battle Spinner Modal -->
+    <div class="disk-battle-modal" id="diskBattleModal">
+        <div class="disk-battle-arena" style="overflow-y: auto; max-height: 95vh;">
+            <!-- Back Button -->
+            <button class="back-btn" onclick="app.closeDiskBattle()" style="
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 10px;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 1000;
+            " onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                ← Back
+            </button>
+            
+            <div class="battle-title">⚔️ DATA DISK BATTLE ⚔️</div>
+            
+            <!-- Vertical Battle Layout: Opponent Top, User Bottom -->
+            <div class="vertical-battle-container">
+                <!-- Opponent Section (Top) -->
+                <div class="opponent-battle-section">
+                    <div class="robot-name opponent-name" id="defenderName">Opponent</div>
+                    <div id="top-move-display" class="move-display"></div>
+                    <div class="disk-wrapper opponent-disk" id="top-disk">
+                        <div class="data-disk" id="defenderDisk">
+                            <div class="disk-wheel" id="defenderWheel">
+                                <!-- Opponent wheel segments populated by JavaScript -->
+                            </div>
+                            <div class="disk-center"></div>
+                            <!-- POINTER at 180° (bottom) -->
+                            <div style="
+                                position: absolute;
+                                bottom: -5px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                width: 0;
+                                height: 0;
+                                border-left: 8px solid transparent;
+                                border-right: 8px solid transparent;
+                                border-bottom: 20px solid #ff0000;
+                                filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.8));
+                                z-index: 1000;
+                                pointer-events: none;
+                            "></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Central Pointer Section -->
+                <div class="central-pointer-section">
+                    <div class="battle-pointer-container">
+                        <div class="diamond-shape" id="diamondPointer"></div>
+                        <div class="pointer-line"></div>
+                    </div>
+                    <div class="vs-indicator" id="spin-button" style="cursor: pointer;">VS</div>
+                </div>
+                
+                <!-- User Section (Bottom) -->
+                <div class="user-battle-section">
+                    <div class="disk-wrapper user-disk" id="bottom-disk">
+                        <div class="data-disk" id="attackerDisk">
+                            <div class="disk-wheel" id="attackerWheel">
+                                <!-- User wheel segments populated by JavaScript -->
+                            </div>
+                            <div class="disk-center"></div>
+                            <!-- POINTER at 0° (top) -->
+                            <div style="
+                                position: absolute;
+                                top: -5px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                width: 0;
+                                height: 0;
+                                border-left: 8px solid transparent;
+                                border-right: 8px solid transparent;
+                                border-top: 20px solid #00ff00;
+                                filter: drop-shadow(0 0 4px rgba(0, 255, 0, 0.8));
+                                z-index: 1000;
+                                pointer-events: none;
+                            "></div>
+                        </div>
+                    </div>
+                    <div class="robot-name user-name" id="attackerName">Your Robot</div>
+                    <div id="bottom-move-display" class="move-display"></div>
+                </div>
+            </div>
+            
+            <div class="battle-outcome" id="diskBattleOutcome" style="display: none;">
+                <!-- Outcome populated by JavaScript -->
+            </div>
+            
+            <!-- Live Spin Results Display -->
+            <div id="liveSpinResults" style="display: none; margin: 20px auto; max-width: 700px;">
+                <div style="
+                    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%);
+                    border: 2px solid rgba(147, 51, 234, 0.5);
+                    border-radius: 15px;
+                    padding: 20px;
+                ">
+                    <h3 style="
+                        color: #ffd93d;
+                        text-align: center;
+                        margin: 0 0 15px 0;
+                        font-size: 20px;
+                        text-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+                    ">🎯 SPIN RESULTS</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <!-- Your Robot Result -->
+                        <div style="
+                            background: rgba(74, 222, 128, 0.1);
+                            border: 2px solid rgba(74, 222, 128, 0.3);
+                            border-radius: 10px;
+                            padding: 15px;
+                            text-align: center;
+                        ">
+                            <div style="color: #4ade80; font-size: 14px; font-weight: bold; margin-bottom: 10px;">
+                                YOUR ROBOT
+                            </div>
+                            <div id="attackerSpinResult" style="
+                                color: white;
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                                min-height: 50px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">Spinning...</div>
+                            <div id="attackerSpinType" style="
+                                color: #fbbf24;
+                                font-size: 12px;
+                                text-transform: uppercase;
+                            ">-</div>
+                            <div id="attackerSpinPower" style="
+                                color: #60a5fa;
+                                font-size: 14px;
+                                margin-top: 5px;
+                            ">-</div>
+                        </div>
+                        
+                        <!-- Opponent Result -->
+                        <div style="
+                            background: rgba(248, 113, 113, 0.1);
+                            border: 2px solid rgba(248, 113, 113, 0.3);
+                            border-radius: 10px;
+                            padding: 15px;
+                            text-align: center;
+                        ">
+                            <div style="color: #f87171; font-size: 14px; font-weight: bold; margin-bottom: 10px;">
+                                OPPONENT
+                            </div>
+                            <div id="defenderSpinResult" style="
+                                color: white;
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                                min-height: 50px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">Spinning...</div>
+                            <div id="defenderSpinType" style="
+                                color: #fbbf24;
+                                font-size: 12px;
+                                text-transform: uppercase;
+                            ">-</div>
+                            <div id="defenderSpinPower" style="
+                                color: #60a5fa;
+                                font-size: 14px;
+                                margin-top: 5px;
+                            ">-</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Spin Count -->
+                    <div id="spinCount" style="
+                        color: #a78bfa;
+                        font-size: 13px;
+                        text-align: center;
+                        margin-top: 15px;
+                    ">Initial Spin</div>
+                </div>
+            </div>
+            
+            <!-- Respin Button for Testing -->
+            <div id="respinButtonContainer" style="display: none; text-align: center; margin: 20px 0;">
+                <button class="continue-btn" id="respinBtn" style="
+                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                    padding: 15px 40px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 10px;
+                    color: white;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+                    transition: all 0.3s ease;
+                ">
+                    🔄 RESPIN (Testing Mode)
+                </button>
+                <div id="respinMessage" style="
+                    color: #ffd93d;
+                    font-size: 14px;
+                    margin-top: 10px;
+                    text-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+                ">
+                    Wheel landed on boundary line
+                </div>
+            </div>
+            
+            <!-- Battle Results Section -->
+            <div id="battleResultsSection" style="display: none; margin: 30px auto; max-width: 600px;">
+                <!-- Move Results -->
+                <div style="
+                    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+                    border: 2px solid rgba(168, 85, 247, 0.5);
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                ">
+                    <h3 style="
+                        color: #ffd93d;
+                        text-align: center;
+                        margin: 0 0 20px 0;
+                        font-size: 22px;
+                        text-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+                    ">📊 MOVE RESULTS</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: center;">
+                        <!-- Attacker Move -->
+                        <div style="text-align: center;">
+                            <div style="color: #4ade80; font-size: 16px; font-weight: bold; margin-bottom: 5px;">YOUR ROBOT</div>
+                            <div id="attackerMoveName" style="
+                                color: white;
+                                font-size: 20px;
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                            ">-</div>
+                            <div id="attackerMoveType" style="
+                                color: #fbbf24;
+                                font-size: 14px;
+                                text-transform: uppercase;
+                            ">-</div>
+                            <div id="attackerMovePower" style="
+                                color: #60a5fa;
+                                font-size: 16px;
+                                margin-top: 5px;
+                                font-weight: bold;
+                            ">-</div>
+                        </div>
+                        
+                        <!-- VS Divider -->
+                        <div style="
+                            color: #ffd93d;
+                            font-size: 24px;
+                            font-weight: bold;
+                            text-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+                        ">VS</div>
+                        
+                        <!-- Defender Move -->
+                        <div style="text-align: center;">
+                            <div style="color: #f87171; font-size: 16px; font-weight: bold; margin-bottom: 5px;">OPPONENT</div>
+                            <div id="defenderMoveName" style="
+                                color: white;
+                                font-size: 20px;
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                            ">-</div>
+                            <div id="defenderMoveType" style="
+                                color: #fbbf24;
+                                font-size: 14px;
+                                text-transform: uppercase;
+                            ">-</div>
+                            <div id="defenderMovePower" style="
+                                color: #60a5fa;
+                                font-size: 16px;
+                                margin-top: 5px;
+                                font-weight: bold;
+                            ">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Winner Display -->
+                <div id="winnerDisplay" style="
+                    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+                    border: 3px solid rgba(34, 197, 94, 0.6);
+                    border-radius: 15px;
+                    padding: 25px;
+                    text-align: center;
+                    margin-bottom: 20px;
+                ">
+                    <div id="winnerText" style="
+                        color: #4ade80;
+                        font-size: 28px;
+                        font-weight: bold;
+                        text-shadow: 0 0 15px rgba(74, 222, 128, 0.8);
+                        margin-bottom: 10px;
+                    ">🏆 WINNER 🏆</div>
+                    <div id="winnerReason" style="
+                        color: #fbbf24;
+                        font-size: 16px;
+                        margin-top: 10px;
+                    ">-</div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="continue-btn" id="respinBothBtn" onclick="app.respinBothWheels()" style="
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                        padding: 15px 40px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 10px;
+                        color: white;
+                        cursor: pointer;
+                        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+                        transition: all 0.3s ease;
+                    ">
+                        🔄 Respin Both Wheels
+                    </button>
+                    <button class="continue-btn" onclick="app.closeDiskBattle()" style="
+                        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+                        padding: 15px 40px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 10px;
+                        color: white;
+                        cursor: pointer;
+                        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+                        transition: all 0.3s ease;
+                    ">
+                        ← Back to Combat Tester
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modules: Load in dependency order -->
+    <script src="js/chore-robot-loader.js"></script>
+    <script src="js/chore-system.js"></script>
+    <script src="js/battle-system.js"></script>
+    <script src="js/robot-loader.js"></script>
+    <script src="js/robot-database.js"></script>
+    <script src="js/combat-system.js"></script>
+    <script src="js/team-manager.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Debug Mode Toggle (loaded after GameBoard is defined) -->
+    <script>
+        // Global debug flags
+        window.debugShowAllRobots = false;
+        
+        // Add toggle function to GameBoard
+        GameBoard.toggleShowAllRobots = function() {
+            window.debugShowAllRobots = !window.debugShowAllRobots;
+            const toggle = document.getElementById('showAllRobotsToggle');
+            if (window.debugShowAllRobots) {
+                toggle.classList.add('active');
+                console.log('🤖 SHOW ALL ROBOTS MODE ENABLED - All robots available for selection!');
+            } else {
+                toggle.classList.remove('active');
+                console.log('🔒 SHOW ALL ROBOTS MODE DISABLED - Ownership requirements restored');
+            }
+            
+            // Refresh robot grid
+            if (typeof app !== 'undefined' && app.updateAvailableRobotsGrid) {
+                app.updateAvailableRobotsGrid();
+            }
+        };
+    </script>
+</body>
+</html>

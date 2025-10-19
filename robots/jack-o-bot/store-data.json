@@ -1,0 +1,12 @@
+{
+  "id": "JACKOBOT",
+  "name": "Jack-o'-Bot",
+  "cost": 100,
+  "purchasable": true,
+  "featured": false,
+  "category": "halloween",
+  "tags": ["spooky", "poison", "sleep", "seasonal"],
+  "displayOrder": 2,
+  "availability": "always",
+  "description": "A spooky seasonal helper with a glowing personality and Halloween spirit!"
+}

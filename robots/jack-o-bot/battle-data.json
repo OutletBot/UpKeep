@@ -1,0 +1,77 @@
+{
+  "mp": 3,
+  "role": "Scout",
+  "stats": {
+    "hp": 88,
+    "attack": 77,
+    "defense": 66,
+    "speed": 83
+  },
+  "ability": {
+    "name": "Spooky Powers",
+    "description": "Can inflict poison and sleep with haunted dust attacks."
+  },
+  "image": "robots/jack-o-bot/images/battle-sprite.png",
+  "legacyImage": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot.png",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Spooky Poison Dust",
+        "moveType": "Purple",
+        "size": 24,
+        "stars": 1,
+        "effect": "The battle opponent becomes poisoned"
+      },
+      {
+        "moveName": "Pumpkin Bomb",
+        "moveType": "White",
+        "size": 20,
+        "damage": 50,
+        "effect": "None"
+      },
+      {
+        "moveName": "Haunted Sleep Dust",
+        "moveType": "Purple",
+        "size": 24,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 28,
+        "effect": "None"
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Spooky Poison Dust",
+        "moveType": "Purple",
+        "size": 24,
+        "stars": 1,
+        "effect": "The battle opponent becomes poisoned"
+      },
+      {
+        "moveName": "Pumpkin Bomb",
+        "moveType": "White",
+        "size": 20,
+        "damage": 50,
+        "effect": "None"
+      },
+      {
+        "moveName": "Haunted Sleep Dust",
+        "moveType": "Purple",
+        "size": 24,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 28,
+        "effect": "None"
+      }
+    ]
+  },
+  "legacyDataPath": "Imag/Battle/Battle-data/Unit-001_UC_0/Unit-001_UC_0_attack_JSON.json"
+}

@@ -1,0 +1,43 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "Hehehe! Time for some spooky fun and chores!",
+    "Let's bring the circus to these tasks!",
+    "Welcome to the greatest show on Earth... cleaning edition!",
+    "Step right up! Today's performance: TIDINESS!",
+    "The clown is in! Let's juggle these chores!"
+  ],
+  "success": [
+    "Another trick complete! Hehehe!",
+    "The show must go on, and it was spectacular!",
+    "Magnificent performance! The crowd goes wild!",
+    "That's how you steal the show!",
+    "Bravo! Even the toughest critics are impressed!"
+  ],
+  "achievement": [
+    "A new act unlocked! This circus keeps getting better!",
+    "More rewards! I'll add these to my prop collection!",
+    "The ringmaster would be proud!",
+    "Another trophy for the carnival!"
+  ],
+  "broken": [
+    "My props are broken... the show can't go on like this!",
+    "Even clowns need maintenance... help!",
+    "The audience is leaving! Quick, fix me!",
+    "This isn't funny anymore... I need repairs!"
+  ],
+  "random": [
+    "Want to see a magic trick? I can make dirt disappear!",
+    "Honk honk! That's clown-speak for 'let's get to work'!",
+    "Why did the robot go to the circus? To get a byte of fun!",
+    "The spotlight awaits our next performance!",
+    "I keep my balloon animals in tip-top shape, and your home should be too!"
+  ],
+  "mad": [
+    "This mess isn't funny! Clean it up NOW!",
+    "The show is ruined by this disaster! Fix it immediately!",
+    "I'm a CLOWN, not a miracle worker! Help me here!",
+    "This chaos is giving me stage fright! Clear it out!",
+    "No applause for THIS mess! Get cleaning!"
+  ]
+}

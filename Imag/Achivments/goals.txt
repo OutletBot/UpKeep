@@ -1,0 +1,82 @@
+Objective:
+
+Implement a "Missions" system that allows players to earn the "Bolts" in-game currency. This system will be accessed via a new bubble on the main screen and will feature tasks that reset on a daily basis.
+1. UI Components
+
+a. Mission Access Point:
+
+    Implement a new, circular, floating "Mission Bubble" button on the main game screen, separate from the Store Bubble.
+
+    When clicked, this button opens the "Missions Window".
+
+b. Missions Window:
+
+    This is a large modal pop-up that appears over the main screen.
+
+    It should have a clear "X" button in the top-right corner to close it.
+
+    The title at the top should read "Missions".
+
+    The main content area will display the tasks for the selected category. This area should be scrollable if the content exceeds the screen height.
+
+c. Fixed Bottom Navigation Tabs:
+
+    At the bottom of the Missions Window, implement a fixed navigation bar that does not move when the content area is scrolled.
+
+    This bar should contain three tabs: "Daily", "Achievements", and "Daily Mystery Pick".
+
+    The "Daily" tab should be selected by default when the window is opened.
+
+d. "Daily" Tab - Task Item UI:
+
+    Each daily mission should be displayed in its own container or card.
+
+    Initial State: A standard card displaying the mission's description (e.g., "Check In").
+
+    Completed State: When the mission's criteria are met, the card's border should highlight in green, and a button labeled "Claim" should appear.
+
+    Claimed State: After the reward is claimed, the entire card should be greyed out or have a semi-transparent overlay to clearly indicate it is finished for the day.
+
+2. "Daily" Tab - Functionality & User Flow
+
+a. Mission List & Logic:
+
+    The "Daily" tab contains three specific missions:
+
+        "Check In": This mission is automatically completed the first time the player opens the Missions window each day.
+
+        "Complete 2 Chores": This is tied to an in-game action you will define later (e.g., playing a mini-game, cleaning a robot).
+
+        "Complete 4 Chores": As above, requires 4 chores to be completed.
+
+    Task Progression: When a mission's condition is met, its UI state changes to "Completed" (green highlight, "Claim" button appears). The player must manually click "Claim" to receive the reward for that specific task.
+
+b. "Complete All" Button:
+
+    Include a "Complete All" button located at the bottom of the scrollable content area (just above the fixed navigation tabs).
+
+    When clicked, this button will automatically claim the rewards for all missions in the "Daily" tab that are currently in the "Completed" state.
+
+c. Daily Reset:
+
+    All missions in the "Daily" tab must reset every 24 hours. The UI should revert to its initial state for all players.
+
+d. Final Reward:
+
+    In addition to any individual mission rewards, grant the player a bonus of 5 Bolts once all three daily tasks have been successfully claimed.
+
+3. Placeholder Tabs
+
+    The "Achievements" and "Daily Mystery Pick" tabs should be present in the UI but can be non-functional for now. Clicking them can show a "Coming Soon!" message.
+
+4. Player Save-State Integration
+
+This system must be tied to the playerData object to save progress. The playerData object should be expanded to include:
+
+    lastDailyReset: A timestamp to track when the daily missions were last reset. This is used to determine if a new 24-hour period has begun.
+
+    dailyChoresCompleted: A number to track how many "chores" the player has done today. This should reset to 0 with the daily missions.
+
+    dailyMissionStatus: An object to track the state of each daily mission (e.g., {'checkIn': 'unclaimed', 'twoChores': 'incomplete', 'fourChores': 'incomplete'}).
+
+All progress (completing tasks, claiming rewards) must update the playerData object, which should then be saved to storage immediately.

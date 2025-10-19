@@ -1,0 +1,191 @@
+[
+  {
+    "id": "default",
+    "folder": "default-bot",
+    "name": "Default Bot",
+    "purchasable": false,
+    "cost": 0,
+    "enabled": true,
+    "hasBattleData": false,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/default-bot/robot.json",
+      "chore": "robots/default-bot/chore-data.json",
+      "dialogue": "robots/default-bot/dialogue.json",
+      "store": "robots/default-bot/store-data.json"
+    }
+  },
+  {
+    "id": "JACKOBOT",
+    "folder": "jack-o-bot",
+    "name": "Jack-o'-Bot",
+    "purchasable": true,
+    "cost": 100,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/jack-o-bot/robot.json",
+      "chore": "robots/jack-o-bot/chore-data.json",
+      "dialogue": "robots/jack-o-bot/dialogue.json",
+      "store": "robots/jack-o-bot/store-data.json",
+      "battle": "robots/jack-o-bot/battle-data.json"
+    }
+  },
+  {
+    "id": "MEGAROCKETMAN",
+    "folder": "mega-rocket-man",
+    "name": "Mega Rocket Man",
+    "purchasable": true,
+    "cost": 150,
+    "enabled": true,
+    "hasBattleData": false,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/mega-rocket-man/robot.json",
+      "chore": "robots/mega-rocket-man/chore-data.json",
+      "dialogue": "robots/mega-rocket-man/dialogue.json",
+      "store": "robots/mega-rocket-man/store-data.json",
+      "battle": "robots/mega-rocket-man/battle-data.json"
+    },
+    "notes": "Battle data to be added later"
+  },
+  {
+    "id": "PIKABOT",
+    "folder": "pika-bot",
+    "name": "Pika-Bot",
+    "purchasable": true,
+    "cost": 120,
+    "enabled": true,
+    "hasBattleData": false,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/pika-bot/robot.json",
+      "chore": "robots/pika-bot/chore-data.json",
+      "dialogue": "robots/pika-bot/dialogue.json",
+      "store": "robots/pika-bot/store-data.json",
+      "battle": "robots/pika-bot/battle-data.json"
+    },
+    "notes": "Battle data to be added later"
+  },
+  {
+    "id": "BUZZBOT",
+    "folder": "buzz-lite-point-0",
+    "name": "Buzz Lite-Point-0",
+    "purchasable": true,
+    "cost": 180,
+    "enabled": true,
+    "hasBattleData": false,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/buzz-lite-point-0/robot.json",
+      "chore": "robots/buzz-lite-point-0/chore-data.json",
+      "dialogue": "robots/buzz-lite-point-0/dialogue.json",
+      "store": "robots/buzz-lite-point-0/store-data.json",
+      "battle": "robots/buzz-lite-point-0/battle-data.json"
+    },
+    "notes": "Battle data to be added later"
+  },
+  {
+    "id": "CLOWNBOT",
+    "folder": "clown-bot",
+    "name": "Clown Bot",
+    "purchasable": true,
+    "cost": 100,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/clown-bot/robot.json",
+      "chore": "robots/clown-bot/chore-data.json",
+      "dialogue": "robots/clown-bot/dialogue.json",
+      "store": "robots/clown-bot/store-data.json",
+      "battle": "robots/clown-bot/battle-data.json"
+    }
+  },
+  {
+    "id": "WITCHBOT",
+    "folder": "witch-bot",
+    "name": "Witch-Bot",
+    "purchasable": true,
+    "cost": 130,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/witch-bot/robot.json",
+      "chore": "robots/witch-bot/chore-data.json",
+      "dialogue": "robots/witch-bot/dialogue.json",
+      "store": "robots/witch-bot/store-data.json",
+      "battle": "robots/witch-bot/battle-data.json"
+    }
+  },
+  {
+    "id": "FREEZY",
+    "folder": "freezy",
+    "name": "Freezy",
+    "purchasable": true,
+    "cost": 100,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/freezy/robot.json",
+      "chore": "robots/freezy/chore-data.json",
+      "dialogue": "robots/freezy/dialogue.json",
+      "store": "robots/freezy/store-data.json",
+      "battle": "robots/freezy/battle-data.json"
+    }
+  },
+  {
+    "id": "GHOSTBOT",
+    "folder": "ghost-bot",
+    "name": "Ghost Bot",
+    "purchasable": true,
+    "cost": 160,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/ghost-bot/robot.json",
+      "chore": "robots/ghost-bot/chore-data.json",
+      "dialogue": "robots/ghost-bot/dialogue.json",
+      "store": "robots/ghost-bot/store-data.json",
+      "battle": "robots/ghost-bot/battle-data.json"
+    }
+  },
+  {
+    "id": "SUNIC",
+    "folder": "sunic",
+    "name": "Sunic",
+    "purchasable": true,
+    "cost": 180,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/sunic/robot.json",
+      "chore": "robots/sunic/chore-data.json",
+      "dialogue": "robots/sunic/dialogue.json",
+      "store": "robots/sunic/store-data.json",
+      "battle": "robots/sunic/battle-data.json"
+    }
+  },
+  {
+    "id": "OUIJABOT",
+    "folder": "ouija-bot",
+    "name": "Ouija-Bot",
+    "purchasable": true,
+    "cost": 220,
+    "enabled": true,
+    "hasBattleData": true,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/ouija-bot/robot.json",
+      "chore": "robots/ouija-bot/chore-data.json",
+      "dialogue": "robots/ouija-bot/dialogue.json",
+      "store": "robots/ouija-bot/store-data.json",
+      "battle": "robots/ouija-bot/battle-data.json"
+    }
+  }
+]

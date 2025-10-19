@@ -1,0 +1,12 @@
+{
+  "id": "MEGAROCKETMAN",
+  "name": "Mega Rocket Man",
+  "cost": 150,
+  "purchasable": true,
+  "featured": false,
+  "category": "heroes",
+  "tags": ["heroic", "fire", "flying", "powerful"],
+  "displayOrder": 3,
+  "availability": "always",
+  "description": "A heroic robot programmed for peace, order, and cleanliness!"
+}

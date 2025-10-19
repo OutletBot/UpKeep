@@ -1,0 +1,13 @@
+{
+  "id": "default",
+  "name": "Default Bot",
+  "cost": 0,
+  "purchasable": false,
+  "featured": false,
+  "category": "starter",
+  "tags": ["default", "starter", "free"],
+  "displayOrder": 1,
+  "availability": "always",
+  "hiddenInStore": true,
+  "description": "Your faithful starting companion. Always ready to help with chores!"
+}

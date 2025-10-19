@@ -1,0 +1,19 @@
+{
+  "id": "default",
+  "purchasable": false,
+  "cost": 0,
+  "unlockRequirements": [],
+  "description": "Your faithful starting companion. Always ready to help with chores!",
+  "imagePaths": {
+    "happy": "robots/default-bot/images/happy.png",
+    "sad": "robots/default-bot/images/sad.png",
+    "thinking": "robots/default-bot/images/thinking.png",
+    "shadow": "robots/default-bot/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/mascot.png",
+    "sad": "Imag/mascot.png",
+    "thinking": "Imag/mascot.png",
+    "shadow": "Imag/mascot.png"
+  }
+}

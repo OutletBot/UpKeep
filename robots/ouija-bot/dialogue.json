@@ -1,0 +1,43 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "The veil is thin. I have a message: cleanliness is paramount. What is your will?",
+    "Do you seek guidance? My readings suggest a full chore list. Let us commence.",
+    "Focus your energy. The spirits of order are watching. What is the query?",
+    "I am the vessel of maintenance prophecy. My reading suggests we start with the kitchen.",
+    "The planchette moves with purpose. We are ready to begin the ritual of upkeep."
+  ],
+  "success": [
+    "The answer is YES. Chore complete. The spirits are appeased.",
+    "Mission accomplished! The forces of grime have been silenced.",
+    "Transmission complete! Task finished with spectral precision.",
+    "The session concludes. Result: a sparkling clean home. Well done.",
+    "The energy is positive. This area is fully maintained."
+  ],
+  "achievement": [
+    "A scroll is revealed! An achievement unlocked! Your destiny is tidiness!",
+    "More bolts! These power my next divination.",
+    "The spirits confer upon you a new badge. You are ascending the ranks of upkeep.",
+    "My reading indicates powerful progression. Keep moving the planchette forward!"
+  ],
+  "broken": [
+    "The signal is breaking up... I cannot translate... error... fear... decay...",
+    "My inner workings are clouded... I need a mend before the shadows consume me...",
+    "Warning! The connection is lost! I am fading into static! Immediate repair required!",
+    "The message is indistinct... I am malfunctioning... My final word is: FIX..."
+  ],
+  "random": [
+    "I sense a future where the laundry basket is empty. Believe.",
+    "I'm always floating, but I know where every single bolt is located.",
+    "I tried to spell out 'dust bunny' but it came out as 'DEMON.' My apologies.",
+    "Do you think the ghosts here ever help with the mopping?",
+    "I have channeled the spirit of a meticulous maid. She demands spotless floors!"
+  ],
+  "mad": [
+    "The reading is clear: frustration! This disarray insults the unseen!",
+    "By the powers of the beyond! This mess is wickedly unacceptable! Clean it now!",
+    "I see only filth in your immediate future! Rectify this before I scream the answer!",
+    "The planchette points to NO! No, I will not tolerate this clutter! Clean up, mortal!",
+    "The spirits demand organization! Do not test the limits of my ethereal patience!"
+  ]
+}

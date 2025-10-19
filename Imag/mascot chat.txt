@@ -1,0 +1,61 @@
+Okay, here's that list of 30 phrases again, with placeholders for the task and category names.
+
+    "Great job completing INSERT TASK NAME! The INSERT CATEGORY NAME sparkles!"
+
+    "Looks like INSERT CATEGORY NAME needs some immediate attention! Let's get scrubbing!"
+
+    "You just added INSERT TASK NAME! Another step towards a perfect home."
+
+    "Fantastic! INSERT TASK NAME is all done. Your INSERT CATEGORY NAME thanks you!"
+
+    "Uh oh! INSERT TASK NAME is looking a bit low. Time to get those suds flowing?"
+
+    "A new task, INSERT TASK NAME, has joined the team! We'll keep it fresh!"
+
+    "Your Overall Maintenance Score is looking excellent today. Keep it up!"
+
+    "Just a friendly reminder: INSERT TASK NAME could use a refresh!"
+
+    "Woohoo! INSERT TASK NAME is at 100%! Freshness achieved!"
+
+    "Remember INSERT CATEGORY NAME? It might be time to check in there!"
+
+    "You completed INSERT TASK NAME! So neat and tidy!"
+
+    "Getting close! INSERT CATEGORY NAME is almost fully maintained."
+
+    "What a champion! You've tackled INSERT TASK NAME."
+
+    "Hey there! The INSERT CATEGORY NAME category is calling for some love."
+
+    "A fresh start for INSERT TASK NAME! They'll be so happy."
+
+    "Don't forget about INSERT TASK NAME! Staying on top of things."
+
+    "Your diligence is paying off. Keep an eye on INSERT TASK NAME!"
+
+    "You're a star! INSERT TASK NAME handled with care."
+
+    "The INSERT CATEGORY NAME category is dropping. What do you say we boost it?"
+
+    "Hooray! INSERT TASK NAME is done and fresh!"
+
+    "Looks like INSERT TASK NAME is getting low. A little tidying goes a long way!"
+
+    "Welcome, INSERT TASK NAME! Let's keep things eco-friendly."
+
+    "Your home is looking great, thanks to all your hard work on Upkeep!"
+
+    "Almost there! INSERT TASK NAME is nearly complete."
+
+    "A little attention to INSERT CATEGORY NAME tasks can make a big difference!"
+
+    "You're building great habits! Good job on INSERT TASK NAME."
+
+    "Time to shine! INSERT TASK NAME is ready for a refresh."
+
+    "The INSERT CATEGORY NAME category could use a quick peek!"
+
+    "Wow, your dedication to INSERT TASK NAME is admirable!"
+
+    "Another task conquered! You're making awesome progress on Upkeep!"

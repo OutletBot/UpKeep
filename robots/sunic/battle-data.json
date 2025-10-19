@@ -1,0 +1,275 @@
+{
+  "mp": 2,
+  "role": "Striker",
+  "stats": {
+    "hp": 95,
+    "attack": 110,
+    "defense": 65,
+    "speed": 105
+  },
+  "ability": {
+    "name": "Speed Surge",
+    "description": "If this robot is knocked out while attacking, the battle opponent becomes overcharged and stunned from the static discharge."
+  },
+  "image": "robots/sunic/images/happy.png",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Sonic Thunder",
+        "moveType": "White",
+        "size": 28,
+        "damage": 110,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Static Dash",
+        "moveType": "White",
+        "size": 52,
+        "damage": 50,
+        "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Sonic Thunder",
+        "moveType": "White",
+        "size": 28,
+        "damage": 110,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Static Dash",
+        "moveType": "White",
+        "size": 52,
+        "damage": 50,
+        "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+      }
+    ],
+    "confused": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Sonic Thunder",
+        "moveType": "White",
+        "size": 28,
+        "damage": 110,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Static Dash",
+        "moveType": "White",
+        "size": 52,
+        "damage": 50,
+        "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+      }
+    ],
+    "paralyzed_list": [
+      {
+        "paralyzed_0": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 28,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Static Dash",
+            "moveType": "White",
+            "size": 52,
+            "damage": 50,
+            "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+          }
+        ]
+      },
+      {
+        "paralyzed_1": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Sonic Thunder",
+            "moveType": "White",
+            "size": 28,
+            "damage": 110,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 52,
+            "effect": ""
+          }
+        ]
+      }
+    ],
+    "asleep": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Sonic Thunder",
+        "moveType": "White",
+        "size": 28,
+        "damage": 110,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Static Dash",
+        "moveType": "White",
+        "size": 52,
+        "damage": 50,
+        "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 28,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 52,
+        "effect": ""
+      }
+    ],
+    "burned_list": [
+      {
+        "burned_0": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 28,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Static Dash",
+            "moveType": "White",
+            "size": 52,
+            "damage": 50,
+            "effect": "If this robot is knocked out when using this move, the battle opponent becomes paralyzed"
+          }
+        ]
+      },
+      {
+        "burned_1": [
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Sonic Thunder",
+            "moveType": "White",
+            "size": 28,
+            "damage": 110,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": ""
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 52,
+            "effect": ""
+          }
+        ]
+      }
+    ]
+  }
+}

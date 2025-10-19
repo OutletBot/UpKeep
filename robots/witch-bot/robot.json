@@ -1,0 +1,13 @@
+{
+  "id": "WITCHBOT",
+  "name": "Witch-Bot",
+  "version": "1.0.0",
+  "description": "A magical witch robot that brings spellbinding cleanliness to your home!",
+  "theme": "Halloween Witch",
+  "dataFiles": {
+    "chore": "chore-data.json",
+    "battle": "battle-data.json",
+    "dialogue": "dialogue.json",
+    "store": "store-data.json"
+  }
+}

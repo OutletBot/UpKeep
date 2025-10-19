@@ -1,0 +1,51 @@
+[
+    {
+        "id": "JACKOBOT",
+        "cost": 100,
+        "shadowImagePath": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-bot-shadow.png",
+        "actualImagePath": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot.png",
+        "name": "Jack-o'-Bot"
+    },
+    {
+        "id": "MEGAROCKETMAN",
+        "cost": 150,
+        "shadowImagePath": "Imag/Achivments/Images/MegaRocketMan/Mega-Shadow.png",
+        "actualImagePath": "Imag/Achivments/Images/MegaRocketMan/Mega.png",
+        "name": "Mega Rocket Man"
+    },
+    {
+        "id": "PIKABOT",
+        "cost": 120,
+        "shadowImagePath": "Imag/Achivments/Images/Pike-achu/PikaBot-shadow.png",
+        "actualImagePath": "Imag/Achivments/Images/Pike-achu/PikaBot.png",
+        "name": "Pika-Bot"
+    },
+    {
+        "id": "BUZZBOT",
+        "cost": 180,
+        "shadowImagePath": "Imag/Achivments/Images/Buzz-lite-point-0/Buzz-shadow.png",
+        "actualImagePath": "Imag/Achivments/Images/Buzz-lite-point-0/Buzz.png",
+        "name": "Buzz Lite-Point-0"
+    },
+    {
+        "id": "CLOWNBOT",
+        "cost": 100,
+        "shadowImagePath": "robots/clown-bot/images/shadow.png",
+        "actualImagePath": "robots/clown-bot/images/happy.png",
+        "name": "Clown Bot"
+    },
+    {
+        "id": "WITCHBOT",
+        "cost": 130,
+        "shadowImagePath": "robots/witch-bot/images/shadow.png",
+        "actualImagePath": "robots/witch-bot/images/happy.png",
+        "name": "Witch-Bot"
+    },
+    {
+        "id": "FREEZY",
+        "cost": 100,
+        "shadowImagePath": "robots/freezy/images/shadow.png",
+        "actualImagePath": "robots/freezy/images/happy.png",
+        "name": "Freezy"
+    }
+]

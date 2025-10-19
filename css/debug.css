@@ -1,0 +1,488 @@
+/* Battle Scenario Debugger Styles */
+.debug-toggle-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3000;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.debug-toggle-icon:hover {
+    background: rgba(255, 215, 0, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.debug-toggle-icon.hidden {
+    display: none;
+}
+
+.battle-debugger-panel {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 400px;
+    max-height: calc(100vh - 100px);
+    background: rgba(26, 26, 46, 0.95);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    z-index: 2999;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    display: none;
+}
+
+.battle-debugger-panel.active {
+    display: block;
+    animation: slideInRight 0.3s ease;
+}
+
+.battle-debugger-panel.minimized {
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.battle-debugger-panel.minimized .debugger-columns,
+.battle-debugger-panel.minimized .debugger-status,
+.battle-debugger-panel.minimized .debugger-toggle-container {
+    display: none;
+}
+
+.battle-debugger-panel.minimized .debugger-minimize-btn {
+    transform: rotate(180deg);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.debugger-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.debugger-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.debugger-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFD700;
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
+}
+
+.debugger-minimize-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.debugger-minimize-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #FFD700;
+    color: #FFD700;
+    transform: scale(1.1);
+}
+
+.debugger-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.debugger-toggle-label {
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 80px;
+    height: 40px;
+    background: rgba(220, 53, 69, 0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid #dc3545;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.toggle-switch.active {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4CAF50;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 30px;
+    height: 30px;
+    background: #dc3545;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.toggle-switch.active .toggle-slider {
+    transform: translateX(40px);
+    background: #4CAF50;
+}
+
+.toggle-text-off,
+.toggle-text-on {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    z-index: 1;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-text-off {
+    margin-left: 2px;
+}
+
+.toggle-text-on {
+    margin-right: 2px;
+    opacity: 0.3;
+}
+
+.toggle-switch.active .toggle-text-off {
+    opacity: 0.3;
+}
+
+.toggle-switch.active .toggle-text-on {
+    opacity: 1;
+}
+
+.debugger-columns {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.debugger-column {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.column-header {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 12px;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.move-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+}
+
+.move-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(3px);
+}
+
+.move-option.selected {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.move-radio {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.move-option.selected .move-radio {
+    border-color: #FFD700;
+    background: #FFD700;
+}
+
+.move-option.selected .move-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: #1a1a2e;
+    border-radius: 50%;
+}
+
+.move-text {
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+}
+
+.move-damage {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-left: auto;
+}
+
+/* Psycho Cut Bonus Spin Section */
+.debugger-bonus-spin-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 0, 255, 0.1);
+    border: 2px solid rgba(255, 0, 255, 0.3);
+    border-radius: 10px;
+}
+
+.bonus-spin-header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+.debugger-status {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.debugger-status.ready {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+    color: #4CAF50;
+}
+
+.debugger-status.waiting {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+    color: #FFC107;
+}
+
+/* Status Effect Manager Styles */
+.debugger-status-manager {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 2px solid rgba(138, 43, 226, 0.5);
+}
+
+.status-manager-header {
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+}
+
+.status-manager-title {
+    color: #BA55D3;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.status-manager-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.status-manager-column {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-column-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 6px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.status-effects-list {
+    min-height: 80px;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.no-status-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    font-style: italic;
+    padding: 20px 10px;
+}
+
+.status-effect-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    border-radius: 6px;
+    font-size: 12px;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.status-effect-item:hover {
+    background: rgba(138, 43, 226, 0.3);
+    border-color: rgba(138, 43, 226, 0.6);
+    transform: translateX(2px);
+}
+
+.status-effect-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.status-effect-remove {
+    background: rgba(220, 53, 69, 0.3);
+    border: 1px solid #dc3545;
+    color: #ff6b6b;
+    font-size: 16px;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.status-effect-remove:hover {
+    background: rgba(220, 53, 69, 0.5);
+    border-color: #ff4444;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.status-add-section {
+    margin-top: 10px;
+}
+
+.status-select {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(138, 43, 226, 0.5);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.status-select:hover {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(138, 43, 226, 0.8);
+}
+
+.status-select:focus {
+    border-color: #BA55D3;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+}
+
+.status-select option {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 8px;
+}

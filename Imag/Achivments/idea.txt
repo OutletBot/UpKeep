@@ -1,0 +1,53 @@
+add achivment bubble in  achivments unlocked = huge bolt pay out
+add store bubble to buy oild drinks and robots, possibly music and sound effects
+add robot bubble (only appears when ropot has been purchased) here you can feed robots and switch out robots.
+add currency "bolt" display that displays your bolt cuantity
+
+
+
+
+achivments for daily log in - 1 bolts
+daily clean 2 task - 1 bolts
+daily clean 4 task - 1 bolt
+daily clean 6 task - 2 bolts
+add 1st task
+add 5th task
+add 10th task etc
+
+and trophy acchivments
+score your first 100% cleaness 10bolts
+
+
+
+
+robot happiness meter
+fills up with "oil drinks" you must buy with bolts
+
+
+you can buy sound effect!
+
+you can buy theme music!
+
+you can buy new robots! each with there own personalities and there own speech bubbles!
+
+in robot select screen they will show there happiness metters. robots can die(break) if happiness metter runs out so you will have to repair them (fix them spending bolts).
+only the mascot robot will not die!
+
+make pile of circuits for when the robot breaks, when it breaks you must pay for full repair (half of its initial cost)
+
+scooby doo
+-------------sbonge bob
+Jason
+freddy crougar
+sub zero
+ryu
+samus
+bowser
+android 13
+-------freeza
+wall-e
+SNES robot
+PlayStation Robot
+Pizza Driver robot
+ghost robot
+zombie robot (doesn't die) expensive

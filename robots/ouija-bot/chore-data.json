@@ -1,0 +1,19 @@
+{
+  "id": "OUIJABOT",
+  "purchasable": true,
+  "cost": 220,
+  "unlockRequirements": [],
+  "description": "Mystic medium who channels tidy spirits to keep every room in harmony.",
+  "imagePaths": {
+    "happy": "robots/ouija-bot/images/happy.png",
+    "sad": "robots/ouija-bot/images/sad.png",
+    "thinking": "robots/ouija-bot/images/thinking.png",
+    "shadow": "robots/ouija-bot/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/Ouija-Bot/Happy.png",
+    "sad": "Imag/Achivments/Images/Ouija-Bot/Sad.png",
+    "thinking": "Imag/Achivments/Images/Ouija-Bot/Mad.png",
+    "shadow": "Imag/Achivments/Images/Ouija-Bot/Shadow.png"
+  }
+}

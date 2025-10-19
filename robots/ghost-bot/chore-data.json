@@ -1,0 +1,19 @@
+{
+  "id": "GHOSTBOT",
+  "purchasable": true,
+  "cost": 160,
+  "unlockRequirements": [],
+  "description": "A friendly spectral robot with ethereal powers! Phases through chores with wispy charm and supernatural efficiency!",
+  "imagePaths": {
+    "happy": "robots/ghost-bot/images/happy.png",
+    "sad": "robots/ghost-bot/images/sad.png",
+    "thinking": "robots/ghost-bot/images/thinking.png",
+    "shadow": "robots/ghost-bot/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/Ghost-Bot/Happy.png",
+    "sad": "Imag/Achivments/Images/Ghost-Bot/Sad.png",
+    "thinking": "Imag/Achivments/Images/Ghost-Bot/Mad.png",
+    "shadow": "Imag/Achivments/Images/Ghost-Bot/Shadow.png"
+  }
+}

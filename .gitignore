@@ -1,0 +1,25 @@
+# Backup files
+index.html.backup*
+index-modular.html.backup*
+*.bak
+
+# Node modules (if we add build tools later)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local

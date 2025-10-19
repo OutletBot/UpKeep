@@ -1,0 +1,66 @@
+Dialogue for Scrappy, the Robot Factory Owner
+
+Here are some speech bubble ideas for your junkyard robot character, Scrappy.
+Greeting Speech Bubbles
+
+    "Whirrr... Clank... New customer detected. What can I bolt together for ya?"
+
+    "Welcome to the Factory. Don't mind the rust—it adds character."
+
+    "Need a bot? Or just browsin' the prime scrap?"
+
+    "Bzzt... State your purpose. Or, ya know, just look around. Mind the loose wiring."
+
+    "Come on in! Watch your step, I dropped a box of ball bearings this morning."
+
+Random Speech Bubbles (Idle Chatter)
+
+    "squeak... Must remember to oil that joint. Later."
+
+    "Hmm, this cog would look great on a Mark IV chassis..."
+
+    "Ah, the smell of burnt circuits in the morning. Smells like... progress."
+
+    "Processing... processing... still processing. This thinkin' stuff is hard work."
+
+    "You ever wonder if we're all just spare parts in a bigger machine?"
+
+    "clank clatter Whoops. Butter-servos today."
+
+    "This place ain't much, but it's full of potential... potential robots, that is."
+
+Purchased Speech Bubbles
+
+    "A fine choice! Bolting it together for ya now. Zzzzap!"
+
+    "Sold! One premium, pre-owned... well, one premium robot, comin' right up."
+
+    "Transaction complete. Another creation finds a home. Try not to break it on the way out."
+
+    "It's yours! Warranty void if you... well, the warranty's void. Enjoy!"
+
+    "Bleep-bloop. Purchase registered. I'll use the good rivets for this one."
+
+Canceled Purchase Speech Bubbles
+
+    "Changed your mind, eh? Fine by me. More parts for my next project."
+
+    "Bzzt. Order canceled. Re-routing spare parts to... the spare parts pile."
+
+    "No deal? Your loss. This one had a perfectly good alternator."
+
+    "Purchase voided. Halting assembly line... grrrrind..."
+
+    "Whatever. More for the scrap heap."
+
+Goodbye Speech Bubbles
+
+    "Come back soon! I'm always buildin' somethin' new... from somethin' old."
+
+    "Exit protocols engaged. Watch the door, it sticks."
+
+    "Later, circuit-head. Don't get rusty out there."
+
+    "Transmission ending. Bzzzzt."
+
+    "Go on, get outta here. These robots won't build themselves."

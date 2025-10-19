@@ -1,0 +1,6 @@
+{
+  "id": "FREEZY",
+  "cost": 100,
+  "shadowImagePath": "robots/freezy/images/shadow.png",
+  "actualImagePath": "robots/freezy/images/happy.png"
+}

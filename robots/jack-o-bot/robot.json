@@ -1,0 +1,13 @@
+{
+  "id": "jack-o-bot",
+  "battleId": "unit-001-uc-0",
+  "name": "Jack-o'-Bot",
+  "number": 1,
+  "rarity": "UC",
+  "type": "Grass / Poison",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": true,
+  "hasBattleData": true,
+  "hasChoreData": true
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mega-rocket-man",
+  "battleId": "unit-006-ex-0",
+  "name": "Mega Rocket Man",
+  "number": 6,
+  "rarity": "EX",
+  "type": "Fire / Flying",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": false,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "notes": "Battle data to be added later"
+}

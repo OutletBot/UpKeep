@@ -1,0 +1,19 @@
+i want to ad a robot select bubble that will bring up a robot select screen where users
+can select to change their current robot to another robot
+
+when user switches robot, the new robots dialog will be used.
+
+i want to add "bolts" this will be a digital currency to purchase robots and "oil" to feed robots
+
+robots will have "happiness metters visiable in the robot select screen
+
+when the happiness metter runs out. the robot will break. the user will need to "repair" the robot
+with bolts they collect
+
+bolts are collected by completing task and acchivments
+each task is one bolt
+
+i want add an achivments tab that shows achivments complete
+
+i want to add achivment list for a loist of achivments (not visible to player)
+

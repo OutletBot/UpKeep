@@ -1,0 +1,12 @@
+{
+  "id": "BUZZBOT",
+  "name": "Buzz Lite-Point-0",
+  "cost": 180,
+  "purchasable": true,
+  "featured": false,
+  "category": "legendary",
+  "tags": ["space", "psychic", "powerful", "legendary"],
+  "displayOrder": 5,
+  "availability": "always",
+  "description": "A space ranger robot ready to take your chores to infinity... and beyond!"
+}

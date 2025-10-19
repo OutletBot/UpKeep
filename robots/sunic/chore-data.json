@@ -1,0 +1,19 @@
+{
+  "id": "SUNIC",
+  "purchasable": true,
+  "cost": 180,
+  "unlockRequirements": [],
+  "description": "Lightning-fast runner who blitzes through chores before the dust settles.",
+  "imagePaths": {
+    "happy": "robots/sunic/images/happy.png",
+    "sad": "robots/sunic/images/sad.png",
+    "thinking": "robots/sunic/images/thinking.png",
+    "shadow": "robots/sunic/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/Sunic/Happy.png",
+    "sad": "Imag/Achivments/Images/Sunic/Sad.png",
+    "thinking": "Imag/Achivments/Images/Sunic/Mad.png",
+    "shadow": "Imag/Achivments/Images/Sunic/Shadow.png"
+  }
+}

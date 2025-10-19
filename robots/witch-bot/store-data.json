@@ -1,0 +1,11 @@
+{
+  "id": "WITCHBOT",
+  "displayName": "Witch-Bot",
+  "cost": 130,
+  "category": "Halloween",
+  "rarity": "R",
+  "tags": ["halloween", "witch", "psychic", "magical"],
+  "unlockRequirements": [],
+  "previewText": "A mystical witch who casts spells of cleanliness!",
+  "storeDescription": "Conjure up the perfect clean home with Witch-Bot! This enchanting robot flies through chores on her magical broomstick and brews potions of tidiness in her cauldron. With psychic powers and magical abilities, she makes housework feel like pure wizardry!"
+}

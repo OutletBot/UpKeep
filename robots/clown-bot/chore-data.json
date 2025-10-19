@@ -1,0 +1,19 @@
+{
+  "id": "CLOWNBOT",
+  "purchasable": true,
+  "cost": 100,
+  "unlockRequirements": [],
+  "description": "A mischievous clown robot with spectral powers! Ready to bring both laughter and fear to your chores!",
+  "imagePaths": {
+    "happy": "robots/clown-bot/images/happy.png",
+    "sad": "robots/clown-bot/images/sad.png",
+    "thinking": "robots/clown-bot/images/thinking.png",
+    "shadow": "robots/clown-bot/images/shadow.png"
+  },
+  "legacyImagePaths": {
+    "happy": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png",
+    "sad": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png",
+    "thinking": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png",
+    "shadow": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png"
+  }
+}

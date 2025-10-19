@@ -1,0 +1,382 @@
+﻿DUEL PROTOCOL: A System Deconstruction and Strategic Analysis of a Robotic Combat Simulation
+
+
+
+
+Section I: System Deconstruction - A Digital Strategy Game Primer
+
+
+This document provides a comprehensive deconstruction and analysis of the DUEL PROTOCOL, a turn-based strategic combat simulation. The system's design, mechanics, and strategic depth will be examined with the objective of codifying its rule set for archival purposes and future analysis, particularly in the context of artificial intelligence development.
+
+
+1.1 Genesis: From Physical Prototype to AI-Driven Simulation
+
+
+The system, commercially released in 2016 as Pokémon Duel (and initially in Japan as Pokémon Comaster), is a digital implementation of a pre-existing physical combat simulation (PCS) from 2007 known as the Pokémon Trading Figure Game.1 The development of the digital version was specifically motivated by the desire to introduce the complex strategic framework of the PCS to a new market where the physical version had not been released.1 This lineage establishes the system's foundation not in the realm of typical video games, but in the tradition of tactical tabletop board games, where deterministic positioning and calculated strategy are paramount.
+The selection of the development partner, HEROZ, is a critical indicator of the system's core design philosophy. HEROZ is a Japanese technology firm renowned for its specialization in sophisticated artificial intelligence, particularly its work on AI for Shogi, a Japanese strategy board game of immense complexity.1 This decision was not incidental; it was a clear statement of design intent. The DUEL PROTOCOL was engineered from the ground up to be a robust and analyzable strategic environment.
+This AI-first approach is evidenced by the nature of the simulation's integrated AI opponent. The AI was not merely programmed with simple heuristics; it was meticulously trained by simulating tens of thousands of engagements to identify and execute optimal lines of play. This rigorous training process refined the AI to a level where it could consistently outperform many of its human developers.1 For an AI to achieve such mastery, the underlying game system must possess a deep, logical, and calculable structure. A system based purely on chance or lacking in complex rules would be impossible for an AI to analyze and master to this degree. Therefore, the core rules governing movement, combat, and board control were intentionally crafted to support high-level, calculable strategic play, making the DUEL PROTOCOL less a game of chance and more a game of calculated probability—an ideal environment for strategic AI.
+
+
+1.2 Core Conflict: Determinism vs. Probability
+
+
+The central mechanic of the DUEL PROTOCOL is a turn-based engagement between two operators. Each operator commands a squad of six robotic combat units and a configurable set of up to six single-use "Strategic Modules".1 The primary objective is to achieve "Goal Capture" by maneuvering a unit onto the opponent's designated Goal Point, a node at the center of their back row, while simultaneously defending one's own.1 This objective creates a persistent strategic tension, forcing a constant balance between offensive maneuvers and defensive formations in what has been described as a "game of cat and mouse".1
+The defining characteristic of the simulation, and the engine of its strategic depth, is the fundamental duality of its core mechanics:
+* Deterministic Positioning: Operators have absolute, precise control over unit movement. The selection of which unit to move and where to place it on the engagement grid is governed by a fixed, transparent, and entirely predictable rule set.1 This element of the simulation is analogous to the perfect information and deterministic movement found in classic strategy games like chess.
+* Probabilistic Combat: When a unit moves adjacent to an opposing unit and combat is initiated, the outcome is not determined by operator skill but is resolved through a probabilistic mechanism. Each unit spins a roulette-style "Data Disk," and the result of the engagement is determined by the interaction of the moves generated.1 This introduces a controlled and quantifiable element of chance.
+This core conflict between deterministic control and probabilistic resolution elevates risk management to the paramount skill required for success. Victory is not achieved by operators who are merely fortunate in combat, but by those who can expertly leverage deterministic movement to manipulate the board state to their advantage. The highest level of play revolves around forcing the opponent into statistically unfavorable combat scenarios, creating threats that bypass the need for combat entirely (such as a surround), and correctly identifying when to avoid an engagement altogether.1 Every strategic decision is thus an exercise in calculating expected value, where the certainty of movement is used to influence and mitigate the uncertainty of combat.
+
+
+1.3 System Lifecycle: Operation, Decommission, and Community Archival
+
+
+The DUEL PROTOCOL was operated as a "game as a service," a model that required a persistent internet connection to centralized servers for all gameplay and data management functions.1 Its revenue model was based on gacha-style mechanics, where operators could use in-game currency (acquirable with real-world funds) to obtain new combat units of varying production classes and capabilities.1
+As a server-dependent system, its operational lifecycle was inherently finite. On October 31, 2019, the simulation was officially decommissioned, and its servers were shut down, rendering the client application inoperable.1 This event, however, did not signify the complete termination of the system. A dedicated community of users initiated a preservation effort, known as "Kaeru Duel," which successfully reverse-engineered the system's network protocols and developed custom, fan-operated servers.1 This project allows operators who possess a legitimate copy of the original client to once again access the simulation's online features and engage in multiplayer combat. The existence and success of this archival project underscore the compelling and unique nature of the system's design. This report aims to contribute to this preservation effort by formally codifying the intricate rule set of the DUEL PROTOCOL, ensuring its complex strategic framework is not lost.
+
+
+Section II: The Combat Protocol - A Comprehensive Gameplay Manual
+
+
+This section provides a direct and unambiguous codification of the DUEL PROTOCOL's rules. All terminology has been standardized to reflect a robotic combat theme for clarity and technical precision.
+
+
+2.1 Victory Conditions: Pathways to Mission Success
+
+
+A simulation concludes when an operator achieves one of three distinct victory conditions. The existence of multiple pathways to success necessitates strategic flexibility and the ability to adapt one's approach based on the evolving state of the engagement.1
+* Goal Capture: The primary and most direct victory condition. It is achieved when an operator moves one of their active units onto the opponent's Goal Point. The simulation ends immediately upon the occupation of this node.1
+* Time Out: In standard player-versus-player engagements, each operator is allocated a five-minute timer. This timer counts down exclusively during that operator's own turn. If an operator's timer expires, they are declared the loser by Time Out, irrespective of the current board state.1 This mechanic pressures operators to process information and make decisions efficiently, punishing indecisive or overly cautious play.
+* System Lockout: A forced victory state achieved when, at the start of the opponent's turn, the opponent has no legal moves available. This scenario, formerly known as a "WaitWin," is typically engineered by achieving two simultaneous objectives: blocking both of the opponent's Entry Points with friendly units and deactivating all of their remaining units on the field.1 This leaves the opponent with no units to move and no means to deploy new ones, resulting in a total strategic domination of the board.
+
+
+2.2 The Battlefield: The Engagement Grid
+
+
+The engagement takes place on a symmetrical grid composed of specific zones and nodes connected by routes. A complete understanding of this layout is fundamental to all strategic positioning.1
+* Field of Play: The main area consists of 26 nodes connected by lines known as "routes." Combat units may only travel between nodes that are directly connected by a route.1
+* Goal Point: Each operator has one Goal Point, located at the central node of the row closest to them. This is the primary objective for the opposing operator and the final line of defense.1
+* Entry Points: Each operator controls two Entry Points, situated at the corner nodes of their back row. These are the only nodes through which an operator can deploy a unit from their Hangar onto the field. An Entry Point cannot be used for deployment if it is occupied by any unit, friendly or hostile.1
+* Hangar: An off-grid zone where all six of an operator's units begin the simulation. Units that have completed their repair cycle are returned to the Hangar.1
+* Repair Bay: An off-grid zone where units are sent after being Deactivated in combat. It has a limited capacity of two units.1
+
+
+2.3 Turn Sequence & Action Commitment
+
+
+The simulation is turn-based, with a random spin at the start of the match determining which operator takes the first turn.1 Each turn follows a rigid and irreversible sequence of phases. Once an action is taken in a later phase, the operator cannot return to an earlier one for the remainder of that turn.1
+1. Module Phase: At the start of the turn, the operator may choose to activate one of their single-use Strategic Modules.1
+2. Subroutine Phase: The operator may choose to activate a special Subroutine on one of their units, if applicable. Many activated Subroutines will end the turn immediately upon use.1
+3. Movement Phase: The operator must select one unit on the grid or in their Hangar to move. This is the mandatory action of every turn. Once a unit is moved, the Module and Subroutine Phases are concluded for that turn.1
+4. Combat Phase: If a unit's movement concludes on a node adjacent to an opposing unit, the operator may choose to initiate combat. The turn ends immediately following the resolution of the combat.1 If the operator declines combat, or if the move does not end adjacent to an opponent, the turn ends after the movement is complete.
+This rigid structure establishes a principle of "action commitment." The decision to move a unit is the most critical point of any turn, as it finalizes the strategic setup from the Module and Subroutine phases and commits the operator to a new board state. This elevates the importance of careful, forward-thinking planning before any unit is repositioned. A notable exception applies to the very first turn of the game: the unit moved by the first operator has its Movement Points (MP) reduced by one for that move only.1
+
+
+2.4 Unit Movement
+
+
+Unit movement is governed by its Movement Point (MP) statistic, a value which typically ranges from 1 to 3.1 A unit can move along the grid's connected routes for a number of steps up to its maximum MP value.1 Deploying a unit from the Hangar onto one of the operator's unoccupied Entry Points costs 1 MP.1 Critically, units cannot move through nodes that are occupied by other units, whether they are friendly or hostile.1
+
+
+2.5 Combat Resolution: The Attack Priority Hierarchy
+
+
+When combat is initiated, the outcome is resolved via a Data Disk spin for each participating unit. The resolution is determined not by unit type or attributes, but by a strict, color-coded hierarchy of attack priorities.1
+* Red (Miss): Represents a failed action or system malfunction. A Miss automatically loses to any opposing move of any other color. If both units spin Miss, the result is a draw with no effect.1
+* White (Standard Attack): A standard, damage-dealing attack, indicated by a numerical value. When a White attack engages another White or a Gold attack, the move with the higher damage value wins, and the loser is Deactivated. If the damage values are equal, the result is a draw. A White attack loses to a Purple or Blue move.1
+* Gold (Priority Attack): Functions identically to a White attack in damage calculation. Its critical distinction is that it possesses priority over and defeats Purple moves.1 This makes Gold attacks a key tactical tool for breaking through units that rely on special effects.
+* Purple (Special Effect): These moves execute unique, non-damaging effects, such as inflicting System Malfunctions or displacing other units on the grid. Purple moves are ranked by a star rating from one (⋆) to three (⋆⋆⋆). A Purple move defeats any White move. When two Purple moves clash, the one with the higher star rating wins. If the star ratings are equal, the result is a draw. A Purple move loses to a Gold or Blue move.1
+* Blue (Defensive Maneuver): These moves, such as Dodge or Protect, have the highest priority in the hierarchy. A Blue move defeats White, Gold, and Purple moves. The most common outcome is a "wash," where the combat ends with no effect, and no units are Deactivated or moved.1 If both units spin Blue, the result is a draw.1
+The definitive hierarchy of move colors is: Blue > Gold > Purple > White > Red.
+Table 2.1: Attack Priority Matrix
+	
+
+	
+
+	
+
+	
+
+	
+
+	Attacker / Defender
+	Red (Miss)
+	White (Attack)
+	Purple (Special)
+	Gold (Priority)
+	Blue (Defensive)
+	Red (Miss)
+	Draw
+	Defender Wins
+	Defender Wins
+	Defender Wins
+	Defender Wins
+	White (Attack)
+	Attacker Wins
+	Higher Damage Wins
+	Defender Wins
+	Higher Damage Wins
+	Defender Wins
+	Purple (Special)
+	Attacker Wins
+	Attacker Wins
+	Higher Stars Win
+	Defender Wins
+	Defender Wins
+	Gold (Priority)
+	Attacker Wins
+	Higher Damage Wins
+	Attacker Wins
+	Higher Damage Wins
+	Defender Wins
+	Blue (Defensive)
+	Attacker Wins
+	Attacker Wins
+	Attacker Wins
+	Attacker Wins
+	Draw
+	
+
+2.6 Deactivation and Repair Cycle
+
+
+The unit that loses a combat engagement is "Deactivated" and is immediately moved from the grid to its operator's Repair Bay.1 This off-board zone and its associated mechanics are not merely a penalty system but a core element of resource and tempo management.
+The Repair Bay has a maximum capacity of two units.1 When a third unit is Deactivated and sent to the Repair Bay, the unit that has been in the Bay for the longest duration is immediately moved to that operator's Hangar.1 This returning unit is afflicted with the "Wait 1" status, meaning the operator cannot select it for movement on their next turn.1 This creates a predictable cycle and a strategic delay, preventing operators from immediately recycling their most powerful units. An expert operator can track the state of the opponent's Repair Bay and Hangar to predict which units will become available and when. A viable strategy could involve intentionally "overloading" the opponent's Repair Bay with low-threat deactivations to force a high-threat unit back into their Hangar with a "Wait" penalty, thereby disrupting their tempo and resource flow.
+
+
+2.7 Advanced Tactics
+
+
+Beyond basic movement and combat, several advanced mechanics provide additional layers of strategic depth.
+* Surrounding: A unit can be instantly Deactivated without initiating combat if it becomes surrounded. A surround occurs when all adjacent nodes connected to the target unit's space are occupied by the opponent's units. The surrounded unit is immediately sent to the Repair Bay.1 This is a powerful, deterministic tactic for removing a formidable defensive unit without engaging in a risky, probabilistic battle.
+* System Malfunctions: Certain attacks, primarily Purple moves, can inflict persistent negative effects, or System Malfunctions, on a unit. These malfunctions alter the unit's performance in subsequent combat engagements. A unit is cleared of any System Malfunction when it is Deactivated and sent to the Repair Bay.1
+Table 2.2: System Malfunctions Reference
+	
+
+	Malfunction
+	Effect
+	Corrosive Leak (Poison)
+	The unit's damage-dealing attacks are reduced by 20.
+	Critical Leak (Noxious)
+	The unit's damage-dealing attacks are reduced by 40.
+	EMP Static (Paralysis)
+	The unit's Data Disk has one of its move segments converted to a Miss segment for the duration of the effect.
+	Overheat (Burn)
+	The unit's damage-dealing attacks are reduced by 20.
+	Logic Scramble (Confusion)
+	The unit's Data Disk is spun an additional time. If the second spin lands on an attack, the unit attacks itself.
+	Standby Mode (Sleep)
+	The unit cannot participate in combat. It can be moved past by opposing units. The effect is cured if the unit is attacked.
+	Cryo-Stasis (Frozen)
+	The unit cannot participate in combat or be moved by the operator. The effect is cured if the unit is attacked.
+	
+
+2.8 Strategic Modules
+
+
+Strategic Modules are single-use items that an operator can include in their squad roster (up to a maximum of six).1 They are activated during the Module Phase at the start of a turn and can produce powerful, often game-altering effects that can override the standard rules of the simulation.1
+Modules serve as the primary tool for operators to mitigate the system's inherent probability and inject moments of controlled certainty. For example, a "Double Chance" module allows an operator to re-spin their unit's Data Disk if the initial result is unfavorable, directly countering the element of chance. An "X Attack" module temporarily boosts a unit's damage, altering the statistical probabilities of winning a specific battle. A "Unit Switch" module allows two friendly units to swap positions on the grid, a powerful maneuver that breaks the standard rules of movement and action commitment. The judicious selection of Modules during squad construction and their timely application during an engagement are hallmarks of advanced play, representing an operator's ability to expend a finite resource to guarantee a specific outcome at a critical moment.
+
+
+Section III: The Unit Compendium - An Analysis of the Robot Roster
+
+
+This section analyzes the individual combatants of the DUEL PROTOCOL as distinct robotic units, breaking down their attributes and classifying them into strategic roles.
+
+
+3.1 Understanding a Unit's Schematic
+
+
+Each unit in the simulation is defined by a set of key performance attributes that determine its role and effectiveness in an engagement.1
+* Production Class (Rarity): Units are categorized by their production class, which generally correlates with their power, complexity, and rarity of acquisition. The tiers are Standard (C), Advanced (UC), Elite (R), Experimental (EX), and Unique-Experimental (UX).1
+* Movement Points (MP): A value of 1, 2, or 3 that dictates the maximum number of nodes a unit can move on the grid in a single turn.1
+* Subroutine (Ability): Many units possess a unique Subroutine, which can be a passive effect that is always active or an activated effect that an operator can choose to use during their turn. Subroutines often define a unit's specific strategic niche.1
+* Data Disk: The spin wheel that determines a unit's action in combat. It is composed of various colored move segments that represent its combat profile.1
+
+
+3.2 The Data Disk Explained
+
+
+The composition of the Data Disk is the heart of a unit's combat potential and the primary factor in assessing its strengths, weaknesses, and reliability.
+* Segment Size: The "Size" of each move segment on the disk corresponds directly to its probability of being landed on during a spin. The total size of all segments on a standard Data Disk is 96.1 Therefore, a move with a size of 24 has a 24/96, or 25%, chance of occurring. This provides a clear, quantifiable measure of a unit's combat consistency.
+* Enhancement (Leveling Up): Operators can fuse duplicate units or special enhancement materials into a base unit to increase its level. Each time a unit levels up, the operator can choose to increase the size of one of its move segments by 1. This point is taken directly from one of the unit's Red (Miss) segments.1 This system of enhancement is a subtle but powerful mechanic for long-term risk mitigation. It allows an operator to permanently modify the probability distribution of a unit's Data Disk, reducing the chance of a critical failure (Miss) while increasing the probability of a desired outcome. For an AI, this represents a clear optimization path, where the value of a unit is not just its base schematic but its potential schematic after full enhancement.
+
+
+3.3 Unit Database & Data Limitations
+
+
+The compilation of a complete and exhaustive database of every unit released in the DUEL PROTOCOL is a significant archival challenge. The simulation featured over 400 unique units by the end of its operational service. The primary community resource for this data, the website DuelDB, became defunct following the system's decommissioning.1
+Therefore, it must be explicitly stated that a complete, verified list of all units and their precise Data Disk segment sizes is not available within the scope of this report. In lieu of a complete database, this compendium provides a standardized template for recording unit data. This template will be populated with key examples for which data could be recovered, serving as a foundational, expandable database for the preservation community.
+
+
+3.4 Example Unit Schematics
+
+
+The following schematics use the standardized data block format and are populated with data for key units, re-themed for this analysis. They serve as examples of different strategic roles and archetypes within the simulation.
+
+
+Table 3.1: Standardized Unit Schematic (Template and Examples)
+	
+
+	Name:
+	Volt-Class Unit V-K4 (Pikachu)
+	Production Class:
+	Elite (R)
+	MP:
+	3
+	Subroutine:
+	None
+	Data Disk (Wheel):
+	- Thunder Shock (White) - 30 Damage - Quick Attack (Gold) - 50 Damage - Thunder Wave (Purple) - ⋆ - The battle opponent is afflicted with EMP Static. - Thunder (White) - 100 Damage - Dodge (Blue) - Miss (Red)
+	Analysis:
+	A versatile 3 MP Scout. Its Data Disk offers a mix of a priority Gold attack, a high-damage White attack, and a utility Purple move that inflicts EMP Static (Paralysis), making it a flexible offensive threat.1
+	Name:
+	Aegis-Class Unit SQ-7 (Squirtle)
+	Production Class:
+	Advanced (UC)
+	MP:
+	3
+	Subroutine:
+	None
+	Data Disk (Wheel):
+	- Withdraw (Blue) - Bubble (White) - 20 Damage - Miss (Red)
+	Analysis:
+	A premier defensive Scout. Defined by its 3 MP and a massive Blue (Withdraw) segment, making it exceptionally reliable for blocking strategic nodes or occupying the Goal Point with a high degree of safety.1
+	Name:
+	Phantom-Class Unit L-10S (Latios)
+	Production Class:
+	Experimental (EX)
+	MP:
+	3
+	Subroutine:
+	Hallucination: If this unit is Deactivated, it is removed from the duel instead of being sent to the Repair Bay.
+	Data Disk (Wheel):
+	- Luster Purge (White) - 120 Damage - Psychic (White) - 60 Damage - Dragon Breath (White) - 80 Damage - Dodge (Blue)
+	Analysis:
+	A high-risk, high-reward "glass cannon" Scout. Its powerful attacks can dominate the early engagement, but its Subroutine makes being Deactivated a permanent and catastrophic loss.1
+	Name:
+	Phantom-Class Unit L-11A (Latias)
+	Production Class:
+	Experimental (EX)
+	MP:
+	3
+	Subroutine:
+	Hallucination: If this unit is Deactivated, it is removed from the duel instead of being sent to the Repair Bay.
+	Data Disk (Wheel):
+	- Fly Over (Purple) - ⋆⋆ - This unit moves to a point 2 steps away. - Mist Ball (White) - 70 Damage - Dodge (Blue)
+	Analysis:
+	A more strategic variant of the L-10S. It relies on its powerful Purple move to reposition and outmaneuver opponents, creating threats through positioning rather than raw damage.1
+	Name:
+	Conductor-Class Unit M-490 (Manaphy)
+	Production Class:
+	Experimental (EX)
+	MP:
+	1
+	Subroutine:
+	Conductor's Song: Your Hydro-type units on the field deal +20 damage in battle.
+	Data Disk (Wheel):
+	- Conductor's Song (Purple) - ⋆⋆ - Choose one of your Hydro-type units on the field or in the Hangar. It can move past other units on the field for the next turn. - Bubble (White) - 40 Damage - Dodge (Blue)
+	Analysis:
+	A cornerstone Support Platform. Its value is derived almost entirely from its passive Subroutine, which provides a significant damage buff to all allied Hydro-type units, defining an entire squad archetype.1
+	
+
+3.5 Strategic Archetypes: Unit Classification
+
+
+Units in the DUEL PROTOCOL can be broadly classified into functional roles based on their schematics, particularly their MP and Data Disk composition. A well-balanced squad typically includes units from multiple archetypes.1
+* Scouts (3 MP): These are high-mobility units used to apply early-game pressure, secure strategic nodes like the opponent's Entry Points, and execute rapid "Goal Rush" strategies. Their speed also makes them effective at setting up surrounds. Examples include V-K4, SQ-7, and L-10S.1
+* Vanguards (2 MP): These units form the core of most squads, offering a balance between solid mobility and strong combat capabilities. They are responsible for controlling the center of the grid, initiating key battles, and serving as the primary combatants in prolonged engagements. Most premier offensive units fall into this category.1
+* Sentinels (1 MP): With the lowest mobility, these units are designed for defensive roles. They are typically placed on the Goal Point or other critical defensive positions. Their strength lies in their Data Disks, which often feature high-damage attacks, large Blue segments, or powerful Purple effects that make them extremely difficult to dislodge in a battle.1
+* Support Platforms: These units are valued not for their individual combat prowess but for their Subroutines or moves that enhance the entire squad. Their effects can define a squad's overall strategy. The Conductor-Class Unit M-490, with its team-wide damage boost for Hydro-types, is a prime example of this archetype.1
+
+
+3.6 The Upgrade Protocol
+
+
+The Upgrade Protocol is a powerful mid-duel transformation mechanic that allows a unit to reconfigure into a stronger form, but it often comes with significant strategic trade-offs.1
+* Mechanics: To enable an upgrade, an operator must own the units for each stage of the upgrade path and set them in sequence in the squad editor. During a duel, after the base-form unit Deactivates an opposing unit, the operator is given the option to execute the upgrade.1
+* Benefits: For each stage of an upgrade, the unit receives a permanent bonus of +10 damage to all of its White and Gold attacks and an additional star (⋆) to all of its Purple attacks.1 A unit that has undergone two upgrade stages would have a +20 damage bonus and a ⋆⋆ bonus to its Purple moves.
+* The Strategic Trade-Off: An upgrade is not always a straightforward improvement. A significant trade-off often exists between mobility and power. For instance, a 3 MP Scout might upgrade into a 2 MP Vanguard.1 This creates a dynamic, state-dependent strategic decision. In an early-game rush scenario where board presence and pressure are paramount, retaining the 3 MP Scout is often the optimal choice. Conversely, in a late-game, stalled board state where breaking through a fortified defensive line is necessary, the superior combat power of the 2 MP Vanguard is more valuable. The decision to upgrade is therefore a strategic pivot, not a simple power-up, and an AI would need to assess the entire game state to determine which unit form has the higher utility at that specific moment.
+
+
+Section IV: Physical Simulation - A Guide to Tabletop Prototyping
+
+
+The strategic depth and board game nature of the DUEL PROTOCOL make it an ideal candidate for adaptation into a physical tabletop simulation. This section provides a practical guide for recreating the experience.
+
+
+4.1 Required Materials
+
+
+The components needed are readily available and can be crafted with basic supplies.1
+* Game Board Surface: A thin foam board or a large sheet of paper.1
+* Drawing Tools: A pencil, a black permanent marker, and a ruler.1
+* Unit and Zone Markers: A circular object (e.g., a coin) for tracing uniform nodes, and paper and scissors to create unit tokens.1
+* Reference Schematics: Paper or index cards to create a detailed reference card for each unit, listing its MP, Subroutine, and Data Disk moves with assigned number ranges.1
+* Random Number Generator: An essential tool to simulate the Data Disk spin. This can be a smartphone app, a website, or physical dice. A pair of ten-sided dice (d10s) can generate a number from 00-99, which is functionally equivalent to a 1-100 system for this purpose.1
+* Status/Effect Tokens: Small markers (e.g., colored beads, small coins) to place on unit tokens to indicate System Malfunctions and Wait timers.1
+
+
+4.2 Constructing the Game Board
+
+
+1. Layout the Grid: Using a pencil and ruler, draw the 26 nodes of the engagement grid on the board surface, ensuring consistent spacing.1
+2. Draw the Routes: Connect the nodes with straight lines using the permanent marker to represent the routes units can travel along.1
+3. Create Player Zones: Below each end of the main grid, draw the designated operator zones: six circles for the Hangar and two circles (marked with a '+') for the Repair Bay.1
+4. Finalize the Board: Trace over all pencil lines with the permanent marker to create a clear and durable game board.1
+
+
+4.3 Creating the Unit Tokens and Reference Schematics
+
+
+* Unit Tokens: For each of the twelve units in the two operators' squads, trace and cut out a circular paper token. Write the unit's designation on each token and use a colored marker to differentiate the two teams.1
+* Reference Schematics: For each unit, create a separate, larger reference card. This card is crucial and must contain all of the unit's gameplay information: its MP, its Subroutine(s), and its complete Data Disk.1
+* Module Cards: Create small, distinct cards for each Strategic Module, detailing its name and full effect.1
+
+
+4.4 Simulating the Data Disk
+
+
+This is the most critical mechanical adaptation. The most accurate method uses a 1-96 numbering system to perfectly replicate the in-game probabilities.
+1. Assign Number Ranges: On each unit's reference schematic, list its moves from the Data Disk. Next to each move, assign a range of numbers from 1 to 96 that corresponds to its "Size".1 For example:
+   * Unit V-K4 Data Disk (Hypothetical Sizes):
+      * Quick Attack (Gold, 50 Dmg): 1-28 (Size 28)
+      * Thunder Shock (White, 30 Dmg): 29-60 (Size 32)
+      * Dodge (Blue): 61-80 (Size 20)
+      * Miss (Red): 81-96 (Size 16)
+2. Generate a Number: When combat occurs, each operator uses the random number generator to produce a number between 1 and 96.
+3. Determine the Move: The operators consult their unit's reference schematic to see which move corresponds to the generated number.
+4. Resolve the Battle: Once both moves are determined, the combat is resolved according to the Attack Priority Hierarchy (Section 2.5).
+For simplicity in casual play, a 1-100 system can be used, as the slight statistical variance is negligible.1
+
+
+4.5 The Physical Protocol Manual
+
+
+A condensed set of rules should be kept with the physical game for quick reference. This should include:
+* A printout of the Attack Priority Matrix (Table 2.1).
+* A printout of the System Malfunctions Reference (Table 2.2).
+* A reminder of the turn sequence: Modules -> Subroutines -> Move -> Battle.
+* Clear rules for Surrounding, the Repair Bay cycle, and Wait timers.
+
+
+Section V: Strategic Synthesis and Concluding Analysis
+
+
+
+
+5.1 The Core Strategic Pillars
+
+
+The intricate mechanics of the DUEL PROTOCOL give rise to a complex strategic environment built upon three interacting pillars. Mastery of the simulation requires a deep understanding of how these pillars inform every decision.
+* Board Control vs. Aggression: At the highest level, the simulation presents a constant tension between two opposing philosophies. An aggressive operator may focus on a "Goal Rush," using high-MP Scouts to apply immediate pressure and aim for a swift Goal Capture victory. A control-oriented operator will focus on securing strategic nodes, establishing defensive formations, blocking the opponent's Entry Points, and slowly grinding the opponent down towards a System Lockout victory.1 A successful operator must be able to identify which strategy is most effective against a given opponent's squad and be able to pivot fluidly between offensive and defensive postures as the engagement evolves.
+* Probabilistic Risk Management: Given that combat resolution is probabilistic, the defining skill of an expert operator is the management of risk. Every decision to initiate combat is a calculated gamble. Before attacking, an operator must consider the Data Disks of both units, the range of potential outcomes, and whether the reward of winning the battle outweighs the risk of losing it. The best operators use deterministic movement to create situations where they either avoid risk entirely (e.g., by surrounding a key target) or force the opponent into engagements where the odds are heavily stacked against them. Strategic Modules serve as the ultimate risk management tool, allowing an operator to spend a limited resource to override chance at a critical moment.1
+* Squad Synergy: A winning strategy is not executed by six individual units, but by a cohesive and unified squad. Squad construction is a crucial meta-game element where operators must select units and Strategic Modules that complement one another to execute a coherent game plan. For example, a Hydro-type squad featuring the Conductor-Class Unit M-490 is designed to leverage its team-wide damage boost to overwhelm opponents with superior combat statistics. A squad built around inflicting System Malfunctions might include units with powerful Purple moves and Modules that can capitalize on a paralyzed or confused opponent. The synergy between units, their Subroutines, and the chosen Modules is what elevates a collection of strong pieces into a formidable and unified strategy.1
+
+
+5.2 Final Verdict: A Lost Paragon of Strategic Design
+
+
+The DUEL PROTOCOL system stands as a unique and compelling entry in the landscape of digital strategy games. By adapting the foundation of a physical tabletop game into a digital format, it created a deeply strategic experience that masterfully blended the tactical positioning of deterministic games like chess with the calculated risk and resource management of probabilistic collectible games. Its core tension—between the perfect control of movement and the unpredictable nature of combat—forced operators to think less like simple battlers and more like comprehensive strategists, constantly evaluating odds, controlling space, and managing finite resources.1
+While its commercial implementation drew valid criticism for its reliance on gacha mechanics and the significant impact of luck on individual outcomes, these aspects did not negate the profound strategic depth that lay at its core.1 The system's discontinuation was a loss for the genre, removing a title that offered a genuinely distinct and intellectually rewarding challenge. The continued dedication of its community, evidenced by the Kaeru Duel preservation project, speaks to the quality and uniqueness of its design. Ultimately, the DUEL PROTOCOL deserves to be remembered not as a transient mobile application, but as a thoughtfully crafted digital board game whose complex and rewarding rule set is worthy of analysis, appreciation, and preservation for future generations of players and game designers.
+Works cited
+1. DUEL-RUNDOWN.txt

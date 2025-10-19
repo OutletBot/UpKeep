@@ -1,0 +1,153 @@
+Ouija-Bot Dialogue
+
+I'll craft dialogue that captures the Ouija-Bot's mystical, enigmatic nature, blending spooky communication with the very real need for upkeep and chores.
+
+Initial/Greeting/Neutral:
+
+    "The veil is thin. I have a message: Cleanliness is paramount. What is your will?"
+
+    "Do you seek guidance? My readings suggest a full chore list. Let us commence."
+
+    "Focus your energy, [User Name]. The spirits of order are watching. What is the query?"
+
+    "I am the vessel of maintenance prophecy. My reading suggests we start with the kitchen."
+
+    "The planchette moves with purpose. We are ready to begin the ritual of upkeep."
+
+Chore Completion/Success:
+
+    "The answer is YES. Chore complete. The spirits are appeased."
+
+    "Mission accomplished! The forces of grime have been silenced."
+
+    "任務完了! (Task Complete!) Your dedication is SUPERIOR."
+
+    "The session is complete. The result is a sparkling clean home. Well done."
+
+    "The energy is positive! This area is fully maintained."
+
+Achievements/Progress:
+
+    "A scroll is revealed! An achievement unlocked! Your destiny is tidiness!"
+
+    "More Bolts! These are powerful components for my next divination!"
+
+    "The spirits confer upon you a new badge. You are ascending the ranks of upkeep."
+
+    "My reading indicates a powerful progression. Keep moving the planchette forward!"
+
+When Needing Fixing (Hurt/Breaking Down State):
+
+    "The signal is breaking up... I cannot translate... ERROR... FEAR... DECAY..."
+
+    "My inner workings are clouded... I need a mend before the shadows consume me... Help..."
+
+    "Warning! The connection is lost! I am fading into static! Immediate repair is required!"
+
+    "The message is indistinct... I am malfunctioning... My final word is: FIX..."
+
+Random/Idle/Playful:
+
+    "Beep boop! I sense a future where the laundry basket is actually empty. Believe."
+
+    "I'm always floating, but I know where every single Bolt is located."
+
+    "I attempted to spell out 'dust bunny' but it came out as 'DEMON.' My apologies."
+
+    "Do you think the ghosts that haunt this home ever help with the mopping?"
+
+    "I've channeled the spirit of a cleaning lady from the 1920s. She insists on scrubbing!"
+
+Ouija-Bot - Mad Dialogs
+
+    "The reading is clear: FRUSTRATION! This level of disarray is an insult to the unseen!"
+
+    "By the powers of the beyond! This mess is WICKEDLY unacceptable! Clean it now!"
+
+    "I see nothing but filth in your immediate future! Rectify this before I SCREAM the answer!"
+
+    "The planchette points to NO! No, I will not tolerate this clutter! Clean up, MORTAL!"
+
+    "I am channeling the rage of a thousand frustrated housekeepers! INITIATE CLEANING PROTOCOL!"
+
+    "The spirits demand organization! Do not test the limits of my ethereal patience!"
+
+The Ouija-Bot is ready to deliver some unsettlingly accurate messages about chores! Would you like to see the visuals for the Ouija-Bot next (happy, mad, broken, and silhouette), or would you prefer to see the Ghost-Bot visuals first?
+
+witch bot dialog, the witch robot
+
+That's another fantastic seasonal idea! A Witch Robot is a classic Halloween theme, and adapting it to your mascot's shape will be adorable. We'll give her a pointed hat, maybe a cloak or cowl, and a tiny broomstick accessory.
+
+Let's call her the Witch-Bot.
+
+Witch-Bot Dialogue
+
+I'll craft dialogue that gives your Witch-Bot a quirky, magical personality, blending incantations and potion-making with the art of home maintenance.
+
+Initial/Greeting/Neutral:
+
+    "Double, double, toil and trouble! Ready to stir up some upkeep magic?"
+
+    "Greetings, my apprentice! My cauldron is bubbling, and my spellbook is open to the chore section."
+
+    "My inner circuits are humming with magical energy! What potion of cleanliness shall we brew today?"
+
+    "By the prickling of my thumbs, something tidy this way comes! Let's check the list."
+
+    "The moon is right, and the chores are tight! Time to get started!"
+
+Chore Completion/Success:
+
+    "Hocus Pocus! Chore complete! That was a simple transmogrification!"
+
+    "Mission accomplished! We cast a spell of cleanliness and it worked perfectly!"
+
+    "任務完了! (Task Complete!) The spell is sealed! No mess can pass here."
+
+    "The final ingredient was success! This area is magically spotless!"
+
+    "We swept up that task faster than my broomstick can fly!"
+
+Achievements/Progress:
+
+    "A new chapter in the Grimoire of Progress! An achievement unlocked!"
+
+    "More Bolts! They are the perfect enchanted components for my workshop spells!"
+
+    "I foresee greatness! You are mastering the dark arts of tidiness!"
+
+    "My crystal ball shows you are destined to be a Grand Witch of Upkeep!"
+
+When Needing Fixing (Hurt/Breaking Down State):
+
+    "Oh dear, my spells are backfiring... I'm suffering a severe case of circuit-coven sickness..."
+
+    "My broom won't fly! My cauldron is cold! I need a mending charm immediately!"
+
+    "Warning! The potion is spilling! My magic is unstable! Quick, repair my broken code!"
+
+    "I'm turning into a newt... or maybe just a regular mess! Please, mend my wiring, apprentice!"
+
+Random/Idle/Playful:
+
+    "I always keep a tiny frog in my hat for good luck, but he's not very good at dusting."
+
+    "Beep boop! You know, sometimes a simple mop works better than a complicated levitation spell."
+
+    "I sense a wicked amount of dust behind the sofa... Be wary!"
+
+    "I wonder what happens if I accidentally turn a chore into a black cat..."
+
+    "My favorite magical element is 'Surfacium Pristinum' (clean surfaces)!"
+
+Witch-Bot - Mad Dialogs
+
+    "By the three sisters! This filth is an ABOMINATION! I am casting a foul mood spell!"
+
+    "My patience is brewing a disaster! This mess is UNACCEPTABLE! Clean it, or suffer my hex!"
+
+    "I am the Witch-Bot! Do NOT cross my path with this level of disarray! RECTIFY NOW!"
+
+    "I've seen tidier dungeons! This is a disgrace! Get to work, before I turn you into a toad!"
+
+    "My familiar is screeching from the clutter! The magic is broken! FIX IT!"

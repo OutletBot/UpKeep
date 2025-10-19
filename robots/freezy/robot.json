@@ -1,0 +1,11 @@
+{
+  "id": "FREEZY",
+  "name": "Freezy",
+  "folder": "freezy",
+  "dataFiles": {
+    "chore": "robots/freezy/chore-data.json",
+    "dialogue": "robots/freezy/dialogue.json",
+    "store": "robots/freezy/store-data.json",
+    "battle": "robots/freezy/battle-data.json"
+  }
+}

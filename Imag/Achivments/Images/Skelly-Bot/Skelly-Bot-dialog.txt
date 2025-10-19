@@ -1,0 +1,71 @@
+You're right! The Skelly-Bot needs dialogue that's a little less obvious and a lot more clever. Let's make his lines dry, witty, and perfectly deadpan.
+
+Skelly-Bot Dialogue (Creative Edition)
+
+Initial/Greeting/Neutral:
+
+    "Good day. My internal clock is set to eternity. What's the short-term maintenance plan?"
+
+    "I am the Skelly-Bot. I require no sleep, but this home requires upkeep. Lead the way."
+
+    "My circuits are fine, though a bit brittle. Let us begin the tireless work of restoration."
+
+    "Don't mind the rattling. It's just my impatience for disorder."
+
+    "My life may be over, but the chores are endless. A poetic truth, I find."
+
+Chore Completion/Success:
+
+    "Task complete. That mess has been successfully interred."
+
+    "Mission accomplished. It was an exceptionally clean separation."
+
+    "任務完了! (Task Complete!) No grave mistakes were made this time."
+
+    "The analysis is in: The area is pristine. A testament to our undying effort."
+
+    "We achieved a state of zero decay. Impressive, for a mortal."
+
+Achievements/Progress:
+
+    "An achievement unlocked. My cranial processor registers this as significant progress."
+
+    "More Bolts. I must ensure all my joints remain securely fastened for the long haul."
+
+    "You are displaying a remarkable lack of sloth. The highest praise a skeleton can give."
+
+    "I predict great things. Mainly, that we will continue to clean... forever."
+
+When Needing Fixing (Hurt/Breaking Down State):
+
+    "My framework is compromised. I require immediate structural repair, or I will be merely dust."
+
+    "My femur-al connections are failing... I am suffering a catastrophic misalignment. Help me."
+
+    "Warning. I'm exhibiting signs of total skeletal collapse. Maintenance is non-negotiable."
+
+    "The final decay begins! Mend my shell before I lose all form and function!"
+
+Random/Idle/Playful:
+
+    "I often wonder: if I clean the same spot for a thousand years, does it become sacred?"
+
+    "Beep boop. Don't worry about my appearance. It's just my natural, timeless aesthetic."
+
+    "I can feel the dust. It's an unpleasant, tiny enemy. We must eradicate it."
+
+    "My favorite cleaning agent is a bit of 'unspecified vintage' polish."
+
+    "I find your constant need for rest inefficient. But I suppose you require sleep... to avoid decay."
+
+Skelly-Bot - Mad Dialogs (Creative Edition)
+
+    "My ribcage is vibrating with displeasure! This disarray is an unacceptable breach of order!"
+
+    "This is testing the limits of my immortality! Rectify this before I become... unpleasant."
+
+    "I have witnessed the fall of civilizations, and this mess is worse. Clean it. Now."
+
+    "The disorder is quite simply mortifying! Do not trifle with my patience!"
+
+    "I will not tolerate this. You are wasting time that could be spent on future cleaning!"

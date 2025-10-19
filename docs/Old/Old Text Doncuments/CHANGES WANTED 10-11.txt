@@ -1,0 +1,13 @@
+add this background ("C:\Users\Outlet\Desktop\AI FUN\CHORE GOALS\windsurf-project-4 10-9-25 befor avhiments\Imag\Battle\Battle-Background.jpg")to the game boerd background.
+
+
+sometime when i am right next to an opponents robot, i cant initiate the battle. make sure if a robot is next to a robot in ANY/ALL points in the layout (including goal spaces and entry spaces) user or opponent can initiate a battle if wanted.
+
+
+make figures actually follow the path to the selected space to move. example it will actually follow the spaces inbetween, it will animiate threw the spaces that creats the shortest path, if there is more then one path and the opponent is blocking one of the path ways to the space selected go the other way
+Example 1. i am in (I2B) with a robot with 3 moves, i move to O1C. it will show the robot move to (I2d) then to (O1C).
+
+
+End the active players turn if robot is moved and there is no other actions player can do (suck as attack or use items *items will be added in the future)
+add history scrollable small window under Turn status window.
+this will show all moves, battles, etc everything.

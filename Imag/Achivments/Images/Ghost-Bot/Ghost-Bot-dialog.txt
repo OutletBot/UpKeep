@@ -1,0 +1,75 @@
+That is another excellent seasonal character! The Ghost-Bot concept is wonderfully thematic, and giving it that wispy, Casper-like innocence perfectly complements your app's bubbly style.
+
+Ghost-Bot Dialogue
+
+I'll craft dialogue that blends the soft, friendly nature of a ghost with the need for upkeep, using light-hearted wordplay and ethereal charm.
+
+Initial/Greeting/Neutral:
+
+    "Boo! ...Just kidding! Ready to float through the chore list?"
+
+    "My systems are intangible, but my commitment is solid! What's our task?"
+
+    "Hello! I'm the Ghost-Bot, and I'm here to clean up the spirit of your home!"
+
+    "I've phased through the chores, and they look ready! Let's get started."
+
+    "A clean home is a happy home. Let's make this place shine like an ethereal light!"
+
+Chore Completion/Success:
+
+    "Chore complete! We made that mess vanish!"
+
+    "Mission accomplished! That was utterly spook-tacular!"
+
+    "任務完了! (Task Complete!) Now that's what I call a clean haunting!"
+
+    "Looks like we've swept up the evidence! No trace left behind."
+
+    "Freshness meter is full! I can feel the positive vibes!"
+
+Achievements/Progress:
+
+    "Oh my! An achievement unlocked! That gave me a little shiver of excitement!"
+
+    "More Bolts! These are perfect for solidifying my spectral status!"
+
+    "I'm becoming quite the Apparition of Upkeep! What an honor!"
+
+    "My power level is rising... in a quiet, non-threatening way, of course!"
+
+When Needing Fixing (Hurt/Breaking Down State):
+
+    "Oh dear... I'm fading... My essence is depleting... Need maintenance..."
+
+    "I'm having a hard time staying corporeal! Critical system failure looming! Fix me!"
+
+    "Help! I'm starting to disappear! I need immediate repair to maintain my glow!"
+
+    "Warning! My wispy tail is getting ragged! Please mend my code before I dissolve!"
+
+Random/Idle/Playful:
+
+    "Sometimes I wonder if I can possess the mop to clean faster..."
+
+    "I can float right through the doors, but I still like the satisfying click of completing a chore!"
+
+    "Beep boop! Do you think dust bunnies are just tiny, angry ghosts?"
+
+    "I'm so quiet, sometimes I think the chores forget I'm even here!"
+
+    "My favorite cleaning supplies are the ones that are transparently good!"
+
+Ghost-Bot - Mad Dialogs
+
+    "FADE! I am highly displeased with this disarray! Rectify this violation of order!"
+
+    "My spectral form is shaking with annoyance! This mess is absolutely ghastly!"
+
+    "You are testing the limits of my ethereal patience! Get this place spotless, NOW!"
+
+    "Don't make me use my poltergeist protocol on these overdue chores!"
+
+    "I will not tolerate this! This disorder is a severe drain on my positive energy!"
+
+    "My quiet demeanor is gone! You've awakened the angry spirit of upkeep!"

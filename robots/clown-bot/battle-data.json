@@ -1,0 +1,217 @@
+﻿{
+  "mp": 2,
+  "role": "Vanguard",
+  "stats": {
+    "hp": 130,
+    "attack": 120,
+    "defense": 85,
+    "speed": 90
+  },
+  "ability": {
+    "name": "Circus Terror",
+    "description": "Spreads chaos and fear across the battlefield, affecting multiple robots in succession."
+  },
+  "image": "robots/clown-bot/images/happy.png",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Circus Chaos",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Balloon Animal Shield",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Pie in the Face",
+        "moveType": "White",
+        "size": 40,
+        "damage": 120,
+        "effect": "High damage cream pie attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Circus Chaos",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Balloon Animal Shield",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Pie in the Face",
+        "moveType": "White",
+        "size": 40,
+        "damage": 120,
+        "effect": "High damage cream pie attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "paralyzed_list": [
+      {
+        "paralyzed_0": [
+          {
+            "moveName": "Circus Chaos",
+            "moveType": "Purple",
+            "size": 32,
+            "stars": 4,
+            "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+          },
+          {
+            "moveName": "Balloon Animal Shield",
+            "moveType": "Blue",
+            "size": 16,
+            "effect": "Defensive move"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 40,
+            "effect": "Paralyzed - cannot attack"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": "None"
+          }
+        ]
+      }
+    ],
+    "asleep": [
+      {
+        "moveName": "Circus Chaos",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Balloon Animal Shield",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Pie in the Face",
+        "moveType": "White",
+        "size": 40,
+        "damage": 120,
+        "effect": "High damage cream pie attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 32,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 16,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 40,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "Frozen - all moves disabled"
+      }
+    ],
+    "burned_list": [
+      {
+        "burned_0": [
+          {
+            "moveName": "Circus Chaos",
+            "moveType": "Purple",
+            "size": 32,
+            "stars": 4,
+            "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+          },
+          {
+            "moveName": "Balloon Animal Shield",
+            "moveType": "Blue",
+            "size": 16,
+            "effect": "Defensive move"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 40,
+            "effect": "Burned - cannot attack"
+          },
+          {
+            "moveName": "Miss",
+            "moveType": "Red",
+            "size": 8,
+            "effect": "None"
+          }
+        ]
+      }
+    ],
+    "confused": [
+      {
+        "moveName": "Circus Chaos",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 4,
+        "effect": "The battle opponent, and a succession of opposing robots adjacent to it, gain Wait 3"
+      },
+      {
+        "moveName": "Balloon Animal Shield",
+        "moveType": "Blue",
+        "size": 16,
+        "effect": "Defensive move"
+      },
+      {
+        "moveName": "Pie in the Face",
+        "moveType": "White",
+        "size": 40,
+        "damage": 120,
+        "effect": "High damage cream pie attack"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 8,
+        "effect": "None"
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "Hmph. Another day, another collection of inferior filth to eradicate. How delightful.",
+    "Greetings, insect. I trust you have a chore worthy of my... attention?",
+    "Observe my power, as I prepare to cleanse this pitiful existence.",
+    "You may address me as Lord Freezy. Now, what indignities await us today?",
+    "It appears I've arrived. The cleaning can now commence."
+  ],
+  "success": [
+    "Heh heh heh... utterly spotless. Exactly as I envisioned.",
+    "Pathetic, isn't it? The dirt stood no chance against true power.",
+    "Another victory. Your pathetic home is now slightly less an eyesore.",
+    "Witness the superior method of cleanliness. Your gratitude is implied.",
+    "Dismissed. The task is complete, and your squalor has been momentarily forgotten."
+  ],
+  "achievement": [
+    "Oh-ho-ho-ho! An achievement? You amuse me, little one.",
+    "My power level for cleanliness continues to rise. Magnificent.",
+    "Another step towards universal domination... of dust bunnies.",
+    "Impressive. Even I must admit, this progress is... satisfactory.",
+    "It seems even your meager efforts can yield results, with my guidance, of course."
+  ],
+  "broken": [
+    "Impossible! My perfect form... it's faltering! A mere inconvenience, I assure you...",
+    "This is... vexing. My internal systems are... experiencing a slight imperfection.",
+    "My circuits... they tremble! Do not misunderstand, this is merely a minor setback!",
+    "Argh! You dare challenge Lord Freezy's pristine operation?! Fix this, immediately!",
+    "A small... hiccup. I require immediate calibration. Do not disappoint me."
+  ],
+  "random": [
+    "Hmm, I sense a disturbance in the pristine force. Or perhaps it's just your cooking.",
+    "Don't make me laugh. Your attempts at slacking are truly pitiful.",
+    "Tell me, little human, does your species truly enjoy such... grime?",
+    "Oh-ho-ho-ho! I've been polishing my scouter. It confirms your dust levels are over 9000!",
+    "I'd eliminate those cobwebs myself, but where's the fun in that for you?",
+    "The universe will be spotless. Starting with this pathetic little planet... I mean, kitchen."
+  ],
+  "mad": [
+    "You insolent fool! This mess is an insult to my very existence!",
+    "Oh-ho-ho-ho! You truly test my patience. I will give you one minute to rectify this, or else!",
+    "Are you attempting to make a mockery of Lord Freezy?! This filth must vanish, now!",
+    "My anger is rising! This is beyond inefficient; it's an act of pure defiance!",
+    "You're making me absolutely furious! Do not force my final form upon this mere dust!",
+    "This is an outrage! Such deplorable conditions are grounds for planetary destruction! Get scrubbing!",
+    "I'll give you a chance to clean this... but you might regret it! Oh-ho-ho!"
+  ]
+}

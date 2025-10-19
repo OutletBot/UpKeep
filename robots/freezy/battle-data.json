@@ -1,0 +1,189 @@
+{
+  "name": "Freezy",
+  "rarity": "R",
+  "mp": 2,
+  "role": "Vanguard",
+  "type": "Water / Ice",
+  "attacks": {
+    "basic": [
+      {
+        "moveName": "Frost Beam",
+        "moveType": "White",
+        "damage": 50,
+        "size": 12,
+        "effect": "The battle opponent is now frozen"
+      },
+      {
+        "moveName": "Tidal Wave",
+        "moveType": "White",
+        "damage": 100,
+        "size": 36,
+        "effect": ""
+      },
+      {
+        "moveName": "Lullaby Protocol",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 12,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": ""
+      }
+    ],
+    "poisoned": [
+      {
+        "moveName": "Frost Beam",
+        "moveType": "White",
+        "damage": 50,
+        "size": 12,
+        "effect": "The battle opponent is now frozen"
+      },
+      {
+        "moveName": "Tidal Wave",
+        "moveType": "White",
+        "damage": 100,
+        "size": 36,
+        "effect": ""
+      },
+      {
+        "moveName": "Lullaby Protocol",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 12,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": ""
+      }
+    ],
+    "paralyzed": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 12,
+        "effect": "Paralyzed - cannot attack"
+      },
+      {
+        "moveName": "Tidal Wave",
+        "moveType": "White",
+        "damage": 100,
+        "size": 36,
+        "effect": ""
+      },
+      {
+        "moveName": "Lullaby Protocol",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 12,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": ""
+      }
+    ],
+    "burned": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 12,
+        "effect": "Burned - cannot attack"
+      },
+      {
+        "moveName": "Tidal Wave",
+        "moveType": "White",
+        "damage": 100,
+        "size": 36,
+        "effect": ""
+      },
+      {
+        "moveName": "Lullaby Protocol",
+        "moveType": "Purple",
+        "size": 32,
+        "stars": 1,
+        "effect": "The battle opponent falls asleep"
+      },
+      {
+        "moveName": "Dodge",
+        "moveType": "Blue",
+        "size": 12,
+        "effect": ""
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": ""
+      }
+    ],
+    "frozen": [
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 12,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 36,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 32,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 12,
+        "effect": "Frozen - all moves disabled"
+      },
+      {
+        "moveName": "Miss",
+        "moveType": "Red",
+        "size": 4,
+        "effect": "Frozen - all moves disabled"
+      }
+    ]
+  },
+  "stats": {
+    "hp": 130,
+    "attack": 85,
+    "defense": 80,
+    "speed": 60
+  },
+  "ability": {
+    "name": "Cryo Protocol",
+    "description": "Can freeze the battle opponent with ice-based attacks, preventing their movement."
+  }
+}

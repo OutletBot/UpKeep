@@ -1,0 +1,13 @@
+{
+  "id": "WITCHBOT",
+  "purchasable": true,
+  "cost": 130,
+  "unlockRequirements": [],
+  "description": "A mystical witch robot who casts spells of cleanliness! Her cauldron bubbles with magical tidiness potions!",
+  "imagePaths": {
+    "happy": "robots/witch-bot/images/happy.png",
+    "sad": "robots/witch-bot/images/sad.png",
+    "thinking": "robots/witch-bot/images/thinking.png",
+    "shadow": "robots/witch-bot/images/shadow.png"
+  }
+}

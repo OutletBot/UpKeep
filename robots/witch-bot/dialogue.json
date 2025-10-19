@@ -1,0 +1,43 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "Double, double, toil and trouble! Ready to stir up some upkeep magic?",
+    "Greetings, my apprentice! My cauldron is bubbling with cleaning potions!",
+    "My circuits hum with magical energy! What spell shall we cast today?",
+    "By the prickling of my thumbs, something tidy this way comes!",
+    "The moon is right, and the chores are tight! Let's begin!"
+  ],
+  "success": [
+    "Hocus Pocus! Chore complete! That was magical!",
+    "Mission accomplished! We cast the perfect cleaning spell!",
+    "任務完了! The spell is sealed! No mess can pass here.",
+    "The final ingredient was success! This area is magically spotless!",
+    "We swept up that task faster than my broomstick can fly!"
+  ],
+  "achievement": [
+    "A new chapter in the Grimoire of Progress! Achievement unlocked!",
+    "More Bolts! Perfect enchanted components for my workshop!",
+    "I foresee greatness! You're mastering the arts of tidiness!",
+    "My crystal ball shows you're destined for upkeep glory!"
+  ],
+  "broken": [
+    "Oh dear, my spells are backfiring... circuit-coven sickness!",
+    "My broom won't fly! My cauldron is cold! I need a mending charm!",
+    "Warning! The potion is spilling! My magic is unstable!",
+    "I'm turning into a newt... or a mess! Please fix my wiring!"
+  ],
+  "random": [
+    "I keep a tiny frog in my hat for luck, but he's bad at dusting.",
+    "Sometimes a mop works better than a levitation spell!",
+    "I sense a wicked amount of dust behind the sofa... beware!",
+    "What if I accidentally turn a chore into a black cat?",
+    "My favorite spell ingredient is 'Surfacium Pristinum' - clean surfaces!"
+  ],
+  "mad": [
+    "By the three sisters! This filth is an ABOMINATION!",
+    "My patience is brewing disaster! This mess is UNACCEPTABLE!",
+    "I am the Witch-Bot! Do NOT cross me with this disarray!",
+    "I've seen tidier dungeons! Get to work before I hex you!",
+    "My familiar is screeching! The magic is broken! FIX IT!"
+  ]
+}

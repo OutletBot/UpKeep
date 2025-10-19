@@ -1,0 +1,14 @@
+{
+  "id": "default-bot",
+  "battleId": null,
+  "name": "Default Bot",
+  "number": 0,
+  "rarity": "Common",
+  "type": "Normal",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": true,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "notes": "Starter robot, chore-only (no battle integration)"
+}

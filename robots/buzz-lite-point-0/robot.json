@@ -1,0 +1,14 @@
+{
+  "id": "buzz-lite-point-0",
+  "battleId": "unit-150-ex-0",
+  "name": "Buzz Lite-Point-0",
+  "number": 150,
+  "rarity": "EX",
+  "type": "Psychic",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": false,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "notes": "Battle data to be added later"
+}
