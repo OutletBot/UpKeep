@@ -2796,10 +2796,10 @@
         "requiresPurchase":  true
     },
     {
-        "id":  "ouija-bot",
-        "folder":  "ouija-bot",
+        "id":  "spirit-bot",
+        "folder":  "spirit-bot",
         "number":  157,
-        "name":  "Ouija-Bot",
+        "name":  "Spirit-Bot",
         "rarity":  "EX",
         "variation":  0,
         "type":  "Psychic",
@@ -2807,7 +2807,7 @@
         "evolution":  "",
         "evolvedFrom":  "",
         "evolutionNum":  0,
-        "assetPath":  "robots/ouija-bot",
+        "assetPath":  "robots/spirit-bot",
         "spriteFile":  "images/happy.png",
         "dataFile":  "battle-data.json",
         "hasCompleteData":  true,
