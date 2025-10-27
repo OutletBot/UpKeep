@@ -2,5 +2,9 @@
   "id": "FREEZY",
   "cost": 100,
   "shadowImagePath": "robots/freezy/images/shadow.png",
-  "actualImagePath": "robots/freezy/images/happy.png"
+  "actualImagePath": "robots/freezy/images/happy.png",
+  "battery": {
+    "hoursToDeplete": 60,
+    "comment": "Lower cost robot = longer battery life. Time from 100% to 0% when active. Inactive robots drain 4x slower."
+  }
 }

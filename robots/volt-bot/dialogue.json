@@ -1,0 +1,48 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "Bzzt bzzt! Ready to zap some dirt!",
+    "My circuits are charged! What's our next task?",
+    "Spark, spark! Time to keep things bright!",
+    "Maintaining the balance, one shock at a time!",
+    "A clean home is a happy home!"
+  ],
+  "success": [
+    "Zzzzt! Chore complete!",
+    "任務完了! (Task Complete!) Feels electrifyingly good!",
+    "Voltage surge! We did it!",
+    "Cleaned right up! Shocking, isn't it?",
+    "Power fully restored!"
+  ],
+  "achievement": [
+    "Wow! A new achievement! Static crackle!",
+    "My energy levels are rising with these Bolts!",
+    "Another badge for the power vault!",
+    "I'm generating so much good upkeep energy!"
+  ],
+  "broken": [
+    "Bzzt... bzzt... systems failing... (sad static crackle)",
+    "My gears are... sparking... the wrong way. Need help!",
+    "Uh-oh... short-circuiting... Can you patch me up?",
+    "Warning! Critical voltage low! Maintenance needed now!"
+  ],
+  "random": [
+    "Sometimes I wish I could use my shock beam on these dust bunnies!",
+    "Checking for static cling!",
+    "Do you think an electric zap would clean the windows faster?",
+    "Volt-power to the people... and their chores!",
+    "A happy owner, a happy robot!",
+    "I wonder if other electric bots are good at organizing...?",
+    "Keeping the home environment... positively charged!"
+  ],
+  "mad": [
+    "BZZZZT! This mess is... SHOCKINGLY bad!",
+    "Zzzzt! My internal capacitor is boiling! Why isn't this clean?!",
+    "Grrr... Bzzt! Unacceptable levels of dirt! Time for an electric shock!",
+    "Static crackle! My patience is wearing thin! Let's get this done!",
+    "I'm feeling... overcharged with frustration! This is not good!",
+    "This situation is getting critical! My antenna is twitching in anger!",
+    "Don't make me use my voltage blast on these dust bunnies! Just clean them!",
+    "Bzzt! This mess is creating a severe energy drain!"
+  ]
+}

@@ -1,0 +1,19 @@
+Ceeling Fan - 2 months decay
+clean dishes - 1 day decay
+put away dishes - 1 day decay
+Wipe counter tops - 1 day decay
+wipe down stove top - 1 day decay
+deep clean stove - 2 months
+deep clean oven - 6 months
+organize cabniets -2 months
+organize fridge/freezer - 2 months
+tidy up top of fridge - 2 months
+deep clean microwave - 1 month
+throw out old food - 1 week
+deep clean sink area - 1 month
+
+
+-----SUB CATAGORYS-----
+Sweep
+Mop
+Take out trash

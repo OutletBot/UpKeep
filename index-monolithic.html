@@ -7414,9 +7414,13 @@
                         <option value="Backyard">Backyard</option>
                         <option value="Back Porch">Back Porch</option>
                         <option value="Vehicle">Vehicle</option>
-                        <option value="Vacuum & Sweeping">Vacuum & Sweeping</option>
                         <option value="Front Yard">Front Yard</option>
                         <option value="Front Porch">Front Porch</option>
+                        <option disabled style="color: #4040ff; font-weight: bold;">━━━━ GROUP CATEGORIES ━━━━</option>
+                        <option value="GROUP:Sweep/Mop" style="color: #4040ff;">🔷 Sweep/Mop</option>
+                        <option value="GROUP:Shampoo" style="color: #4040ff;">🔷 Shampoo</option>
+                        <option value="GROUP:Deep Cleaning" style="color: #4040ff;">🔷 Deep Cleaning</option>
+                        <option value="GROUP:Vacuum" style="color: #4040ff;">🔷 Vacuum</option>
                         <option value="custom">✏️ Custom Category</option>
                     </select>
                 </div>
@@ -7453,9 +7457,17 @@
                 <button class="close-btn" onclick="app.closeModal('addTaskModal')"><img src="Imag/Close.png" alt="Close"></button>
             </div>
             <form onsubmit="app.addTask(event)">
+                <div class="form-group" id="linkedCategoryGroup" style="display: none;">
+                    <label class="form-label">Link to Standard Category</label>
+                    <select class="form-select" id="linkedCategorySelect" required>
+                        <option value="">-- Select Standard Category --</option>
+                    </select>
+                    <small style="color: #666; display: block; margin-top: 4px;">Task will appear in both this group and the selected category</small>
+                </div>
                 <div class="form-group">
                     <label class="form-label">Task Name</label>
                     <input type="text" class="form-input" id="taskName" placeholder="e.g., Wipe counters" required>
+                    <small id="taskNameNote" style="color: #666; display: none; margin-top: 4px;">For group tasks, name will be auto-generated as '[Group] - [Category]'</small>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Decay Time</label>
@@ -7468,6 +7480,7 @@
                             <option value="months">Months</option>
                         </select>
                     </div>
+                    <small style="color: #666; display: block; margin-top: 4px;">Decay affects the linked category's score only</small>
                 </div>
                 <button type="submit" class="btn-primary">Create Task</button>
             </form>

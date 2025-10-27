@@ -1,0 +1,2927 @@
+// Decompiled with JetBrains decompiler
+// Type: Monaco.Client.Scenes.Match.AiAction
+// Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 9F6D3097-9E2A-46D6-B7F9-1F913AB628BD
+// Assembly location: C:\Users\Outlet\Desktop\jp.pokemon.pokemoncomaster_7.0.16-514_minAPI16(armeabi-v7a)(nodpi)_apkmirror.com\assets\bin\Data\Managed\Assembly-CSharp.dll
+
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+#nullable disable
+namespace Monaco.Client.Scenes.Match;
+
+public class AiAction
+{
+  public static readonly ULong128 TypeResign = new ULong128(0);
+  public static readonly ULong128 TypeMove = new ULong128(60) | new ULong128(62) | new ULong128(61) | new ULong128(52) | new ULong128(53) | new ULong128(36) | new ULong128(45) | new ULong128(72) | new ULong128(73) | new ULong128(74) | new ULong128(31 /*0x1F*/) | new ULong128(37);
+  public static readonly ULong128 TypeBattle = new ULong128(55) | new ULong128(1);
+  public static readonly ULong128 TypePseudoBattle = new ULong128(56) | new ULong128(1);
+  public static readonly ULong128 TypeTouch = new ULong128(54) | new ULong128(1);
+  public static readonly ULong128 TypeTamanageMaxMove = new ULong128(58) | new ULong128(1);
+  public static readonly ULong128 TypeSpin = new ULong128(64 /*0x40*/);
+  public static readonly ULong128 TypeBattleResult = new ULong128(65);
+  public static readonly ULong128 TypeEvolve = new ULong128(15) | new ULong128(1);
+  public static readonly ULong128 TypeDoubleEvolve = new ULong128(16 /*0x10*/) | new ULong128(1);
+  public static readonly ULong128 TypeRouteMove = new ULong128(61) | new ULong128(1);
+  public static readonly ULong128 TypeSpotMove = new ULong128(52) | new ULong128(1);
+  public static readonly ULong128 TypeSwapMove = new ULong128(36) | new ULong128(1);
+  public static readonly ULong128 TypeRouteMoveAndWait = new ULong128(72) | new ULong128(1);
+  public static readonly ULong128 TypeRouteMoveAndPutCircle = new ULong128(73) | new ULong128(1);
+  public static readonly ULong128 TypeRouteMoveAndPutTriangle = new ULong128(74) | new ULong128(1);
+  public static readonly ULong128 TypeSwapMoveAndWait = new ULong128(45) | new ULong128(1);
+
+  public static AiToJson DeserializeObject(string json)
+  {
+    return AiAction.DeserializeObject(json, "black");
+  }
+
+  public static AiToJson DeserializeObject(string json, string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(json);
+    if (((AiAction.TypeBase) aiAction).type == null)
+      return aiAction;
+    switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+    {
+      case 15:
+      case 17:
+        AiAction.Pokemon pokemon1 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon1.pokemon = AiToJson.CharaReversed(pokemon1.pokemon);
+        aiAction = (AiToJson) pokemon1;
+        break;
+      case 16 /*0x10*/:
+        AiAction.Pokemon pokemon2 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon2.pokemon = AiToJson.CharaReversed(pokemon2.pokemon);
+        aiAction = (AiToJson) pokemon2;
+        break;
+      case 18:
+      case 19:
+      case 28:
+      case 29:
+      case 30:
+        AiAction.Pokemon pokemon3 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon3.pokemon = AiToJson.CharaReversed(pokemon3.pokemon);
+        aiAction = (AiToJson) pokemon3;
+        break;
+      case 20:
+      case 21:
+        AiAction.FormChangeNew formChangeNew = JsonConvert.DeserializeObject<AiAction.FormChangeNew>(json);
+        if (color.Equals("white"))
+          formChangeNew.pokemon_index = AiToJson.CharaReversed(formChangeNew.pokemon_index);
+        aiAction = (AiToJson) formChangeNew;
+        break;
+      case 22:
+        AiAction.Pokemon pokemon4 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon4.pokemon = AiToJson.CharaReversed(pokemon4.pokemon);
+        aiAction = (AiToJson) pokemon4;
+        break;
+      case 23:
+      case 24:
+        AiAction.Pokemon pokemon5 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon5.pokemon = AiToJson.CharaReversed(pokemon5.pokemon);
+        aiAction = (AiToJson) pokemon5;
+        break;
+      case 25:
+        AiAction.Pokemon pokemon6 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon6.pokemon = AiToJson.CharaReversed(pokemon6.pokemon);
+        aiAction = (AiToJson) pokemon6;
+        break;
+      case 26:
+        AiAction.Pokemon pokemon7 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon7.pokemon = AiToJson.CharaReversed(pokemon7.pokemon);
+        aiAction = (AiToJson) pokemon7;
+        break;
+      case 27:
+        AiAction.Pokemon pokemon8 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon8.pokemon = AiToJson.CharaReversed(pokemon8.pokemon);
+        aiAction = (AiToJson) pokemon8;
+        break;
+      case 31 /*0x1F*/:
+        AiAction.PokemonMate pokemonMate = JsonConvert.DeserializeObject<AiAction.PokemonMate>(json);
+        if (color.Equals("white"))
+        {
+          pokemonMate.pokemon = AiToJson.CharaReversed(pokemonMate.pokemon);
+          pokemonMate.mate = AiToJson.CharaReversed(pokemonMate.mate);
+        }
+        aiAction = (AiToJson) pokemonMate;
+        break;
+      case 32 /*0x20*/:
+      case 33:
+      case 34:
+      case 151:
+      case 161:
+      case 166:
+        AiAction.Pokemons pokemons1 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons1.pokemons.Count; ++index)
+            pokemons1.pokemons[index] = AiToJson.CharaReversed(pokemons1.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons1;
+        break;
+      case 35:
+        AiAction.Pokemons pokemons2 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons2.pokemons.Count; ++index)
+            pokemons2.pokemons[index] = AiToJson.CharaReversed(pokemons2.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons2;
+        break;
+      case 36:
+      case 37:
+        AiAction.Pokemons pokemons3 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons3.pokemons.Count; ++index)
+            pokemons3.pokemons[index] = AiToJson.CharaReversed(pokemons3.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons3;
+        break;
+      case 38:
+      case 39:
+        AiAction.Pokemons pokemons4 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons4.pokemons.Count; ++index)
+            pokemons4.pokemons[index] = AiToJson.CharaReversed(pokemons4.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons4;
+        break;
+      case 40:
+        AiAction.Pokemons pokemons5 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons5.pokemons.Count; ++index)
+            pokemons5.pokemons[index] = AiToJson.CharaReversed(pokemons5.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons5;
+        break;
+      case 41:
+        AiAction.Pokemons pokemons6 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons6.pokemons.Count; ++index)
+            pokemons6.pokemons[index] = AiToJson.CharaReversed(pokemons6.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons6;
+        break;
+      case 42:
+        AiAction.Pokemons pokemons7 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons7.pokemons.Count; ++index)
+            pokemons7.pokemons[index] = AiToJson.CharaReversed(pokemons7.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons7;
+        break;
+      case 43:
+        AiAction.Pokemons pokemons8 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons8.pokemons.Count; ++index)
+            pokemons8.pokemons[index] = AiToJson.CharaReversed(pokemons8.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons8;
+        break;
+      case 44:
+        AiAction.MoveToUltraSpaceWithDuration spaceWithDuration = JsonConvert.DeserializeObject<AiAction.MoveToUltraSpaceWithDuration>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < spaceWithDuration.pokemons.Count; ++index)
+            spaceWithDuration.pokemons[index] = AiToJson.CharaReversed(spaceWithDuration.pokemons[index]);
+        }
+        aiAction = (AiToJson) spaceWithDuration;
+        break;
+      case 45:
+        AiAction.SwapMoveAndWait swapMoveAndWait = JsonConvert.DeserializeObject<AiAction.SwapMoveAndWait>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < swapMoveAndWait.pokemons.Count; ++index)
+            swapMoveAndWait.pokemons[index] = AiToJson.CharaReversed(swapMoveAndWait.pokemons[index]);
+        }
+        aiAction = (AiToJson) swapMoveAndWait;
+        break;
+      case 46:
+        AiAction.TargetsAnother targetsAnother = JsonConvert.DeserializeObject<AiAction.TargetsAnother>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < targetsAnother.pokemons.Count; ++index)
+            targetsAnother.pokemons[index] = AiToJson.CharaReversed(targetsAnother.pokemons[index]);
+        }
+        aiAction = (AiToJson) targetsAnother;
+        break;
+      case 47:
+      case 48 /*0x30*/:
+        AiAction.PutCircle putCircle = JsonConvert.DeserializeObject<AiAction.PutCircle>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < putCircle.pokemons.Count; ++index)
+            putCircle.pokemons[index] = AiToJson.CharaReversed(putCircle.pokemons[index]);
+        }
+        aiAction = (AiToJson) putCircle;
+        break;
+      case 49:
+      case 50:
+        AiAction.PutTriangle putTriangle = JsonConvert.DeserializeObject<AiAction.PutTriangle>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < putTriangle.pokemons.Count; ++index)
+            putTriangle.pokemons[index] = AiToJson.CharaReversed(putTriangle.pokemons[index]);
+        }
+        aiAction = (AiToJson) putTriangle;
+        break;
+      case 51:
+        AiAction.FromTo fromTo1 = JsonConvert.DeserializeObject<AiAction.FromTo>(json);
+        if (color.Equals("white"))
+        {
+          fromTo1.from = AiToJson.BoardReversed(fromTo1.from);
+          fromTo1.to = AiToJson.BoardReversed(fromTo1.to);
+        }
+        aiAction = (AiToJson) fromTo1;
+        break;
+      case 52:
+        AiAction.FromTo fromTo2 = JsonConvert.DeserializeObject<AiAction.FromTo>(json);
+        if (color.Equals("white"))
+        {
+          fromTo2.from = AiToJson.BoardReversed(fromTo2.from);
+          fromTo2.to = AiToJson.BoardReversed(fromTo2.to);
+        }
+        aiAction = (AiToJson) fromTo2;
+        break;
+      case 53:
+        AiAction.FromToWithSource fromToWithSource = JsonConvert.DeserializeObject<AiAction.FromToWithSource>(json);
+        if (color.Equals("white"))
+        {
+          fromToWithSource.from = AiToJson.BoardReversed(fromToWithSource.from);
+          fromToWithSource.to = AiToJson.BoardReversed(fromToWithSource.to);
+          fromToWithSource.source = AiToJson.CharaReversed(fromToWithSource.source);
+        }
+        aiAction = (AiToJson) fromToWithSource;
+        break;
+      case 54:
+      case 55:
+      case 56:
+      case 57:
+      case 58:
+      case 59:
+        AiAction.FromPokemonToPokemon pokemonToPokemon = JsonConvert.DeserializeObject<AiAction.FromPokemonToPokemon>(json);
+        if (color.Equals("white"))
+        {
+          pokemonToPokemon.from_pokemon = AiToJson.CharaReversed(pokemonToPokemon.from_pokemon);
+          pokemonToPokemon.to_pokemon = AiToJson.CharaReversed(pokemonToPokemon.to_pokemon);
+        }
+        aiAction = (AiToJson) pokemonToPokemon;
+        break;
+      case 60:
+        AiAction.Route route1 = JsonConvert.DeserializeObject<AiAction.Route>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < route1.route.Count; ++index)
+            route1.route[index] = AiToJson.BoardReversed(route1.route[index]);
+        }
+        aiAction = (AiToJson) route1;
+        break;
+      case 61:
+        AiAction.Route route2 = JsonConvert.DeserializeObject<AiAction.Route>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < route2.route.Count; ++index)
+            route2.route[index] = AiToJson.BoardReversed(route2.route[index]);
+        }
+        aiAction = (AiToJson) route2;
+        break;
+      case 62:
+        AiAction.Route route3 = JsonConvert.DeserializeObject<AiAction.Route>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < route3.route.Count; ++index)
+            route3.route[index] = AiToJson.BoardReversed(route3.route[index]);
+        }
+        aiAction = (AiToJson) route3;
+        break;
+      case 63 /*0x3F*/:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.GameSet>(json);
+        break;
+      case 64 /*0x40*/:
+        AiAction.Spin spin = JsonConvert.DeserializeObject<AiAction.Spin>(json);
+        if (color.Equals("white"))
+        {
+          for (int index1 = 0; index1 < spin.spins.Count; ++index1)
+          {
+            spin.spins[index1].pokemon = AiToJson.CharaReversed(spin.spins[index1].pokemon);
+            for (int index2 = 0; index2 < spin.spins[index1].results.Count; ++index2)
+            {
+              if (spin.spins[index1].results[index2].figure != -1)
+                spin.spins[index1].results[index2].figure = AiToJson.CharaReversed(spin.spins[index1].results[index2].figure);
+            }
+          }
+        }
+        aiAction = (AiToJson) spin;
+        break;
+      case 65:
+        AiAction.BattleResult battleResult = JsonConvert.DeserializeObject<AiAction.BattleResult>(json);
+        if (color.Equals("white"))
+        {
+          battleResult.attack.pokemon = AiToJson.CharaReversed(battleResult.attack.pokemon);
+          battleResult.defence.pokemon = AiToJson.CharaReversed(battleResult.defence.pokemon);
+        }
+        aiAction = (AiToJson) battleResult;
+        break;
+      case 66:
+        AiAction.PokepowerNotice pokepowerNotice = JsonConvert.DeserializeObject<AiAction.PokepowerNotice>(json);
+        if (color.Equals("white"))
+          pokepowerNotice.pokemon = AiToJson.CharaReversed(pokepowerNotice.pokemon);
+        aiAction = (AiToJson) pokepowerNotice;
+        break;
+      case 67:
+        AiAction.SkillNotice skillNotice = JsonConvert.DeserializeObject<AiAction.SkillNotice>(json);
+        if (color.Equals("white"))
+          skillNotice.pokemon = AiToJson.CharaReversed(skillNotice.pokemon);
+        aiAction = (AiToJson) skillNotice;
+        break;
+      case 68:
+        AiAction.PlateNotice plateNotice = JsonConvert.DeserializeObject<AiAction.PlateNotice>(json);
+        if (color.Equals("white"))
+          plateNotice.pokemon = AiToJson.CharaReversed(plateNotice.pokemon);
+        aiAction = (AiToJson) plateNotice;
+        break;
+      case 69:
+        AiAction.MarkerNotice markerNotice1 = JsonConvert.DeserializeObject<AiAction.MarkerNotice>(json);
+        if (color.Equals("white"))
+          markerNotice1.pokemon = AiToJson.CharaReversed(markerNotice1.pokemon);
+        aiAction = (AiToJson) markerNotice1;
+        break;
+      case 70:
+        AiAction.MarkerNotice markerNotice2 = JsonConvert.DeserializeObject<AiAction.MarkerNotice>(json);
+        if (color.Equals("white"))
+          markerNotice2.pokemon = AiToJson.CharaReversed(markerNotice2.pokemon);
+        aiAction = (AiToJson) markerNotice2;
+        break;
+      case 71:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.MarkerNotice>(json);
+        break;
+      case 72:
+        AiAction.RouteMoveAndWait routeMoveAndWait = JsonConvert.DeserializeObject<AiAction.RouteMoveAndWait>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < routeMoveAndWait.route.Count; ++index)
+            routeMoveAndWait.route[index] = AiToJson.BoardReversed(routeMoveAndWait.route[index]);
+        }
+        aiAction = (AiToJson) routeMoveAndWait;
+        break;
+      case 73:
+        AiAction.RouteMoveAndPutCircle moveAndPutCircle = JsonConvert.DeserializeObject<AiAction.RouteMoveAndPutCircle>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < moveAndPutCircle.route.Count; ++index)
+            moveAndPutCircle.route[index] = AiToJson.BoardReversed(moveAndPutCircle.route[index]);
+        }
+        aiAction = (AiToJson) moveAndPutCircle;
+        break;
+      case 74:
+        AiAction.RouteMoveAndPutTriangle moveAndPutTriangle = JsonConvert.DeserializeObject<AiAction.RouteMoveAndPutTriangle>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < moveAndPutTriangle.route.Count; ++index)
+            moveAndPutTriangle.route[index] = AiToJson.BoardReversed(moveAndPutTriangle.route[index]);
+        }
+        aiAction = (AiToJson) moveAndPutTriangle;
+        break;
+      case 75:
+        AiAction.RouteMoveWithSource routeMoveWithSource = JsonConvert.DeserializeObject<AiAction.RouteMoveWithSource>(json);
+        for (int index = 0; index < routeMoveWithSource.route.Count; ++index)
+          routeMoveWithSource.route[index] = AiToJson.BoardReversed(routeMoveWithSource.route[index]);
+        routeMoveWithSource.source = AiToJson.CharaReversed(routeMoveWithSource.source);
+        aiAction = (AiToJson) routeMoveWithSource;
+        break;
+      case 76:
+        AiAction.DisableSkill disableSkill = JsonConvert.DeserializeObject<AiAction.DisableSkill>(json);
+        if (color.Equals("white"))
+          disableSkill.pokemon = AiToJson.CharaReversed(disableSkill.pokemon);
+        aiAction = (AiToJson) disableSkill;
+        break;
+      case 77:
+      case 78:
+        AiAction.SpeedUpSkill speedUpSkill = JsonConvert.DeserializeObject<AiAction.SpeedUpSkill>(json);
+        if (color.Equals("white"))
+          speedUpSkill.pokemon = AiToJson.CharaReversed(speedUpSkill.pokemon);
+        aiAction = (AiToJson) speedUpSkill;
+        break;
+      case 79:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.NextTurn>(json);
+        break;
+      case 80 /*0x50*/:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DisablePlate>(json);
+        break;
+      case 81:
+      case 111:
+        AiAction.DisablePlate disablePlate = JsonConvert.DeserializeObject<AiAction.DisablePlate>(json);
+        if (color.Equals("white"))
+        {
+          List<string> black = disablePlate.black;
+          disablePlate.black = disablePlate.white;
+          disablePlate.white = black;
+        }
+        aiAction = (AiToJson) disablePlate;
+        break;
+      case 82:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlateBase>(json);
+        break;
+      case 83:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlateEffectBase>(json);
+        break;
+      case 84:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePokepowerBase>(json);
+        break;
+      case 85:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DamageSetNotice>(json);
+        break;
+      case 86:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DamageSumNotice>(json);
+        break;
+      case 87:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DamageProductNotice>(json);
+        break;
+      case 88:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DamageProductSumNotice>(json);
+        break;
+      case 89:
+        AiAction.DamageNoticeBase damageNoticeBase1 = JsonConvert.DeserializeObject<AiAction.DamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase1.pokemon = AiToJson.CharaReversed(damageNoticeBase1.pokemon);
+        aiAction = (AiToJson) damageNoticeBase1;
+        break;
+      case 90:
+        AiAction.DamageNoticeBase damageNoticeBase2 = JsonConvert.DeserializeObject<AiAction.DamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase2.pokemon = AiToJson.CharaReversed(damageNoticeBase2.pokemon);
+        aiAction = (AiToJson) damageNoticeBase2;
+        break;
+      case 91:
+        AiAction.DamageNoticeBase damageNoticeBase3 = JsonConvert.DeserializeObject<AiAction.DamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase3.pokemon = AiToJson.CharaReversed(damageNoticeBase3.pokemon);
+        aiAction = (AiToJson) damageNoticeBase3;
+        break;
+      case 92:
+        AiAction.PokepowerDamageNoticeBase damageNoticeBase4 = JsonConvert.DeserializeObject<AiAction.PokepowerDamageNoticeBase>(json);
+        if (color.Equals("white"))
+        {
+          damageNoticeBase4.pokemon = AiToJson.CharaReversed(damageNoticeBase4.pokemon);
+          damageNoticeBase4.source = AiToJson.CharaReversed(damageNoticeBase4.source);
+        }
+        aiAction = (AiToJson) damageNoticeBase4;
+        break;
+      case 93:
+        AiAction.PlateDamageNoticeBase damageNoticeBase5 = JsonConvert.DeserializeObject<AiAction.PlateDamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase5.pokemon = AiToJson.CharaReversed(damageNoticeBase5.pokemon);
+        aiAction = (AiToJson) damageNoticeBase5;
+        break;
+      case 94:
+        AiAction.ConditionDamageNoticeBase damageNoticeBase6 = JsonConvert.DeserializeObject<AiAction.ConditionDamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase6.pokemon = AiToJson.CharaReversed(damageNoticeBase6.pokemon);
+        aiAction = (AiToJson) damageNoticeBase6;
+        break;
+      case 95:
+        AiAction.TriangleDamageNoticeBase damageNoticeBase7 = JsonConvert.DeserializeObject<AiAction.TriangleDamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase7.pokemon = AiToJson.CharaReversed(damageNoticeBase7.pokemon);
+        aiAction = (AiToJson) damageNoticeBase7;
+        break;
+      case 96 /*0x60*/:
+        AiAction.MistDamageNoticeBase damageNoticeBase8 = JsonConvert.DeserializeObject<AiAction.MistDamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase8.pokemon = AiToJson.CharaReversed(damageNoticeBase8.pokemon);
+        aiAction = (AiToJson) damageNoticeBase8;
+        break;
+      case 97:
+        AiAction.TechnoChargeDamageNoticeBase damageNoticeBase9 = JsonConvert.DeserializeObject<AiAction.TechnoChargeDamageNoticeBase>(json);
+        if (color.Equals("white"))
+          damageNoticeBase9.pokemon = AiToJson.CharaReversed(damageNoticeBase9.pokemon);
+        aiAction = (AiToJson) damageNoticeBase9;
+        break;
+      case 98:
+        AiAction.AddMist addMist = JsonConvert.DeserializeObject<AiAction.AddMist>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < addMist.pokemons.Count; ++index)
+            addMist.pokemons[index] = AiToJson.CharaReversed(addMist.pokemons[index]);
+        }
+        aiAction = (AiToJson) addMist;
+        break;
+      case 99:
+      case 100:
+      case 107:
+      case 112 /*0x70*/:
+      case 139:
+        AiAction.TechnoCharge technoCharge = JsonConvert.DeserializeObject<AiAction.TechnoCharge>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < technoCharge.pokemons.Count; ++index)
+            technoCharge.pokemons[index] = AiToJson.CharaReversed(technoCharge.pokemons[index]);
+        }
+        aiAction = (AiToJson) technoCharge;
+        break;
+      case 101:
+      case 109:
+      case 133:
+      case 135:
+      case 141:
+      case 143:
+      case 152:
+      case 155:
+      case 156:
+      case 158:
+      case 159:
+      case 162:
+        AiAction.Pokemons pokemons9 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons9.pokemons.Count; ++index)
+            pokemons9.pokemons[index] = AiToJson.CharaReversed(pokemons9.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons9;
+        break;
+      case 102:
+        AiAction.Pokemons pokemons10 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.AddPokeType>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons10.pokemons.Count; ++index)
+            pokemons10.pokemons[index] = AiToJson.CharaReversed(pokemons10.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons10;
+        break;
+      case 103:
+        AiAction.Pokemons pokemons11 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.AddPokeTypeWithDuration>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons11.pokemons.Count; ++index)
+            pokemons11.pokemons[index] = AiToJson.CharaReversed(pokemons11.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons11;
+        break;
+      case 104:
+        AiAction.Pokemons pokemons12 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.PutContinuousEffect>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons12.pokemons.Count; ++index)
+            pokemons12.pokemons[index] = AiToJson.CharaReversed(pokemons12.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons12;
+        break;
+      case 105:
+        AiAction.Pokemon pokemon9 = (AiAction.Pokemon) JsonConvert.DeserializeObject<AiAction.PokemonMove>(json);
+        if (color.Equals("white"))
+          pokemon9.pokemon = AiToJson.CharaReversed(pokemon9.pokemon);
+        aiAction = (AiToJson) pokemon9;
+        break;
+      case 106:
+        AiAction.Pokemons pokemons13 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.DeclareSpotMoveToPc>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons13.pokemons.Count; ++index)
+            pokemons13.pokemons[index] = AiToJson.CharaReversed(pokemons13.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons13;
+        break;
+      case 108:
+        AiAction.TechnoChargeKaiDamageNotice chargeKaiDamageNotice = JsonConvert.DeserializeObject<AiAction.TechnoChargeKaiDamageNotice>(json);
+        if (color.Equals("white"))
+          chargeKaiDamageNotice.pokemon = AiToJson.CharaReversed(chargeKaiDamageNotice.pokemon);
+        aiAction = (AiToJson) chargeKaiDamageNotice;
+        break;
+      case 110:
+        AiAction.KatakunaruKaiDamageNotice katakunaruKaiDamageNotice = JsonConvert.DeserializeObject<AiAction.KatakunaruKaiDamageNotice>(json);
+        if (color.Equals("white"))
+          katakunaruKaiDamageNotice.pokemon = AiToJson.CharaReversed(katakunaruKaiDamageNotice.pokemon);
+        aiAction = (AiToJson) katakunaruKaiDamageNotice;
+        break;
+      case 113:
+        AiAction.Pokemons pokemons14 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.IncreaseNandemoTaberuNum>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons14.pokemons.Count; ++index)
+            pokemons14.pokemons[index] = AiToJson.CharaReversed(pokemons14.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons14;
+        break;
+      case 114:
+        AiAction.Pokemon pokemon10 = (AiAction.Pokemon) JsonConvert.DeserializeObject<AiAction.ChangeSkill>(json);
+        if (color.Equals("white"))
+          pokemon10.pokemon = AiToJson.CharaReversed(pokemon10.pokemon);
+        aiAction = (AiToJson) pokemon10;
+        break;
+      case 115:
+        AiAction.Pokemon pokemon11 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon11.pokemon = AiToJson.CharaReversed(pokemon11.pokemon);
+        aiAction = (AiToJson) pokemon11;
+        break;
+      case 116:
+      case 117:
+        AiAction.RemovePokemonWithDuration pokemonWithDuration = JsonConvert.DeserializeObject<AiAction.RemovePokemonWithDuration>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemonWithDuration.pokemons.Count; ++index)
+            pokemonWithDuration.pokemons[index] = AiToJson.CharaReversed(pokemonWithDuration.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemonWithDuration;
+        break;
+      case 118:
+        AiAction.MeremereNoInori meremereNoInori = JsonConvert.DeserializeObject<AiAction.MeremereNoInori>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < meremereNoInori.pokemons.Count; ++index)
+            meremereNoInori.pokemons[index] = AiToJson.CharaReversed(meremereNoInori.pokemons[index]);
+        }
+        aiAction = (AiToJson) meremereNoInori;
+        break;
+      case 119:
+        AiAction.UlaulaNoInori ulaulaNoInori = JsonConvert.DeserializeObject<AiAction.UlaulaNoInori>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < ulaulaNoInori.pokemons.Count; ++index)
+            ulaulaNoInori.pokemons[index] = AiToJson.CharaReversed(ulaulaNoInori.pokemons[index]);
+        }
+        aiAction = (AiToJson) ulaulaNoInori;
+        break;
+      case 120:
+        AiAction.CosmoPower cosmoPower = JsonConvert.DeserializeObject<AiAction.CosmoPower>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < cosmoPower.pokemons.Count; ++index)
+            cosmoPower.pokemons[index] = AiToJson.CharaReversed(cosmoPower.pokemons[index]);
+        }
+        aiAction = (AiToJson) cosmoPower;
+        break;
+      case 121:
+        AiAction.BalloonFlight balloonFlight = JsonConvert.DeserializeObject<AiAction.BalloonFlight>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < balloonFlight.pokemons.Count; ++index)
+            balloonFlight.pokemons[index] = AiToJson.CharaReversed(balloonFlight.pokemons[index]);
+        }
+        aiAction = (AiToJson) balloonFlight;
+        break;
+      case 122:
+        AiAction.AddSoulHeart addSoulHeart = JsonConvert.DeserializeObject<AiAction.AddSoulHeart>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < addSoulHeart.pokemons.Count; ++index)
+            addSoulHeart.pokemons[index] = AiToJson.CharaReversed(addSoulHeart.pokemons[index]);
+        }
+        aiAction = (AiToJson) addSoulHeart;
+        break;
+      case 123:
+      case 165:
+        AiAction.GearChange gearChange = JsonConvert.DeserializeObject<AiAction.GearChange>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < gearChange.pokemons.Count; ++index)
+            gearChange.pokemons[index] = AiToJson.CharaReversed(gearChange.pokemons[index]);
+        }
+        aiAction = (AiToJson) gearChange;
+        break;
+      case 124:
+        AiAction.SelectIndex selectIndex = JsonConvert.DeserializeObject<AiAction.SelectIndex>(json);
+        if (color.Equals("white"))
+        {
+          selectIndex.setter = AiToJson.CharaReversed(selectIndex.setter);
+          selectIndex.index = AiToJson.BoardReversed(selectIndex.index);
+        }
+        aiAction = (AiToJson) selectIndex;
+        break;
+      case 125:
+      case 164:
+        AiAction.MoveFromUltraSpace moveFromUltraSpace = JsonConvert.DeserializeObject<AiAction.MoveFromUltraSpace>(json);
+        if (color.Equals("white"))
+        {
+          moveFromUltraSpace.pokemon = AiToJson.CharaReversed(moveFromUltraSpace.pokemon);
+          moveFromUltraSpace.index = AiToJson.BoardReversed(moveFromUltraSpace.index);
+        }
+        aiAction = (AiToJson) moveFromUltraSpace;
+        break;
+      case 126:
+        AiAction.Pokemon pokemon12 = JsonConvert.DeserializeObject<AiAction.Pokemon>(json);
+        if (color.Equals("white"))
+          pokemon12.pokemon = AiToJson.CharaReversed(pokemon12.pokemon);
+        aiAction = (AiToJson) pokemon12;
+        break;
+      case (int) sbyte.MaxValue:
+        AiAction.AddMegaRemain addMegaRemain = JsonConvert.DeserializeObject<AiAction.AddMegaRemain>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < addMegaRemain.pokemons.Count; ++index)
+            addMegaRemain.pokemons[index] = AiToJson.CharaReversed(addMegaRemain.pokemons[index]);
+        }
+        aiAction = (AiToJson) addMegaRemain;
+        break;
+      case 128 /*0x80*/:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclareUltraSpace>(json);
+        break;
+      case 129:
+      case 130:
+        AiAction.ShadowBeam shadowBeam = JsonConvert.DeserializeObject<AiAction.ShadowBeam>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < shadowBeam.pokemons.Count; ++index)
+            shadowBeam.pokemons[index] = AiToJson.CharaReversed(shadowBeam.pokemons[index]);
+        }
+        aiAction = (AiToJson) shadowBeam;
+        break;
+      case 131:
+        AiAction.HatsudenDamageNotice hatsudenDamageNotice = JsonConvert.DeserializeObject<AiAction.HatsudenDamageNotice>(json);
+        if (color.Equals("white"))
+          hatsudenDamageNotice.pokemon = AiToJson.CharaReversed(hatsudenDamageNotice.pokemon);
+        aiAction = (AiToJson) hatsudenDamageNotice;
+        break;
+      case 132:
+        AiAction.SphereTrick sphereTrick = JsonConvert.DeserializeObject<AiAction.SphereTrick>(json);
+        if (color.Equals("white"))
+          sphereTrick.pokemon = AiToJson.CharaReversed(sphereTrick.pokemon);
+        aiAction = (AiToJson) sphereTrick;
+        break;
+      case 134:
+        AiAction.KougouseiDamageNotice kougouseiDamageNotice = JsonConvert.DeserializeObject<AiAction.KougouseiDamageNotice>(json);
+        if (color.Equals("white"))
+          kougouseiDamageNotice.pokemon = AiToJson.CharaReversed(kougouseiDamageNotice.pokemon);
+        aiAction = (AiToJson) kougouseiDamageNotice;
+        break;
+      case 136:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclareEizanNoKoukaku>(json);
+        break;
+      case 137:
+        AiAction.Pokemon pokemon13 = (AiAction.Pokemon) JsonConvert.DeserializeObject<AiAction.UsePokepower>(json);
+        if (color.Equals("white"))
+          pokemon13.pokemon = AiToJson.CharaReversed(pokemon13.pokemon);
+        aiAction = (AiToJson) pokemon13;
+        break;
+      case 138:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclareHouzanNoGankaku>(json);
+        break;
+      case 140:
+        AiAction.DeclareGuardian declareGuardian = JsonConvert.DeserializeObject<AiAction.DeclareGuardian>(json);
+        if (color.Equals("white"))
+          declareGuardian.pokemon = AiToJson.CharaReversed(declareGuardian.pokemon);
+        aiAction = (AiToJson) declareGuardian;
+        break;
+      case 142:
+        AiAction.DisableSkillForProbSpin skillForProbSpin = JsonConvert.DeserializeObject<AiAction.DisableSkillForProbSpin>(json);
+        if (color.Equals("white") && skillForProbSpin.disable_skills != null)
+        {
+          for (int index = 0; index < skillForProbSpin.disable_skills.Count; ++index)
+            skillForProbSpin.disable_skills[index].pokemon = AiToJson.CharaReversed(skillForProbSpin.disable_skills[index].pokemon);
+        }
+        aiAction = (AiToJson) skillForProbSpin;
+        break;
+      case 144 /*0x90*/:
+      case 145:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.EnableUsedPlateForTurn>(json);
+        break;
+      case 146:
+        AiAction.UltraPortation ultraPortation = JsonConvert.DeserializeObject<AiAction.UltraPortation>(json);
+        if (color.Equals("white"))
+          ultraPortation.pokemon = AiToJson.CharaReversed(ultraPortation.pokemon);
+        aiAction = (AiToJson) ultraPortation;
+        break;
+      case 147:
+        aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.AddZGauge>(json);
+        break;
+      case 148:
+        AiAction.Pokemons pokemons15 = JsonConvert.DeserializeObject<AiAction.Pokemons>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < pokemons15.pokemons.Count; ++index)
+            pokemons15.pokemons[index] = AiToJson.CharaReversed(pokemons15.pokemons[index]);
+        }
+        aiAction = (AiToJson) pokemons15;
+        break;
+      case 149:
+        AiAction.ZSkill zskill = JsonConvert.DeserializeObject<AiAction.ZSkill>(json);
+        if (color.Equals("white"))
+          zskill.pokemon = AiToJson.CharaReversed(zskill.pokemon);
+        aiAction = (AiToJson) zskill;
+        break;
+      case 150:
+        AiAction.PutContinuousEffectWithSkills effectWithSkills = JsonConvert.DeserializeObject<AiAction.PutContinuousEffectWithSkills>(json);
+        if (color.Equals("white"))
+        {
+          for (int index = 0; index < effectWithSkills.pokemons.Count; ++index)
+            effectWithSkills.pokemons[index] = AiToJson.CharaReversed(effectWithSkills.pokemons[index]);
+        }
+        aiAction = (AiToJson) effectWithSkills;
+        break;
+      case 153:
+        AiAction.NineEvolBoostDamageNotice boostDamageNotice = JsonConvert.DeserializeObject<AiAction.NineEvolBoostDamageNotice>(json);
+        if (color.Equals("white"))
+          boostDamageNotice.pokemon = AiToJson.CharaReversed(boostDamageNotice.pokemon);
+        aiAction = (AiToJson) boostDamageNotice;
+        break;
+      case 154:
+        AiAction.HanpatsuGomuDamageNotice gomuDamageNotice = JsonConvert.DeserializeObject<AiAction.HanpatsuGomuDamageNotice>(json);
+        if (color.Equals("white"))
+          gomuDamageNotice.pokemon = AiToJson.CharaReversed(gomuDamageNotice.pokemon);
+        aiAction = (AiToJson) gomuDamageNotice;
+        break;
+      case 157:
+        AiAction.HaradaikoDamageNotice haradaikoDamageNotice = JsonConvert.DeserializeObject<AiAction.HaradaikoDamageNotice>(json);
+        if (color.Equals("white"))
+          haradaikoDamageNotice.pokemon = AiToJson.CharaReversed(haradaikoDamageNotice.pokemon);
+        aiAction = (AiToJson) haradaikoDamageNotice;
+        break;
+      case 160 /*0xA0*/:
+        AiAction.CometPunchDamageNotice punchDamageNotice = JsonConvert.DeserializeObject<AiAction.CometPunchDamageNotice>(json);
+        if (color.Equals("white"))
+          punchDamageNotice.pokemon = AiToJson.CharaReversed(punchDamageNotice.pokemon);
+        aiAction = (AiToJson) punchDamageNotice;
+        break;
+      case 163:
+        AiAction.GenshiNoChikaraDamageNotice chikaraDamageNotice = JsonConvert.DeserializeObject<AiAction.GenshiNoChikaraDamageNotice>(json);
+        if (color.Equals("white"))
+          chikaraDamageNotice.pokemon = AiToJson.CharaReversed(chikaraDamageNotice.pokemon);
+        aiAction = (AiToJson) chikaraDamageNotice;
+        break;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson PlateDeserializeObject(AiToJson typeBase, string json, string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.DeclarePlateBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 0:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 1:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 2:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 3:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 4:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 5:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 6:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 7:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 8:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 9:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 10:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 11:
+        case 13:
+        case 14:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 12:
+        case 20:
+        case 21:
+          aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.DeclarePlate_TypeBase>(json).value;
+          break;
+        case 15:
+        case 17:
+          AiAction.Pokemon pokemon1 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon1.pokemon = AiToJson.CharaReversed(pokemon1.pokemon);
+          aiAction = (AiToJson) pokemon1;
+          break;
+        case 16 /*0x10*/:
+          AiAction.Pokemon pokemon2 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon2.pokemon = AiToJson.CharaReversed(pokemon2.pokemon);
+          aiAction = (AiToJson) pokemon2;
+          break;
+        case 18:
+        case 19:
+        case 28:
+        case 29:
+        case 30:
+          AiAction.Pokemon pokemon3 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon3.pokemon = AiToJson.CharaReversed(pokemon3.pokemon);
+          aiAction = (AiToJson) pokemon3;
+          break;
+        case 22:
+          AiAction.Pokemon pokemon4 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon4.pokemon = AiToJson.CharaReversed(pokemon4.pokemon);
+          aiAction = (AiToJson) pokemon4;
+          break;
+        case 23:
+        case 24:
+          AiAction.Pokemon pokemon5 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon5.pokemon = AiToJson.CharaReversed(pokemon5.pokemon);
+          aiAction = (AiToJson) pokemon5;
+          break;
+        case 25:
+          AiAction.Pokemon pokemon6 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon6.pokemon = AiToJson.CharaReversed(pokemon6.pokemon);
+          aiAction = (AiToJson) pokemon6;
+          break;
+        case 26:
+          AiAction.Pokemon pokemon7 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon7.pokemon = AiToJson.CharaReversed(pokemon7.pokemon);
+          aiAction = (AiToJson) pokemon7;
+          break;
+        case 27:
+          AiAction.Pokemon pokemon8 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon8.pokemon = AiToJson.CharaReversed(pokemon8.pokemon);
+          aiAction = (AiToJson) pokemon8;
+          break;
+        case 31 /*0x1F*/:
+          AiAction.PokemonMate pokemonMate = JsonConvert.DeserializeObject<AiAction.DeclarePlate_PokemonMate>(json).value;
+          if (color.Equals("white"))
+          {
+            pokemonMate.pokemon = AiToJson.CharaReversed(pokemonMate.pokemon);
+            pokemonMate.mate = AiToJson.CharaReversed(pokemonMate.mate);
+          }
+          aiAction = (AiToJson) pokemonMate;
+          break;
+        case 32 /*0x20*/:
+        case 33:
+        case 34:
+        case 151:
+        case 161:
+        case 166:
+          AiAction.Pokemons pokemons1 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons1.pokemons.Count; ++index)
+              pokemons1.pokemons[index] = AiToJson.CharaReversed(pokemons1.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons1;
+          break;
+        case 35:
+          AiAction.Pokemons pokemons2 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons2.pokemons.Count; ++index)
+              pokemons2.pokemons[index] = AiToJson.CharaReversed(pokemons2.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons2;
+          break;
+        case 36:
+        case 37:
+          AiAction.Pokemons pokemons3 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons3.pokemons.Count; ++index)
+              pokemons3.pokemons[index] = AiToJson.CharaReversed(pokemons3.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons3;
+          break;
+        case 38:
+        case 39:
+          AiAction.Pokemons pokemons4 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons4.pokemons.Count; ++index)
+              pokemons4.pokemons[index] = AiToJson.CharaReversed(pokemons4.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons4;
+          break;
+        case 40:
+          AiAction.Pokemons pokemons5 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons5.pokemons.Count; ++index)
+              pokemons5.pokemons[index] = AiToJson.CharaReversed(pokemons5.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons5;
+          break;
+        case 41:
+          AiAction.Pokemons pokemons6 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons6.pokemons.Count; ++index)
+              pokemons6.pokemons[index] = AiToJson.CharaReversed(pokemons6.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons6;
+          break;
+        case 42:
+          AiAction.Pokemons pokemons7 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons7.pokemons.Count; ++index)
+              pokemons7.pokemons[index] = AiToJson.CharaReversed(pokemons7.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons7;
+          break;
+        case 43:
+        case 44:
+          AiAction.Pokemons pokemons8 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons8.pokemons.Count; ++index)
+              pokemons8.pokemons[index] = AiToJson.CharaReversed(pokemons8.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons8;
+          break;
+        case 45:
+          AiAction.SwapMoveAndWait swapMoveAndWait = JsonConvert.DeserializeObject<AiAction.DeclarePlate_SwapMoveAndWait>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < swapMoveAndWait.pokemons.Count; ++index)
+              swapMoveAndWait.pokemons[index] = AiToJson.CharaReversed(swapMoveAndWait.pokemons[index]);
+          }
+          aiAction = (AiToJson) swapMoveAndWait;
+          break;
+        case 46:
+          AiAction.TargetsAnother targetsAnother = JsonConvert.DeserializeObject<AiAction.DeclarePlate_TargetAnother>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < targetsAnother.pokemons.Count; ++index)
+              targetsAnother.pokemons[index] = AiToJson.CharaReversed(targetsAnother.pokemons[index]);
+          }
+          aiAction = (AiToJson) targetsAnother;
+          break;
+        case 47:
+        case 48 /*0x30*/:
+          AiAction.Pokemons pokemons9 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.DeclarePlate_PutCircle>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons9.pokemons.Count; ++index)
+              pokemons9.pokemons[index] = AiToJson.CharaReversed(pokemons9.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons9;
+          break;
+        case 49:
+        case 50:
+          AiAction.Pokemons pokemons10 = (AiAction.Pokemons) JsonConvert.DeserializeObject<AiAction.DeclarePlate_PutTriangle>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons10.pokemons.Count; ++index)
+              pokemons10.pokemons[index] = AiToJson.CharaReversed(pokemons10.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons10;
+          break;
+        case 51:
+          AiAction.FromTo fromTo1 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_FromTo>(json).value;
+          if (color.Equals("white"))
+          {
+            fromTo1.from = AiToJson.BoardReversed(fromTo1.from);
+            fromTo1.to = AiToJson.BoardReversed(fromTo1.to);
+          }
+          aiAction = (AiToJson) fromTo1;
+          break;
+        case 52:
+          AiAction.FromTo fromTo2 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_FromTo>(json).value;
+          if (color.Equals("white"))
+          {
+            fromTo2.from = AiToJson.BoardReversed(fromTo2.from);
+            fromTo2.to = AiToJson.BoardReversed(fromTo2.to);
+          }
+          aiAction = (AiToJson) fromTo2;
+          break;
+        case 61:
+          AiAction.Route route = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Route>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < route.route.Count; ++index)
+              route.route[index] = AiToJson.BoardReversed(route.route[index]);
+          }
+          aiAction = (AiToJson) route;
+          break;
+        case 105:
+        case 137:
+          AiAction.Pokemon pokemon9 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon9.pokemon = AiToJson.CharaReversed(pokemon9.pokemon);
+          aiAction = (AiToJson) pokemon9;
+          break;
+        case 115:
+          AiAction.Pokemon pokemon10 = JsonConvert.DeserializeObject<AiAction.DeclarePlate_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon10.pokemon = AiToJson.CharaReversed(pokemon10.pokemon);
+          aiAction = (AiToJson) pokemon10;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson PokepowerDeserializeObject(AiToJson typeBase, string json, string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.DeclarePokepowerBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 15:
+        case 17:
+          AiAction.Pokemon pokemon1 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon1.pokemon = AiToJson.CharaReversed(pokemon1.pokemon);
+          aiAction = (AiToJson) pokemon1;
+          break;
+        case 16 /*0x10*/:
+          AiAction.Pokemon pokemon2 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon2.pokemon = AiToJson.CharaReversed(pokemon2.pokemon);
+          aiAction = (AiToJson) pokemon2;
+          break;
+        case 20:
+          AiAction.FormChangeNew formChangeNew = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_FormChangeNew>(json).value;
+          if (color.Equals("white"))
+            formChangeNew.pokemon_index = AiToJson.CharaReversed(formChangeNew.pokemon_index);
+          aiAction = (AiToJson) formChangeNew;
+          break;
+        case 22:
+          AiAction.Pokemon pokemon3 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon3.pokemon = AiToJson.CharaReversed(pokemon3.pokemon);
+          aiAction = (AiToJson) pokemon3;
+          break;
+        case 23:
+        case 24:
+        case 105:
+        case 137:
+          AiAction.Pokemon pokemon4 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon4.pokemon = AiToJson.CharaReversed(pokemon4.pokemon);
+          aiAction = (AiToJson) pokemon4;
+          break;
+        case 25:
+          AiAction.Pokemon pokemon5 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon5.pokemon = AiToJson.CharaReversed(pokemon5.pokemon);
+          aiAction = (AiToJson) pokemon5;
+          break;
+        case 26:
+          AiAction.Pokemon pokemon6 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon6.pokemon = AiToJson.CharaReversed(pokemon6.pokemon);
+          aiAction = (AiToJson) pokemon6;
+          break;
+        case 27:
+          AiAction.Pokemon pokemon7 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon7.pokemon = AiToJson.CharaReversed(pokemon7.pokemon);
+          aiAction = (AiToJson) pokemon7;
+          break;
+        case 32 /*0x20*/:
+        case 33:
+        case 34:
+        case 151:
+        case 161:
+        case 166:
+          AiAction.Pokemons pokemons1 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons1.pokemons.Count; ++index)
+              pokemons1.pokemons[index] = AiToJson.CharaReversed(pokemons1.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons1;
+          break;
+        case 35:
+          AiAction.Pokemons pokemons2 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons2.pokemons.Count; ++index)
+              pokemons2.pokemons[index] = AiToJson.CharaReversed(pokemons2.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons2;
+          break;
+        case 36:
+        case 37:
+          AiAction.Pokemons pokemons3 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons3.pokemons.Count; ++index)
+              pokemons3.pokemons[index] = AiToJson.CharaReversed(pokemons3.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons3;
+          break;
+        case 38:
+        case 39:
+          AiAction.Pokemons pokemons4 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons4.pokemons.Count; ++index)
+              pokemons4.pokemons[index] = AiToJson.CharaReversed(pokemons4.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons4;
+          break;
+        case 40:
+          AiAction.Pokemons pokemons5 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons5.pokemons.Count; ++index)
+              pokemons5.pokemons[index] = AiToJson.CharaReversed(pokemons5.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons5;
+          break;
+        case 41:
+          AiAction.Pokemons pokemons6 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons6.pokemons.Count; ++index)
+              pokemons6.pokemons[index] = AiToJson.CharaReversed(pokemons6.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons6;
+          break;
+        case 42:
+          AiAction.Pokemons pokemons7 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons7.pokemons.Count; ++index)
+              pokemons7.pokemons[index] = AiToJson.CharaReversed(pokemons7.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons7;
+          break;
+        case 43:
+        case 44:
+          AiAction.Pokemons pokemons8 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons8.pokemons.Count; ++index)
+              pokemons8.pokemons[index] = AiToJson.CharaReversed(pokemons8.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons8;
+          break;
+        case 45:
+          AiAction.SwapMoveAndWait swapMoveAndWait = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_SwapMoveAndWait>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < swapMoveAndWait.pokemons.Count; ++index)
+              swapMoveAndWait.pokemons[index] = AiToJson.CharaReversed(swapMoveAndWait.pokemons[index]);
+          }
+          aiAction = (AiToJson) swapMoveAndWait;
+          break;
+        case 47:
+        case 48 /*0x30*/:
+          AiAction.PutCircle putCircle = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_PutCircle>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < putCircle.pokemons.Count; ++index)
+              putCircle.pokemons[index] = AiToJson.CharaReversed(putCircle.pokemons[index]);
+          }
+          aiAction = (AiToJson) putCircle;
+          break;
+        case 49:
+        case 50:
+          AiAction.PutTriangle putTriangle = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_PutTriangle>(json).value;
+          if (color.Equals("white"))
+          {
+            putTriangle.setter = AiToJson.CharaReversed(putTriangle.setter);
+            for (int index = 0; index < putTriangle.pokemons.Count; ++index)
+              putTriangle.pokemons[index] = AiToJson.CharaReversed(putTriangle.pokemons[index]);
+          }
+          aiAction = (AiToJson) putTriangle;
+          break;
+        case 51:
+          AiAction.FromTo fromTo1 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_FromTo>(json).value;
+          if (color.Equals("white"))
+          {
+            fromTo1.from = AiToJson.BoardReversed(fromTo1.from);
+            fromTo1.to = AiToJson.BoardReversed(fromTo1.to);
+          }
+          aiAction = (AiToJson) fromTo1;
+          break;
+        case 52:
+          AiAction.FromTo fromTo2 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_FromTo>(json).value;
+          if (color.Equals("white"))
+          {
+            fromTo2.from = AiToJson.BoardReversed(fromTo2.from);
+            fromTo2.to = AiToJson.BoardReversed(fromTo2.to);
+          }
+          aiAction = (AiToJson) fromTo2;
+          break;
+        case 53:
+          AiAction.FromToWithSource fromToWithSource = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_FromToWithSource>(json).value;
+          if (color.Equals("white"))
+          {
+            fromToWithSource.from = AiToJson.BoardReversed(fromToWithSource.from);
+            fromToWithSource.to = AiToJson.BoardReversed(fromToWithSource.to);
+            fromToWithSource.source = AiToJson.CharaReversed(fromToWithSource.source);
+          }
+          aiAction = (AiToJson) fromToWithSource;
+          break;
+        case 55:
+        case 56:
+        case 57:
+        case 58:
+        case 59:
+          AiAction.FromPokemonToPokemon pokemonToPokemon = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_FromPokemonToPokemon>(json).value;
+          if (color.Equals("white"))
+          {
+            pokemonToPokemon.from_pokemon = AiToJson.CharaReversed(pokemonToPokemon.from_pokemon);
+            pokemonToPokemon.to_pokemon = AiToJson.CharaReversed(pokemonToPokemon.to_pokemon);
+          }
+          aiAction = (AiToJson) pokemonToPokemon;
+          break;
+        case 60:
+          AiAction.Route route1 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Route>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < route1.route.Count; ++index)
+              route1.route[index] = AiToJson.BoardReversed(route1.route[index]);
+          }
+          aiAction = (AiToJson) route1;
+          break;
+        case 61:
+          AiAction.Route route2 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Route>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < route2.route.Count; ++index)
+              route2.route[index] = AiToJson.BoardReversed(route2.route[index]);
+          }
+          aiAction = (AiToJson) route2;
+          break;
+        case 62:
+          AiAction.Route route3 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Route>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < route3.route.Count; ++index)
+              route3.route[index] = AiToJson.BoardReversed(route3.route[index]);
+          }
+          aiAction = (AiToJson) route3;
+          break;
+        case 72:
+          AiAction.RouteMoveAndWait routeMoveAndWait = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_RouteMoveAndWait>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < routeMoveAndWait.route.Count; ++index)
+              routeMoveAndWait.route[index] = AiToJson.BoardReversed(routeMoveAndWait.route[index]);
+          }
+          aiAction = (AiToJson) routeMoveAndWait;
+          break;
+        case 75:
+          AiAction.RouteMoveWithSource routeMoveWithSource = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_RouteMoveWithSource>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < routeMoveWithSource.route.Count; ++index)
+              routeMoveWithSource.route[index] = AiToJson.BoardReversed(routeMoveWithSource.route[index]);
+            routeMoveWithSource.source = AiToJson.CharaReversed(routeMoveWithSource.source);
+          }
+          aiAction = (AiToJson) routeMoveWithSource;
+          break;
+        case 106:
+          AiAction.DeclareSpotMoveToPc declareSpotMoveToPc = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_DeclareSpotMoveToPc>(json).value;
+          if (color.Equals("white"))
+          {
+            declareSpotMoveToPc.setter = AiToJson.CharaReversed(declareSpotMoveToPc.setter);
+            for (int index = 0; index < declareSpotMoveToPc.pokemons.Count; ++index)
+              declareSpotMoveToPc.pokemons[index] = AiToJson.CharaReversed(declareSpotMoveToPc.pokemons[index]);
+          }
+          aiAction = (AiToJson) declareSpotMoveToPc;
+          break;
+        case 115:
+          AiAction.Pokemon pokemon8 = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_Pokemon>(json).value;
+          if (color.Equals("white"))
+            pokemon8.pokemon = AiToJson.CharaReversed(pokemon8.pokemon);
+          aiAction = (AiToJson) pokemon8;
+          break;
+        case 124:
+          AiAction.SelectIndex selectIndex = JsonConvert.DeserializeObject<AiAction.DeclarePokepower_SelectIndex>(json).value;
+          if (color.Equals("white"))
+          {
+            selectIndex.setter = AiToJson.CharaReversed(selectIndex.setter);
+            selectIndex.index = AiToJson.BoardReversed(selectIndex.index);
+          }
+          aiAction = (AiToJson) selectIndex;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson PlateEffectDeserializeObject(AiToJson typeBase, string json, string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.DeclarePlateEffectBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 36:
+        case 37:
+          AiAction.Pokemons pokemons = JsonConvert.DeserializeObject<AiAction.DeclarePlateEffect_Pokemons>(json).value;
+          if (color.Equals("white"))
+          {
+            for (int index = 0; index < pokemons.pokemons.Count; ++index)
+              pokemons.pokemons[index] = AiToJson.CharaReversed(pokemons.pokemons[index]);
+          }
+          aiAction = (AiToJson) pokemons;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson DamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.DamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 85:
+          AiAction.BaseDamageNotice_Zero damageNoticeZero = JsonConvert.DeserializeObject<AiAction.BaseDamageNotice_Zero>(json);
+          if (color.Equals("white"))
+            damageNoticeZero.pokemon = AiToJson.CharaReversed(damageNoticeZero.pokemon);
+          aiAction = (AiToJson) damageNoticeZero.value;
+          break;
+        case 86:
+          AiAction.BaseDamageNotice_Sum baseDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.BaseDamageNotice_Sum>(json);
+          if (color.Equals("white"))
+            baseDamageNoticeSum.pokemon = AiToJson.CharaReversed(baseDamageNoticeSum.pokemon);
+          aiAction = (AiToJson) baseDamageNoticeSum.value;
+          break;
+        case 87:
+          AiAction.BaseDamageNotice_Product damageNoticeProduct = JsonConvert.DeserializeObject<AiAction.BaseDamageNotice_Product>(json);
+          if (color.Equals("white"))
+            damageNoticeProduct.pokemon = AiToJson.CharaReversed(damageNoticeProduct.pokemon);
+          aiAction = (AiToJson) damageNoticeProduct.value;
+          break;
+        case 88:
+          AiAction.BaseDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.BaseDamageNotice_ProductSum>(json);
+          if (color.Equals("white"))
+            noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+          aiAction = (AiToJson) noticeProductSum.value;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson PokepowerDamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.PokepowerDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 85:
+          AiAction.PokepowerDamageNotice_Zero damageNoticeZero = JsonConvert.DeserializeObject<AiAction.PokepowerDamageNotice_Zero>(json);
+          if (color.Equals("white"))
+          {
+            damageNoticeZero.pokemon = AiToJson.CharaReversed(damageNoticeZero.pokemon);
+            damageNoticeZero.source = AiToJson.CharaReversed(damageNoticeZero.source);
+          }
+          aiAction = (AiToJson) damageNoticeZero.value;
+          break;
+        case 86:
+          AiAction.PokepowerDamageNotice_Sum pokepowerDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.PokepowerDamageNotice_Sum>(json);
+          if (color.Equals("white"))
+          {
+            pokepowerDamageNoticeSum.pokemon = AiToJson.CharaReversed(pokepowerDamageNoticeSum.pokemon);
+            pokepowerDamageNoticeSum.source = AiToJson.CharaReversed(pokepowerDamageNoticeSum.source);
+          }
+          aiAction = (AiToJson) pokepowerDamageNoticeSum.value;
+          break;
+        case 87:
+          AiAction.PokepowerDamageNotice_Product damageNoticeProduct = JsonConvert.DeserializeObject<AiAction.PokepowerDamageNotice_Product>(json);
+          if (color.Equals("white"))
+          {
+            damageNoticeProduct.pokemon = AiToJson.CharaReversed(damageNoticeProduct.pokemon);
+            damageNoticeProduct.source = AiToJson.CharaReversed(damageNoticeProduct.source);
+          }
+          aiAction = (AiToJson) damageNoticeProduct.value;
+          break;
+        case 88:
+          AiAction.PokepowerDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.PokepowerDamageNotice_ProductSum>(json);
+          if (color.Equals("white"))
+          {
+            noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+            noticeProductSum.source = AiToJson.CharaReversed(noticeProductSum.source);
+          }
+          aiAction = (AiToJson) noticeProductSum.value;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson PlateDamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.PlateDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 85:
+          AiAction.PlateDamageNotice_Zero damageNoticeZero = JsonConvert.DeserializeObject<AiAction.PlateDamageNotice_Zero>(json);
+          if (color.Equals("white"))
+            damageNoticeZero.pokemon = AiToJson.CharaReversed(damageNoticeZero.pokemon);
+          aiAction = (AiToJson) damageNoticeZero.value;
+          break;
+        case 86:
+          AiAction.PlateDamageNotice_Sum plateDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.PlateDamageNotice_Sum>(json);
+          if (color.Equals("white"))
+            plateDamageNoticeSum.pokemon = AiToJson.CharaReversed(plateDamageNoticeSum.pokemon);
+          aiAction = (AiToJson) plateDamageNoticeSum.value;
+          break;
+        case 87:
+          AiAction.PlateDamageNotice_Product damageNoticeProduct = JsonConvert.DeserializeObject<AiAction.PlateDamageNotice_Product>(json);
+          if (color.Equals("white"))
+            damageNoticeProduct.pokemon = AiToJson.CharaReversed(damageNoticeProduct.pokemon);
+          aiAction = (AiToJson) damageNoticeProduct.value;
+          break;
+        case 88:
+          AiAction.PlateDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.PlateDamageNotice_ProductSum>(json);
+          if (color.Equals("white"))
+            noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+          aiAction = (AiToJson) noticeProductSum.value;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson ConditionDamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.ConditionDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 85:
+          AiAction.ConditionDamageNotice_Zero damageNoticeZero = JsonConvert.DeserializeObject<AiAction.ConditionDamageNotice_Zero>(json);
+          if (color.Equals("white"))
+            damageNoticeZero.pokemon = AiToJson.CharaReversed(damageNoticeZero.pokemon);
+          aiAction = (AiToJson) damageNoticeZero.value;
+          break;
+        case 86:
+          AiAction.ConditionDamageNotice_Sum conditionDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.ConditionDamageNotice_Sum>(json);
+          if (color.Equals("white"))
+            conditionDamageNoticeSum.pokemon = AiToJson.CharaReversed(conditionDamageNoticeSum.pokemon);
+          aiAction = (AiToJson) conditionDamageNoticeSum.value;
+          break;
+        case 87:
+          AiAction.ConditionDamageNotice_Product damageNoticeProduct = JsonConvert.DeserializeObject<AiAction.ConditionDamageNotice_Product>(json);
+          if (color.Equals("white"))
+            damageNoticeProduct.pokemon = AiToJson.CharaReversed(damageNoticeProduct.pokemon);
+          aiAction = (AiToJson) damageNoticeProduct.value;
+          break;
+        case 88:
+          AiAction.ConditionDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.ConditionDamageNotice_ProductSum>(json);
+          if (color.Equals("white"))
+            noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+          aiAction = (AiToJson) noticeProductSum.value;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson TriangleDamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.TriangleDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null)
+    {
+      switch (AiAction.GetTypeInt((AiAction.TypeBase) aiAction))
+      {
+        case 85:
+          AiAction.TriangleDamageNotice_Zero damageNoticeZero = JsonConvert.DeserializeObject<AiAction.TriangleDamageNotice_Zero>(json);
+          if (color.Equals("white"))
+            damageNoticeZero.pokemon = AiToJson.CharaReversed(damageNoticeZero.pokemon);
+          aiAction = (AiToJson) damageNoticeZero.value;
+          break;
+        case 86:
+          AiAction.TriangleDamageNotice_Sum triangleDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.TriangleDamageNotice_Sum>(json);
+          if (color.Equals("white"))
+            triangleDamageNoticeSum.pokemon = AiToJson.CharaReversed(triangleDamageNoticeSum.pokemon);
+          aiAction = (AiToJson) triangleDamageNoticeSum.value;
+          break;
+        case 87:
+          AiAction.TriangleDamageNotice_Product damageNoticeProduct = JsonConvert.DeserializeObject<AiAction.TriangleDamageNotice_Product>(json);
+          if (color.Equals("white"))
+            damageNoticeProduct.pokemon = AiToJson.CharaReversed(damageNoticeProduct.pokemon);
+          aiAction = (AiToJson) damageNoticeProduct.value;
+          break;
+        case 88:
+          AiAction.TriangleDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.TriangleDamageNotice_ProductSum>(json);
+          if (color.Equals("white"))
+            noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+          aiAction = (AiToJson) noticeProductSum.value;
+          break;
+      }
+    }
+    return aiAction;
+  }
+
+  public static AiToJson MistDamageNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.MistDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.MistDamageNotice_ProductSum noticeProductSum = JsonConvert.DeserializeObject<AiAction.MistDamageNotice_ProductSum>(json);
+      if (color.Equals("white"))
+        noticeProductSum.pokemon = AiToJson.CharaReversed(noticeProductSum.pokemon);
+      aiAction = (AiToJson) noticeProductSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson TechnoChargeNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.TechnoChargeDamageNoticeBase) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 86)
+    {
+      AiAction.TechnoChargeDamageNotice_Sum chargeDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.TechnoChargeDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        chargeDamageNoticeSum.pokemon = AiToJson.CharaReversed(chargeDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) chargeDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson TechnoChargeKaiNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.TechnoChargeKaiDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 86)
+    {
+      AiAction.TechnoChargeKaiDamageNotice_Sum kaiDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.TechnoChargeKaiDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        kaiDamageNoticeSum.pokemon = AiToJson.CharaReversed(kaiDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) kaiDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson KatakunaruKaiNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.KatakunaruKaiDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.KatakunaruKaiDamageNotice_Sum kaiDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.KatakunaruKaiDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        kaiDamageNoticeSum.pokemon = AiToJson.CharaReversed(kaiDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) kaiDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson HatsudenNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.HatsudenDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 86)
+    {
+      AiAction.HatsudenDamageNotice_Sum hatsudenDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.HatsudenDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        hatsudenDamageNoticeSum.pokemon = AiToJson.CharaReversed(hatsudenDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) hatsudenDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson KougouseiNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.KougouseiDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.KougouseiDamageNotice_Sum kougouseiDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.KougouseiDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        kougouseiDamageNoticeSum.pokemon = AiToJson.CharaReversed(kougouseiDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) kougouseiDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson NineEvolBoostNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.NineEvolBoostDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.NineEvolBoostDamageNotice_Sum boostDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.NineEvolBoostDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        boostDamageNoticeSum.pokemon = AiToJson.CharaReversed(boostDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) boostDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson HanpatsuGomuNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.HanpatsuGomuDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.HanpatsuGomuDamageNotice_Sum gomuDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.HanpatsuGomuDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        gomuDamageNoticeSum.pokemon = AiToJson.CharaReversed(gomuDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) gomuDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson HaradaikoNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.HaradaikoDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.HaradaikoDamageNotice_Sum haradaikoDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.HaradaikoDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        haradaikoDamageNoticeSum.pokemon = AiToJson.CharaReversed(haradaikoDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) haradaikoDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson CometPunchNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.CometPunchDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.CometPunchDamageNotice_Sum punchDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.CometPunchDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        punchDamageNoticeSum.pokemon = AiToJson.CharaReversed(punchDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) punchDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static AiToJson GenshiNoChikaraNoticeDeserializeObject(
+    AiToJson typeBase,
+    string json,
+    string color)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(JsonConvert.SerializeObject(((AiAction.GenshiNoChikaraDamageNotice) typeBase).value));
+    if (((AiAction.TypeBase) aiAction).type != null && AiAction.GetTypeInt((AiAction.TypeBase) aiAction) == 88)
+    {
+      AiAction.GenshiNoChikaraDamageNotice_Sum chikaraDamageNoticeSum = JsonConvert.DeserializeObject<AiAction.GenshiNoChikaraDamageNotice_Sum>(json);
+      if (color.Equals("white"))
+        chikaraDamageNoticeSum.pokemon = AiToJson.CharaReversed(chikaraDamageNoticeSum.pokemon);
+      aiAction = (AiToJson) chikaraDamageNoticeSum.value;
+    }
+    return aiAction;
+  }
+
+  public static int GetTypeInt(string json)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(json);
+    return ((AiAction.TypeBase) aiAction).type == null ? 167 : AiAction.GetTypeInt((AiAction.TypeBase) aiAction);
+  }
+
+  public static int GetTypeInt(AiAction.TypeBase aiAction) => (int) AiAction.GetType(aiAction);
+
+  public static AiAction.TypeName GetType(string json)
+  {
+    AiToJson aiAction = (AiToJson) JsonConvert.DeserializeObject<AiAction.TypeBase>(json);
+    return ((AiAction.TypeBase) aiAction).type == null ? AiAction.TypeName.Max : AiAction.GetType((AiAction.TypeBase) aiAction);
+  }
+
+  public static AiAction.TypeName GetType(AiAction.TypeBase aiAction)
+  {
+    return (AiAction.TypeName) Enum.Parse(typeof (AiAction.TypeName), aiAction.type);
+  }
+
+  public static int GetLength() => 167;
+
+  public static string GetString(int index) => Enum.GetNames(typeof (AiAction.TypeName))[index];
+
+  public class TypeBase : AiToJson
+  {
+    public string type { get; set; }
+  }
+
+  public class Target : AiAction.TypeBase
+  {
+    public int target { get; set; }
+  }
+
+  public class Pokemon : AiAction.TypeBase
+  {
+    public int pokemon { get; set; }
+  }
+
+  public class PokemonMate : AiAction.Pokemon
+  {
+    public AiToJson.AiFunc<int> _aiFunc;
+
+    public int mate { get; set; }
+
+    public override void Exec(int val) => this._aiFunc.ActionExec(val);
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<int>();
+  }
+
+  public class Targets : AiAction.TypeBase
+  {
+    public List<int> target { get; set; }
+  }
+
+  public class Pokemons : AiAction.TypeBase
+  {
+    public AiToJson.AiFunc<List<int>> _aiFunc;
+
+    public List<int> pokemons { get; set; }
+
+    public override void Exec() => this._aiFunc.ActionExec(this.pokemons.ToList<int>());
+
+    public override void Exec(int value)
+    {
+      if (value == -1)
+        return;
+      List<int> source = new List<int>();
+      if (this.pokemons.Any<int>((Func<int, bool>) (pokemon => pokemon == value)))
+        source.Add(value);
+      foreach (int num in this.pokemons.Where<int>((Func<int, bool>) (pokemon => pokemon != value)))
+        source.Add(num);
+      this._aiFunc.ActionExec(source.ToList<int>());
+    }
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<List<int>>();
+  }
+
+  public class SwapMoveAndWait : AiAction.Pokemons
+  {
+    public int duration { get; set; }
+  }
+
+  public class TargetsAnother : AiAction.Pokemons
+  {
+    public int duration { get; set; }
+  }
+
+  public class PutCircle : AiAction.Pokemons
+  {
+    public string condition { get; set; }
+  }
+
+  public class PutTriangle : AiAction.Pokemons
+  {
+    public string marker { get; set; }
+
+    public int skill_id { get; set; }
+
+    public int setter { get; set; }
+  }
+
+  public class AddMist : AiAction.Pokemons
+  {
+    public int pokemon_type { get; set; }
+  }
+
+  public class TechnoCharge : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class From : AiAction.TypeBase
+  {
+    public int from { get; set; }
+  }
+
+  public class FromTo : AiAction.From
+  {
+    public AiToJson.AiFunc<List<int>> _aiFunc;
+
+    public int to { get; set; }
+
+    public new virtual void Exec()
+    {
+      this._aiFunc.ActionExec(new List<int>()
+      {
+        this.from,
+        this.to
+      });
+    }
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<List<int>>();
+  }
+
+  public class FromToWithSource : AiAction.FromTo
+  {
+    public int source { get; set; }
+  }
+
+  public class FromPokemon : AiAction.TypeBase
+  {
+    public int from_pokemon { get; set; }
+  }
+
+  public class FromPokemonToPokemon : AiAction.FromPokemon
+  {
+    public AiToJson.AiFunc<int> _aiFunc;
+
+    public int to_pokemon { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this.to_pokemon);
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<int>();
+  }
+
+  public class Route : AiAction.TypeBase
+  {
+    public AiToJson.AiFunc<List<int>> _aiFunc;
+
+    public List<int> route { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this.route);
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<List<int>>();
+  }
+
+  public class Indices : AiAction.TypeBase
+  {
+    public List<int> indices { get; set; }
+  }
+
+  public class GameSet : AiAction.TypeBase
+  {
+    public string win { get; set; }
+
+    public string lose { get; set; }
+
+    public string reason { get; set; }
+  }
+
+  public class Spin : AiAction.TypeBase
+  {
+    public List<AiAction.Spin.ResultsTarget> spins { get; set; }
+
+    public class ResultsTarget : AiAction.Pokemon
+    {
+      public List<AiAction.Spin.ResultsTarget.Results> results { get; set; }
+
+      public class Results : AiAction.TypeBase
+      {
+        public Results() => this.figure = -1;
+
+        public int num { get; set; }
+
+        public int displace { get; set; }
+
+        public int figure { get; set; }
+      }
+    }
+  }
+
+  public class BattleResult : AiAction.TypeBase
+  {
+    public AiAction.BattleResult.Result attack { get; set; }
+
+    public AiAction.BattleResult.Result defence { get; set; }
+
+    public int winner { get; set; }
+
+    public class Result : AiToJson
+    {
+      public int pokemon { get; set; }
+
+      public string result { get; set; }
+
+      public int skill { get; set; }
+
+      public int speed_or_damage { get; set; }
+    }
+  }
+
+  public class PokepowerNotice : AiAction.Pokemon
+  {
+    public int pokepower { get; set; }
+  }
+
+  public class SkillNotice : AiAction.Pokemon
+  {
+    public int skill { get; set; }
+  }
+
+  public class PlateNotice : AiAction.Pokemon
+  {
+    public int plate { get; set; }
+  }
+
+  public class MarkerNotice : AiAction.Pokemon
+  {
+    public string marker { get; set; }
+  }
+
+  public class RouteMoveAndWait : AiAction.Route
+  {
+    public int duration { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this.route);
+  }
+
+  public class RouteMoveAndPutCircle : AiAction.Route
+  {
+    public string condition { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this.route);
+  }
+
+  public class RouteMoveAndPutTriangle : AiAction.Route
+  {
+    public string marker { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this.route);
+  }
+
+  public class RouteMoveWithSource : AiAction.Route
+  {
+    public int source { get; set; }
+  }
+
+  public class DisableSkill : AiAction.Pokemon
+  {
+    public List<int> skill_id { get; set; }
+  }
+
+  public class SpeedUpSkill : AiAction.Pokemon
+  {
+    public List<int> skill_id { get; set; }
+  }
+
+  public class NextTurn : AiAction.TypeBase
+  {
+    public string next_turn { get; set; }
+  }
+
+  public class DisablePlate : AiAction.TypeBase
+  {
+    public List<string> black { get; set; }
+
+    public List<string> white { get; set; }
+  }
+
+  public class DeclarePlate : AiAction.TypeBase
+  {
+    public int plate_id { get; set; }
+  }
+
+  public class DeclarePlateBase : AiAction.DeclarePlate
+  {
+    public object value { get; set; }
+  }
+
+  public class DeclarePlate_TypeBase : AiAction.DeclarePlate
+  {
+    public AiAction.TypeBase value { get; set; }
+  }
+
+  public class DeclarePlate_Pokemon : AiAction.DeclarePlate
+  {
+    public AiAction.Pokemon value { get; set; }
+  }
+
+  public class DeclarePlate_PokemonMate : AiAction.DeclarePlate
+  {
+    public AiAction.PokemonMate value { get; set; }
+  }
+
+  public class DeclarePlate_Pokemons : AiAction.DeclarePlate
+  {
+    public AiAction.Pokemons value { get; set; }
+  }
+
+  public class DeclarePlate_SwapMoveAndWait : AiAction.DeclarePlate
+  {
+    public AiAction.SwapMoveAndWait value { get; set; }
+  }
+
+  public class DeclarePlate_TargetAnother : AiAction.DeclarePlate
+  {
+    public AiAction.TargetsAnother value { get; set; }
+  }
+
+  public class DeclarePlate_PutCircle : AiAction.DeclarePlate
+  {
+    public AiAction.PutCircle value { get; set; }
+  }
+
+  public class DeclarePlate_PutTriangle : AiAction.DeclarePlate
+  {
+    public AiAction.PutTriangle value { get; set; }
+  }
+
+  public class DeclarePlate_FromTo : AiAction.DeclarePlate
+  {
+    public AiAction.FromTo value { get; set; }
+  }
+
+  public class DeclarePlate_Route : AiAction.DeclarePlate
+  {
+    public AiAction.Route value { get; set; }
+  }
+
+  public class DeclarePokepower : AiAction.TypeBase
+  {
+    public int pokepower_id { get; set; }
+  }
+
+  public class DeclarePokepowerBase : AiAction.DeclarePokepower
+  {
+    public AiToJson.AiFunc<AiAction.DeclarePokepowerBase> _aiFunc;
+
+    public object value { get; set; }
+
+    public new virtual void Exec() => this._aiFunc.ActionExec(this);
+
+    public void NewAiFunc() => this._aiFunc = new AiToJson.AiFunc<AiAction.DeclarePokepowerBase>();
+  }
+
+  public class DeclarePokepower_PutCircle : AiAction.DeclarePokepower
+  {
+    public AiAction.PutCircle value { get; set; }
+  }
+
+  public class DeclarePokepower_PutTriangle : AiAction.DeclarePokepower
+  {
+    public AiAction.PutTriangle value { get; set; }
+  }
+
+  public class DeclarePokepower_FromTo : AiAction.DeclarePokepower
+  {
+    public AiAction.FromTo value { get; set; }
+  }
+
+  public class DeclarePokepower_FromToWithSource : AiAction.DeclarePokepower
+  {
+    public AiAction.FromToWithSource value { get; set; }
+  }
+
+  public class DeclarePokepower_FromPokemonToPokemon : AiAction.DeclarePokepower
+  {
+    public AiAction.FromPokemonToPokemon value { get; set; }
+  }
+
+  public class DeclarePokepower_Pokemon : AiAction.DeclarePokepower
+  {
+    public AiAction.Pokemon value { get; set; }
+  }
+
+  public class DeclarePokepower_RouteMoveAndWait : AiAction.DeclarePokepower
+  {
+    public AiAction.RouteMoveAndWait value { get; set; }
+  }
+
+  public class DeclarePokepower_RouteMoveWithSource : AiAction.DeclarePokepower
+  {
+    public AiAction.RouteMoveWithSource value { get; set; }
+  }
+
+  public class DeclarePokepower_Pokemons : AiAction.DeclarePokepower
+  {
+    public AiAction.Pokemons value { get; set; }
+  }
+
+  public class DeclarePokepower_SwapMoveAndWait : AiAction.DeclarePokepower
+  {
+    public AiAction.SwapMoveAndWait value { get; set; }
+  }
+
+  public class DeclarePokepower_Route : AiAction.DeclarePokepower
+  {
+    public AiAction.Route value { get; set; }
+  }
+
+  public class DeclarePokepower_FormChangeNew : AiAction.DeclarePokepower
+  {
+    public AiAction.FormChangeNew value { get; set; }
+  }
+
+  public class DeclarePokepower_SelectIndex : AiAction.DeclarePokepower
+  {
+    public AiAction.SelectIndex value { get; set; }
+  }
+
+  public class DeclarePokepower_DeclareSpotMoveToPc : AiAction.DeclarePokepower
+  {
+    public AiAction.DeclareSpotMoveToPc value { get; set; }
+  }
+
+  public class DeclarePlateEffect : AiAction.TypeBase
+  {
+    public int plate_id { get; set; }
+  }
+
+  public class DeclarePlateEffectBase : AiAction.DeclarePlateEffect
+  {
+    public object value { get; set; }
+  }
+
+  public class DeclarePlateEffect_Pokemons : AiAction.DeclarePlateEffect
+  {
+    public AiAction.Pokemons value { get; set; }
+  }
+
+  public class DamageSetNotice : AiAction.TypeBase
+  {
+    public int current { get; set; }
+
+    public int result { get; set; }
+  }
+
+  public class DamageSumNotice : AiAction.DamageSetNotice
+  {
+    public int addend { get; set; }
+  }
+
+  public class DamageProductNotice : AiAction.DamageSetNotice
+  {
+    public int multiplier { get; set; }
+  }
+
+  public class DamageProductSumNotice : AiAction.DamageProductNotice
+  {
+    public int multiplicand { get; set; }
+  }
+
+  public class DamageNotice : AiAction.Pokemon
+  {
+    public int skill_id { get; set; }
+  }
+
+  public class DamageNoticeBase : AiAction.DamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class BaseDamageNotice_Zero : AiAction.DamageNotice
+  {
+    public AiAction.DamageSetNotice value { get; set; }
+  }
+
+  public class BaseDamageNotice_Sum : AiAction.DamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class BaseDamageNotice_Product : AiAction.DamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class BaseDamageNotice_ProductSum : AiAction.DamageNotice
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class PokepowerDamageNotice : AiAction.Pokemon
+  {
+    public int source { get; set; }
+  }
+
+  public class PokepowerDamageNoticeBase : AiAction.PokepowerDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class PokepowerDamageNotice_Zero : AiAction.PokepowerDamageNotice
+  {
+    public AiAction.DamageSetNotice value { get; set; }
+  }
+
+  public class PokepowerDamageNotice_Sum : AiAction.PokepowerDamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class PokepowerDamageNotice_Product : AiAction.PokepowerDamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class PokepowerDamageNotice_ProductSum : AiAction.PokepowerDamageNotice
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class PlateDamageNotice : AiAction.Pokemon
+  {
+    public int plate_id { get; set; }
+  }
+
+  public class PlateDamageNoticeBase : AiAction.PlateDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class PlateDamageNotice_Zero : AiAction.PlateDamageNotice
+  {
+    public AiAction.DamageSetNotice value { get; set; }
+  }
+
+  public class PlateDamageNotice_Sum : AiAction.PlateDamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class PlateDamageNotice_Product : AiAction.PlateDamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class PlateDamageNotice_ProductSum : AiAction.PlateDamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class ConditionDamageNotice : AiAction.Pokemon
+  {
+    public string condition { get; set; }
+  }
+
+  public class ConditionDamageNoticeBase : AiAction.ConditionDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class ConditionDamageNotice_Zero : AiAction.ConditionDamageNotice
+  {
+    public AiAction.DamageSetNotice value { get; set; }
+  }
+
+  public class ConditionDamageNotice_Sum : AiAction.ConditionDamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class ConditionDamageNotice_Product : AiAction.ConditionDamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class ConditionDamageNotice_ProductSum : AiAction.ConditionDamageNotice
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class TriangleDamageNotice : AiAction.Pokemon
+  {
+    public string marker { get; set; }
+  }
+
+  public class TriangleDamageNoticeBase : AiAction.TriangleDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class TriangleDamageNotice_Zero : AiAction.TriangleDamageNotice
+  {
+    public AiAction.DamageSetNotice value { get; set; }
+  }
+
+  public class TriangleDamageNotice_Sum : AiAction.TriangleDamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class TriangleDamageNotice_Product : AiAction.TriangleDamageNotice
+  {
+    public AiAction.DamageProductNotice value { get; set; }
+  }
+
+  public class TriangleDamageNotice_ProductSum : AiAction.TriangleDamageNotice
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class MistDamageNotice : AiAction.Pokemon
+  {
+    public int pokemon_type { get; set; }
+  }
+
+  public class MistDamageNoticeBase : AiAction.MistDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class MistDamageNotice_ProductSum : AiAction.MistDamageNotice
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class TechnoChargeDamageNotice : AiAction.Pokemon
+  {
+  }
+
+  public class TechnoChargeDamageNoticeBase : AiAction.TechnoChargeDamageNotice
+  {
+    public object value { get; set; }
+  }
+
+  public class TechnoChargeDamageNotice_Sum : AiAction.TechnoChargeDamageNotice
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class AddPokeType : AiAction.Pokemons
+  {
+    public int pokemon_type { get; set; }
+  }
+
+  public class AddPokeTypeWithDuration : AiAction.Pokemons
+  {
+    public int poke_type { get; set; }
+
+    public int duration { get; set; }
+  }
+
+  public class PutContinuousEffect : AiAction.Pokemons
+  {
+    public int effect_type { get; set; }
+  }
+
+  public class PokemonMove : AiAction.Pokemon
+  {
+  }
+
+  public class DeclareSpotMoveToPc : AiAction.Pokemons
+  {
+    public int pc_send_type { get; set; }
+
+    public int setter { get; set; }
+  }
+
+  public class IncreaseNandemoTaberuNum : AiAction.Pokemons
+  {
+    public int variation { get; set; }
+  }
+
+  public class TechnoChargeKaiDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class TechnoChargeKaiDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class KatakunaruKaiDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class KatakunaruKaiDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class ChangeSkill : AiAction.Pokemon
+  {
+    public List<int> src_skill_id { get; set; }
+
+    public int dst_skill_id { get; set; }
+
+    public int speed_or_damage { get; set; }
+  }
+
+  public class RemovePokemonWithDuration : AiAction.Pokemons
+  {
+    public int duration { get; set; }
+  }
+
+  public class MeremereNoInori : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+
+    public int setter { get; set; }
+  }
+
+  public class UlaulaNoInori : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+
+    public int setter { get; set; }
+  }
+
+  public class CosmoPower : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class BalloonFlight : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class AddSoulHeart : AiAction.Pokemons
+  {
+  }
+
+  public class GearChange : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class SelectIndex : AiAction.TypeBase
+  {
+    public int index { get; set; }
+
+    public int setter { get; set; }
+  }
+
+  public class MoveFromUltraSpace : AiAction.Pokemon
+  {
+    public int index { get; set; }
+  }
+
+  public class DisablePlateForOnePokemon : AiAction.Pokemon
+  {
+    public List<int> plate_id { get; set; }
+  }
+
+  public class AddMegaRemain : AiAction.Pokemons
+  {
+    public int duration { get; set; }
+  }
+
+  public class DeclareUltraSpace : AiAction.TypeBase
+  {
+    public bool declaration { get; set; }
+  }
+
+  public class ShadowBeam : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class HatsudenDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class HatsudenDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageSumNotice value { get; set; }
+  }
+
+  public class SphereTrick : AiAction.Pokemon
+  {
+    public List<int> plates { get; set; }
+  }
+
+  public class KougouseiDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class KougouseiDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class FormChangeNew : AiAction.TypeBase
+  {
+    public int pokemon_index { get; set; }
+
+    public int initial_pokemon_index { get; set; }
+  }
+
+  public class DeclareEizanNoKoukaku : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class UsePokepower : AiAction.Pokemon
+  {
+  }
+
+  public class DeclareHouzanNoGankaku : AiAction.Pokemons
+  {
+    public bool boolean { get; set; }
+  }
+
+  public class DeclareGuardian : AiAction.Pokemon
+  {
+    public int index { get; set; }
+  }
+
+  public class DisableSkillForProbSpin : AiAction.TypeBase
+  {
+    public List<AiAction.DisableSkill> disable_skills { get; set; }
+  }
+
+  public class EnableUsedPlateForTurn : AiAction.TypeBase
+  {
+    public List<int> turns { get; set; }
+  }
+
+  public class UltraPortation : AiAction.Pokemon
+  {
+    public int src_index { get; set; }
+  }
+
+  public class AddZGauge : AiAction.TypeBase
+  {
+    public int black { get; set; }
+
+    public int white { get; set; }
+
+    public int black_result { get; set; }
+
+    public int white_result { get; set; }
+  }
+
+  public class ZSkill : AiAction.Pokemon
+  {
+    public int dst_skill_id { get; set; }
+
+    public int speed_or_damage { get; set; }
+  }
+
+  public class MoveToUltraSpaceWithDuration : AiAction.Pokemons
+  {
+    public int duration { get; set; }
+  }
+
+  public class PutContinuousEffectWithSkills : AiAction.Pokemons
+  {
+    public List<int> skills { get; set; }
+
+    public int effect_type { get; set; }
+  }
+
+  public class NineEvolBoostDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class NineEvolBoostDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class HanpatsuGomuDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class HanpatsuGomuDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class HaradaikoDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class HaradaikoDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class CometPunchDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class CometPunchDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public class GenshiNoChikaraDamageNotice : AiAction.Pokemon
+  {
+    public object value { get; set; }
+  }
+
+  public class GenshiNoChikaraDamageNotice_Sum : AiAction.Pokemon
+  {
+    public AiAction.DamageProductSumNotice value { get; set; }
+  }
+
+  public enum TypeName
+  {
+    resign,
+    null_move,
+    turn_end,
+    declare_turn_end,
+    declare_aura,
+    recycle,
+    monomane_controller,
+    declare_aura_by_psychic,
+    genki_no_katamari_plus,
+    warp_point,
+    toki_no_jyuatsu,
+    mugen_no_fue,
+    trick_room,
+    utsushi_kagami,
+    remove_used_plate,
+    evolve,
+    double_evolve,
+    mega_evolve,
+    degenerate,
+    degenerate_by_koori_no_soukou,
+    form_change_new,
+    form_change_evolve,
+    bench_move,
+    select_pokemon,
+    select_pokemon_and_declare_aura,
+    select_pokemon_by_psychic,
+    declare_displacement,
+    declare_waruagaki,
+    tokiwatari,
+    tokiwatari_execute,
+    makimodoshi,
+    asym_swap_move,
+    remove_debuff,
+    reset,
+    reset_mushikui,
+    sandwich,
+    swap_move,
+    swap_move_auto,
+    remove_pokemon,
+    remove_pokemon_by_owari_no_daichi,
+    declare_respin,
+    declare_spin,
+    declare_figure_spin,
+    move_to_ultra_space,
+    move_to_ultra_space_with_duration,
+    swap_move_and_wait,
+    wait,
+    put_circle,
+    put_circle_auto,
+    put_triangle,
+    put_triangle_with_duration,
+    knockedout_move,
+    spot_move,
+    spot_move_with_source,
+    touch,
+    declare_battle,
+    pseudo_declare_battle,
+    battle_info,
+    tamanage_max_move,
+    multi_type_move,
+    mp_move,
+    route_move,
+    ghost_move,
+    game_set,
+    spin,
+    battle_result,
+    pokepower_notice,
+    skill_notice,
+    plate_notice,
+    marker_notice,
+    remove_charge,
+    overwrite_notice,
+    route_move_and_wait,
+    route_move_and_put_circle,
+    route_move_and_put_triangle,
+    route_move_with_source,
+    disable_skill,
+    speedup_skill,
+    speeddown_skill,
+    opponents_turn,
+    disable_plate,
+    enable_plate,
+    declare_plate,
+    declare_plate_effect,
+    declare_pokepower,
+    damage_set_notice,
+    damage_sum_notice,
+    damage_product_notice,
+    damage_product_sum_notice,
+    base_damage_notice,
+    skill_damage_notice,
+    support_skill_damage_notice,
+    pokepower_damage_notice,
+    plate_damage_notice,
+    condition_damage_notice,
+    triangle_damage_notice,
+    mist_damage_notice,
+    techno_charge_damage_notice,
+    add_mist,
+    techno_charge,
+    cotton_guard,
+    remove_mist,
+    add_poke_type,
+    add_poke_type_with_duration,
+    put_continuous_effect,
+    pokemon_move,
+    declare_spot_move_to_pc,
+    techno_charge_kai,
+    techno_charge_kai_damage_notice,
+    add_katakunaru_kai,
+    katakunaru_kai_damage_notice,
+    disable_plate_by_effect,
+    battled_after_field_in,
+    increase_nandemo_taberu_num,
+    change_skill,
+    bench_move_by_mugen_no_fue,
+    remove_pokemon_with_duration,
+    remove_pokemon_with_pc_move_duration,
+    meremere_no_inori,
+    ulaula_no_inori,
+    cosmo_power,
+    balloon_flight,
+    add_soul_heart,
+    gear_change,
+    select_index,
+    move_from_ultra_space,
+    disable_plate_for_one_pokemon,
+    add_mega_remain,
+    declare_ultra_space,
+    shadow_beam,
+    night_burst,
+    hatsuden_damage_notice,
+    sphere_trick,
+    add_kougousei,
+    kougousei_damage_notice,
+    energy_ball,
+    declare_eizan_no_koukaku,
+    use_pokepower,
+    declare_houzan_no_gankaku,
+    garyoutensei,
+    declare_guardian,
+    declare_disable_sphere,
+    disable_skill_for_prob_spin,
+    declare_disable_skill,
+    enable_used_plate_for_turn,
+    remove_used_plate_for_turn,
+    ultra_portation,
+    add_z_gauge,
+    add_faint_num,
+    z_skill,
+    put_continuous_effect_with_skills,
+    add_hanpatsu_gomu,
+    add_nine_evol_boost,
+    nine_evol_boost_damage_notice,
+    hanpatsu_gomu_damage_notice,
+    add_wait,
+    add_haradaiko,
+    haradaiko_damage_notice,
+    acid_bomb,
+    add_comet_punch,
+    comet_punch_damage_notice,
+    set_chousyuha_shindou,
+    add_genshi_no_chikara,
+    genshi_no_chikara_damage_notice,
+    move_from_remove,
+    uchiotosu,
+    set_punisher,
+    Max,
+  }
+}

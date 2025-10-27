@@ -1,0 +1,24 @@
+I want to make "groupe Catagorys"
+Sweep/Mop
+Shampoo
+Vacume
+Trash
+
+these groupe catagorys shall not have decay bar nor effect over all upkeep score.
+task withen these group catagorys will be directly linked to regular catagorys and will have decay bars as normal
+
+so for example
+
+If user makes trash group-category
+withen the group-catagory to add task, you must select from exciting catagorys from the "trash category task" drop down menu.
+
+the menu will populated by the exciting regular catagories (only exciting catagorys user has set up not group catagorys) the user has set up.
+
+so if the user add (example) "Kitchen" from the drop down menu in this sub-category it will be listed in the sub category as "Trash - Kitchen"
+
+
+this task will also be populated to the exciting kitchen category.the user should also be required to enter a decay time for this task, but the decay should only effect the category it is linked to, not the sub category. 
+ ( it should be uniquely indintified as sub-category task withen)
+when user checks off task it shall be completed in both kitchen category and the sub category at the same time.
+
+

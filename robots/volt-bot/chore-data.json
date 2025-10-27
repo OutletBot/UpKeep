@@ -1,0 +1,17 @@
+{
+  "id": "VOLTBOT",
+  "purchasable": true,
+  "cost": 120,
+  "unlockRequirements": [],
+  "description": "An electrifying companion that brings shocking efficiency to chore management!",
+  "imagePaths": {
+    "happy": "robots/volt-bot/images/happy.png",
+    "sad": "robots/volt-bot/images/sad.png",
+    "thinking": "robots/volt-bot/images/thinking.png",
+    "shadow": "robots/volt-bot/images/shadow.png"
+  },
+  "battery": {
+    "hoursToDeplete": 52,
+    "comment": "Medium cost robot = medium battery life. Time from 100% to 0% when active. Inactive robots drain 4x slower."
+  }
+}

@@ -15,5 +15,9 @@
     "sad": "Imag/Achivments/Images/MegaRocketMan/Mega-mad (1).png",
     "thinking": "Imag/Achivments/Images/MegaRocketMan/Mega-low.png",
     "shadow": "Imag/Achivments/Images/MegaRocketMan/Mega-Shadow.png"
+  },
+  "battery": {
+    "hoursToDeplete": 42,
+    "comment": "Higher cost robot = faster battery drain. Time from 100% to 0% when active. Inactive robots drain 4x slower."
   }
 }

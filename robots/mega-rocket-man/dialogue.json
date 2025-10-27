@@ -5,7 +5,7 @@
     "Systems nominal. What's next on the chore list?",
     "My programming is for peace and order... and cleanliness!",
     "It's a good day for some tidying!",
-    "Fighting Wily's robots, or fighting dust bunnies... duty calls!"
+    "Fighting evil robots, or fighting dust bunnies... duty calls!"
   ],
   "success": [
     "Chore complete! Another area maintained!",
@@ -27,22 +27,22 @@
     "Warning! Critical decay! Need repair! Need repair!"
   ],
   "random": [
-    "Sometimes I wonder what Dr. Light would think of my mopping skills.",
+    "Sometimes I wonder what my creator would think of my mopping skills.",
     "Beep boop! Just checking the freshness meters.",
-    "I wish I had an 'E-Tank' for energy when chores feel tough!",
+    "I wish I had a backup battery for energy when chores feel tough!",
     "Watch out, dirt! Here comes the Upkeep Unit!",
     "Even heroes need to organize their gear, right?",
-    "Guts Man might lift heavy, but can he scrub heavy?",
+    "Some robots might lift heavy, but can they scrub heavy?",
     "For everlasting peace... and a sparkling home!"
   ],
   "mad": [
-    "Buster ready! My systems are detecting high levels of frustration due to this mess!",
+    "Arm cannon ready! My systems are detecting high levels of frustration due to this mess!",
     "This is highly inefficient! Why is this task still incomplete?",
     "Warning! My anger levels are approaching critical mass! Let's clean this up!",
-    "Dr. Wily's messes were easier to clear! This is unacceptable!",
+    "Evil villain messes were easier to clear! This is unacceptable!",
     "Error! Emotional circuits overloading! Initiate cleanup sequence, NOW!",
     "My programming does not allow for such prolonged disarray! Rectify immediately!",
-    "I am Mega Man! And this mess... this mess vexes me!",
+    "I am Mega Rocket Man! And this mess... this mess vexes me!",
     "My energy tank is full of frustration! Let's get these tasks neutralized!"
   ]
 }

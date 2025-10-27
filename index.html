@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/gamification.css">
     <link rel="stylesheet" href="css/debug.css">
 </head>
 <body>
@@ -607,6 +608,19 @@
             </div>
         </div>
         
+        <div class="debugger-buttons" style="margin-top: 15px;">
+            <button class="debugger-close-btn" onclick="GameBoard.toggleDebugger()">Close Debugger</button>
+        </div>
+
+        <div class="debugger-toggle-container" style="margin-top: 15px;">
+            <span class="debugger-toggle-label">Unlimited Bolts:</span>
+            <div class="toggle-switch" id="unlimitedBoltsToggle" onclick="GameBoard.toggleUnlimitedBoltsMode()">
+                <div class="toggle-slider"></div>
+                <span class="toggle-text-off">OFF</span>
+                <span class="toggle-text-on">ON</span>
+            </div>
+        </div>
+
         <div class="debugger-status" id="debuggerStatus">
             Awaiting battle initiation...
         </div>
@@ -761,6 +775,8 @@
                     <label class="form-label">Choose a Category</label>
                     <select class="form-select" id="categorySelect" onchange="app.handleCategorySelect()" required>
                         <option value="">-- Select from common categories --</option>
+                        <option value="SELFCARE" style="color: #ff4444; font-weight: bold;">❤️ Self Care</option>
+                        <option disabled style="color: #888;">━━━━━━━━━━━━━━━━</option>
                         <option value="Kitchen">Kitchen</option>
                         <option value="Bathroom">Bathroom</option>
                         <option value="Bedroom">Bedroom</option>
@@ -771,15 +787,24 @@
                         <option value="Backyard">Backyard</option>
                         <option value="Back Porch">Back Porch</option>
                         <option value="Vehicle">Vehicle</option>
-                        <option value="Vacuum & Sweeping">Vacuum & Sweeping</option>
                         <option value="Front Yard">Front Yard</option>
                         <option value="Front Porch">Front Porch</option>
                         <option value="custom">✏️ Custom Category</option>
+                        <option disabled style="color: #4040ff; font-weight: bold;">━━━━ GROUP CATEGORIES ━━━━</option>
+                        <option value="GROUP:Sweep/Mop/Vacuum" style="color: #4040ff;">🔷 Sweep/Mop/Vacuum</option>
+                        <option value="GROUP:Shampoo" style="color: #4040ff;">🔷 Shampoo</option>
+                        <option value="GROUP:Deep Cleaning" style="color: #4040ff;">🔷 Deep Cleaning</option>
+                        <option value="customgroup" style="color: #4040ff;">✏️ Custom Group Category</option>
                     </select>
                 </div>
                 <div class="form-group" id="customCategoryGroup" style="display: none;">
                     <label class="form-label">Custom Category Name</label>
                     <input type="text" class="form-input" id="categoryName" placeholder="e.g., Laundry Room">
+                </div>
+                <div class="form-group" id="customGroupCategoryGroup" style="display: none;">
+                    <label class="form-label">Custom Group Category Name</label>
+                    <input type="text" class="form-input" id="groupCategoryName" placeholder="e.g., Window Cleaning">
+                    <small style="color: #bbb; display: block; margin-top: 4px;">Group categories allow multiple rooms/locations to share the same task list</small>
                 </div>
                 <button type="submit" class="btn-primary">Create Category</button>
             </form>
@@ -810,9 +835,17 @@
                 <button class="close-btn" onclick="app.closeModal('addTaskModal')"><img src="Imag/Close.png" alt="Close"></button>
             </div>
             <form onsubmit="app.addTask(event)">
+                <div class="form-group" id="linkedCategoryGroup" style="display: none;">
+                    <label class="form-label">Link to Standard Category</label>
+                    <select class="form-select" id="linkedCategorySelect" required>
+                        <option value="">-- Select Standard Category --</option>
+                    </select>
+                    <small style="color: #bbb; display: block; margin-top: 4px;">Task will appear in both this group and the selected category</small>
+                </div>
                 <div class="form-group">
                     <label class="form-label">Task Name</label>
                     <input type="text" class="form-input" id="taskName" placeholder="e.g., Wipe counters" required>
+                    <small id="taskNameNote" style="color: #bbb; display: none; margin-top: 4px;">For group tasks, name will be auto-generated as '[Group] - [Category]'</small>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Decay Time</label>
@@ -825,6 +858,7 @@
                             <option value="months">Months</option>
                         </select>
                     </div>
+                    <small style="color: #bbb; display: block; margin-top: 4px;">Decay affects the linked category's score only</small>
                 </div>
                 <button type="submit" class="btn-primary">Create Task</button>
             </form>
@@ -857,6 +891,98 @@
                 <button type="submit" class="btn-primary">Update Task</button>
                 <button type="button" class="btn-danger" onclick="app.deleteTask()">Delete Task</button>
             </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addStepModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add Step</div>
+                <button class="close-btn" onclick="app.closeModal('addStepModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <form onsubmit="app.addStep(event)">
+                <div class="form-group">
+                    <label class="form-label" id="stepLabel">Step A.</label>
+                    <input type="text" class="form-input" id="stepDescription" placeholder="e.g., Wipe down spice cabinet" required>
+                </div>
+                <button type="submit" class="btn-primary">Add Step</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="completeTaskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">All Steps Complete! 🎉</div>
+                <button class="close-btn" onclick="app.closeModal('completeTaskModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <p style="font-size: 16px; color: var(--text); margin-bottom: 20px;">
+                    You've checked off all steps for this task!<br>
+                    Would you like to mark the entire task as complete?
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="btn-primary" onclick="app.confirmCompleteTask()">✓ Yes, Complete Task</button>
+                    <button class="btn-secondary" onclick="app.closeModal('completeTaskModal')" style="background: var(--border); color: var(--text);">Not Yet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bedtime Modal -->
+    <div class="modal" id="bedtimeModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <div class="modal-title">⏰ Set Bedtime Target</div>
+                <button class="close-btn" onclick="app.closeModal('bedtimeModal')"><img src="Imag/Close.png" alt="Close"></button>
+            </div>
+            <div style="padding: 20px;">
+                <p style="color: var(--text); margin-bottom: 16px;">Choose what time you'd like to be in bed by:</p>
+                <input type="time" id="bedtimeInput" class="form-input" style="font-size: 18px; text-align: center;">
+                <button class="btn-primary" onclick="app.setBedtime()" style="width: 100%; margin-top: 16px;">Save Bedtime</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Self Care Group Bonus Choice Modal -->
+    <div class="modal" id="selfCareGroupBonusModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <div class="modal-title">🎉 Group Completed!</div>
+            </div>
+            <div style="padding: 24px; text-align: center;">
+                <p style="font-size: 16px; color: var(--text); margin-bottom: 24px; font-weight: 500;">
+                    You've completed all required tasks for this Self Care group!<br>
+                    Would you like to take <strong>15 bolts</strong>, or take a chance to win an <strong>unknown robot</strong>?
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-direction: column;">
+                    <button class="btn-primary" onclick="app.chooseBoltsReward()" style="padding: 16px; font-size: 16px;">
+                        💰 Take 15 Bolts
+                    </button>
+                    <button class="btn-secondary" onclick="app.chooseRobotChance()" style="padding: 16px; font-size: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                        🎲 Take a Chance for a Robot!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robot Chance Mini-Game Modal -->
+    <div class="modal" id="robotChanceModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <div class="modal-title">🎲 Robot Chance Game!</div>
+            </div>
+            <div style="padding: 24px; text-align: center;">
+                <p style="font-size: 15px; color: var(--text); margin-bottom: 20px;">
+                    I've picked a secret number between <strong>1 and 200</strong>.<br>
+                    Pick a number between <strong>1 and 99</strong> to try to match it!
+                </p>
+                <input type="number" id="robotChanceInput" class="form-input" min="1" max="99" placeholder="Enter 1-99" style="font-size: 24px; text-align: center; margin-bottom: 20px;">
+                <button class="btn-primary" onclick="app.submitRobotChance()" style="width: 100%; padding: 16px; font-size: 16px;">
+                    🎯 Submit Guess
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1117,6 +1243,12 @@
                 <img src="Imag/Achivments/Images/Finished Images/Robot-Select.png" alt="Robot Select" class="robot-select-logo">
                 <button class="robot-select-close" onclick="app.closeRobotSelect()">&times;</button>
             </div>
+            <!-- Items Section -->
+            <div class="robot-select-items-section">
+                <div class="robot-select-items-grid" id="robotSelectItemsGrid">
+                    <!-- Item cards will be populated by JavaScript -->
+                </div>
+            </div>
             <div class="robot-select-body">
                 <div class="robot-select-grid" id="robotSelectGrid">
                     <!-- Robot cards will be populated by JavaScript -->
@@ -1132,9 +1264,23 @@
                 <h2><img src="Imag/Achivments/Images/Finished Images/Robot-Factory-Logo.png" alt="Robot Factory" class="robot-factory-logo"></h2>
                 <button class="robot-store-close" onclick="app.closeRobotStore()">&times;</button>
             </div>
+            <!-- Store Tab Switcher -->
+            <div class="store-tab-switcher">
+                <button class="store-tab-btn active" id="robotsTabBtn" onclick="app.switchStoreTab('robots')">
+                    🤖 ROBOTS
+                </button>
+                <button class="store-tab-btn" id="itemsTabBtn" onclick="app.switchStoreTab('items')">
+                    🛢️ ITEMS
+                </button>
+            </div>
             <div class="robot-store-body">
+                <!-- Robots Grid -->
                 <div class="robot-store-grid" id="robotStoreGrid">
                     <!-- Robot store cards will be populated by JavaScript -->
+                </div>
+                <!-- Items Grid -->
+                <div class="items-store-grid" id="itemsStoreGrid" style="display: none;">
+                    <!-- Item store cards will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -1162,7 +1308,9 @@
         <div class="purchase-confirm-content">
             <div class="purchase-confirm-icon">🤖</div>
             <div class="purchase-confirm-title">Purchase Robot?</div>
-            <div class="purchase-confirm-message">Are you sure you want to purchase this mystery robot?</div>
+            <div id="purchaseConfirmMessage" class="purchase-confirm-message" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 13px; font-style: italic; opacity: 0.9;">
+                Are you sure you want to purchase this mystery robot?
+            </div>
             <div class="purchase-confirm-cost">
                 <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="purchase-confirm-cost-bolt">
                 <img src="Imag/Achivments/Images/Finished Images/X.png" alt="x" class="purchase-confirm-cost-x">
@@ -1171,6 +1319,24 @@
             <div class="purchase-confirm-buttons">
                 <button class="purchase-confirm-btn purchase-confirm-btn-no" onclick="app.cancelPurchase()">No</button>
                 <button class="purchase-confirm-btn purchase-confirm-btn-yes" onclick="app.confirmPurchase()">Yes</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Item Purchase Confirmation Modal -->
+    <div class="purchase-confirm-modal" id="itemPurchaseConfirmModal">
+        <div class="purchase-confirm-content">
+            <div id="itemPurchaseIcon" class="purchase-confirm-icon">🛍️</div>
+            <div id="itemPurchaseTitle" class="purchase-confirm-title">Purchase Item?</div>
+            <div id="itemPurchaseDescription" class="purchase-confirm-message"></div>
+            <div class="purchase-confirm-cost">
+                <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="purchase-confirm-cost-bolt">
+                <img src="Imag/Achivments/Images/Finished Images/X.png" alt="x" class="purchase-confirm-cost-x">
+                <span id="itemPurchaseConfirmCost">30</span>
+            </div>
+            <div class="purchase-confirm-buttons">
+                <button class="purchase-confirm-btn purchase-confirm-btn-no" onclick="app.cancelItemPurchase()">No</button>
+                <button class="purchase-confirm-btn purchase-confirm-btn-yes" onclick="app.confirmItemPurchase()">Yes</button>
             </div>
         </div>
     </div>
@@ -1301,8 +1467,8 @@
             
             <!-- Menu Buttons -->
             <div class="cb-menu-buttons">
-                <!-- START BATTLE - Coming Soon (Custom Image) -->
-                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                <!-- START BATTLE - Opens Mode Selection -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.openStartBattleMenu()">
                     <img src="Imag/Battle/Start-Battle.png" alt="Start Battle" class="cb-btn-custom-img">
                     <span class="cb-btn-badge">COMING SOON</span>
                 </button>
@@ -1318,23 +1484,6 @@
                     <span class="cb-btn-badge">COMING SOON</span>
                 </button>
                 
-                <!-- BATTLE AI - Active (Custom Image) -->
-                <button class="cb-menu-btn cb-btn-image" onclick="app.openAIBattleSelector()">
-                    <img src="Imag/Battle/VS-AI.png" alt="Battle AI" class="cb-btn-custom-img">
-                </button>
-                
-                <!-- RANKED BATTLE - Placeholder (Custom Image) -->
-                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
-                    <img src="Imag/Battle/Ranked.png" alt="Ranked Battle" class="cb-btn-custom-img">
-                    <span class="cb-btn-badge">COMING SOON</span>
-                </button>
-                
-                <!-- BATTLE WITH FRIENDS - Placeholder (Custom Image) -->
-                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
-                    <img src="Imag/Battle/Lobby.png" alt="Lobby" class="cb-btn-custom-img">
-                    <span class="cb-btn-badge">COMING SOON</span>
-                </button>
-                
                 <!-- DEBUGGER MODE - Active (Temporary Start Battle) -->
                 <button class="cb-menu-btn cb-btn-image" onclick="app.startCircuitBreakerBattle()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 3px solid #FFD700;">
                     <span style="font-size: 24px; font-weight: bold; color: #FFD700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">⚙️ DEBUGGER MODE</span>
@@ -1343,6 +1492,48 @@
                 <!-- EXIT - Active (Custom Image) -->
                 <button class="cb-menu-btn cb-btn-image cb-btn-exit-img" onclick="app.closeCircuitBreakerMenu()">
                     <img src="Imag/Battle/Exit.png" alt="Exit" class="cb-btn-custom-img">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Battle Mode Selection Menu -->
+    <div class="circuit-breaker-menu" id="startBattleMenu">
+        <div class="cb-menu-container">
+            <div class="cb-logo-container">
+                <img src="Imag/Battle/CB-Logo.png" alt="Select Battle Mode" class="cb-logo">
+            </div>
+
+            <div class="cb-menu-buttons">
+                <!-- Start Battle Header Image -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Start-Battle.png" alt="Start Battle" class="cb-btn-custom-img">
+                </button>
+            </div>
+
+            <div class="cb-menu-buttons">
+                <!-- VS AI - Active -->
+                <button class="cb-menu-btn cb-btn-image" onclick="app.launchVsAIMode()">
+                    <img src="Imag/Battle/VS-AI.png" alt="VS AI" class="cb-btn-custom-img">
+                </button>
+
+                <!-- Ranked Battle - Coming Soon -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Ranked.png" alt="Ranked Battle" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+
+                <!-- Battle With Friends - Coming Soon -->
+                <button class="cb-menu-btn cb-btn-image cb-btn-image-disabled" disabled>
+                    <img src="Imag/Battle/Lobby.png" alt="Battle With Friends" class="cb-btn-custom-img">
+                    <span class="cb-btn-badge">COMING SOON</span>
+                </button>
+
+            </div>
+
+            <div class="cb-menu-buttons">
+                <button class="cb-menu-btn cb-btn-image cb-btn-exit-img" onclick="app.closeStartBattleMenu()">
+                    <img src="Imag/Battle/Exit.png" alt="Back" class="cb-btn-custom-img">
                 </button>
             </div>
         </div>
@@ -1373,12 +1564,11 @@
                 </button>
                 
                 <!-- EASY -->
-                <button class="ai-difficulty-btn ai-btn-disabled" disabled>
+                <button class="ai-difficulty-btn" onclick="app.startEasyAIBattle()">
                     <div class="ai-btn-content">
                         <div class="ai-btn-icon">★☆☆</div>
                         <div class="ai-btn-text">EASY</div>
                     </div>
-                    <span class="ai-btn-badge">COMING SOON</span>
                 </button>
                 
                 <!-- MEDIUM -->
@@ -1846,6 +2036,7 @@
     </div>
 
     <!-- JavaScript Modules: Load in dependency order -->
+    <script src="js/gamification.js"></script>
     <script src="js/chore-robot-loader.js"></script>
     <script src="js/chore-system.js"></script>
     <script src="js/battle-system.js"></script>

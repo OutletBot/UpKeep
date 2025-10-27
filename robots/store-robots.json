@@ -14,11 +14,11 @@
         "name": "Mega Rocket Man"
     },
     {
-        "id": "PIKABOT",
+        "id": "VOLTBOT",
         "cost": 120,
-        "shadowImagePath": "Imag/Achivments/Images/Pike-achu/PikaBot-shadow.png",
-        "actualImagePath": "Imag/Achivments/Images/Pike-achu/PikaBot.png",
-        "name": "Pika-Bot"
+        "shadowImagePath": "robots/volt-bot/images/shadow.png",
+        "actualImagePath": "robots/volt-bot/images/happy.png",
+        "name": "Volt-Bot"
     },
     {
         "id": "BUZZBOT",

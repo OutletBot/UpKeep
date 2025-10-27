@@ -1,0 +1,13 @@
+{
+  "id": "SPIRITBOT",
+  "purchasable": true,
+  "cost": 220,
+  "unlockRequirements": [],
+  "description": "Mystic medium who channels tidy spirits to keep every room in harmony.",
+  "imagePaths": {
+    "happy": "robots/spirit-bot/images/happy.png",
+    "sad": "robots/spirit-bot/images/sad.png",
+    "thinking": "robots/spirit-bot/images/thinking.png",
+    "shadow": "robots/spirit-bot/images/shadow.png"
+  }
+}

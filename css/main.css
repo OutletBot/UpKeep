@@ -828,7 +828,7 @@ h1 {
 }
 .modal.active { display: flex; }
 .modal-content {
-    background: transparent;
+    background: rgba(50, 50, 60, 0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px 20px 0 0;
@@ -838,7 +838,7 @@ h1 {
     margin: 0 auto;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
 }
 .modal-header {
     display: flex;
@@ -846,41 +846,47 @@ h1 {
     margin-bottom: 20px;
 }
 .modal-title { 
-    font-size: 20px; 
-    font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 22px; 
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 .close-btn {
     background: none;
     border: none;
     font-size: 24px;
-    color: var(--text-secondary);
+    color: #e0e0e0;
     cursor: pointer;
+    opacity: 0.8;
+}
+.close-btn:hover {
+    opacity: 1;
 }
 .form-group { margin-bottom: 20px; }
 .form-label {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     margin-bottom: 8px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    color: #e0e0e0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .form-input {
     width: 100%;
     padding: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--text);
+    color: #222;
     font-weight: 500;
 }
 .form-input:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 1);
 }
 .form-input::placeholder {
     color: rgba(51, 51, 51, 0.7);
@@ -889,13 +895,13 @@ h1 {
 .form-select {
     width: 100%;
     padding: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--text);
+    color: #222;
     font-weight: 500;
 }
 .time-unit-group {
@@ -1559,7 +1565,8 @@ h1 {
     background: transparent;
     position: relative;
     height: 400px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .robot-select-container {
     position: relative;
@@ -1640,7 +1647,7 @@ h1 {
     -webkit-backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1667,6 +1674,19 @@ h1 {
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 0 20px rgba(101, 212, 110, 0.4);
+}
+.robot-select-card.drag-over {
+    border-color: #FFD93D;
+    background: rgba(255, 217, 61, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 0 25px rgba(255, 217, 61, 0.6);
+    transform: scale(1.05);
+    animation: pulse 0.6s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1.05); }
+    50% { transform: scale(1.08); }
 }
 .robot-select-card.empty-slot {
     background: rgba(255, 255, 255, 0.1);
@@ -1700,10 +1720,10 @@ h1 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 .robot-select-card-image {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     transition: transform 0.3s ease;
     animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
@@ -1713,15 +1733,149 @@ h1 {
 }
 .robot-select-card-name {
     font-family: 'Sassy Raccoon', cursive;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: white;
     margin-bottom: 4px;
-    line-height: 1.2;
+    line-height: 1.1;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
-.robot-select-card-status {
+
+/* Robot Battery Bar - Enhanced Visibility */
+.robot-battery-label {
     font-size: 10px;
+    font-weight: 700;
+    color: white;
+    text-align: left;
+    width: 90%;
+    margin-bottom: 2px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.2px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+.robot-battery-timer {
+    font-size: 8px;
+    font-weight: 600;
+    opacity: 0.75;
+    text-align: left;
+    margin-top: 0px;
+    line-height: 1;
+}
+.robot-battery-container {
+    width: 90%;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 6px;
+    border: 2.5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.robot-battery-bar {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    min-width: 2%;
+}
+
+/* Battery color classes */
+.robot-battery-bar.battery-perfect {
+    background-color: #65D46E !important;
+}
+.robot-battery-bar.battery-good {
+    background-color: #FFD93D !important;
+}
+.robot-battery-bar.battery-low {
+    background-color: #FF8C42 !important;
+}
+.robot-battery-bar.battery-critical {
+    background-color: #FF5757 !important;
+}
+.robot-battery-bar.battery-broken {
+    background-color: #888888 !important;
+}
+.robot-battery-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    border-radius: 7px 7px 0 0;
+    pointer-events: none;
+    z-index: 2;
+}
+.robot-battery-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+}
+.robot-battery-text::before {
+    content: '⚡ ';
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+/* Broken Robot State */
+.robot-select-card.broken {
+    opacity: 0.6;
+    filter: grayscale(50%);
+    cursor: not-allowed;
+}
+.robot-select-card.broken .robot-select-card-image {
+    animation: none;
+}
+.robot-select-card.broken .robot-battery-text {
+    color: #FF5757;
+    font-weight: 900;
+}
+
+/* Repair Button */
+.robot-repair-button {
+    width: 90%;
+    padding: 6px 10px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF5757 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 87, 87, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    margin-top: 4px;
+}
+.robot-repair-button:hover {
+    background: linear-gradient(135deg, #FF7B7B 0%, #FF6767 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 87, 87, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+.robot-repair-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 87, 87, 0.3);
+}
+
+.robot-select-card-status {
+    font-size: 9px;
     color: white;
     font-weight: 600;
     text-transform: uppercase;
@@ -1749,6 +1903,130 @@ h1 {
     font-size: 14px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Robot Select Items Section - Compact for Android, Image Only, Static */
+.robot-select-items-section {
+    padding: 8px 10px;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+.robot-select-items-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.robot-select-item-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    cursor: default;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+.robot-select-item-card.has-items {
+    cursor: grab;
+}
+.robot-select-item-card.has-items:active {
+    cursor: grabbing;
+}
+.robot-select-item-card.has-items:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.35);
+}
+.robot-select-item-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.9);
+    cursor: grabbing;
+}
+.robot-select-item-card.no-items {
+    opacity: 0.4;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+}
+.robot-select-item-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+}
+.robot-select-item-name {
+    display: none;
+}
+.robot-select-item-quantity {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.robot-select-item-card.no-items .robot-select-item-quantity {
+    display: none;
+}
+
+/* Item Usage Modal */
+.item-use-robots-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+.item-use-robot-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: left;
+    width: 100%;
+}
+.item-use-robot-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+.item-use-robot-btn:active {
+    transform: translateY(0);
 }
 
 /* Scrollbar styling for robot select */
@@ -2374,6 +2652,94 @@ h1 {
 }
 .robot-store-close:active {
     transform: scale(0.9) rotate(90deg);
+}
+
+/* Store Tab Switcher */
+.store-tab-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 24px 16px;
+    margin-top: -8px;
+}
+
+.store-tab-btn {
+    flex: 1;
+    max-width: 150px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Cocogoose', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.store-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.store-tab-btn.active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border-color: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.store-tab-btn:active {
+    transform: translateY(0);
+}
+
+/* Items Store Grid - EXACT COPY of Robot Store Layout */
+.items-store-grid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column;
+    gap: 12px;
+    height: 340px;
+    width: max-content;
+}
+
+.item-store-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 140px;
+    height: 100%;
+}
+
+.item-store-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Gray out coming soon item cards like robot store */
+.item-store-card.placeholder {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.item-store-card.placeholder:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Robot Store Grid */
@@ -7176,4 +7542,116 @@ margin: 0;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
     letter-spacing: 0.5px;
+}
+
+/* Self Care Bolt Notification */
+.bolt-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.5);
+    z-index: 10000;
+    pointer-events: none;
+    animation: boltFloat 1.5s ease-out forwards;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Modal Overlay for Item Confirmation */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-overlay .modal-content {
+    background: linear-gradient(135deg, rgba(101, 212, 110, 0.95) 0%, rgba(76, 184, 196, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-overlay .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.modal-overlay .modal-close:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+@keyframes boltFloat {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(-10px) scale(1.2);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(-20px) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-80px) scale(0.8);
+        opacity: 0;
+    }
 }

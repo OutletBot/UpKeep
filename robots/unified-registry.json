@@ -21,6 +21,7 @@
     "name": "Jack-o'-Bot",
     "purchasable": true,
     "cost": 100,
+    "clue": "🎃 \"This helper loves carved grins and glowing nights...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -38,6 +39,7 @@
     "name": "Mega Rocket Man",
     "purchasable": true,
     "cost": 150,
+    "clue": "🎸 \"A legendary performer who brings explosive energy to every task...\"",
     "enabled": true,
     "hasBattleData": false,
     "hasChoreData": true,
@@ -51,20 +53,21 @@
     "notes": "Battle data to be added later"
   },
   {
-    "id": "PIKABOT",
-    "folder": "pika-bot",
-    "name": "Pika-Bot",
+    "id": "VOLTBOT",
+    "folder": "volt-bot",
+    "name": "Volt-Bot",
     "purchasable": true,
     "cost": 120,
+    "clue": "⚡ \"A tiny companion with electrifying enthusiasm and sparking energy...\"",
     "enabled": true,
     "hasBattleData": false,
     "hasChoreData": true,
     "dataFiles": {
-      "robot": "robots/pika-bot/robot.json",
-      "chore": "robots/pika-bot/chore-data.json",
-      "dialogue": "robots/pika-bot/dialogue.json",
-      "store": "robots/pika-bot/store-data.json",
-      "battle": "robots/pika-bot/battle-data.json"
+      "robot": "robots/volt-bot/robot.json",
+      "chore": "robots/volt-bot/chore-data.json",
+      "dialogue": "robots/volt-bot/dialogue.json",
+      "store": "robots/volt-bot/store-data.json",
+      "battle": "robots/volt-bot/battle-data.json"
     },
     "notes": "Battle data to be added later"
   },
@@ -74,6 +77,7 @@
     "name": "Buzz Lite-Point-0",
     "purchasable": true,
     "cost": 180,
+    "clue": "🚀 \"A cosmic explorer programmed for stellar missions and duty...\"",
     "enabled": true,
     "hasBattleData": false,
     "hasChoreData": true,
@@ -92,6 +96,7 @@
     "name": "Clown Bot",
     "purchasable": true,
     "cost": 100,
+    "clue": "🎪 \"Under the big top, this colorful entertainer never stops smiling...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -109,6 +114,7 @@
     "name": "Witch-Bot",
     "purchasable": true,
     "cost": 130,
+    "clue": "🔮 \"Brewing up magical solutions, this spellcaster sweeps with supernatural flair...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -126,6 +132,7 @@
     "name": "Freezy",
     "purchasable": true,
     "cost": 100,
+    "clue": "❄️ \"Built for frosty conditions, this chilly friend never melts under pressure...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -143,6 +150,7 @@
     "name": "Ghost Bot",
     "purchasable": true,
     "cost": 160,
+    "clue": "👻 \"A translucent helper that phases through obstacles and haunts your chores...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -160,6 +168,7 @@
     "name": "Sunic",
     "purchasable": true,
     "cost": 180,
+    "clue": "💨 \"This speedy blur zips through tasks at supersonic velocity...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
@@ -172,20 +181,21 @@
     }
   },
   {
-    "id": "OUIJABOT",
-    "folder": "ouija-bot",
-    "name": "Ouija-Bot",
+    "id": "SPIRITBOT",
+    "folder": "spirit-bot",
+    "name": "Spirit-Bot",
     "purchasable": true,
     "cost": 220,
+    "clue": "🕯️ \"This mystical oracle communicates with spirits to divine your cleaning destiny...\"",
     "enabled": true,
     "hasBattleData": true,
     "hasChoreData": true,
     "dataFiles": {
-      "robot": "robots/ouija-bot/robot.json",
-      "chore": "robots/ouija-bot/chore-data.json",
-      "dialogue": "robots/ouija-bot/dialogue.json",
-      "store": "robots/ouija-bot/store-data.json",
-      "battle": "robots/ouija-bot/battle-data.json"
+      "robot": "robots/spirit-bot/robot.json",
+      "chore": "robots/spirit-bot/chore-data.json",
+      "dialogue": "robots/spirit-bot/dialogue.json",
+      "store": "robots/spirit-bot/store-data.json",
+      "battle": "robots/spirit-bot/battle-data.json"
     }
   }
 ]

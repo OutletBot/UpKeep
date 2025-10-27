@@ -79,16 +79,18 @@
                     // WHITELIST: Only allow these robots in battle
                     const allowedRobots = [
                         'unit-001-uc-0',    // Jack-o'-Bot (Bulbasaur stats)
-                        'unit-003-ex-0',    // Venusaur (default)
+                        'unit-001-r-0',     // Bulbasaur (TEMP - for testing)
+                        'unit-002-uc-0',    // Ivysaur (TEMP - for testing)
+                        'unit-003-ex-0',    // Venusaur (TEMP - for testing)
                         'unit-006-ex-0',    // Mega Rocket Man (Charizard stats)
-                        'unit-025-r-0',     // Pika-Bot (Pikachu stats)
+                        'unit-025-r-0',     // Pika-Bot / Pikachu (TEMP - for testing)
                         'unit-150-ex-0',    // Buzz Lite-Point-0 (Mewtwo stats)
                         'clown-bot',        // Clown Bot (store)
                         'witch-bot',        // Witch-Bot (store)
                         'freezy',           // Freezy (store)
                         'ghost-bot',        // Ghost Bot (store)
                         'sunic',            // Sunic (store)
-                        'ouija-bot'         // Ouija-Bot (store)
+                        'spirit-bot'        // Spirit-Bot (store)
                     ];
                     
                     // Filter to only include whitelisted robots

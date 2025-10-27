@@ -15,5 +15,9 @@
     "sad": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot-mad.png",
     "thinking": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot-low.png",
     "shadow": "Imag/Achivments/Images/Jack-0-Bot/Jack-0-bot-shadow.png"
+  },
+  "battery": {
+    "hoursToDeplete": 60,
+    "comment": "Lower cost robot = longer battery life. Time from 100% to 0% when active. Inactive robots drain 4x slower."
   }
 }

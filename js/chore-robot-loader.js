@@ -242,7 +242,8 @@
                         cost: r.cost,
                         shadowImagePath: loadedRobot?.shadowImagePath || `${this.robotBasePath}${r.folder}/images/shadow.png`,
                         actualImagePath: loadedRobot?.actualImagePath || `${this.robotBasePath}${r.folder}/images/happy.png`,
-                        name: r.name
+                        name: r.name,
+                        clue: r.clue || null  // Include clue from registry for purchase confirmation hints
                     };
                 });
             },

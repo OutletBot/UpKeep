@@ -9,5 +9,9 @@
     "sad": "robots/witch-bot/images/sad.png",
     "thinking": "robots/witch-bot/images/thinking.png",
     "shadow": "robots/witch-bot/images/shadow.png"
+  },
+  "battery": {
+    "hoursToDeplete": 48,
+    "comment": "Medium-high cost robot = shorter battery life. Time from 100% to 0% when active. Inactive robots drain 4x slower."
   }
 }

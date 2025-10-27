@@ -3,7 +3,7 @@
   "purchasable": true,
   "cost": 180,
   "unlockRequirements": [],
-  "description": "A space ranger robot ready to take your chores to infinity... and beyond!",
+  "description": "A space ranger robot ready to take your chores to maximum efficiency and beyond!",
   "imagePaths": {
     "happy": "robots/buzz-lite-point-0/images/happy.png",
     "sad": "robots/buzz-lite-point-0/images/sad.png",
@@ -15,5 +15,9 @@
     "sad": "Imag/Achivments/Images/Buzz-lite-point-0/Buzz-mad.png",
     "thinking": "Imag/Achivments/Images/Buzz-lite-point-0/Buzz-low.png",
     "shadow": "Imag/Achivments/Images/Buzz-lite-point-0/Buzz-shadow.png"
+  },
+  "battery": {
+    "hoursToDeplete": 36,
+    "comment": "Highest cost robot = fastest battery drain. Time from 100% to 0% when active. Inactive robots drain 4x slower."
   }
 }

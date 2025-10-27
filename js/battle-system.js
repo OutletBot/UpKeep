@@ -6,6 +6,8 @@
                 enabled: false,
                 panelOpen: false,
                 bonusSpinEnabled: false,
+                unlimitedBoltsEnabled: false,
+                originalCurrency: null,
                 selectedPlayerMove: null,
                 selectedOpponentMove: null,
                 selectedPlayerBonusMove: null,
@@ -84,6 +86,52 @@
                     toggle.classList.remove('active');
                     console.log('🌀 BONUS SPIN FORCING DISABLED - Respins will be random');
                 }
+            },
+
+            toggleUnlimitedBoltsMode() {
+                const appInstance = window.app;
+                if (!appInstance || !appInstance.data) {
+                    console.warn('⚠️ Unlimited Bolts toggle ignored - app object not initialized');
+                    return;
+                }
+
+                this.debugger.unlimitedBoltsEnabled = !this.debugger.unlimitedBoltsEnabled;
+                const toggle = document.getElementById('unlimitedBoltsToggle');
+
+                if (this.debugger.unlimitedBoltsEnabled) {
+                    toggle?.classList.add('active');
+
+                    const currentCurrency = appInstance.data.currency ?? 0;
+                    this.debugger.originalCurrency = currentCurrency;
+                    appInstance.unlimitedBoltsActive = true;
+                    appInstance.unlimitedBoltsActualCurrency = currentCurrency;
+
+                    const targetAmount = 999999;
+                    if ((appInstance.data.currency ?? 0) < targetAmount) {
+                        appInstance.data.currency = targetAmount;
+                    }
+                    appInstance.updateCurrencyDisplay?.();
+                    appInstance.saveData?.();
+
+                    console.log('💰 Unlimited Bolts ENABLED - currency set for testing');
+                } else {
+                    toggle?.classList.remove('active');
+
+                    const restoreAmount = appInstance.unlimitedBoltsActualCurrency ?? this.debugger.originalCurrency;
+                    if (typeof restoreAmount === 'number' && !Number.isNaN(restoreAmount)) {
+                        appInstance.data.currency = restoreAmount;
+                        appInstance.updateCurrencyDisplay?.();
+                        appInstance.saveData?.();
+                    }
+
+                    appInstance.unlimitedBoltsActive = false;
+                    appInstance.unlimitedBoltsActualCurrency = null;
+                    this.debugger.originalCurrency = null;
+
+                    console.log('💰 Unlimited Bolts DISABLED - currency restored to saved amount');
+                }
+
+                this.updateDebuggerStatus();
             },
             
             // Populate debugger with battle moves
@@ -268,7 +316,8 @@
                 
                 if (this.debugger.selectedPlayerMove !== null && this.debugger.selectedOpponentMove !== null) {
                     statusDiv.className = 'debugger-status ready';
-                    statusDiv.textContent = '✅ Ready! Battle outcome will be forced to selected moves.';
+                    const unlimitedText = this.debugger.unlimitedBoltsEnabled ? ' 💰 Unlimited Bolts active.' : '';
+                    statusDiv.textContent = `✅ Ready! Battle outcome will be forced to selected moves.${unlimitedText}`;
                 } else {
                     statusDiv.className = 'debugger-status waiting';
                     const missing = [];
@@ -1968,9 +2017,7 @@
                 
                 // In debug mode, set control to player
                 if (this.debugMode) {
-                    this.currentControlTeam = 'player';
-                    this.showDebugControls();
-                    console.log('🐛 DEBUG MODE: Player turn - you control player');
+                    this.enableDebugMode();
                 }
                 
                 // Check for win conditions
@@ -1982,7 +2029,7 @@
                 // CRITICAL: TRIGGER 1 - Highlight all adjacent enemies at turn start
                 // Small delay to ensure DOM is fully ready
                 setTimeout(() => {
-                    this.highlightAllAdjacentEnemies('player');
+                    this.scanAndHighlightAdjacentEnemies('player');
                 }, 100);
             },
             
@@ -2407,34 +2454,75 @@
                     }
                     
                     // DON'T auto-end turn - let player move other robots or click "End Turn"
-                    console.log('✅ Move complete. You can move other robots or click "End Turn"');
-                }, 500); // Match the CSS transition time
+                
+                // Scan all points on the board
+                const allPoints = [
+                    ...Object.entries(this.gameBoard.entryPoints),
+                    ...Object.entries(this.gameBoard.routePoints),
+                    ...Object.entries(this.gameBoard.innerPoints),
+                    ...Object.entries(this.gameBoard.goalPoints)
+                ];
+                
+                let totalEnemiesHighlighted = 0;
+                
+                // Check each robot belonging to the current team
+                for (const [pointId, pointData] of allPoints) {
+                    if (pointData.robot && pointData.robot.team === team) {
+                        console.log(`  🤖 Checking ${pointData.robot.id} at ${pointId}...`);
+                        
+                        // Check if this robot can initiate battle (not affected by action-blocking status)
+                        const robotStatuses = this.getRobotStatuses(pointData.robot.id);
+                        const actionBlockers = ['sleep', 'frozen', 'waiting'];
+                        const hasBlockingStatus = actionBlockers.some(s => 
+                            robotStatuses.conditions.includes(s) || robotStatuses.markers.includes(s)
+                        );
+                        
+                        if (hasBlockingStatus) {
+                            console.log(`    ⏸️ Robot is affected by action-blocking status - cannot attack`);
+                            continue; // Skip this robot, don't highlight enemies
+                        }
+                        
+                        // Check for adjacent enemies
+                        const adjacentEnemies = this.getAdjacentEnemies(pointId, team);
+                        if (adjacentEnemies.length > 0) {
+                            console.log(`    ⚡ Found ${adjacentEnemies.length} adjacent enemies!`);
+                            
+                            // Highlight each adjacent enemy
+                            adjacentEnemies.forEach(enemyPointId => {
+                                const enemyRobotGroup = document.getElementById(`robot-${enemyPointId}`);
+                                if (enemyRobotGroup) {
+                                    // Skip if already highlighted (avoid duplicates)
+                                    if (!enemyRobotGroup.classList.contains('attackable-enemy')) {
+                                        enemyRobotGroup.classList.add('attackable-enemy');
+                                        
+                                        // Apply RED GLOW effect
+                                        const circle = enemyRobotGroup.querySelector('circle');
+                                        if (circle) {
+                                            circle.setAttribute('r', '60');
+                                            circle.style.filter = 'drop-shadow(0 0 20px rgba(255, 0, 0, 0.9))';
+                                            circle.setAttribute('stroke', '#ff0000');
+                                            circle.setAttribute('stroke-width', '8');
+                                            console.log(`      🔴 Highlighted enemy at ${enemyPointId}`);
+                                            totalEnemiesHighlighted++;
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+                
+                if (totalEnemiesHighlighted > 0) {
+                    console.log(`✅ TURN START: Highlighted ${totalEnemiesHighlighted} attackable ${totalEnemiesHighlighted === 1 ? 'enemy' : 'enemies'}`);
+                    this.addToHistory(`⚔️ ${totalEnemiesHighlighted} attackable ${totalEnemiesHighlighted === 1 ? 'enemy' : 'enemies'} on the board!`, 'info', team);
+                } else {
+                    console.log(`✅ TURN START: No adjacent enemies found`);
+                }
                 */
             },
             
-            getAdjacentEnemies(pointId, team) {
-                const point = this.getPointById(pointId);
-                if (!point || !point.connections) return [];
-                
-                const enemyTeam = team === 'player' ? 'opponent' : 'player';
-                const adjacentEnemies = [];
-                
-                point.connections.forEach(connectedPointId => {
-                    const connectedPoint = this.getPointById(connectedPointId);
-                    
-                    // Check if point has a robot and it's an enemy
-                    if (connectedPoint && connectedPoint.robot && connectedPoint.robot.team === enemyTeam) {
-                        adjacentEnemies.push(connectedPointId);
-                    }
-                });
-                
-                return adjacentEnemies;
-            },
-            
-            // TRIGGER 1: Global scan - Highlight ALL adjacent enemies at turn start
-            highlightAllAdjacentEnemies(team) {
-                console.log(`🔍 TRIGGER 1 - TURN START: Scanning all ${team} robots for adjacent enemies...`);
-                
+            // TRIGGER 1: Scan and highlight all adjacent enemies at turn start
+            scanAndHighlightAdjacentEnemies(team) {
                 // Scan all points on the board
                 const allPoints = [
                     ...Object.entries(this.gameBoard.entryPoints),
@@ -2732,14 +2820,349 @@
                 }
             },
             
-            executeAITurn() {
+            async executeAITurn() {
                 console.log('🤖 AI executing turn...');
-                // TODO: Implement AI logic
-                // For now, just pass turn back to player after a delay
-                setTimeout(() => {
-                    console.log('🤖 AI turn complete, passing to player');
-                    this.setState(this.gameStates.PLAYER_TURN);
-                }, 1000);
+
+                let aiFigures = this.getTeamFigures('opponent');
+                if (aiFigures.length === 0) {
+                    const deployed = this.autoDeployOpponentRobot();
+                    if (!deployed) {
+                        console.warn('🤖 AI could not deploy any robots. Ending turn.');
+                        this.finishAITurn();
+                        return;
+                    }
+
+                    // Rebuild figure list after deployment so AI can act immediately
+                    aiFigures = this.getTeamFigures('opponent');
+                    if (aiFigures.length === 0) {
+                        console.warn('🤖 Deployment succeeded but figure list still empty. Ending turn.');
+                        this.finishAITurn();
+                        return;
+                    }
+                }
+
+                // 1. Goal defense: block player threats
+                const defensiveAction = this.findGoalDefenseAction(aiFigures);
+                if (defensiveAction) {
+                    await this.performAIMove(defensiveAction);
+                    return;
+                }
+
+                // 2. Goal offense: seize player goal if reachable
+                const offensiveAction = this.findGoalOffenseAction(aiFigures);
+                if (offensiveAction) {
+                    await this.performAIMove(offensiveAction);
+                    return;
+                }
+
+                // 3. Capture favorable targets
+                const captureAction = this.findCaptureAction(aiFigures);
+                if (captureAction) {
+                    await this.performAIMove(captureAction);
+                    return;
+                }
+
+                // 4. Advance toward strategic points
+                const advanceAction = this.findAdvanceAction(aiFigures);
+                if (advanceAction) {
+                    await this.performAIMove(advanceAction);
+                    return;
+                }
+
+                console.log('🤖 AI found no viable actions. Ending turn.');
+                this.finishAITurn();
+            },
+
+            autoDeployOpponentRobot() {
+                if (!Array.isArray(this.opponentBench) || this.opponentBench.length === 0) {
+                    console.warn('🤖 AI bench is empty, cannot deploy.');
+                    return false;
+                }
+
+                const benchIndex = this.opponentBench.findIndex(robotId => robotId);
+                if (benchIndex === -1) {
+                    console.warn('🤖 No available robots in opponent bench.');
+                    return false;
+                }
+
+                const entryPoints = ['entry-top-left', 'entry-top-right'];
+                let chosenEntry = null;
+                for (const entryId of entryPoints) {
+                    const entryData = this.getPointById(entryId);
+                    if (entryData && !entryData.robot) {
+                        chosenEntry = entryId;
+                        break;
+                    }
+                }
+
+                if (!chosenEntry) {
+                    console.warn('🤖 No available entry points for AI deployment.');
+                    return false;
+                }
+
+                const robotId = this.opponentBench[benchIndex];
+                if (!robotId) {
+                    console.warn('🤖 Bench index resolved to empty slot during deployment.');
+                    return false;
+                }
+
+                const robotState = this.createRobotState(robotId, 'opponent');
+                
+                // CRITICAL: Deployment costs 1 MP - reduce remaining MP for this turn
+                const definition = this.getRobotDefinition(robotId);
+                const baseMp = definition?.mp ?? 0;
+                robotState.mp = Math.max(0, baseMp - 1);  // Subtract deployment cost
+                console.log(`🤖 ${robotId} deployed with ${baseMp} base MP → ${robotState.mp} remaining MP after deployment`);
+
+                // Set robot data directly on the board
+                if (this.gameBoard.entryPoints[chosenEntry]) {
+                    this.gameBoard.entryPoints[chosenEntry].robot = robotState;
+                } else if (this.gameBoard.routePoints[chosenEntry]) {
+                    this.gameBoard.routePoints[chosenEntry].robot = robotState;
+                }
+
+                this.addRobotVisual(chosenEntry, robotId, 'opponent');
+                this.updateRobotStatusIndicators(chosenEntry, robotId);
+
+                // Update DOM occupancy attributes
+                const entryElement = document.getElementById(chosenEntry);
+                if (entryElement) {
+                    entryElement.setAttribute('data-occupied', 'true');
+                    entryElement.setAttribute('data-team', 'opponent');
+                    entryElement.setAttribute('data-robot-id', robotId);
+                }
+
+                // Remove from bench arrays/structures
+                this.opponentBench[benchIndex] = null;
+                const benchSlots = this.playerZones.opponent.benchSlots;
+                const slotIds = Object.keys(benchSlots).sort();
+                if (benchIndex < slotIds.length) {
+                    benchSlots[slotIds[benchIndex]].robotId = null;
+                }
+                this.updateBenchDisplay('opponent');
+
+                const robotInfo = this.getRobotDefinition(robotId);
+                const robotName = robotInfo ? robotInfo.name : robotState.baseId || robotId;
+                this.addToHistory(`${robotName} deployed to ${chosenEntry}`, 'deploy', 'opponent');
+
+                console.log(`🤖 AI deployed ${robotName} to ${chosenEntry}`);
+
+                // AI deployment does not consume its action for this turn
+                this.turnActions.hasMovedRobot = false;
+                this.turnActions.actionTakenThisTurn = false;
+                this.turnActions.lastMovedRobotPoint = null;
+
+                return true;
+            },
+
+            getBaseRobotId(robotId) {
+                if (!robotId) return null;
+                return robotId.endsWith('-opp') ? robotId.slice(0, -4) : robotId;
+            },
+
+            getRobotDefinition(robotId) {
+                const baseId = this.getBaseRobotId(robotId);
+                if (!baseId) return null;
+                return RobotDatabase.getRobot(baseId);
+            },
+
+            createRobotState(robotId, team) {
+                const definition = this.getRobotDefinition(robotId);
+                const baseId = this.getBaseRobotId(robotId);
+                return {
+                    id: robotId,
+                    team,
+                    baseId,
+                    name: definition?.name || baseId || robotId,
+                    mp: definition?.mp ?? 0,
+                    rarity: definition?.rarity ?? null
+                };
+            },
+
+            getTeamFigures(team) {
+                const figures = [];
+                const categories = [
+                    this.gameBoard.entryPoints,
+                    this.gameBoard.routePoints,
+                    this.gameBoard.innerPoints,
+                    this.gameBoard.goalPoints
+                ];
+
+                categories.forEach(category => {
+                    Object.entries(category).forEach(([pointId, pointData]) => {
+                        if (pointData.robot && pointData.robot.team === team) {
+                            figures.push({ pointId, robot: pointData.robot });
+                        }
+                    });
+                });
+
+                return figures;
+            },
+
+            async performAIMove(action) {
+                const { type, from, to, battleTarget } = action;
+                console.log('[AI ACTION]', action);
+
+                switch (type) {
+                    case 'move':
+                        const moved = await this.moveRobotForAI(from, to);
+                        const finishAITurn = this.finishAITurn ? this.finishAITurn.bind(this) : null;
+                        if (finishAITurn) {
+                            finishAITurn();
+                        }
+                        if (!moved) {
+                            console.warn('🤖 AI move failed, ending turn.');
+                        }
+                        break;
+                    case 'battle':
+                        // AI battles: Set up battle data then auto-execute
+                        this.initiateBattle(from, battleTarget);
+                        
+                        // Auto-execute battle after modal is shown (small delay for visual feedback)
+                        setTimeout(async () => {
+                            if (this.currentBattle) {
+                                console.log('🤖 AI auto-executing battle...');
+                                await this.executeBattle();
+                            }
+                            // End turn after battle completes
+                            setTimeout(() => this.finishAITurn(), 1600);
+                        }, 500);
+                        break;
+                    default:
+                        console.warn('Unknown AI action type:', type);
+                        this.finishAITurn();
+                        break;
+                }
+            },
+
+            findGoalDefenseAction(aiFigures) {
+                const playerThreats = this.getTeamFigures('player');
+                const aiGoalId = 'goal-player';
+
+                for (const threat of playerThreats) {
+                    const threatMoves = this.calculateValidMovesWithinMP(threat.pointId, threat.robot.mp);
+                    if (threatMoves.includes(aiGoalId)) {
+                        // Try to move an AI figure onto goal or adjacent to capture threat
+                        for (const { pointId, robot } of aiFigures) {
+                            const moves = this.calculateValidMovesWithinMP(pointId, robot.mp);
+                            if (moves.includes(aiGoalId)) {
+                                return { type: 'move', from: pointId, to: aiGoalId };
+                            }
+                            if (this.arePointsAdjacent(pointId, threat.pointId)) {
+                                const risk = this.evaluateBattleRisk(robot.id, threat.robot.id);
+                                if (risk >= 0) {
+                                    return { type: 'battle', from: pointId, battleTarget: threat.pointId };
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return null;
+            },
+
+            findGoalOffenseAction(aiFigures) {
+                const playerGoalId = 'goal-opponent';
+
+                for (const { pointId, robot } of aiFigures) {
+                    const moves = this.calculateValidMovesWithinMP(pointId, robot.mp);
+                    if (moves.includes(playerGoalId)) {
+                        console.log('🤖 AI can reach goal! Moving to win.');
+                        return { type: 'move', from: pointId, to: playerGoalId };
+                    }
+                }
+
+                return null;
+            },
+
+            findCaptureAction(aiFigures) {
+                let bestAction = null;
+                let bestScore = -Infinity;
+
+                for (const { pointId, robot } of aiFigures) {
+                    const adjacentEnemies = this.getAdjacentEnemies(pointId, 'opponent');
+                    adjacentEnemies.forEach(enemyPointId => {
+                        const enemyPoint = this.getPointById(enemyPointId);
+                        if (!enemyPoint || !enemyPoint.robot) return;
+
+                        const score = this.evaluateBattleRisk(robot.id, enemyPoint.robot.id);
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestAction = {
+                                type: 'battle',
+                                from: pointId,
+                                battleTarget: enemyPointId,
+                                score
+                            };
+                        }
+                    });
+                }
+
+                if (bestAction && bestAction.score >= -10) {
+                    return bestAction;
+                }
+
+                return null;
+            },
+
+            findAdvanceAction(aiFigures) {
+                const playerGoalId = 'goal-opponent';
+                let bestOption = null;
+                let bestDistance = Infinity;
+
+                for (const { pointId, robot } of aiFigures) {
+                    const moves = this.calculateValidMovesWithinMP(pointId, robot.mp);
+                    moves.forEach(destination => {
+                        const distance = this.estimateDistance(destination, playerGoalId);
+                        if (distance < bestDistance) {
+                            bestDistance = distance;
+                            bestOption = {
+                                type: 'move',
+                                from: pointId,
+                                to: destination,
+                                distance
+                            };
+                        }
+                    });
+                }
+
+                return bestOption;
+            },
+
+            estimateDistance(fromPointId, toPointId) {
+                const start = this.getPointById(fromPointId);
+                const target = this.getPointById(toPointId);
+                if (!start || !target) return Infinity;
+
+                if (start.position && target.position) {
+                    return Math.abs(start.x - target.x) + Math.abs(start.y - target.y);
+                }
+
+                return Math.random() * 100; // fallback to avoid infinite loops
+            },
+
+            evaluateBattleRisk(attackerId, defenderId) {
+                const attacker = RobotDatabase.getRobot(attackerId);
+                const defender = RobotDatabase.getRobot(defenderId);
+                if (!attacker || !defender) return 0;
+
+                const attackerDamage = (attacker.stats?.attack || 50) + (attacker.mp || 0) * 2;
+                const defenderDamage = (defender.stats?.defense || 50) + (defender.mp || 0) * 2;
+
+                const rarityScore = (rarity) => {
+                    switch (rarity) {
+                        case 'EX': return 4;
+                        case 'R': return 3;
+                        case 'UC': return 2;
+                        case 'C': return 1;
+                        default: return 0;
+                    }
+                };
+
+                const attackerScore = attackerDamage + rarityScore(attacker.rarity) * 10;
+                const defenderScore = defenderDamage + rarityScore(defender.rarity) * 10;
+
+                return attackerScore - defenderScore;
             },
             
             // Win Condition Checking
@@ -3318,25 +3741,34 @@
                         }
                     });
                 });
+
                 console.log('✅ Movable space image click handlers initialized');
             },
-
+            
             // DEBUG MODE: Enable manual control of both sides
             debugMode: false,
             currentControlTeam: 'player',
-            
-            // FREE MOVEMENT MODE: Allow instant teleportation for scenario setup
-            freeMovementMode: false,
-            
+
             enableDebugMode() {
                 this.debugMode = true;
                 this.currentControlTeam = 'player'; // Always start with player control
                 console.log('🐛 DEBUG MODE ENABLED - You control both sides! Starting with PLAYER control.');
                 this.showDebugControls();
+                this.showTurnActionMessage('DEBUG MODE: PLAYER CONTROL ACTIVE');
             },
-            
+
+            disableDebugMode() {
+                if (!this.debugMode) {
+                    return;
+                }
+
+                console.log('🧰 DEBUG MODE DISABLED - Restoring AI control');
+                this.debugMode = false;
+                this.currentControlTeam = 'player';
+                this.hideDebugControls();
+            },
+
             showDebugControls() {
-                // Create or get debug button
                 let debugBtn = document.getElementById('debug-switch-btn');
                 if (!debugBtn) {
                     debugBtn = document.createElement('button');
@@ -3357,13 +3789,11 @@
                     debugBtn.onclick = () => this.switchControlTeam();
                     document.body.appendChild(debugBtn);
                 }
-                
-                // Update button text
+
                 const team = this.currentControlTeam === 'player' ? '👤 Player' : '🤖 Opponent';
                 debugBtn.innerHTML = `🐛 ${team}`;
                 debugBtn.style.borderColor = this.currentControlTeam === 'player' ? '#28a745' : '#dc3545';
-                
-                // Add hover effect
+
                 debugBtn.onmouseenter = () => {
                     debugBtn.style.background = 'rgba(50, 50, 50, 0.95)';
                     debugBtn.style.transform = 'scale(1.05)';
@@ -3372,32 +3802,38 @@
                     debugBtn.style.background = 'rgba(30, 30, 30, 0.9)';
                     debugBtn.style.transform = 'scale(1)';
                 };
-                
-                // Create or update turn status indicator
+
                 let statusDiv = document.getElementById('turn-status-indicator');
-                // Turn Status moved to Battle Log - hide the panel
                 if (!statusDiv) {
                     statusDiv = document.createElement('div');
                     statusDiv.id = 'turn-status-indicator';
-                    statusDiv.style.display = 'none'; // Hidden - info in battle log instead
+                    statusDiv.style.display = 'none';
                     document.body.appendChild(statusDiv);
                 }
-                
-                // Add turn status to battle log instead
+
                 const moved = this.turnActions.hasMovedRobot ? '✅' : '❌';
                 const battled = this.turnActions.hasBattled ? '✅' : '❌';
-                
-                // Only update log if status changed (avoid spam)
                 const statusKey = `${moved}${battled}`;
                 if (this.lastTurnStatusLog !== statusKey) {
                     this.addToHistory(`Turn Status - Moved: ${moved}, Battled: ${battled}`, 'system');
                     this.lastTurnStatusLog = statusKey;
                 }
-                
-                // Create or update battle history log
+
                 this.showBattleHistory();
             },
-            
+
+            hideDebugControls() {
+                const debugBtn = document.getElementById('debug-switch-btn');
+                if (debugBtn && debugBtn.parentNode) {
+                    debugBtn.parentNode.removeChild(debugBtn);
+                }
+
+                const statusDiv = document.getElementById('turn-status-indicator');
+                if (statusDiv && statusDiv.parentNode) {
+                    statusDiv.parentNode.removeChild(statusDiv);
+                }
+            },
+
             switchControlTeam() {
                 this.currentControlTeam = this.currentControlTeam === 'player' ? 'opponent' : 'player';
                 console.log(`🔄 Switched control to: ${this.currentControlTeam}`);
@@ -3594,6 +4030,29 @@
                 console.log('👤 Player Team:', playerTeam);
                 console.log('🤖 Opponent Team:', opponentTeam);
                 
+                // CRITICAL: Clear ALL status effects from ALL robots (fresh start for new battle)
+                console.log('🧹 Clearing all status effects from all robots...');
+                if (this.robotStatusEffects) {
+                    const allRobotIds = Object.keys(this.robotStatusEffects);
+                    allRobotIds.forEach(robotId => {
+                        this.clearAllStatusEffects(robotId);
+                    });
+                    console.log(`✅ Cleared status effects from ${allRobotIds.length} robots`);
+                }
+                
+                // Clear Rebooting status tracking
+                if (this.rebootingRobots) {
+                    this.rebootingRobots = {};
+                    console.log('✅ Cleared Rebooting status tracking');
+                }
+                
+                // Reset turn counters
+                this.turnCounters = {
+                    player: 0,
+                    opponent: 0
+                };
+                console.log('✅ Reset turn counters');
+                
                 // Clear any existing robots
                 this.clearAllRobots();
                 
@@ -3689,6 +4148,21 @@
                         
                         // Check if this is an attackable enemy
                         if (closest.robotGroup && closest.robotGroup.classList.contains('attackable-enemy')) {
+                            // CRITICAL: Only allow battles during PLAYER's turn
+                            if (this.currentState !== this.gameStates.PLAYER_TURN) {
+                                console.warn(`⚠️ Cannot battle during ${this.currentState} - battles only allowed during player turn`);
+                                return;
+                            }
+                            
+                            // CRITICAL: Validate that the clicked robot is actually an ENEMY
+                            const currentTeam = 'player'; // Player's team during player turn
+                            const enemyTeam = 'opponent';
+                            
+                            if (closest.team !== enemyTeam) {
+                                console.warn(`⚠️ Cannot battle your own team! Clicked: ${closest.team}, Expected enemy: ${enemyTeam}`);
+                                return;
+                            }
+                            
                             console.log(`⚔️ Initiating battle with enemy at ${closest.pointId}!`);
                             const attackerPointId = this.findAdjacentAlly(closest.pointId, closest.team);
                             if (attackerPointId) {
@@ -3899,6 +4373,89 @@
                 }, 50);
             },
 
+            // Select robot for deployment from bench
+            selectRobotForDeployment(robotId, teamType, benchIndex) {
+                // CLEAR FIRST PRINCIPLE: Always clear previous selection before showing new highlights
+                console.log('🧹 CLEAR FIRST: Clearing all previous highlights and selections');
+                this.clearSelection();
+                this.clearAttackableEnemies();
+                
+                // REPAIR BAY: Check if robot is rebooting
+                if (this.isRobotRebooting(robotId, teamType)) {
+                    console.log(`⏳ Cannot deploy ${robotId} - robot is rebooting (Wait 1)`);
+                    const robotData = RobotDatabase.getRobot(robotId);
+                    this.addToHistory(`⏳ ${robotData?.name || robotId} is rebooting - cannot deploy this turn`, 'info', teamType);
+                    return;
+                }
+                
+                // Check if robot has already been moved this turn
+                if (this.turnActions.hasMovedRobot) {
+                    console.log('⚠️ Cannot deploy - already moved/deployed a robot this turn!');
+                    this.showTurnActionMessage('You can only move ONE robot per turn! End your turn to continue.');
+                    return;
+                }
+                
+                // In debug mode, only allow deploying for current control team
+                if (this.debugMode && teamType !== this.currentControlTeam) {
+                    console.log(`❌ Currently controlling ${this.currentControlTeam} team. Switch teams to deploy this robot.`);
+                    return;
+                }
+                
+                // CRITICAL: In normal mode, only allow player to deploy their own robots
+                if (!this.debugMode) {
+                    // Check if it's player's turn
+                    if (this.currentState !== this.gameStates.PLAYER_TURN && this.currentState !== this.gameStates.SETUP) {
+                        console.log(`❌ Cannot deploy - not player's turn (current state: ${this.currentState})`);
+                        return;
+                    }
+                    
+                    // Check if trying to deploy opponent's robot
+                    if (teamType !== 'player') {
+                        console.log(`❌ Cannot deploy opponent's robot! You can only deploy your own robots.`);
+                        this.showTurnActionMessage('You cannot deploy opponent robots!');
+                        return;
+                    }
+                }
+                
+                // Get robot data to check MP
+                const robot = RobotDatabase.getRobot(robotId);
+                if (!robot) {
+                    console.log('❌ Robot data not found');
+                    return;
+                }
+                
+                // FIRST-TURN HANDICAP CHECK
+                let effectiveMP = robot.mp;
+                if (this.isFirstMoveOfGame) {
+                    effectiveMP = robot.mp - 1;
+                    console.log(`⚠️ FIRST-TURN HANDICAP: ${robot.name} MP reduced from ${robot.mp} to ${effectiveMP}`);
+                }
+                
+                // Check if robot has enough MP to deploy (needs at least 1 MP after handicap)
+                if (effectiveMP < 1) {
+                    console.log(`❌ Cannot deploy ${robot.name} - insufficient MP after first-turn handicap (${effectiveMP} MP)`);
+                    this.showTurnActionMessage(`${robot.name} cannot be deployed on first turn (1 MP robots need 2 MP after -1 handicap)`);
+                    return;
+                }
+                
+                console.log(`🎯 Selected ${robotId} for deployment from ${teamType} bench`);
+                
+                this.selectedRobotForDeployment = {
+                    robotId: robotId,
+                    teamType: teamType,
+                    benchIndex: benchIndex
+                };
+                
+                // Visual feedback for bench robot selection
+                const benchEl = document.getElementById(`bench-${teamType}-${benchIndex}`);
+                if (benchEl) {
+                    benchEl.classList.add('selected');
+                }
+                
+                // SMART DEPLOYMENT: Calculate and highlight ALL possible final destinations
+                this.highlightSmartDeploymentDestinations(robotId, teamType, effectiveMP);
+            },
+
             // Enable robot interaction and movement
             enableRobotInteraction() {
                 console.log('🎮 Enabling robot interaction...');
@@ -3940,89 +4497,55 @@
                 
                 console.log(`🎯 Clicked point: ${pointId}`);
                 
-                // If we have a selected robot for deployment
+                // PRIORITY 1: Check if we have a robot selected for deployment from bench
                 if (this.selectedRobotForDeployment) {
+                    console.log(`📍 Deploying robot to ${pointId}`);
                     this.deployRobotToPoint(this.selectedRobotForDeployment, pointId);
                     return;
                 }
                 
-                // If point has a robot, select it for movement
+                // PRIORITY 2: Check if we have a robot selected for movement and this is a valid destination
+                if (this.selectedRobotForMovement) {
+                    const pointData = this.getPointById(pointId);
+                    
+                    // If clicking on the same robot that's already selected, do nothing
+                    if (pointData && pointData.robot && pointId === this.selectedRobotForMovement.pointId) {
+                        console.log('⏭️ Already selected - ignoring click');
+                        return;
+                    }
+                    
+                    // If clicking on an empty space, try to move there
+                    if (!pointData || !pointData.robot) {
+                        // CRITICAL: Validate destination is in validMoves array
+                        if (!this.validMoves || this.validMoves.length === 0) {
+                            console.error(`❌ No valid moves available - this.validMoves is ${this.validMoves ? 'empty' : 'undefined'}`);
+                            return;
+                        }
+                        
+                        if (!this.validMoves.includes(pointId)) {
+                            console.warn(`❌ Invalid move: ${pointId} is not in validMoves array`);
+                            console.warn(`   Valid destinations:`, this.validMoves);
+                            return;
+                        }
+                        
+                        // Valid move - execute it!
+                        this.moveRobotToPoint(this.selectedRobotForMovement, pointId);
+                        return;
+                    }
+                    
+                    // If clicking on a different robot, select that one instead
+                    if (pointData && pointData.robot) {
+                        console.log(`🔄 Switching selection to ${pointId}`);
+                        this.selectRobotForMovement(pointId);
+                        return;
+                    }
+                }
+                
+                // PRIORITY 3: No robot selected - check if clicking on a robot to select it
                 const pointData = this.getPointById(pointId);
                 if (pointData && pointData.robot) {
                     this.selectRobotForMovement(pointId);
-                } else {
-                    // If we have a robot selected for movement, move it here
-                    if (this.selectedRobotForMovement) {
-                        this.moveRobotToPoint(this.selectedRobotForMovement, pointId);
-                    }
                 }
-            },
-
-            // Select robot for deployment from bench
-            selectRobotForDeployment(robotId, teamType, benchIndex) {
-                // CLEAR FIRST PRINCIPLE: Always clear previous selection before showing new highlights
-                console.log('🧹 CLEAR FIRST: Clearing all previous highlights and selections');
-                this.clearSelection();
-                this.clearAttackableEnemies();
-                
-                // REPAIR BAY: Check if robot is rebooting
-                if (this.isRobotRebooting(robotId, teamType)) {
-                    console.log(`⏳ Cannot deploy ${robotId} - robot is rebooting (Wait 1)`);
-                    const robotData = RobotDatabase.getRobot(robotId);
-                    this.addToHistory(`⏳ ${robotData?.name || robotId} is rebooting - cannot deploy this turn`, 'info', teamType);
-                    return;
-                }
-                
-                // Check if robot has already been moved this turn
-                if (this.turnActions.hasMovedRobot) {
-                    console.log('⚠️ Cannot deploy - already moved/deployed a robot this turn!');
-                    this.showTurnActionMessage('You can only move ONE robot per turn! End your turn to continue.');
-                    return;
-                }
-                
-                // In debug mode, only allow deploying for current control team
-                if (this.debugMode && teamType !== this.currentControlTeam) {
-                    console.log(`❌ Currently controlling ${this.currentControlTeam} team. Switch teams to deploy this robot.`);
-                    return;
-                }
-                
-                // Get robot data to check MP
-                const robot = RobotDatabase.getRobot(robotId);
-                if (!robot) {
-                    console.log('❌ Robot data not found');
-                    return;
-                }
-                
-                // FIRST-TURN HANDICAP CHECK
-                let effectiveMP = robot.mp;
-                if (this.isFirstMoveOfGame) {
-                    effectiveMP = robot.mp - 1;
-                    console.log(`⚠️ FIRST-TURN HANDICAP: ${robot.name} MP reduced from ${robot.mp} to ${effectiveMP}`);
-                }
-                
-                // Check if robot has enough MP to deploy (needs at least 1 MP after handicap)
-                if (effectiveMP < 1) {
-                    console.log(`❌ Cannot deploy ${robot.name} - insufficient MP after first-turn handicap (${effectiveMP} MP)`);
-                    this.showTurnActionMessage(`${robot.name} cannot be deployed on first turn (1 MP robots need 2 MP after -1 handicap)`);
-                    return;
-                }
-                
-                console.log(`🎯 Selected ${robotId} for deployment from ${teamType} bench`);
-                
-                this.selectedRobotForDeployment = {
-                    robotId: robotId,
-                    teamType: teamType,
-                    benchIndex: benchIndex
-                };
-                
-                // Visual feedback for bench robot selection
-                const benchEl = document.getElementById(`bench-${teamType}-${benchIndex}`);
-                if (benchEl) {
-                    benchEl.classList.add('selected');
-                }
-                
-                // SMART DEPLOYMENT: Calculate and highlight ALL possible final destinations
-                this.highlightSmartDeploymentDestinations(robotId, teamType, effectiveMP);
             },
 
             // SMART DEPLOYMENT: Calculate all possible final destinations from bench
@@ -4438,8 +4961,15 @@
                     return;
                 }
                 
-                // Check for adjacent enemies ONLY for deployed robot
-                const adjacentEnemies = this.highlightAdjacentEnemies(pointId, deploymentData.teamType);
+                // Check for adjacent enemies ONLY for PLAYER deployments (not AI)
+                let adjacentEnemies = 0;
+                if (deploymentData.teamType === 'player' && this.currentState === this.gameStates.PLAYER_TURN) {
+                    adjacentEnemies = this.highlightAdjacentEnemies(pointId, deploymentData.teamType);
+                } else {
+                    // For AI deployments, just count but don't highlight
+                    const enemies = this.getAdjacentEnemies(pointId, deploymentData.teamType);
+                    adjacentEnemies = enemies.length;
+                }
                 
                 // AUTO-END TURN: If no adjacent enemies to battle, end turn automatically
                 if (adjacentEnemies === 0) {
@@ -4574,6 +5104,12 @@
                 // Check for surrounded enemies (instant KO!)
                 this.checkForSurrounds(deploymentData.teamType);
                 
+                // CRITICAL: Check for win conditions immediately after deployment
+                if (this.checkWinConditions(deploymentData.teamType)) {
+                    console.log(`🏆 Win condition met after deployment!`);
+                    return; // Stop processing, game is over
+                }
+                
                 // LOCK-IN: Clear ALL battle highlights first (important!)
                 this.clearAttackableEnemies();
                 
@@ -4584,18 +5120,26 @@
                     return;
                 }
                 
-                // Check for adjacent enemies ONLY for deployed robot
-                const adjacentEnemies = this.highlightAdjacentEnemies(finalDestinationId, deploymentData.teamType);
+                // Check for adjacent enemies ONLY for PLAYER deployments (not AI)
+                let adjacentEnemies = 0;
+                if (deploymentData.teamType === 'player' && this.currentState === this.gameStates.PLAYER_TURN) {
+                    adjacentEnemies = this.highlightAdjacentEnemies(finalDestinationId, deploymentData.teamType);
+                } else {
+                    // For AI deployments, just count but don't highlight
+                    const enemies = this.getAdjacentEnemies(finalDestinationId, deploymentData.teamType);
+                    adjacentEnemies = enemies.length;
+                }
                 
                 // AUTO-END TURN: If no adjacent enemies to battle, end turn automatically
                 if (adjacentEnemies === 0) {
                     console.log('⏩ No adjacent enemies after smart deployment - auto-ending turn');
-                    this.addToHistory('Turn auto-ended (no battles available)', 'info', deploymentData.teamType);
-                    setTimeout(() => {
-                        this.endPlayerTurn();
-                    }, 500); // Small delay for better UX
+                    if (!this.freeMovementMode) {
+                        this.addToHistory('Turn auto-ended (no battles available)', 'info', deploymentData.teamType);
+                        setTimeout(() => {
+                            this.endPlayerTurn();
+                        }, 500);
+                    }
                 } else {
-                    // Show message about battle options
                     this.showTurnActionMessage(`Robot deployed! You can battle ${adjacentEnemies} adjacent ${adjacentEnemies === 1 ? 'enemy' : 'enemies'} or end your turn.`);
                 }
             },
@@ -4836,6 +5380,9 @@
                     validMoves = this.calculateValidMovesWithinMP(fromPointId, maxMP);
                 }
                 
+                // CRITICAL: Store validMoves for validation in handlePointClick
+                this.validMoves = validMoves;
+                
                 // Highlight all valid destination points
                 validMoves.forEach(pointId => {
                     const pointEl = document.getElementById(pointId);
@@ -4925,7 +5472,7 @@
                 }
                 
                 console.log(`🎯 Found ${validMoves.length} valid moves within ${maxMP} steps from ${startPointId}`);
-                console.log(`🗺️ Stored ${this.validMovePaths.size} paths`);
+                
                 return validMoves;
             },
 
@@ -4940,73 +5487,126 @@
                 
                 const fromPointId = movementData.pointId;
                 const fromPointData = this.getPointById(fromPointId);
+                
+                if (!fromPointData || !fromPointData.robot) {
+                    console.error('❌ No robot at source point');
+                    this.isMovementInProgress = false;
+                    return;
+                }
+                
                 const toPointData = this.getPointById(toPointId);
-                
-                console.log(`🚀 Attempting to move robot from ${fromPointId} to ${toPointId}`);
-                
-                if (!fromPointData || !toPointData) {
-                    console.log('❌ Invalid movement points');
+                if (!toPointData) {
+                    console.error('❌ Invalid destination point');
                     this.isMovementInProgress = false;
                     return;
                 }
                 
-                // Check if source has a robot
-                if (!fromPointData.robot) {
-                    console.error(`❌ No robot at source ${fromPointId}!`);
+                // CRITICAL: Validate destination is in validMoves array (prevents invalid movement)
+                if (!this.validMoves || !this.validMoves.includes(toPointId)) {
+                    console.error(`❌ Invalid move: ${toPointId} is not in validMoves array`);
+                    console.error(`   Valid destinations:`, this.validMoves);
+                    console.error(`   Attempted destination: ${toPointId}`);
                     this.isMovementInProgress = false;
                     return;
                 }
                 
-                // Check if destination is occupied (DATA check)
-                if (toPointData.robot) {
-                    console.log('❌ Destination point is occupied (data exists)');
-                    this.isMovementInProgress = false;
-                    return;
-                }
-                
-                // GHOST ROBOT FIX: Check if destination has a visual robot without data
-                const ghostVisual = document.getElementById(`robot-${toPointId}`);
-                if (ghostVisual) {
-                    console.warn(`⚠️ GHOST ROBOT DETECTED at ${toPointId}! Visual exists but no data. Removing ghost...`);
-                    this.removeRobotVisual(toPointId);
-                    console.log(`✅ Ghost robot visual removed from ${toPointId}`);
-                }
-                
-                // Get robot data
-                const robot = RobotDatabase.getRobot(movementData.robotId);
-                if (!robot) {
-                    console.log('❌ Robot data not found');
-                    this.isMovementInProgress = false;
-                    return;
-                }
-                
-                // FREE MOVEMENT MODE: Skip MP validation
-                if (!this.freeMovementMode) {
-                    // Validate move is within MP range
-                    const validMoves = this.calculateValidMovesWithinMP(fromPointId, robot.mp);
-                    if (!validMoves.includes(toPointId)) {
-                        console.log(`❌ Destination not within ${robot.mp} MP range`);
-                        this.isMovementInProgress = false;
-                        return;
+                // Wrap everything in try-finally to ensure flag is always cleared
+                try {
+                    console.log(`🚀 Moving robot from ${fromPointId} to ${toPointId}`);
+                    
+                    // Animate movement
+                    await this.moveRobotVisual(fromPointId, toPointId);
+                    
+                    // Update data structures
+                    const robotState = fromPointData.robot;
+                    fromPointData.robot = null;
+                    toPointData.robot = robotState;
+                    
+                    // Update DOM
+                    this.clearPoint(fromPointId);
+                    this.occupyPoint(toPointId, robotState.id, robotState.team);
+                    this.updateRobotStatusIndicators(toPointId, robotState.id);
+                    
+                    // Mark that robot has moved this turn
+                    this.turnActions.hasMovedRobot = true;
+                    this.turnActions.actionTakenThisTurn = true;
+                    this.turnActions.lastMovedRobotPoint = toPointId;
+                    
+                    // Check for surrounds
+                    this.checkForSurrounds(movementData.team);
+                    
+                    // CRITICAL: Check for win conditions immediately after movement
+                    if (this.checkWinConditions(movementData.team)) {
+                        console.log(`🏆 Win condition met after movement!`);
+                        return; // Stop processing, game is over
                     }
-                    console.log(`✅ Valid move within ${robot.mp} MP range`);
-                } else {
-                    console.log(`🚀 FREE MOVEMENT MODE: Skipping MP validation - instant teleport!`);
+                    
+                    // Clear selection
+                    this.clearSelection();
+                    
+                    // Check for Tagging cure opportunities
+                    this.checkTaggingCure(toPointId, movementData.team);
+                    
+                    // Highlight adjacent enemies
+                    const adjacentEnemies = this.highlightAdjacentEnemies(toPointId, movementData.team);
+
+                    // AUTO-END TURN: If no adjacent enemies to battle, end turn automatically
+                    if (adjacentEnemies === 0) {
+                        console.log('⏩ No adjacent enemies after movement - auto-ending turn');
+                        if (!this.freeMovementMode) {
+                            this.addToHistory('Turn auto-ended (no battles available)', 'info', movementData.team);
+                            setTimeout(() => {
+                                this.endPlayerTurn();
+                            }, 500);
+                        }
+                    } else {
+                        this.showTurnActionMessage(`Robot moved! You can battle ${adjacentEnemies} adjacent ${adjacentEnemies === 1 ? 'enemy' : 'enemies'} or end your turn.`);
+                    }
+                } finally {
+                    // ALWAYS clear the movement lock, even if an error occurred
+                    this.isMovementInProgress = false;
                 }
-                
-                // Animate the visual robot first (wait for animation to complete)
-                console.log(`🎬 Starting animation from ${fromPointId} to ${toPointId}...`);
+            },
+
+            async moveRobotForAI(fromPointId, toPointId) {
+                if (this.isMovementInProgress) {
+                    console.warn('🤖 AI attempted to move while another movement is in progress.');
+                    return false;
+                }
+
+                const fromPointData = this.getPointById(fromPointId);
+                const toPointData = this.getPointById(toPointId);
+
+                if (!fromPointData || !fromPointData.robot) {
+                    console.warn(`🤖 AI move cancelled - no robot at ${fromPointId}`);
+                    return false;
+                }
+
+                if (!toPointData) {
+                    console.warn(`🤖 AI move cancelled - destination ${toPointId} not found.`);
+                    return false;
+                }
+
+                if (toPointData.robot) {
+                    console.warn(`🤖 AI move cancelled - destination ${toPointId} already occupied.`);
+                    return false;
+                }
+
+                const robotState = fromPointData.robot;
+                const definition = this.getRobotDefinition(robotState.id);
+                const mp = robotState.mp ?? definition?.mp ?? 0;
+
+                const reachable = this.calculateValidMovesWithinMP(fromPointId, mp);
+                if (!reachable.includes(toPointId)) {
+                    console.warn(`🤖 AI move cancelled - ${toPointId} not within ${mp} MP of ${fromPointId}.`);
+                    return false;
+                }
+
+                this.isMovementInProgress = true;
+
                 await this.moveRobotVisual(fromPointId, toPointId);
-                console.log(`🎨 Robot visual animation complete`);
-                
-                // Now update the robot data
-                console.log(`📊 Before move - fromPoint.robot:`, fromPointData.robot);
-                console.log(`📊 Before move - toPoint.robot:`, toPointData.robot);
-                
-                // CRITICAL: Set data directly in gameBoard, not via reference
-                const robotDataToMove = fromPointData.robot;
-                
-                // Clear source point directly in gameBoard
+
+                // Clear source point data
                 if (this.gameBoard.entryPoints[fromPointId]) {
                     this.gameBoard.entryPoints[fromPointId].robot = null;
                 } else if (this.gameBoard.routePoints[fromPointId]) {
@@ -5016,128 +5616,33 @@
                 } else if (this.gameBoard.goalPoints[fromPointId]) {
                     this.gameBoard.goalPoints[fromPointId].robot = null;
                 }
-                
-                // Set destination point directly in gameBoard
+
+                // Assign robot to destination
                 if (this.gameBoard.entryPoints[toPointId]) {
-                    this.gameBoard.entryPoints[toPointId].robot = robotDataToMove;
+                    this.gameBoard.entryPoints[toPointId].robot = robotState;
                 } else if (this.gameBoard.routePoints[toPointId]) {
-                    this.gameBoard.routePoints[toPointId].robot = robotDataToMove;
+                    this.gameBoard.routePoints[toPointId].robot = robotState;
                 } else if (this.gameBoard.innerPoints[toPointId]) {
-                    this.gameBoard.innerPoints[toPointId].robot = robotDataToMove;
+                    this.gameBoard.innerPoints[toPointId].robot = robotState;
                 } else if (this.gameBoard.goalPoints[toPointId]) {
-                    this.gameBoard.goalPoints[toPointId].robot = robotDataToMove;
+                    this.gameBoard.goalPoints[toPointId].robot = robotState;
                 }
-                
-                console.log(`📊 After move - set directly in gameBoard`);
-                
-                // Verify the data persists in gameBoard
-                const verifyTo = this.getPointById(toPointId);
-                const verifyFrom = this.getPointById(fromPointId);
-                console.log(`✅ Verification - ${toPointId}.robot:`, verifyTo.robot);
-                console.log(`✅ Verification - ${fromPointId}.robot:`, verifyFrom.robot);
-                
-                // Update DOM attributes for source point
-                const fromElement = document.getElementById(fromPointId);
-                if (fromElement) {
-                    fromElement.setAttribute('data-occupied', 'false');
-                    fromElement.setAttribute('data-team', 'neutral');
-                }
-                
-                // Update DOM attributes for destination point
-                const toElement = document.getElementById(toPointId);
-                if (toElement) {
-                    toElement.setAttribute('data-occupied', 'true');
-                    toElement.setAttribute('data-team', movementData.team);
-                }
-                
-                console.log(`📦 Robot data moved from ${fromPointId} to ${toPointId}`);
-                
-                // Developer Log: Movement
-                this.addDeveloperLog('MOVEMENT', {
-                    robotId: movementData.robotId,
-                    robotName: robot.name,
-                    team: movementData.team,
-                    from: fromPointId,
-                    to: toPointId,
-                    mp: robot.mp,
-                    turnLocked: !this.freeMovementMode,
-                    firstMove: this.isFirstMoveOfGame,
-                    freeMovement: this.freeMovementMode
-                });
-                
-                // FREE MOVEMENT MODE: Don't consume turn action!
-                if (!this.freeMovementMode) {
-                    // Mark that robot has been moved this turn - LOCK-IN to this robot only
-                    this.turnActions.hasMovedRobot = true;
-                    this.turnActions.actionTakenThisTurn = true;
-                    this.turnActions.lastMovedRobotPoint = toPointId; // LOCK-IN: Only this robot can battle
-                    console.log(`✅ Turn action recorded: Robot moved (movement action used)`);
-                    console.log(`🔒 LOCK-IN: Only robot at ${toPointId} can battle this turn`);
-                } else {
-                    console.log(`🚀 FREE MOVEMENT MODE: Movement does not consume turn action!`);
-                }
-                
-                // Clear first move flag after first movement
-                if (this.isFirstMoveOfGame) {
-                    this.isFirstMoveOfGame = false;
-                    console.log(`✅ First move completed - future moves will use full MP`);
-                }
-                
-                // Update debug status display
-                if (this.debugMode) {
-                    this.showDebugControls();
-                }
-                
-                // Clear selection and highlights
-                this.clearSelection();
-                
-                console.log(`✅ Successfully moved robot ${movementData.robotId} from ${fromPointId} to ${toPointId}`);
-                
-                // Update status indicators to follow the robot to new position
-                this.updateRobotStatusIndicators(toPointId, movementData.robotId);
-                console.log(`🎯 Updated status indicators for robot at new position ${toPointId}`);
-                
-                // Add to battle history with detailed info
-                const robotData = RobotDatabase.getRobot(movementData.robotId);
-                const robotName = robotData ? robotData.name : movementData.robotId;
-                this.addToHistory(`${robotName} moved from ${fromPointId} to ${toPointId}`, 'move', movementData.team);
-                
-                // Check for surrounded enemies (instant KO!)
-                this.checkForSurrounds(movementData.team);
-                
-                // LOCK-IN: Clear ALL battle highlights first (important!)
-                this.clearAttackableEnemies();
-                
-                // TRIGGER 3: Highlight ONLY adjacent enemies for the robot that just moved
-                const adjacentEnemies = this.highlightAdjacentEnemies(toPointId, movementData.team);
-                
-                // Check if robot reached a goal (WIN CONDITION!)
-                if (this.checkWinConditions(movementData.team)) {
-                    console.log(`🏆 ${movementData.team} reached the goal and wins!`);
-                    const robotData = RobotDatabase.getRobot(movementData.robotId);
-                    const robotName = robotData ? robotData.name : movementData.robotId;
-                    this.addToHistory(`🏆 ${robotName} captured the goal!`, 'win', movementData.team);
-                    this.addToHistory(`🏆 ${movementData.team.toUpperCase()} WINS THE BATTLE!`, 'win', null);
-                    this.isMovementInProgress = false; // Reset flag
-                    return; // Stop processing, game is over
-                }
-                
-                // AUTO-END TURN: If no adjacent enemies to battle, end turn automatically
-                if (adjacentEnemies === 0) {
-                    console.log('⏩ No adjacent enemies - auto-ending turn');
-                    this.addToHistory('Turn auto-ended (no battles available)', 'info', movementData.team);
-                    setTimeout(() => {
-                        this.endPlayerTurn();
-                    }, 500); // Small delay for better UX
-                } else {
-                    // Show message about turn action
-                    this.showTurnActionMessage(`Robot moved! You can battle ${adjacentEnemies} adjacent ${adjacentEnemies === 1 ? 'enemy' : 'enemies'} or end your turn.`);
-                }
-                
-                // Reset movement flag
+
+                // Update DOM attributes
+                this.clearPoint(fromPointId);
+                this.occupyPoint(toPointId, robotState.id, robotState.team);
+
+                this.updateRobotStatusIndicators(toPointId, robotState.id);
+
                 this.isMovementInProgress = false;
+                return true;
             },
 
+            finishAITurn() {
+                console.log('✅ AI turn complete');
+                this.setState(this.gameStates.PLAYER_TURN);
+            },
+            
             // ==========================================
             // SURROUNDING MECHANIC
             // ==========================================
@@ -7913,18 +8418,23 @@
                     return;
                 }
                 
+                // CRITICAL: Check for win conditions after battle
+                if (this.checkWinConditions(attackerTeam)) {
+                    console.log(`🏆 Win condition met after battle!`);
+                    return; // Stop processing, game is over
+                }
+                
                 // CHECK FOR WAITWIN: Did this battle eliminate the opponent?
                 if (this.checkWaitWin(attackerTeam)) {
                     console.log(`🏆 ${attackerTeam} wins by System Lock after battle!`);
                     return; // Game over - don't end turn
                 }
                 
-                // IMPORTANT: End the turn of whoever initiated the battle
-                console.log(`🔄 Battle complete - ending ${attackerTeam}'s turn`);
+                // IMPORTANT: Don't auto-end turn here - let the normal flow handle it
+                // For AI: finishAITurn() will be called by performAIMove
+                // For Player: Player must click "End Turn" button
+                console.log(`✅ Battle resolved - turn will end via normal flow`);
                 console.log(`📊 Current state: debugMode=${this.debugMode}, currentControlTeam=${this.currentControlTeam}, gameState=${this.currentState}`);
-                
-                // Always use endPlayerTurn which handles both debug mode and normal mode
-                this.endPlayerTurn();
             },
             
             // ==========================================
@@ -8914,10 +9424,34 @@
                         messageEl.parentNode.removeChild(messageEl);
                     }
                 }, 2000);
+            },
+            
+            // Helper: Check if two points are adjacent
+            arePointsAdjacent(pointId1, pointId2) {
+                const point1 = this.getPointById(pointId1);
+                if (!point1 || !point1.connections) return false;
+                return point1.connections.includes(pointId2);
+            },
+            
+            // Helper: Get adjacent enemy points
+            getAdjacentEnemies(pointId, team) {
+                const point = this.getPointById(pointId);
+                if (!point || !point.connections) return [];
+                
+                const enemyTeam = team === 'player' ? 'opponent' : 'player';
+                const adjacentEnemies = [];
+                
+                point.connections.forEach(connectedPointId => {
+                    const connectedPoint = this.getPointById(connectedPointId);
+                    if (connectedPoint && connectedPoint.robot && connectedPoint.robot.team === enemyTeam) {
+                        adjacentEnemies.push(connectedPointId);
+                    }
+                });
+                
+                return adjacentEnemies;
             }
         };
 
         // ==========================================
         // ROBOT DATA SYSTEM - PLACEHOLDER ROBOTS
         // ==========================================
-        

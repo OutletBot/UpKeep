@@ -1,0 +1,24 @@
+I want to make "Sub Catagorys"
+Sweep/Mop
+Shampoo
+Vacume
+Trash
+
+these catagorys shall not have decay bar nor effect over all upkeep score.
+task withen these sub catagorys will be directly linked to regular catagorys and will have decay bars as normal
+
+so for example
+
+If user makes trash sub-category
+withen the sub-catagory to add task, you must select from exciting catagorys in the "trash category task" drop down menu.
+
+the menu will populated by the exciting regular catagories the user has set up.
+
+so if the user add (example) "Kitchen" from the drop down menu in this sub-category it will be listed in the sub category as "Trash - Kitchen"
+
+
+this task will also be populated to the exciting kitchen category.the user should also be required to enter a decay time for this task, but the decay should only effect the category it is linked to, not the sub category. 
+ ( it should be uniquely indintified as sub-category task withen)
+when user checks off task it shall be completed in both kitchen category and the sub category at the same time.
+
+

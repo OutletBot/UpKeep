@@ -15,5 +15,9 @@
     "sad": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png",
     "thinking": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png",
     "shadow": "Imag/Achivments/Images/Clown-Bot/Clown-Bot.png"
+  },
+  "battery": {
+    "hoursToDeplete": 60,
+    "comment": "Lower cost robot = longer battery life. Time from 100% to 0% when active. Inactive robots drain 4x slower."
   }
 }

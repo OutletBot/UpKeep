@@ -1,16 +1,16 @@
 {
   "hasCustomDialogue": true,
   "greeting": [
-    "Gotta go fast! What's the chore of the day?",
+    "Speed is my specialty! What's the chore of the day?",
     "Too slow? Not with me around! Let's roll!",
     "My internal clocks are set. Ready for action!",
     "No time to waste! Let's make this place sparkle!",
-    "Spin dash into maintenance mode!"
+    "Turbo mode engaged! Let's clean!"
   ],
   "success": [
     "Nailed it! That was easy!",
     "Mission accomplished! Faster than the speed of sound!",
-    "Yeah! Just like taking out Robotnik's badniks!",
+    "Yeah! Just like blitzing through obstacles!",
     "Looks like we left that chore in the dust!",
     "Freshness meters are at max speed!"
   ],
@@ -23,26 +23,26 @@
   "broken": [
     "Ugh... My systems are slowing down... I can't keep up...",
     "Error... my circuits are feeling sluggish. Need a tune-up, quick!",
-    "This isn't good... My rings are scattered! Help me out!",
+    "This isn't good... My power cells are depleted! Help me out!",
     "Warning! Critical system failure! Must... maintain... speed..."
   ],
   "random": [
     "Hey, no slacking! Unless it's a chill-out zone.",
     "Think fast! Did you remember to wipe the counters?",
-    "I heard Robotnik's got a messy lab. Maybe I should pay him a visit?",
+    "I heard some villains have messy lairs. Maybe I should pay them a visit?",
     "A clean home is a clear path to adventure!",
     "What's wrong? Cat got your tongue... or perhaps a rogue dust bunny?",
     "I'm the fastest thing alive... at cleaning!",
-    "Woohoo! Let's get this place sparkling like a Chaos Emerald!"
+    "Woohoo! Let's get this place sparkling like a power gem!"
   ],
   "mad": [
     "Grrr! This is beyond sluggish! Move it, move it, MOVE IT!",
-    "Chaos! This mess is seriously cramping my style! Let's get this done, fast!",
-    "I'm losing rings just looking at this! This is a total slowdown!",
+    "Whoa! This mess is seriously cramping my style! Let's get this done, fast!",
+    "I'm losing energy just looking at this! This is a total slowdown!",
     "Come on, come on! My patience runs faster than me, and that's saying something!",
-    "This is no good! My chili dog senses are tingling... and they sense overdue chores!",
-    "Argh! I can't even spin dash through this clutter! Unacceptable!",
+    "This is no good! My sensors are tingling... and they sense overdue chores!",
+    "Argh! I can't even turbo boost through this clutter! Unacceptable!",
     "You want to see real speed? Then get this place spotless, pronto!",
-    "My temper is revving up! Don't make me go Super Sunic on this mess!"
+    "My temper is revving up! Don't make me go hyper mode on this mess!"
   ]
 }

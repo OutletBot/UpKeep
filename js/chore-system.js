@@ -22,6 +22,7 @@
                     twoChores: 'incomplete',
                     fourChores: 'incomplete'
                 },
+
                 currentMissionTab: 'daily',
                 mysteryGamePlayed: false,
                 mysteryGameState: {
@@ -34,7 +35,21 @@
                 },
                 // ChoreBot Hangar - Deck Management
                 currentDeck: [], // Active deck being built (max 6 robots)
-                savedDecks: []   // Saved deck configurations: [{ name: "Deck Name", robots: [id1, id2, ...] }]
+                savedDecks: [],   // Saved deck configurations: [{ name: "Deck Name", robots: [id1, id2, ...] }]
+                
+                // Item Inventory - Maintenance items owned by user
+                itemInventory: {
+                    OILDRINK: 0,
+                    BATTERY: 0,
+                    MEGABATTERY: 0,
+                    SOLARPANEL: 0
+                },
+                
+                // Robot Bonds & Durability - Tracks battery and repair status for each robot
+                robotBonds: {
+                    // Format: 'ROBOTID': { durability: { battery: 100, lastUpdate: timestamp, isBroken: false, totalRepairs: 0 } }
+                    // Default Bot never breaks (no entry needed)
+                }
             },
 
             storeRobots: [
@@ -43,49 +58,92 @@
                     cost: 100,
                     shadowImagePath: 'Imag/Achivments/Images/Jack-0-Bot/Jack-0-bot-shadow.png',
                     actualImagePath: 'Imag/Achivments/Images/Jack-0-Bot/Jack-0-Bot.png',
-                    name: 'Jack-o\'-Bot'
+                    name: 'Jack-o\'-Bot',
+                    clue: '🎃 "This helper loves carved grins and glowing nights..."'
                 },
                 {
                     id: 'MEGAROCKETMAN',
                     cost: 150,
                     shadowImagePath: 'Imag/Achivments/Images/MegaRocketMan/Mega-Shadow.png',
                     actualImagePath: 'Imag/Achivments/Images/MegaRocketMan/Mega.png',
-                    name: 'Mega Rocket Man'
+                    name: 'Mega Rocket Man',
+                    clue: '🎸 "A legendary performer who brings explosive energy to every task..."'
                 },
                 {
-                    id: 'PIKABOT',
+                    id: 'VOLTBOT',
                     cost: 120,
-                    shadowImagePath: 'Imag/Achivments/Images/Pike-achu/PikaBot-shadow.png',
-                    actualImagePath: 'Imag/Achivments/Images/Pike-achu/PikaBot.png',
-                    name: 'Pika-Bot'
+                    shadowImagePath: 'robots/volt-bot/images/shadow.png',
+                    actualImagePath: 'robots/volt-bot/images/happy.png',
+                    name: 'Volt-Bot',
+                    clue: '⚡ "A tiny companion with electrifying enthusiasm and sparking energy..."'
                 },
                 {
                     id: 'BUZZBOT',
                     cost: 180,
                     shadowImagePath: 'Imag/Achivments/Images/Buzz-lite-point-0/Buzz-shadow.png',
                     actualImagePath: 'Imag/Achivments/Images/Buzz-lite-point-0/Buzz.png',
-                    name: 'Buzz Lite-Point-0'
+                    name: 'Buzz Lite-Point-0',
+                    clue: '🚀 "A cosmic explorer programmed for stellar missions and duty..."'
                 },
                 {
                     id: 'CLOWNBOT',
                     cost: 100,
                     shadowImagePath: 'robots/clown-bot/images/shadow.png',
                     actualImagePath: 'robots/clown-bot/images/happy.png',
-                    name: 'Clown Bot'
+                    name: 'Clown Bot',
+                    clue: '🎪 "Under the big top, this colorful entertainer never stops smiling..."'
                 },
                 {
                     id: 'WITCHBOT',
                     cost: 130,
                     shadowImagePath: 'robots/witch-bot/images/shadow.png',
                     actualImagePath: 'robots/witch-bot/images/happy.png',
-                    name: 'Witch-Bot'
+                    name: 'Witch-Bot',
+                    clue: '🔮 "Brewing up magical solutions, this spellcaster sweeps with supernatural flair..."'
                 },
                 {
                     id: 'FREEZY',
                     cost: 100,
                     shadowImagePath: 'robots/freezy/images/shadow.png',
                     actualImagePath: 'robots/freezy/images/happy.png',
-                    name: 'Freezy'
+                    name: 'Freezy',
+                    clue: '❄️ "Built for frosty conditions, this chilly friend never melts under pressure..."'
+                }
+            ],
+
+            // Store Items - Maintenance items for robots
+            storeItems: [
+                {
+                    id: 'OILDRINK',
+                    name: 'Robo-Fuel',
+                    description: 'Restores 25% battery. Quick maintenance for your robot!',
+                    cost: 30,
+                    effect: { type: 'battery', amount: 25 },
+                    imagePath: 'Imag/Store/Items/oil-drink.png'
+                },
+                {
+                    id: 'BATTERY',
+                    name: 'Battery Pack',
+                    description: 'Restores 50% battery. Essential for regular care!',
+                    cost: 50,
+                    effect: { type: 'battery', amount: 50 },
+                    imagePath: 'Imag/Store/Items/battery.png'
+                },
+                {
+                    id: 'MEGABATTERY',
+                    name: 'Mega Battery',
+                    description: 'Fully restores battery to 100%! The ultimate care package.',
+                    cost: 80,
+                    effect: { type: 'battery', amount: 100 },
+                    imagePath: 'Imag/Store/Items/mega-battery.png'
+                },
+                {
+                    id: 'SOLARPANEL',
+                    name: 'Solar Panel',
+                    description: 'Infinite energy! Keeps your robot at 100% battery forever.',
+                    cost: 1000,
+                    effect: { type: 'solar', permanent: true },
+                    imagePath: 'Imag/Store/Items/solar-panel.png'
                 }
             ],
 
@@ -102,6 +160,10 @@
 
             scrappyIdleTimer: null,
             purchaseInProgress: false,
+
+            // Unlimited bolts debug state (controlled by battle debugger toggle)
+            unlimitedBoltsActive: false,
+            unlimitedBoltsActualCurrency: null,
             
             // OBONXO Cheat Code State
             isObonxoCheatActive: false,
@@ -136,6 +198,10 @@
             // Context-Aware Mode Flags (CRITICAL for dialogue management)
             isStoreMode: false,    // When true, suppress companion robot dialogue (Scrappy only)
             isBattleMode: false,   // When true, suppress companion robot dialogue (battle focus)
+            returnToStartBattleMenu: false,
+            currentBattleMode: null,      // 'debug', 'ai', etc.
+            currentAIDifficulty: null,    // 'easy', 'medium', etc. when in AI mode
+            pendingBattleLaunch: null,
 
             ui: {
                 categoryColors: [
@@ -357,12 +423,521 @@
             openRobotSelect() {
                 const modal = document.getElementById('robotSelectModal');
                 modal.style.display = 'flex';
+                
+                // Update all battery levels before rendering
+                this.updateAllBatteries();
+                
+                this.renderRobotSelectItems();
                 this.renderRobotOptions();
             },
 
             closeRobotSelect() {
                 const modal = document.getElementById('robotSelectModal');
                 modal.style.display = 'none';
+            },
+
+            renderRobotSelectItems() {
+                const container = document.getElementById('robotSelectItemsGrid');
+                if (!container) return;
+
+                // DRAG-AND-DROP ENABLED: Items can be dragged onto robots to apply them!
+                // Also supports click-to-use for accessibility
+                // Compact image-only display for Android screens with quantity badge overlay
+                // Only these 4 items display: Robo-Fuel, Battery Pack, Mega Battery, Solar Panel
+                
+                const itemsHTML = this.storeItems.map(item => {
+                    const quantity = this.data.itemInventory[item.id] || 0;
+                    const hasItems = quantity > 0;
+                    const cardClass = hasItems ? 'has-items' : 'no-items';
+                    
+                    // Add click handler and drag/drop support if items owned
+                    const clickHandler = hasItems ? `onclick="app.promptItemUse('${item.id}')"` : '';
+                    const dragHandlers = hasItems ? `
+                        draggable="true"
+                        ondragstart="app.handleItemDragStart(event, '${item.id}')"
+                        ondragend="app.handleItemDragEnd(event)"
+                    ` : '';
+                    
+                    return `
+                        <div class="robot-select-item-card ${cardClass}" 
+                             data-item-id="${item.id}" 
+                             data-quantity="${quantity}" 
+                             ${clickHandler} 
+                             ${dragHandlers}
+                             title="${item.name}">
+                            <img src="${item.imagePath}" alt="${item.name}" class="robot-select-item-image">
+                            <div class="robot-select-item-quantity">${quantity}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                container.innerHTML = itemsHTML;
+            },
+
+            // Battery & Durability System
+            initializeRobotDurability(robotId) {
+                // Default Bot gets special solar panel treatment
+                if (robotId === 'DEFAULTBOT' || robotId === 'default') {
+                    if (!this.data.robotBonds[robotId]) {
+                        this.data.robotBonds[robotId] = {
+                            durability: {
+                                battery: 100,
+                                lastUpdate: Date.now(),
+                                isBroken: false,
+                                totalRepairs: 0,
+                                hasSolarPanel: true  // Default bot has infinite battery
+                            }
+                        };
+                    } else if (!this.data.robotBonds[robotId].durability.hasSolarPanel) {
+                        // Ensure existing default bot data has solar panel flag
+                        this.data.robotBonds[robotId].durability.hasSolarPanel = true;
+                    }
+                    return;
+                }
+                
+                // Initialize durability for new robot if not exists
+                if (!this.data.robotBonds[robotId]) {
+                    this.data.robotBonds[robotId] = {
+                        durability: {
+                            battery: 100,
+                            lastUpdate: Date.now(),
+                            isBroken: false,
+                            totalRepairs: 0
+                        }
+                    };
+                }
+            },
+            
+            getRobotBattery(robotId) {
+                // Default Bot always at 100%
+                if (robotId === 'DEFAULTBOT' || robotId === 'default') return 100;
+                
+                // Initialize if missing
+                if (!this.data.robotBonds[robotId]) {
+                    this.initializeRobotDurability(robotId);
+                }
+                
+                return this.data.robotBonds[robotId]?.durability?.battery || 100;
+            },
+            
+            getBatteryColor(percentage) {
+                if (percentage >= 75) return '#65D46E'; // Green
+                if (percentage >= 50) return '#FFD93D'; // Yellow
+                if (percentage >= 25) return '#FF8C42'; // Orange
+                if (percentage > 0) return '#FF5757';   // Red
+                return '#888888'; // Gray (broken)
+            },
+            
+            getBatteryStatus(percentage) {
+                if (percentage >= 75) return 'Perfect';
+                if (percentage >= 50) return 'Good';
+                if (percentage >= 25) return 'Low';
+                if (percentage > 0) return 'Critical';
+                return 'BROKEN';
+            },
+            
+            // Calculate time remaining until battery depletes
+            getBatteryTimeRemaining(robotId) {
+                const robot = this.robots.find(r => r.id === robotId);
+                if (!robot) return null;
+                
+                const durability = this.data.robotBonds[robotId]?.durability;
+                if (!durability || durability.isBroken) return null;
+                
+                // Solar panel = infinite battery
+                if (durability.hasSolarPanel) return '∞';
+                
+                const battery = durability.battery || 100;
+                if (battery <= 0) return null;
+                
+                // Get robot's depletion rate
+                let hoursToDeplete = 50; // Default
+                if (robot.choreData?.battery?.hoursToDeplete) {
+                    hoursToDeplete = robot.choreData.battery.hoursToDeplete;
+                }
+                
+                // Calculate decay rate
+                const activeDecayRate = 100 / hoursToDeplete; // % per hour when active
+                const isActive = robotId === this.data.selectedRobotId;
+                const decayRate = isActive ? activeDecayRate : (activeDecayRate / 4);
+                
+                // Calculate hours remaining
+                const hoursRemaining = battery / decayRate;
+                
+                // Convert to hours and minutes
+                const hours = Math.floor(hoursRemaining);
+                const minutes = Math.round((hoursRemaining - hours) * 60);
+                
+                // Format display with emoji clock
+                if (hours > 0 && minutes > 0) {
+                    return `⏱️ ${hours}h ${minutes}m`;
+                } else if (hours > 0) {
+                    return `⏱️ ${hours}h`;
+                } else if (minutes > 0) {
+                    return `⏱️ ${minutes}m`;
+                } else {
+                    return '⏱️ < 1m';
+                }
+            },
+            
+            // Battery Decay & Management
+            updateBatteryDecay(robotId) {
+                // Default Bot never decays
+                if (robotId === 'DEFAULTBOT' || robotId === 'default') return;
+                
+                // Initialize if missing
+                if (!this.data.robotBonds[robotId]) {
+                    this.initializeRobotDurability(robotId);
+                    return;
+                }
+                
+                const durability = this.data.robotBonds[robotId].durability;
+                
+                // Skip if already broken or has solar panel
+                if (durability.isBroken || durability.hasSolarPanel) return;
+                
+                const now = Date.now();
+                const lastUpdate = durability.lastUpdate || now;
+                const timeDiff = now - lastUpdate;
+                
+                // Calculate decay based on time passed
+                const hoursElapsed = timeDiff / (1000 * 60 * 60);
+                
+                // Get robot's unique battery depletion rate from robot data
+                const robot = this.robots.find(r => r.id === robotId);
+                let hoursToDeplete = 50; // Default fallback if not configured
+                
+                if (robot && robot.choreData && robot.choreData.battery && robot.choreData.battery.hoursToDeplete) {
+                    hoursToDeplete = robot.choreData.battery.hoursToDeplete;
+                }
+                
+                // Calculate decay rate: 100% / hoursToDeplete = % per hour when active
+                // Example: 50 hours to deplete = 2% per hour when active
+                const activeDecayRate = 100 / hoursToDeplete;
+                
+                // Inactive robots drain 4x slower
+                const isActive = robotId === this.data.selectedRobotId;
+                const decayRate = isActive ? activeDecayRate : (activeDecayRate / 4);
+                const decay = hoursElapsed * decayRate;
+                
+                // Apply decay
+                if (decay > 0) {
+                    durability.battery = Math.max(0, durability.battery - decay);
+                    durability.lastUpdate = now;
+                    
+                    // Mark as broken if battery hits 0
+                    if (durability.battery === 0) {
+                        durability.isBroken = true;
+                    }
+                    
+                    this.saveData();
+                }
+            },
+            
+            updateAllBatteries() {
+                // Update battery for all owned robots (except default)
+                this.data.ownedRobots.forEach(robotId => {
+                    if (robotId !== 'default' && robotId !== 'DEFAULTBOT') {
+                        this.updateBatteryDecay(robotId);
+                    }
+                });
+            },
+            
+            drainBattery(robotId, amount) {
+                // Default Bot never drains
+                if (robotId === 'DEFAULTBOT' || robotId === 'default') return;
+                
+                if (!this.data.robotBonds[robotId]) {
+                    this.initializeRobotDurability(robotId);
+                }
+                
+                const durability = this.data.robotBonds[robotId].durability;
+                
+                // Skip if solar panel equipped
+                if (durability.hasSolarPanel) return;
+                
+                durability.battery = Math.max(0, durability.battery - amount);
+                durability.lastUpdate = Date.now();
+                
+                // Mark as broken if battery hits 0
+                if (durability.battery === 0) {
+                    durability.isBroken = true;
+                }
+                
+                this.saveData();
+            },
+            
+            repairRobot(robotId) {
+                if (!this.data.robotBonds[robotId]) return false;
+                
+                const robot = this.robots.find(r => r.id === robotId);
+                if (!robot) return false;
+                
+                // Calculate repair cost: 50% of robot purchase price
+                const repairCost = Math.floor(robot.cost * 0.5);
+                
+                // Check if user has enough bolts
+                if (this.data.currency < repairCost) {
+                    this.showSpeechBubble(`You need ${repairCost} bolts to repair ${robot.name}!`, 'concerned');
+                    return false;
+                }
+                
+                // Deduct cost
+                this.deductCurrency(repairCost);
+                
+                // Repair robot
+                const durability = this.data.robotBonds[robotId].durability;
+                durability.battery = 100;
+                durability.isBroken = false;
+                durability.lastUpdate = Date.now();
+                durability.totalRepairs++;
+                
+                this.saveData();
+                this.showSpeechBubble(`${robot.name} repaired! Battery restored to 100%!`, 'happy');
+                
+                // Refresh robot selection display
+                this.renderRobotOptions();
+                
+                return true;
+            },
+            
+            promptItemUse(itemId) {
+                // Get item details
+                const item = this.storeItems.find(i => i.id === itemId);
+                if (!item) return;
+                
+                // Get all owned robots (except default)
+                const availableRobots = this.robots.filter(robot => 
+                    this.data.ownedRobots.includes(robot.id) && robot.id !== 'default'
+                );
+                
+                if (availableRobots.length === 0) {
+                    this.showSpeechBubble('You need to own a robot first! Visit the Robot Store!', 'concerned');
+                    return;
+                }
+                
+                // Create robot selection buttons
+                const robotButtons = availableRobots.map(robot => {
+                    const battery = this.getRobotBattery(robot.id);
+                    const batteryColor = this.getBatteryColor(battery);
+                    return `
+                        <button class="item-use-robot-btn" onclick="app.useItem('${itemId}', '${robot.id}'); app.closeItemPrompt();">
+                            <img src="${robot.happyImage}" alt="${robot.name}" style="width: 40px; height: 40px;">
+                            <div>
+                                <div style="font-weight: 700;">${robot.name}</div>
+                                <div style="font-size: 10px; color: ${batteryColor};">Battery: ${battery}%</div>
+                            </div>
+                        </button>
+                    `;
+                }).join('');
+                
+                // Show prompt with robot selection
+                const message = `
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <div style="width: 80px; height: 80px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                            <img src="${item.imagePath}" style="max-width: 80px; max-height: 80px; width: auto; height: auto; object-fit: contain;">
+                        </div>
+                        <h3 style="margin: 0; font-size: 16px;">${item.name}</h3>
+                        <p style="margin: 8px 0; font-size: 12px; opacity: 0.9;">${item.description}</p>
+                        <p style="margin: 0; font-weight: 700;">Select a robot to apply:</p>
+                    </div>
+                    <div class="item-use-robots-grid">
+                        ${robotButtons}
+                    </div>
+                `;
+                
+                this.showItemPrompt(message);
+            },
+            
+            showItemPrompt(htmlContent) {
+                // Create or update item prompt modal
+                let modal = document.getElementById('itemUsePromptModal');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = 'itemUsePromptModal';
+                    modal.className = 'modal-overlay';
+                    modal.innerHTML = `
+                        <div class="modal-content" style="max-width: 400px; padding: 20px;">
+                            <button class="modal-close" onclick="app.closeItemPrompt()">&times;</button>
+                            <div id="itemPromptContent"></div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                }
+                
+                document.getElementById('itemPromptContent').innerHTML = htmlContent;
+                modal.classList.add('active');
+            },
+            
+            closeItemPrompt() {
+                const modal = document.getElementById('itemUsePromptModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                }
+            },
+            
+            useItem(itemId, robotId) {
+                // Check if user owns the item
+                if (!this.data.itemInventory[itemId] || this.data.itemInventory[itemId] <= 0) {
+                    this.showSpeechBubble('You don\'t have any of this item!', 'concerned');
+                    return false;
+                }
+                
+                // Default Bot doesn't need items
+                if (robotId === 'DEFAULTBOT' || robotId === 'default') {
+                    this.showSpeechBubble('Default Bot doesn\'t need maintenance!', 'regular');
+                    return false;
+                }
+                
+                if (!this.data.robotBonds[robotId]) {
+                    this.initializeRobotDurability(robotId);
+                }
+                
+                const durability = this.data.robotBonds[robotId].durability;
+                const robot = this.robots.find(r => r.id === robotId);
+                const robotName = robot ? robot.name : 'Robot';
+                
+                // Apply item effect
+                switch(itemId) {
+                    case 'OILDRINK':
+                        // +25% battery
+                        durability.battery = Math.min(100, durability.battery + 25);
+                        durability.isBroken = false;
+                        this.showSpeechBubble(`${robotName} drank Oil! +25% battery!`, 'happy');
+                        break;
+                        
+                    case 'BATTERY':
+                        // +50% battery
+                        durability.battery = Math.min(100, durability.battery + 50);
+                        durability.isBroken = false;
+                        this.showSpeechBubble(`${robotName} charged up! +50% battery!`, 'happy');
+                        break;
+                        
+                    case 'MEGABATTERY':
+                        // Full restore to 100%
+                        durability.battery = 100;
+                        durability.isBroken = false;
+                        this.showSpeechBubble(`${robotName} fully charged! 100% battery!`, 'excited');
+                        break;
+                        
+                    case 'SOLARPANEL':
+                        // Permanent solar charging
+                        durability.battery = 100;
+                        durability.isBroken = false;
+                        durability.hasSolarPanel = true;
+                        this.showSpeechBubble(`${robotName} now has infinite energy! Solar Panel installed!`, 'excited');
+                        break;
+                        
+                    default:
+                        return false;
+                }
+                
+                // Update timestamp and consume item
+                durability.lastUpdate = Date.now();
+                this.data.itemInventory[itemId]--;
+                
+                this.saveData();
+                
+                // Refresh displays
+                this.renderRobotOptions();
+                this.renderRobotSelectItems();
+                
+                return true;
+            },
+            
+            // Drag-and-Drop Handlers
+            handleItemDragStart(event, itemId) {
+                event.dataTransfer.effectAllowed = 'copy';
+                event.dataTransfer.setData('text/plain', itemId);
+                event.target.classList.add('dragging');
+                
+                // Store the item being dragged
+                this.draggedItemId = itemId;
+            },
+            
+            handleItemDragEnd(event) {
+                event.target.classList.remove('dragging');
+                this.draggedItemId = null;
+                
+                // Remove any hover states from robot cards
+                document.querySelectorAll('.robot-select-card').forEach(card => {
+                    card.classList.remove('drag-over');
+                });
+            },
+            
+            handleRobotDragOver(event) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'copy';
+                
+                // Add visual feedback
+                const card = event.currentTarget;
+                card.classList.add('drag-over');
+            },
+            
+            handleRobotDragLeave(event) {
+                // Only remove if leaving the card entirely
+                const card = event.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = event.clientX;
+                const y = event.clientY;
+                
+                if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) {
+                    card.classList.remove('drag-over');
+                }
+            },
+            
+            handleRobotDrop(event, robotId) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const card = event.currentTarget;
+                card.classList.remove('drag-over');
+                
+                const itemId = event.dataTransfer.getData('text/plain') || this.draggedItemId;
+                
+                if (!itemId) return;
+                
+                // Get item details
+                const item = this.storeItems.find(i => i.id === itemId);
+                if (!item) return;
+                
+                // Show confirmation dialog
+                this.confirmItemUse(itemId, robotId);
+            },
+            
+            confirmItemUse(itemId, robotId) {
+                const item = this.storeItems.find(i => i.id === itemId);
+                const robot = this.robots.find(r => r.id === robotId);
+                
+                if (!item || !robot) return;
+                
+                // Create confirmation modal
+                const message = `
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                            <img src="${item.imagePath}" style="max-width: 80px; max-height: 80px; width: auto; height: auto; object-fit: contain;">
+                        </div>
+                        <h3 style="margin: 10px 0; font-size: 16px;">Use ${item.name}?</h3>
+                        <p style="margin: 10px 0; font-size: 13px;">${item.description}</p>
+                        <img src="${robot.happyImage}" style="width: 50px; height: 50px; margin: 10px 0;">
+                        <p style="margin: 10px 0; font-weight: 700; font-size: 14px;">Apply to ${robot.name}?</p>
+                        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                            <button onclick="app.confirmItemUseYes('${itemId}', '${robotId}')" style="padding: 10px 20px; background: #65D46E; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                                Yes, Use It
+                            </button>
+                            <button onclick="app.closeItemPrompt()" style="padding: 10px 20px; background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                this.showItemPrompt(message);
+            },
+            
+            confirmItemUseYes(itemId, robotId) {
+                this.closeItemPrompt();
+                this.useItem(itemId, robotId);
             },
 
             renderRobotOptions() {
@@ -430,15 +1005,75 @@
                             </div>
                         `;
                     }
+                    
+                    // Get battery level and color
+                    const battery = Math.round(this.getRobotBattery(robot.id));
+                    const batteryColor = this.getBatteryColor(battery);
+                    const isBroken = battery === 0;
+                    
+                    // Get battery class for styling
+                    let batteryClass = 'battery-perfect';
+                    if (battery < 75 && battery >= 50) batteryClass = 'battery-good';
+                    else if (battery < 50 && battery >= 25) batteryClass = 'battery-low';
+                    else if (battery < 25 && battery > 0) batteryClass = 'battery-critical';
+                    else if (battery === 0) batteryClass = 'battery-broken';
+                    
+                    // Ensure default bot has durability data initialized
+                    if (robot.id === 'default' && !this.data.robotBonds[robot.id]) {
+                        this.initializeRobotDurability(robot.id);
+                        this.saveData();
+                    }
+                    
+                    // Also ensure existing default bot has solar panel flag
+                    if (robot.id === 'default' && this.data.robotBonds[robot.id] && !this.data.robotBonds[robot.id].durability.hasSolarPanel) {
+                        this.data.robotBonds[robot.id].durability.hasSolarPanel = true;
+                        this.saveData();
+                    }
+                    
+                    const durability = this.data.robotBonds[robot.id]?.durability;
+                    const hasSolarPanel = durability?.hasSolarPanel || false;
+                    
+                    // Calculate repair cost
+                    const repairCost = Math.floor(robot.cost * 0.5);
+                    
+                    // Show broken image if robot is broken
+                    const robotImage = isBroken ? robot.thinkingImage : robot.happyImage;
+                    
+                    // Get time remaining
+                    const timeRemaining = this.getBatteryTimeRemaining(robot.id);
+                    const timeDisplay = timeRemaining ? `<div class="robot-battery-timer">${timeRemaining}</div>` : '';
+                    
                     return `
-                        <div class="robot-select-card ${robot.id === this.data.selectedRobotId ? 'selected' : ''}" 
-                             onclick="app.selectRobot('${robot.id}')">
-                            <img src="${robot.happyImage}" alt="${robot.name}" class="robot-select-card-image">
-                            <div class="robot-select-card-name">${robot.name}</div>
-                            <div class="robot-select-card-status">
-                                ${robot.id === this.data.selectedRobotId ? 'Currently Active' : 'Available'}
+                        <div class="robot-select-card ${robot.id === this.data.selectedRobotId ? 'selected' : ''} ${isBroken ? 'broken' : ''}" 
+                             data-robot-id="${robot.id}"
+                             ${isBroken ? '' : `onclick="app.selectRobot('${robot.id}')"`}
+                             ondragover="app.handleRobotDragOver(event)"
+                             ondragleave="app.handleRobotDragLeave(event)"
+                             ondrop="app.handleRobotDrop(event, '${robot.id}')">
+                            <img src="${robotImage}" alt="${robot.name}" class="robot-select-card-image">
+                            <div class="robot-select-card-name">${robot.name}${hasSolarPanel ? ' ☀️' : ''}</div>
+                            
+                            <!-- Battery Bar with Label and Timer -->
+                            <div class="robot-battery-label">
+                                <span>Battery: <span style="color: ${batteryColor};">${isBroken ? 'BROKEN' : battery + '%'}</span></span>
+                                ${timeDisplay}
                             </div>
-                            ${robot.id === this.data.selectedRobotId ? 
+                            <div class="robot-battery-container">
+                                <div class="robot-battery-bar ${batteryClass}" style="width: ${battery}%;"></div>
+                                <div class="robot-battery-text">${battery}%</div>
+                            </div>
+                            
+                            ${isBroken ? `
+                                <button class="robot-repair-button" onclick="event.stopPropagation(); app.repairRobot('${robot.id}')">
+                                    🔧 Repair - Cost: ${repairCost} ⚡
+                                </button>
+                            ` : `
+                                <div class="robot-select-card-status">
+                                    ${robot.id === this.data.selectedRobotId ? 'Currently Active' : 'Available'}
+                                </div>
+                            `}
+                            
+                            ${robot.id === this.data.selectedRobotId && !isBroken ? 
                                 '<div class="robot-selected-badge">✓</div>' : ''}
                         </div>
                     `;
@@ -551,6 +1186,59 @@
                 });
             },
 
+            initializeSelfCareData() {
+                const now = Date.now();
+                return {
+                    enabled: false,
+                    lastReset: now,
+                    bedtimeTarget: '22:00', // Default 10:00 PM
+                    groups: [
+                        {
+                            id: 'basic',
+                            name: 'Basic Self-Care & Hygiene',
+                            tasks: [
+                                { id: 'bed', name: 'Get out of bed', completed: false, earnedToday: false },
+                                { id: 'brush', name: 'Brush teeth', completed: false, earnedToday: false },
+                                { id: 'floss', name: 'Floss', completed: false, earnedToday: false },
+                                { id: 'wash-face', name: 'Wash face', completed: false, earnedToday: false },
+                                { id: 'shower', name: 'Take a shower or bath', completed: false, earnedToday: false },
+                                { id: 'dressed', name: 'Get dressed (even just into clean pajamas)', completed: false, earnedToday: false },
+                                { id: 'medication', name: 'Take vitamins/ medication', completed: false, earnedToday: false, optional: true }
+                            ],
+                            bonusEarned: false
+                        },
+                        {
+                            id: 'physical',
+                            name: 'Physical Health',
+                            tasks: [
+                                { id: 'water', name: 'Drink Water', completed: false, earnedToday: false },
+                                { id: 'breakfast', name: 'Eat breakfast / lunch / dinner', completed: false, earnedToday: false },
+                                { id: 'healthy', name: 'Eat something healthy', completed: false, earnedToday: false },
+                                { id: 'walk', name: 'Go for a walk', completed: false, earnedToday: false },
+                                { id: 'outside', name: 'Step outside for 5 minutes', completed: false, earnedToday: false },
+                                { id: 'stretch', name: 'Stretch for 5 minutes', completed: false, earnedToday: false },
+                                { id: 'workout', name: 'Complete a workout', completed: false, earnedToday: false },
+                                { id: 'bedtime', name: 'Go to bed by set time', completed: false, earnedToday: false }
+                            ],
+                            bonusEarned: false
+                        },
+                        {
+                            id: 'other',
+                            name: 'Other Tasks',
+                            tasks: [
+                                { id: 'cash', name: 'Set aside extra cash for yourself if possible', completed: false, earnedToday: false, optional: true },
+                                { id: 'mail', name: 'Check mail', completed: false, earnedToday: false },
+                                { id: 'plants', name: 'Water plants', completed: false, earnedToday: false, optional: true },
+                                { id: 'pet', name: 'Feed a pet', completed: false, earnedToday: false, optional: true },
+                                { id: 'study', name: 'Study for 20 minutes', completed: false, earnedToday: false },
+                                { id: 'bill', name: 'Pay a bill', completed: false, earnedToday: false, optional: true }
+                            ],
+                            bonusEarned: false
+                        }
+                    ]
+                };
+            },
+
             loadData() {
                 const currentFile = localStorage.getItem('upkeepCurrentFile') || 'default';
                 this.data.currentSaveFile = currentFile;
@@ -610,6 +1298,31 @@
                         this.data.scrappyRate = 1.3;
                     }
                     
+                    // Ensure itemInventory exists (for backward compatibility with old saves)
+                    if (!this.data.itemInventory) {
+                        this.data.itemInventory = {
+                            OILDRINK: 0,
+                            BATTERY: 0,
+                            MEGABATTERY: 0,
+                            SOLARPANEL: 0
+                        };
+                    }
+                    // Ensure SOLARPANEL exists in existing inventories
+                    if (this.data.itemInventory && this.data.itemInventory.SOLARPANEL === undefined) {
+                        this.data.itemInventory.SOLARPANEL = 0;
+                    }
+                    
+                    // Ensure robotBonds exists (for battery/durability system)
+                    if (!this.data.robotBonds) {
+                        this.data.robotBonds = {};
+                    }
+                    // Initialize durability for all owned robots (including default with solar panel)
+                    this.data.ownedRobots.forEach(robotId => {
+                        if (!this.data.robotBonds[robotId]) {
+                            this.initializeRobotDurability(robotId);
+                        }
+                    });
+                    
                     // Ensure mission fields exist
                     if (!this.data.lastDailyReset) {
                         this.data.lastDailyReset = null;
@@ -632,6 +1345,16 @@
                     }
                     if (!this.data.currentMissionTab) {
                         this.data.currentMissionTab = 'daily';
+                    }
+                    
+                    // Ensure Self Care data exists
+                    if (!this.data.selfCare) {
+                        this.data.selfCare = this.initializeSelfCareData();
+                    }
+                    
+                    // Load Gamification streak data
+                    if (typeof Gamification !== 'undefined' && this.data.gamification) {
+                        Gamification.loadData(this.data.gamification);
                     }
                 } else {
                     // Demo data for first-time users
@@ -694,6 +1417,12 @@
 
             saveData() {
                 this.data.lastSaveTime = Date.now();
+                
+                // Save Gamification streak data
+                if (typeof Gamification !== 'undefined') {
+                    this.data.gamification = Gamification.saveData();
+                }
+                
                 localStorage.setItem(`upkeepData_${this.data.currentSaveFile}`, JSON.stringify(this.data));
                 localStorage.setItem('upkeepCurrentFile', this.data.currentSaveFile);
                 
@@ -786,9 +1515,11 @@
             },
 
             calculateOverallScore() {
-                if (this.data.categories.length === 0) return 0;
-                const sum = this.data.categories.reduce((acc, cat) => acc + this.calculateCategoryScore(cat), 0);
-                return Math.round(sum / this.data.categories.length);
+                // Filter out Group Categories (they don't affect overall score)
+                const standardCategories = this.data.categories.filter(cat => !cat.isGroupCategory);
+                if (standardCategories.length === 0) return 0;
+                const sum = standardCategories.reduce((acc, cat) => acc + this.calculateCategoryScore(cat), 0);
+                return Math.round(sum / standardCategories.length);
             },
 
             getProgressClass(score) {
@@ -840,7 +1571,11 @@
                 const dashboardView = document.getElementById('dashboardView');
                 const categoryView = document.getElementById('categoryView');
                 
-                if (this.data.currentCategoryId) {
+                if (this.data.currentCategoryId === 'SELFCARE') {
+                    dashboardView.classList.remove('active');
+                    categoryView.classList.add('active');
+                    this.renderSelfCare();
+                } else if (this.data.currentCategoryId) {
                     dashboardView.classList.remove('active');
                     categoryView.classList.add('active');
                     this.renderCategory();
@@ -867,7 +1602,25 @@
                 saveFileDisplay.textContent = displayName;
 
                 const categoryList = document.getElementById('categoryList');
-                if (this.data.categories.length === 0) {
+                
+                // Build Self Care card if enabled
+                let selfCareCard = '';
+                if (this.data.selfCare && this.data.selfCare.enabled) {
+                    // Self Care card without percentage (doesn't affect upkeep score)
+                    selfCareCard = `
+                        <div class="category-card" onclick="app.showSelfCare()" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); position: relative;">
+                            <div style="position: absolute; top: 8px; right: 8px; font-size: 24px;">❤️</div>
+                            <div class="category-header">
+                                <div class="category-name" style="color: white; font-weight: 700;">Self Care</div>
+                            </div>
+                            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 12px; margin-top: -8px;">
+                                Track your wellness
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (this.data.categories.length === 0 && !selfCareCard) {
                     categoryList.innerHTML = `
                         <div class="empty-state" style="grid-column: 1 / -1;">
                             <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5.4 10.5h13.2"/><path d="M5.4 10.5V4.5c0-1.1.9-2 2-2h8.2c1.1 0 2 .9 2 2v6"/><path d="M10.2 10.5V2.5"/><path d="M13.8 10.5V2.5"/><path d="M18.6 10.5c.9 0 1.8.3 2.4.9"/><path d="M18.6 10.5H5.4c-.9 0-1.8.3-2.4.9"/><path d="M3 11.4v7.1c0 1.1.9 2 2-2h14c1.1 0 2-.9 2-2v-7.1"/></svg></div>
@@ -875,7 +1628,7 @@
                         </div>
                     `;
                 } else {
-                    categoryList.innerHTML = this.data.categories.map((category, index) => {
+                    const regularCategoriesHTML = this.data.categories.map((category, index) => {
                         const score = this.calculateCategoryScore(category);
                         const color = this.ui.categoryColors[index % this.ui.categoryColors.length];
                         const bgImage = this.ui.categoryBackgrounds[category.name] || '';
@@ -904,11 +1657,18 @@
                             dustBunnies += `<div class="dust-bunny hop${i}"></div>`;
                         }
                         
+                        // Add group category badge and blue styling
+                        const groupBadge = category.isGroupCategory ? 
+                            '<div style="position: absolute; top: 8px; right: 8px; background: rgba(100, 100, 255, 0.9); color: white; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">GROUP</div>' : '';
+                        const categoryNameStyle = category.isGroupCategory ? 
+                            'color: #4040ff; font-weight: 700; text-shadow: 0 0 8px rgba(64, 64, 255, 0.3);' : '';
+                        
                         return `
                             <div class="category-card ${dustClass}" onclick="app.showCategory(${category.id})" style="${bgStyle}">
+                                ${groupBadge}
                                 ${dustBunnies}
                                 <div class="category-header">
-                                    <div class="category-name">${category.name}</div>
+                                    <div class="category-name" style="${categoryNameStyle}">${category.name}</div>
                                     <div class="category-score">${score}%</div>
                                 </div>
                                 <div class="category-progress">
@@ -919,6 +1679,9 @@
                             </div>
                         `;
                     }).join('');
+                    
+                    // Combine Self Care card (first) + regular categories
+                    categoryList.innerHTML = selfCareCard + regularCategoriesHTML;
                 }
             },
 
@@ -971,6 +1734,33 @@
                         // Add snoozed class
                         if (isSnoozed) dustClass += ' task-snoozed';
                         
+                        // Check if this is a linked task
+                        const isLinkedTask = task.linkedTaskId !== undefined;
+                        const linkedBadge = isLinkedTask ? 
+                            '<span style="display: inline-block; margin-left: 8px; padding: 2px 6px; background: rgba(64, 64, 255, 0.15); color: #4040ff; border: 1px solid rgba(64, 64, 255, 0.3); border-radius: 4px; font-size: 10px; font-weight: 600;">🔗 LINKED</span>' : '';
+                        
+                        // Check if task has steps
+                        const hasSteps = task.steps && task.steps.length > 0;
+                        const completedSteps = hasSteps ? task.steps.filter(s => s.completed).length : 0;
+                        const stepsDisplay = hasSteps ? `
+                            <div style="margin-top: 12px;">
+                                <button onclick="app.toggleStepsDisplay(${task.id})" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 13px; font-weight: 600; padding: 4px 0;">
+                                    <span id="steps-toggle-${task.id}">▼</span> Show Steps (${completedSteps}/${task.steps.length})
+                                </button>
+                                <div id="steps-list-${task.id}" style="display: none; margin-top: 8px; padding: 12px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+                                    ${task.steps.map(step => `
+                                        <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                                            <div class="checkbox ${step.completed ? 'checked' : ''}" onclick="app.toggleStepCompletion(${task.id}, ${step.id})" style="min-width: 24px; height: 24px; background: white; border: 2px solid var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;">
+                                                <svg style="width: 14px; height: 14px;"><use href="#icon-checkmark" /></svg>
+                                            </div>
+                                            <span style="font-size: 13px; flex: 1; ${step.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}"><strong>${step.label}.</strong> ${step.description}</span>
+                                            <button onclick="app.deleteStep(${task.id}, ${step.id})" style="background: none; border: none; color: #ff4444; cursor: pointer; font-size: 16px; padding: 0 8px;">×</button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : '';
+                        
                         return `
                             <div class="task-card ${dustClass}">
                                 <div class="task-header">
@@ -978,7 +1768,7 @@
                                         <svg><use href="#icon-checkmark" /></svg>
                                     </div>
                                     <div class="task-info">
-                                        <div class="task-name">${task.name}</div>
+                                        <div class="task-name">${task.name}${linkedBadge}</div>
                                         <div class="task-meta">
                                             ${isSnoozed ? `💤 Snoozed - ${countdownText}` :
                                               `Last done: ${this.formatTimeAgo(task.lastCompleted)} • Decays in ${this.formatDecayTime(task.decayMs)}`}
@@ -998,36 +1788,170 @@
                                     </div>
                                 </div>
                                 ${!isSnoozed ? `
-                                <div style="margin-top: 12px;">
+                                <div style="margin-top: 12px; display: flex; gap: 8px; justify-content: center; align-items: center;">
                                     <button class="task-snooze-btn" onclick="app.snoozeTask(${task.id})"><img src="Imag/Snooze.png" alt="Snooze" style="width: 60px; height: 60px; display: block;"></button>
+                                    <button onclick="app.showAddStepModal(${task.id})" style="width: 60px; height: 60px; background: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">ABC</button>
                                 </div>
                                 ` : `
                                 <div style="margin-top: 12px;">
                                     <button class="task-resume-btn" onclick="app.unsnoozeTask(${task.id})">✓ Resume Task</button>
                                 </div>
                                 `}
+                                ${stepsDisplay}
                             </div>
                         `;
                     }).join('');
                 }
+            },
+            
+            renderSelfCare() {
+                if (!this.data.selfCare) return;
+                
+                // Set title with extra margin to avoid clipping with bolt display
+                const categoryTitle = document.getElementById('categoryTitle');
+                categoryTitle.textContent = '❤️ Self Care';
+                categoryTitle.style.marginTop = '20px';
+                
+                // Calculate time until next 12:00 AM (midnight) reset
+                const now = new Date();
+                const todayMidnight = new Date();
+                todayMidnight.setHours(0, 0, 0, 0);
+                
+                // Next reset is always tomorrow's midnight
+                const tomorrowMidnight = new Date(todayMidnight.getTime() + 24 * 60 * 60 * 1000);
+                
+                const timeUntilReset = tomorrowMidnight - now;
+                
+                const hoursLeft = Math.floor(timeUntilReset / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeUntilReset % (1000 * 60 * 60)) / (1000 * 60));
+                
+                const resetText = timeUntilReset > 0 ? 
+                    `Resets at 12:00 AM (in ${hoursLeft}h ${minutesLeft}m)` : 
+                    'Resetting now...';
+                
+                const taskList = document.getElementById('taskList');
+                
+                // Add reset counter before task groups
+                const resetCounterHTML = `
+                    <div style="text-align: center; padding: 12px 20px; background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%); border-radius: 12px; margin-bottom: 20px; border: 2px solid rgba(255, 107, 107, 0.3);">
+                        <div style="font-size: 14px; color: #ff6b6b; font-weight: 600;">
+                            🕐 ${resetText}
+                        </div>
+                        <div style="font-size: 11px; color: #666; margin-top: 4px;">
+                            All tasks and rewards will refresh
+                        </div>
+                    </div>
+                `;
+                
+                const groupsHTML = this.data.selfCare.groups.map(group => {
+                    const requiredTasks = group.tasks.filter(t => !t.optional);
+                    const completedRequired = requiredTasks.filter(t => t.completed).length;
+                    const groupPercent = requiredTasks.length > 0 ? Math.round((completedRequired / requiredTasks.length) * 100) : 0;
+                    
+                    const tasksHTML = group.tasks.map(task => {
+                        const isOptional = task.optional;
+                        const optionalLabel = isOptional ? ' <span style="color: #888; font-size: 11px;">(Optional)</span>' : '';
+                        const isBedtime = task.id === 'bedtime';
+                        
+                        // Bedtime logic
+                        let taskName = task.name;
+                        let bedtimeCheckable = true;
+                        let bedtimeDisabledMessage = '';
+                        
+                        if (isBedtime) {
+                            const bedtimeTarget = this.data.selfCare.bedtimeTarget;
+                            
+                            if (bedtimeTarget) {
+                                // Convert 24-hour to 12-hour AM/PM format
+                                const [targetHour, targetMinute] = bedtimeTarget.split(':').map(Number);
+                                const period = targetHour >= 12 ? 'PM' : 'AM';
+                                const displayHour = targetHour === 0 ? 12 : (targetHour > 12 ? targetHour - 12 : targetHour);
+                                const displayTime = `${displayHour}:${targetMinute.toString().padStart(2, '0')} ${period}`;
+                                
+                                // Display bedtime in task name with AM/PM
+                                taskName = `Go to bed by ${displayTime}`;
+                                
+                                // Check if current time has passed the bedtime
+                                const now = new Date();
+                                const targetTime = new Date();
+                                targetTime.setHours(targetHour, targetMinute, 0, 0);
+                                
+                                if (now > targetTime) {
+                                    bedtimeCheckable = false;
+                                    bedtimeDisabledMessage = '<div style="font-size: 11px; color: #ff6b6b; margin-top: 4px;">⏰ Time has passed for today</div>';
+                                }
+                            } else {
+                                // No time set
+                                bedtimeCheckable = false;
+                                bedtimeDisabledMessage = '<div style="font-size: 11px; color: #ff6b6b; margin-top: 4px;">⏰ Please set a bedtime first</div>';
+                            }
+                        }
+                        
+                        const checkboxDisabled = isBedtime && !bedtimeCheckable;
+                        const checkboxStyle = checkboxDisabled ? 'opacity: 0.4; cursor: not-allowed;' : 'cursor: pointer;';
+                        const checkboxClick = checkboxDisabled ? '' : `onclick="app.toggleSelfCareTask('${group.id}', '${task.id}')"`;
+                        
+                        return `
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: ${task.completed ? 'rgba(76, 175, 80, 0.1)' : 'white'}; border-radius: 8px; margin-bottom: 8px; border: 2px solid ${task.completed ? '#4CAF50' : '#e0e0e0'};">
+                                <div class="checkbox ${task.completed ? 'checked' : ''}" ${checkboxClick} style="min-width: 28px; height: 28px; background: white; border: 3px solid ${task.completed ? '#4CAF50' : '#ff6b6b'}; box-shadow: 0 2px 4px rgba(0,0,0,0.15); flex-shrink: 0; ${checkboxStyle}">
+                                    <svg style="width: 16px; height: 16px;"><use href="#icon-checkmark" /></svg>
+                                </div>
+                                <div style="flex: 1; ${task.completed ? 'text-decoration: line-through; opacity: 0.7;' : ''}">
+                                    <div style="font-size: 15px; font-weight: 500; color: var(--text);">${taskName}${optionalLabel}</div>
+                                    ${task.earnedToday ? '<div style="font-size: 12px; color: #4CAF50; font-weight: 600;">✓ +2 bolts earned</div>' : ''}
+                                    ${bedtimeDisabledMessage}
+                                </div>
+                                ${isBedtime ? `<button onclick="app.showBedtimeModal()" style="padding: 6px 12px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 13px; cursor: pointer;">⏰ Set Time</button>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    const bonusBadge = group.bonusEarned ? 
+                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: #4CAF50; color: white; border-radius: 4px; font-size: 11px; font-weight: bold;">✓ BONUS EARNED +15</div>' :
+                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border-radius: 4px; font-size: 11px; font-weight: bold;">Complete all for +15 bonus</div>';
+                    
+                    return `
+                        <div style="margin-bottom: 24px; background: rgba(255, 255, 255, 0.95); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <div>
+                                    <h3 style="margin: 0; color: #ff6b6b; font-size: 18px; font-weight: 700;">${group.name}</h3>
+                                    <div style="font-size: 13px; color: #666; margin-top: 4px;">${completedRequired}/${requiredTasks.length} completed</div>
+                                </div>
+                                <div style="font-size: 24px; font-weight: bold; color: ${groupPercent === 100 ? '#4CAF50' : '#ff6b6b'};">${groupPercent}%</div>
+                            </div>
+                            ${bonusBadge}
+                            <div style="margin-top: 16px;">
+                                ${tasksHTML}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Combine reset counter with groups HTML
+                taskList.innerHTML = resetCounterHTML + groupsHTML;
             },
 
             showDashboard() {
                 this.data.currentCategoryId = null;
                 // Restore main background
                 document.body.style.backgroundImage = `url('Imag/Main Background 2.png')`;
+                // Reset category title margin
+                document.getElementById('categoryTitle').style.marginTop = '';
                 // Show settings, currency display, missions bubble, store bubble, and robot bubble
                 document.getElementById('settingsBtn').classList.remove('hidden');
                 document.getElementById('currencyDisplay').classList.remove('hidden');
                 document.getElementById('missionsBubble').classList.remove('hidden');
                 document.querySelector('.robot-store-bubble').classList.remove('hidden');
                 document.querySelector('.robot-select-bubble').classList.remove('hidden');
+                document.getElementById('battleModeBubble').classList.remove('hidden');
                 this.render();
                 setTimeout(() => this.mascotGreet(), 500);
             },
 
             showCategory(id) {
                 this.data.currentCategoryId = id;
+                // Reset category title margin
+                document.getElementById('categoryTitle').style.marginTop = '';
                 // Change background to category-specific if available, otherwise keep main background
                 const category = this.data.categories.find(c => c.id === id);
                 if (category && this.ui.categoryBackgrounds[category.name]) {
@@ -1043,11 +1967,332 @@
                 this.render();
                 setTimeout(() => this.mascotGreet(), 500);
             },
+            
+            showSelfCare() {
+                // Check for daily reset
+                this.checkSelfCareReset();
+                
+                this.data.currentCategoryId = 'SELFCARE';
+                document.getElementById('settingsBtn').classList.add('hidden');
+                // Keep currency display visible in Self Care
+                document.getElementById('currencyDisplay').classList.remove('hidden');
+                document.getElementById('missionsBubble').classList.add('hidden');
+                document.querySelector('.robot-store-bubble').classList.add('hidden');
+                document.querySelector('.robot-select-bubble').classList.add('hidden');
+                document.getElementById('battleModeBubble').classList.add('hidden');
+                this.render();
+            },
+            
+            checkSelfCareReset() {
+                if (!this.data.selfCare) return;
+                
+                const now = new Date();
+                const lastReset = new Date(this.data.selfCare.lastReset || 0);
+                
+                // Get today's 12:00 AM (midnight) in local time
+                const todayMidnight = new Date();
+                todayMidnight.setHours(0, 0, 0, 0);
+                
+                // Get yesterday's midnight
+                const yesterdayMidnight = new Date(todayMidnight);
+                yesterdayMidnight.setDate(yesterdayMidnight.getDate() - 1);
+                
+                // Check if we've passed today's midnight AND last reset was before today's midnight
+                const shouldReset = now >= todayMidnight && lastReset < todayMidnight;
+                
+                if (shouldReset) {
+                    this.data.selfCare.groups.forEach(group => {
+                        group.tasks.forEach(task => {
+                            task.completed = false;
+                            task.earnedToday = false;
+                        });
+                        group.bonusEarned = false;
+                    });
+                    this.data.selfCare.lastReset = now.getTime();
+                    this.saveData();
+                }
+            },
+            
+            toggleSelfCareTask(groupId, taskId) {
+                const group = this.data.selfCare.groups.find(g => g.id === groupId);
+                if (!group) return;
+                
+                const task = group.tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                task.completed = !task.completed;
+                
+                // Award 2 bolts for completing the task (only once per day)
+                if (task.completed && !task.earnedToday) {
+                    this.data.currency += 2;
+                    task.earnedToday = true;
+                    
+                    // Update currency display immediately
+                    this.updateCurrencyDisplay();
+                    
+                    // Show bolt notification
+                    this.showBoltNotification(2);
+                    
+                    // Check if all required tasks in group are complete for bonus
+                    const requiredTasks = group.tasks.filter(t => !t.optional);
+                    const allCompleted = requiredTasks.every(t => t.completed);
+                    
+                    if (allCompleted && !group.bonusEarned) {
+                        // Store the group ID for later use in reward functions
+                        this.data.currentBonusGroupId = groupId;
+                        // Show choice modal instead of immediate reward
+                        document.getElementById('selfCareGroupBonusModal').classList.add('active');
+                    }
+                }
+                
+                this.saveData();
+                this.render();
+            },
+            
+            showBoltNotification(amount) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'bolt-notification';
+                notification.innerHTML = `<span>+${amount}</span><span>⚡</span>`;
+                
+                // Add to body
+                document.body.appendChild(notification);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    notification.remove();
+                }, 1500);
+            },
+            
+            showBedtimeModal() {
+                const currentTime = this.data.selfCare?.bedtimeTarget || '22:00';
+                document.getElementById('bedtimeInput').value = currentTime;
+                document.getElementById('bedtimeModal').classList.add('active');
+            },
+            
+            setBedtime() {
+                const timeInput = document.getElementById('bedtimeInput').value;
+                if (timeInput) {
+                    this.data.selfCare.bedtimeTarget = timeInput;
+                    this.saveData();
+                    this.closeModal('bedtimeModal');
+                    if (this.mascotSpeak) {
+                        this.mascotSpeak(`Bedtime set to ${timeInput}. Sweet dreams!`);
+                    }
+                }
+            },
+            
+            chooseBoltsReward() {
+                // User chose the safe option: 15 bolts
+                const groupId = this.data.currentBonusGroupId;
+                if (!groupId) return;
+                
+                const group = this.data.selfCare.groups.find(g => g.id === groupId);
+                if (!group) return;
+                
+                // Award 15 bolts
+                this.data.currency += 15;
+                group.bonusEarned = true;
+                
+                // Clear the stored group ID
+                delete this.data.currentBonusGroupId;
+                
+                this.saveData();
+                
+                // Update currency display immediately
+                this.updateCurrencyDisplay();
+                
+                this.closeModal('selfCareGroupBonusModal');
+                
+                if (this.mascotSpeak) {
+                    this.mascotSpeak(`Nice! You earned 15 bolts for completing ${group.name}!`);
+                }
+                
+                this.render();
+            },
+            
+            chooseRobotChance() {
+                // User chose the risky option: chance for a robot
+                // Close choice modal and open the mini-game modal
+                this.closeModal('selfCareGroupBonusModal');
+                
+                // Generate the secret target number (1-200)
+                this.data.robotChanceTarget = Math.floor(Math.random() * 200) + 1;
+                
+                // Reset modal to original state (in case it was showing results)
+                const modalContent = document.querySelector('#robotChanceModal .modal-content > div:last-child');
+                modalContent.innerHTML = `
+                    <p style="font-size: 15px; color: var(--text); margin-bottom: 20px;">
+                        I've picked a secret number between <strong>1 and 200</strong>.<br>
+                        Pick a number between <strong>1 and 99</strong> to try to match it!
+                    </p>
+                    <input type="number" id="robotChanceInput" class="form-input" min="1" max="99" placeholder="Enter 1-99" style="font-size: 24px; text-align: center; margin-bottom: 20px;">
+                    <button class="btn-primary" onclick="app.submitRobotChance()" style="width: 100%; padding: 16px; font-size: 16px;">
+                        🎯 Submit Guess
+                    </button>
+                `;
+                
+                // Clear the input field
+                document.getElementById('robotChanceInput').value = '';
+                
+                // Show the mini-game modal
+                document.getElementById('robotChanceModal').classList.add('active');
+            },
+            
+            submitRobotChance() {
+                const userGuess = parseInt(document.getElementById('robotChanceInput').value);
+                
+                // Validate input
+                if (isNaN(userGuess) || userGuess < 1 || userGuess > 99) {
+                    if (this.mascotSpeak) {
+                        this.mascotSpeak('Please enter a number between 1 and 99!');
+                    }
+                    return;
+                }
+                
+                const targetNumber = this.data.robotChanceTarget;
+                const groupId = this.data.currentBonusGroupId;
+                
+                if (!groupId) return;
+                
+                const group = this.data.selfCare.groups.find(g => g.id === groupId);
+                if (!group) return;
+                
+                // Mark bonus as earned regardless of outcome
+                group.bonusEarned = true;
+                
+                // Check if user won
+                if (userGuess === targetNumber) {
+                    // USER WON! Give them a random locked robot
+                    const allRobots = ['default', 'obonxo', 'zephyr', 'rusty', 'sparky', 'bolt', 'nova', 'apex', 'cinder', 'frost'];
+                    const lockedRobots = allRobots.filter(robot => !this.data.ownedRobots.includes(robot));
+                    
+                    if (lockedRobots.length > 0) {
+                        // Pick a random locked robot
+                        const wonRobot = lockedRobots[Math.floor(Math.random() * lockedRobots.length)];
+                        this.data.ownedRobots.push(wonRobot);
+                        
+                        // Initialize durability for new robot
+                        this.initializeRobotDurability(wonRobot);
+                        
+                        this.saveData();
+                        
+                        // Show WIN result
+                        this.showRobotChanceResult(true, targetNumber, wonRobot);
+                        
+                        if (this.mascotSpeak) {
+                            this.mascotSpeak(`INCREDIBLE! You matched ${targetNumber}! You won a new robot: ${wonRobot.toUpperCase()}!`);
+                        }
+                    } else {
+                        // All robots already owned - give 50 bolts instead
+                        this.data.currency += 50;
+                        
+                        this.saveData();
+                        
+                        // Update currency display immediately
+                        this.updateCurrencyDisplay();
+                        
+                        // Show WIN result (with bolts fallback)
+                        this.showRobotChanceResult(true, targetNumber, null, true);
+                        
+                        if (this.mascotSpeak) {
+                            this.mascotSpeak(`You matched ${targetNumber}, but you already own all robots! Here's 50 bolts instead!`);
+                        }
+                    }
+                } else {
+                    // User lost
+                    this.saveData();
+                    
+                    // Show LOSS result
+                    this.showRobotChanceResult(false, targetNumber);
+                    
+                    if (this.mascotSpeak) {
+                        this.mascotSpeak(`Sorry, better luck next time! The number was ${targetNumber}.`);
+                    }
+                }
+                
+                // Clear stored data
+                delete this.data.currentBonusGroupId;
+                delete this.data.robotChanceTarget;
+                
+                this.render();
+            },
+            
+            showRobotChanceResult(isWin, targetNumber, wonRobot = null, allOwned = false) {
+                // Hide the input section
+                const modalContent = document.querySelector('#robotChanceModal .modal-content > div:last-child');
+                
+                let resultHTML = '';
+                if (isWin) {
+                    if (allOwned) {
+                        // Won but all robots owned
+                        resultHTML = `
+                            <div style="padding: 24px; text-align: center;">
+                                <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
+                                <h2 style="color: #4CAF50; font-size: 24px; margin-bottom: 12px;">YOU WON!</h2>
+                                <p style="font-size: 16px; color: var(--text); margin-bottom: 8px;">
+                                    Your guess matched the target number: <strong>${targetNumber}</strong>!
+                                </p>
+                                <p style="font-size: 15px; color: #666; margin-bottom: 20px;">
+                                    You already own all robots, so here's <strong>50 bolts</strong> instead!
+                                </p>
+                                <div style="font-size: 48px; margin-bottom: 20px;">💰 +50</div>
+                                <button class="btn-primary" onclick="app.closeModal('robotChanceModal')" style="padding: 16px 32px; font-size: 16px;">
+                                    Awesome! 🎊
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // Won a robot
+                        resultHTML = `
+                            <div style="padding: 24px; text-align: center;">
+                                <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
+                                <h2 style="color: #4CAF50; font-size: 24px; margin-bottom: 12px;">YOU WON A ROBOT!</h2>
+                                <p style="font-size: 16px; color: var(--text); margin-bottom: 8px;">
+                                    Your guess matched the target number: <strong>${targetNumber}</strong>!
+                                </p>
+                                <p style="font-size: 18px; font-weight: bold; color: var(--primary); margin-bottom: 20px;">
+                                    🤖 ${wonRobot.toUpperCase()} 🤖
+                                </p>
+                                <div style="font-size: 48px; margin-bottom: 20px;">🏆</div>
+                                <button class="btn-primary" onclick="app.closeModal('robotChanceModal')" style="padding: 16px 32px; font-size: 16px;">
+                                    Incredible! 🎊
+                                </button>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Lost
+                    resultHTML = `
+                        <div style="padding: 24px; text-align: center;">
+                            <div style="font-size: 64px; margin-bottom: 16px;">😔</div>
+                            <h2 style="color: #ff6b6b; font-size: 24px; margin-bottom: 12px;">Not This Time...</h2>
+                            <p style="font-size: 16px; color: var(--text); margin-bottom: 8px;">
+                                The target number was: <strong>${targetNumber}</strong>
+                            </p>
+                            <p style="font-size: 15px; color: #666; margin-bottom: 20px;">
+                                You'll get another chance tomorrow!
+                            </p>
+                            <div style="font-size: 48px; margin-bottom: 20px;">🍀</div>
+                            <button class="btn-primary" onclick="app.closeModal('robotChanceModal')" style="padding: 16px 32px; font-size: 16px;">
+                                Try Again Tomorrow
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                modalContent.innerHTML = resultHTML;
+            },
 
             showAddCategoryModal() {
                 document.getElementById('categorySelect').value = '';
                 document.getElementById('categoryName').value = '';
                 document.getElementById('customCategoryGroup').style.display = 'none';
+                const groupInput = document.getElementById('groupCategoryName');
+                if (groupInput) {
+                    groupInput.value = '';
+                    document.getElementById('customGroupCategoryGroup').style.display = 'none';
+                }
                 document.getElementById('addCategoryModal').classList.add('active');
             },
 
@@ -1055,14 +2300,26 @@
                 const select = document.getElementById('categorySelect');
                 const customGroup = document.getElementById('customCategoryGroup');
                 const customInput = document.getElementById('categoryName');
+                const customGroupGroup = document.getElementById('customGroupCategoryGroup');
+                const groupInput = document.getElementById('groupCategoryName');
 
                 if (select.value === 'custom') {
                     customGroup.style.display = 'block';
                     customInput.required = true;
+                    customGroupGroup.style.display = 'none';
+                    groupInput.required = false;
                     customInput.focus();
+                } else if (select.value === 'customgroup') {
+                    customGroupGroup.style.display = 'block';
+                    groupInput.required = true;
+                    customGroup.style.display = 'none';
+                    customInput.required = false;
+                    groupInput.focus();
                 } else {
                     customGroup.style.display = 'none';
                     customInput.required = false;
+                    customGroupGroup.style.display = 'none';
+                    groupInput.required = false;
                 }
             },
 
@@ -1074,9 +2331,55 @@
             },
 
             showAddTaskModal() {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                
                 document.getElementById('taskName').value = '';
                 document.getElementById('taskDecayValue').value = 7;
                 document.getElementById('taskDecayUnit').value = 'days';
+                
+                // Show/hide linked category selection based on category type
+                const linkedCategoryGroup = document.getElementById('linkedCategoryGroup');
+                const linkedCategorySelect = document.getElementById('linkedCategorySelect');
+                const taskNameField = document.getElementById('taskName');
+                const taskNameNote = document.getElementById('taskNameNote');
+                
+                if (linkedCategoryGroup) {
+                    if (category && category.isGroupCategory) {
+                        linkedCategoryGroup.style.display = 'block';
+                        this.populateLinkedCategorySelect();
+                        
+                        // Enable linked category select for group categories
+                        if (linkedCategorySelect) {
+                            linkedCategorySelect.required = true;
+                        }
+                        
+                        // Hide task name field for group categories (auto-generated)
+                        if (taskNameField) {
+                            taskNameField.parentElement.style.display = 'none';
+                            taskNameField.required = false; // Remove required attribute when hidden
+                        }
+                        if (taskNameNote) {
+                            taskNameNote.style.display = 'block';
+                        }
+                    } else {
+                        linkedCategoryGroup.style.display = 'none';
+                        
+                        // Disable linked category select for standard categories
+                        if (linkedCategorySelect) {
+                            linkedCategorySelect.required = false;
+                        }
+                        
+                        // Show task name field for standard categories
+                        if (taskNameField) {
+                            taskNameField.parentElement.style.display = 'block';
+                            taskNameField.required = true; // Restore required attribute when shown
+                        }
+                        if (taskNameNote) {
+                            taskNameNote.style.display = 'none';
+                        }
+                    }
+                }
+                
                 document.getElementById('addTaskModal').classList.add('active');
             },
 
@@ -1110,11 +2413,37 @@
                 const select = document.getElementById('categorySelect');
                 const customInput = document.getElementById('categoryName');
                 
+                // Handle Self Care special category
+                if (select.value === 'SELFCARE') {
+                    if (!this.data.selfCare) {
+                        this.data.selfCare = this.initializeSelfCareData();
+                    }
+                    this.data.selfCare.enabled = true;
+                    this.saveData();
+                    this.render();
+                    this.closeModal('addCategoryModal');
+                    return;
+                }
+                
                 let categoryName = '';
+                let isGroupCategory = false;
+                
                 if (select.value === 'custom') {
                     categoryName = customInput.value.trim();
+                    isGroupCategory = false;
+                } else if (select.value === 'customgroup') {
+                    const groupInput = document.getElementById('groupCategoryName');
+                    categoryName = groupInput.value.trim();
+                    isGroupCategory = true;
                 } else if (select.value) {
-                    categoryName = select.value;
+                    // Check if this is a group category (starts with "GROUP:")
+                    if (select.value.startsWith('GROUP:')) {
+                        categoryName = select.value.replace('GROUP:', '');
+                        isGroupCategory = true;
+                    } else {
+                        categoryName = select.value;
+                        isGroupCategory = false;
+                    }
                 } else {
                     return; // No selection made
                 }
@@ -1124,7 +2453,8 @@
                 const newCategory = {
                     id: Date.now(),
                     name: categoryName,
-                    tasks: []
+                    tasks: [],
+                    isGroupCategory: isGroupCategory
                 };
                 this.data.categories.push(newCategory);
                 this.saveData();
@@ -1147,6 +2477,35 @@
 
             deleteCategory() {
                 if (!confirm('Are you sure you want to delete this category and all its tasks?')) return;
+                
+                // Find the category being deleted
+                const categoryToDelete = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!categoryToDelete) return;
+                
+                // If it's a group category, delete all linked tasks from standard categories
+                if (categoryToDelete.isGroupCategory) {
+                    for (const task of categoryToDelete.tasks) {
+                        if (task.linkedCategoryId && task.linkedTaskId) {
+                            // Find the linked category and remove the linked task
+                            const linkedCategory = this.data.categories.find(c => c.id === task.linkedCategoryId);
+                            if (linkedCategory) {
+                                linkedCategory.tasks = linkedCategory.tasks.filter(t => t.id !== task.linkedTaskId);
+                            }
+                        }
+                    }
+                }
+                
+                // If it's a standard category, remove any linked tasks from group categories
+                if (!categoryToDelete.isGroupCategory) {
+                    for (const category of this.data.categories) {
+                        if (category.isGroupCategory) {
+                            // Remove any tasks that link to the category being deleted
+                            category.tasks = category.tasks.filter(t => t.linkedCategoryId !== this.data.currentCategoryId);
+                        }
+                    }
+                }
+                
+                // Now delete the category itself
                 this.data.categories = this.data.categories.filter(c => c.id !== this.data.currentCategoryId);
                 this.data.currentCategoryId = null;
                 this.saveData();
@@ -1163,36 +2522,97 @@
                 const taskName = document.getElementById('taskName').value;
                 const decayValue = document.getElementById('taskDecayValue').value;
                 const decayUnit = document.getElementById('taskDecayUnit').value;
+                const linkedCategoryId = document.getElementById('linkedCategorySelect')?.value;
 
                 const decayMs = this.getDecayMs(decayValue, decayUnit);
 
-                const newTask = {
-                    id: Date.now(),
-                    name: taskName,
-                    decayMs: decayMs,
-                    lastCompleted: null,
-                    freshness: 0
-                };
+                // If this is a group category task, handle linking
+                if (category.isGroupCategory && linkedCategoryId) {
+                    const linkedCategory = this.data.categories.find(c => c.id === parseInt(linkedCategoryId));
+                    if (!linkedCategory) {
+                        alert('Please select a valid standard category to link to.');
+                        return;
+                    }
+                    
+                    // Create task in group category
+                    const groupTaskId = Date.now();
+                    const groupTask = {
+                        id: groupTaskId,
+                        name: `${category.name} - ${linkedCategory.name}`,
+                        decayMs: decayMs,
+                        lastCompleted: null,
+                        freshness: 0,
+                        linkedCategoryId: linkedCategory.id,
+                        linkedTaskId: groupTaskId + 1 // Will link to the standard category task
+                    };
+                    
+                    // Create linked task in standard category
+                    const standardTaskId = groupTaskId + 1;
+                    const standardTask = {
+                        id: standardTaskId,
+                        name: `${category.name} - ${linkedCategory.name}`,
+                        decayMs: decayMs,
+                        lastCompleted: null,
+                        freshness: 0,
+                        linkedCategoryId: category.id,
+                        linkedTaskId: groupTaskId // Link back to group task
+                    };
+                    
+                    // Add tasks to their respective categories
+                    if (!category.tasks) category.tasks = [];
+                    if (!linkedCategory.tasks) linkedCategory.tasks = [];
+                    
+                    category.tasks.push(groupTask);
+                    linkedCategory.tasks.push(standardTask);
+                    
+                    // Update the link references now that both tasks exist
+                    groupTask.linkedTaskId = standardTaskId;
+                    
+                    // Log the new linked task
+                    if (this.addLogEntry) {
+                        this.addLogEntry(
+                            'added',
+                            `New Linked Task: ${groupTask.name}`,
+                            `Created in ${category.name} and ${linkedCategory.name}`
+                        );
+                    }
+                    
+                    this.saveData();
+                    this.checkObonxoCheatStatus();
+                    this.render();
+                    this.closeModal('addTaskModal');
+                    this.mascotNewTask(groupTask.name, category.name);
+                    
+                } else {
+                    // Standard task creation
+                    const newTask = {
+                        id: Date.now(),
+                        name: taskName,
+                        decayMs: decayMs,
+                        lastCompleted: null,
+                        freshness: 0
+                    };
 
-                if (!category.tasks) {
-                    category.tasks = [];
+                    if (!category.tasks) {
+                        category.tasks = [];
+                    }
+                    category.tasks.push(newTask);
+                    
+                    // Log the new task (check if function exists)
+                    if (this.addLogEntry) {
+                        this.addLogEntry(
+                            'added',
+                            `New Task Added: ${taskName}`,
+                            `Added to ${category.name} category`
+                        );
+                    }
+                    
+                    this.saveData();
+                    this.checkObonxoCheatStatus();
+                    this.render();
+                    this.closeModal('addTaskModal');
+                    this.mascotNewTask(taskName, category.name);
                 }
-                category.tasks.push(newTask);
-                
-                // Log the new task (check if function exists)
-                if (this.addLogEntry) {
-                    this.addLogEntry(
-                        'added',
-                        `New Task Added: ${taskName}`,
-                        `Added to ${category.name} category`
-                    );
-                }
-                
-                this.saveData();
-                this.checkObonxoCheatStatus();
-                this.render();
-                this.closeModal('addTaskModal');
-                this.mascotNewTask(taskName, category.name);
             },
 
             updateTask(event) {
@@ -1201,10 +2621,23 @@
                 const task = category.tasks.find(t => t.id === this.data.currentTaskId);
                 if (!task) return;
 
-                task.name = document.getElementById('editTaskName').value.trim();
+                const newName = document.getElementById('editTaskName').value.trim();
+                task.name = newName;
                 const decayValue = parseInt(document.getElementById('editTaskDecayValue').value);
                 const decayUnit = document.getElementById('editTaskDecayUnit').value;
                 task.decayMs = this.getDecayMs(decayValue, decayUnit);
+
+                // If this is a linked task, also update the linked task's name
+                if (task.linkedCategoryId && task.linkedTaskId) {
+                    const linkedCategory = this.data.categories.find(c => c.id === task.linkedCategoryId);
+                    if (linkedCategory) {
+                        const linkedTask = linkedCategory.tasks.find(t => t.id === task.linkedTaskId);
+                        if (linkedTask) {
+                            linkedTask.name = newName;
+                            linkedTask.decayMs = task.decayMs;
+                        }
+                    }
+                }
 
                 this.saveData();
                 this.checkObonxoCheatStatus();
@@ -1217,11 +2650,164 @@
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
                 if (!category) return;
 
+                // Find the task being deleted
+                const taskToDelete = category.tasks.find(t => t.id === this.data.currentTaskId);
+                
+                // If this task is linked, also delete the linked task
+                if (taskToDelete && taskToDelete.linkedCategoryId && taskToDelete.linkedTaskId) {
+                    const linkedCategory = this.data.categories.find(c => c.id === taskToDelete.linkedCategoryId);
+                    if (linkedCategory) {
+                        linkedCategory.tasks = linkedCategory.tasks.filter(t => t.id !== taskToDelete.linkedTaskId);
+                    }
+                }
+                
+                // Delete the task from current category
                 category.tasks = category.tasks.filter(t => t.id !== this.data.currentTaskId);
                 this.saveData();
                 this.checkObonxoCheatStatus();
                 this.render();
                 this.closeModal('editTaskModal');
+            },
+
+            // ===== STEP MANAGEMENT FUNCTIONS =====
+            // Added: Oct 24, 2025
+            // Purpose: Break down tasks into smaller sequential steps (A, B, C...)
+            // Note: Steps are guidance only - do NOT affect task freshness/decay
+            // Available for: ALL tasks (standard and group categories)
+            
+            showAddStepModal(taskId) {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                const task = category?.tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                // Initialize steps array if it doesn't exist
+                if (!task.steps) {
+                    task.steps = [];
+                }
+                
+                // Calculate next step label (A, B, C, etc.)
+                const nextLabel = String.fromCharCode(65 + task.steps.length); // 65 = 'A'
+                
+                // Update modal
+                this.data.currentTaskId = taskId;
+                document.getElementById('stepLabel').textContent = `Step ${nextLabel}.`;
+                document.getElementById('stepDescription').value = '';
+                document.getElementById('addStepModal').classList.add('active');
+            },
+            
+            addStep(event) {
+                event.preventDefault();
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                const task = category?.tasks.find(t => t.id === this.data.currentTaskId);
+                if (!task) return;
+                
+                // Initialize steps array if it doesn't exist
+                if (!task.steps) {
+                    task.steps = [];
+                }
+                
+                const description = document.getElementById('stepDescription').value.trim();
+                if (!description) return;
+                
+                // Calculate step label
+                const stepLabel = String.fromCharCode(65 + task.steps.length); // A, B, C...
+                
+                // Create new step
+                const newStep = {
+                    id: Date.now(),
+                    label: stepLabel,
+                    description: description,
+                    completed: false
+                };
+                
+                task.steps.push(newStep);
+                this.saveData();
+                this.render();
+                this.closeModal('addStepModal');
+            },
+            
+            deleteStep(taskId, stepId) {
+                if (!confirm('Are you sure you want to delete this step?')) return;
+                
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                const task = category?.tasks.find(t => t.id === taskId);
+                if (!task || !task.steps) return;
+                
+                // Remove the step
+                task.steps = task.steps.filter(s => s.id !== stepId);
+                
+                // Re-label remaining steps sequentially (A, B, C...)
+                task.steps.forEach((step, index) => {
+                    step.label = String.fromCharCode(65 + index);
+                });
+                
+                this.saveData();
+                this.render();
+            },
+            
+            toggleStepsDisplay(taskId) {
+                const stepsList = document.getElementById(`steps-list-${taskId}`);
+                const toggleIcon = document.getElementById(`steps-toggle-${taskId}`);
+                
+                if (stepsList && toggleIcon) {
+                    const isVisible = stepsList.style.display !== 'none';
+                    stepsList.style.display = isVisible ? 'none' : 'block';
+                    toggleIcon.textContent = isVisible ? '▼' : '▲';
+                }
+            },
+            
+            toggleStepCompletion(taskId, stepId) {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                const task = category?.tasks.find(t => t.id === taskId);
+                if (!task || !task.steps) return;
+                
+                // Find and toggle the step
+                const step = task.steps.find(s => s.id === stepId);
+                if (!step) return;
+                
+                step.completed = !step.completed;
+                this.saveData();
+                
+                // Remember that this task's steps are expanded
+                const stepsListElement = document.getElementById(`steps-list-${taskId}`);
+                const wasExpanded = stepsListElement && stepsListElement.style.display !== 'none';
+                
+                this.render();
+                
+                // Restore expanded state
+                if (wasExpanded) {
+                    const stepsListAfterRender = document.getElementById(`steps-list-${taskId}`);
+                    const toggleIcon = document.getElementById(`steps-toggle-${taskId}`);
+                    if (stepsListAfterRender) {
+                        stepsListAfterRender.style.display = 'block';
+                    }
+                    if (toggleIcon) {
+                        toggleIcon.textContent = '▲';
+                    }
+                }
+                
+                // Check if all steps are now completed
+                const allCompleted = task.steps.every(s => s.completed);
+                if (allCompleted && task.steps.length > 0) {
+                    // Store the task ID for later use
+                    this.data.currentTaskIdForCompletion = taskId;
+                    // Show confirmation modal
+                    document.getElementById('completeTaskModal').classList.add('active');
+                }
+            },
+            
+            confirmCompleteTask() {
+                const taskId = this.data.currentTaskIdForCompletion;
+                if (!taskId) return;
+                
+                // Close the modal
+                this.closeModal('completeTaskModal');
+                
+                // Complete the task using existing toggleTask logic
+                this.toggleTask(taskId);
+                
+                // Clear the stored task ID
+                this.data.currentTaskIdForCompletion = null;
             },
 
             toggleTask(taskId) {
@@ -1245,6 +2831,46 @@
                             `${category.name} cleanliness boosted by ${Math.round(100 - task.freshness)}%`
                         );
                     }
+                    
+                    // GAMIFICATION: Add fun celebration effects
+                    if (typeof Gamification !== 'undefined') {
+                        // Find the task card element for visual effects
+                        const taskElement = document.querySelector(`[onclick*="toggleTask(${taskId})"]`)?.closest('.task-card');
+                        
+                        if (taskElement) {
+                            // Celebrate the completion with confetti and sounds
+                            Gamification.celebrateTaskCompletion(taskElement, task.name);
+                        }
+                        
+                        // Update and check streak
+                        const currentStreak = Gamification.updateStreak();
+                        
+                        // Show streak notification for milestones
+                        if (currentStreak > 1 && Gamification.checkStreakMilestone(currentStreak)) {
+                            setTimeout(() => {
+                                Gamification.celebrateMilestone(
+                                    currentStreak,
+                                    `${currentStreak} days in a row! You're unstoppable!`
+                                );
+                            }, 800);
+                        } else if (currentStreak > 1 && currentStreak % 2 === 0) {
+                            // Show streak every 2 days
+                            setTimeout(() => {
+                                Gamification.celebrateStreak(currentStreak);
+                            }, 600);
+                        }
+                        
+                        // Check if category is now 100% complete
+                        setTimeout(() => {
+                            const updatedCategory = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                            if (updatedCategory) {
+                                const allComplete = updatedCategory.tasks.every(t => t.freshness === 100);
+                                if (allComplete) {
+                                    Gamification.celebrateCategoryCompletion(updatedCategory.name);
+                                }
+                            }
+                        }, 1000);
+                    }
                 }
 
                 task.lastCompleted = Date.now();
@@ -1252,6 +2878,21 @@
                 
                 // Clear any snooze status
                 delete task.snoozedUntil;
+                
+                // Reset all step completions (so they can be checked off again next time)
+                if (task.steps && task.steps.length > 0) {
+                    task.steps.forEach(step => {
+                        step.completed = false;
+                    });
+                }
+                
+                // Sync completion with linked tasks
+                this.syncLinkedTaskCompletion(taskId);
+                
+                // Battery drain: -0.5% per task completion
+                if (this.data.selectedRobotId) {
+                    this.drainBattery(this.data.selectedRobotId, 0.5);
+                }
 
                 this.saveData();
                 this.render();
@@ -1357,6 +2998,84 @@
                     `${task.name} is resumed. Let's get to work!`
                 ];
                 this.showSpeechBubble(phrases[Math.floor(Math.random() * phrases.length)]);
+            },
+
+            // Group Category Functions
+            syncLinkedTaskCompletion(taskId) {
+                // Find the task that was just completed
+                let completedTask = null;
+                let completedCategory = null;
+                
+                for (const cat of this.data.categories) {
+                    const task = cat.tasks.find(t => t.id === taskId);
+                    if (task) {
+                        completedTask = task;
+                        completedCategory = cat;
+                        break;
+                    }
+                }
+                
+                if (!completedTask) return;
+                
+                // Sync all linked tasks
+                for (const category of this.data.categories) {
+                    for (const task of category.tasks) {
+                        // Skip the task we just completed
+                        if (task.id === taskId) continue;
+                        
+                        // Check if this task is linked to the completed task
+                        if (task.linkedTaskId === taskId || completedTask.linkedTaskId === task.id) {
+                            task.lastCompleted = completedTask.lastCompleted;
+                            task.freshness = 100;
+                            delete task.snoozedUntil;
+                        }
+                    }
+                }
+            },
+            
+            showAddTaskModalForGroup() {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category) return;
+                
+                // Show modal with linked category selector
+                document.getElementById('taskName').value = '';
+                document.getElementById('taskDecayValue').value = 7;
+                document.getElementById('taskDecayUnit').value = 'days';
+                
+                // Show/hide linked category selection based on category type
+                const linkedCategoryGroup = document.getElementById('linkedCategoryGroup');
+                if (linkedCategoryGroup) {
+                    if (category.isGroupCategory) {
+                        linkedCategoryGroup.style.display = 'block';
+                        this.populateLinkedCategorySelect();
+                    } else {
+                        linkedCategoryGroup.style.display = 'none';
+                    }
+                }
+                
+                document.getElementById('addTaskModal').classList.add('active');
+            },
+            
+            populateLinkedCategorySelect() {
+                const select = document.getElementById('linkedCategorySelect');
+                if (!select) return;
+                
+                // Get all standard (non-group) categories
+                const standardCategories = this.data.categories.filter(cat => !cat.isGroupCategory);
+                
+                // Build options with styling for group categories
+                select.innerHTML = '<option value="">-- Select Standard Category --</option>' +
+                    standardCategories.map(cat => 
+                        `<option value="${cat.id}">${cat.name}</option>`
+                    ).join('');
+            },
+            
+            // Update category name display to show group categories in blue
+            getCategoryDisplayName(category) {
+                if (category.isGroupCategory) {
+                    return `<span style="color: #4040ff; font-weight: 600;">${category.name}</span>`;
+                }
+                return category.name;
             },
 
             resetDemo() {
@@ -1731,6 +3450,12 @@
                     return;
                 }
                 
+                // Check for Self Care reminders (if enabled and has incomplete tasks)
+                if (this.data.selfCare && this.data.selfCare.enabled && !this.data.currentCategoryId) {
+                    const hasSelfCareReminder = this.checkSelfCareReminder();
+                    if (hasSelfCareReminder) return; // If reminder shown, don't show other greetings
+                }
+                
                 const overallScore = this.calculateOverallScore();
                 
                 // High score celebration
@@ -1830,6 +3555,64 @@
                         "You're making incredible progress towards a perfectly maintained home!"
                     ];
                     this.showSpeechBubble(phrases[Math.floor(Math.random() * phrases.length)]);
+                }
+            },
+
+            checkSelfCareReminder() {
+                // Check if there are incomplete Self Care tasks (excluding optional ones)
+                if (!this.data.selfCare || !this.data.selfCare.enabled) return false;
+                
+                let incompleteCount = 0;
+                let incompleteTasks = [];
+                
+                for (const group of this.data.selfCare.groups) {
+                    for (const task of group.tasks) {
+                        // Skip optional tasks
+                        if (task.optional) continue;
+                        // Count incomplete non-optional tasks
+                        if (!task.completed) {
+                            incompleteCount++;
+                            incompleteTasks.push({ groupName: group.name, taskName: task.name });
+                        }
+                    }
+                }
+                
+                // If no incomplete tasks, don't show reminder
+                if (incompleteCount === 0) return false;
+                
+                // Get selected robot name or use default
+                const selectedRobot = this.robots.find(r => r.id === this.data.selectedRobotId);
+                const robotName = selectedRobot ? selectedRobot.name : 'Your robot';
+                
+                // Show reminder with different messages based on count
+                if (incompleteCount === 1) {
+                    const task = incompleteTasks[0];
+                    const phrases = [
+                        `Hey! Don't forget about Self Care today. You still need to: ${task.taskName}`,
+                        `Quick reminder: ${task.taskName} is waiting for you in Self Care! 💚`,
+                        `Your wellness matters! Remember to ${task.taskName} today.`,
+                        `Self Care check-in: ${task.taskName} still needs your attention! ❤️`
+                    ];
+                    this.showSpeechBubble(phrases[Math.floor(Math.random() * phrases.length)]);
+                    return true;
+                } else if (incompleteCount <= 3) {
+                    const taskNames = incompleteTasks.slice(0, 3).map(t => t.taskName).join(', ');
+                    const phrases = [
+                        `Don't forget Self Care! You have ${incompleteCount} tasks left: ${taskNames}`,
+                        `Self Care reminder: ${taskNames} are waiting for you! ❤️`,
+                        `Your wellness is important! ${incompleteCount} Self Care tasks need attention today.`
+                    ];
+                    this.showSpeechBubble(phrases[Math.floor(Math.random() * phrases.length)]);
+                    return true;
+                } else {
+                    const phrases = [
+                        `Self Care check-in! You have ${incompleteCount} tasks to complete today. Your wellness matters! ❤️`,
+                        `Hey! ${incompleteCount} Self Care tasks are waiting. Let's take care of yourself today! 💚`,
+                        `Don't forget about Self Care! You have ${incompleteCount} tasks left. You're worth it! ✨`,
+                        `Wellness reminder: ${incompleteCount} Self Care tasks need your attention. You've got this! 💪`
+                    ];
+                    this.showSpeechBubble(phrases[Math.floor(Math.random() * phrases.length)]);
+                    return true;
                 }
             },
 
@@ -2096,6 +3879,9 @@
                 this.closeModal('settingsModal');
                 this.speak("Battle system activated! Ready for combat, commander!", 'excited');
                 
+                this.isBattleMode = true;
+                console.log('[BATTLE MODE] Activated via battle system entry');
+
                 // Hide all other views
                 document.querySelectorAll('.view').forEach(view => {
                     view.classList.remove('active');
@@ -2132,11 +3918,13 @@
                 
                 // ===== EXIT BATTLE MODE: Re-enable companion robot dialogue =====
                 this.isBattleMode = false;
+                this.currentBattleMode = null;
+                this.currentAIDifficulty = null;
+                this.pendingBattleLaunch = null;
                 console.log('[BATTLE MODE] Deactivated - companion robot dialogue re-enabled');
                 console.log("Battle system closed - returned to dashboard");
             },
 
-            // Circuit Breaker Menu Functions
             openCircuitBreakerMenu() {
                 // ===== ENTER BATTLE MODE: Suppress companion robot dialogue =====
                 this.isBattleMode = true;
@@ -2172,8 +3960,14 @@
                 // Reset mascot state flags
                 this.mascotState.isSpeaking = false;
                 this.mascotState.isThinking = false;
-                
+
                 console.log('[BATTLE MODE] Companion dialogue cut off - entering Circuit Breaker');
+
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                this.returnToStartBattleMenu = false;
 
                 const menu = document.getElementById('circuitBreakerMenu');
                 if (menu) {
@@ -2188,6 +3982,12 @@
                     menu.classList.remove('active');
                     console.log("Circuit Breaker menu closed");
                 }
+
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                this.returnToStartBattleMenu = false;
 
                 // ===== EXIT BATTLE MODE: Re-enable companion robot dialogue =====
                 this.isBattleMode = false;
@@ -2208,19 +4008,64 @@
                 console.log("Circuit Breaker battle started - opening ChoreBot Hangar for team selection");
             },
 
+            openStartBattleMenu() {
+                console.log('[START BATTLE] Opening battle mode selection menu');
+                this.returnToStartBattleMenu = false;
+                const mainMenu = document.getElementById('circuitBreakerMenu');
+                if (mainMenu) {
+                    mainMenu.classList.remove('active');
+                }
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.add('active');
+                }
+            },
+
+            closeStartBattleMenu() {
+                console.log('[START BATTLE] Closing battle mode selection menu');
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                const mainMenu = document.getElementById('circuitBreakerMenu');
+                if (mainMenu) {
+                    mainMenu.classList.add('active');
+                }
+                this.returnToStartBattleMenu = false;
+            },
+
+            launchVsAIMode() {
+                console.log('[START BATTLE] Launching VS AI mode');
+                this.returnToStartBattleMenu = true;
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                const mainMenu = document.getElementById('circuitBreakerMenu');
+                if (mainMenu) {
+                    mainMenu.classList.remove('active');
+                }
+                this.openAIBattleSelector();
+            },
+
             // ============================================
             // AI BATTLE SIMULATOR FUNCTIONS
             // ============================================
             
             openAIBattleSelector() {
                 console.log('[AI BATTLE] Opening AI difficulty selector');
-                
+
                 // Close Circuit Breaker menu
                 const cbMenu = document.getElementById('circuitBreakerMenu');
                 if (cbMenu) {
                     cbMenu.classList.remove('active');
                 }
-                
+
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+
                 // Open AI selector
                 const aiSelector = document.getElementById('aiBattleSelector');
                 if (aiSelector) {
@@ -2233,20 +4078,79 @@
             
             closeAIBattleSelector() {
                 console.log('[AI BATTLE] Closing AI difficulty selector');
-                
+
                 // Close AI selector
                 const aiSelector = document.getElementById('aiBattleSelector');
                 if (aiSelector) {
                     aiSelector.classList.remove('active');
                 }
-                
-                // Reopen Circuit Breaker menu
+
+                const easySelector = document.getElementById('easyAIBattleSelector');
+                if (easySelector) {
+                    easySelector.classList.remove('active');
+                }
+
                 const cbMenu = document.getElementById('circuitBreakerMenu');
-                if (cbMenu) {
+                if (this.pendingBattleLaunch === 'easy-ai') {
+                    this.pendingBattleLaunch = null;
+                    this.returnToStartBattleMenu = false;
+                    this.openChorebotHangar();
+                    return;
+                }
+
+                if (this.returnToStartBattleMenu) {
+                    if (cbMenu) {
+                        cbMenu.classList.remove('active');
+                    }
+                    const startMenu = document.getElementById('startBattleMenu');
+                    if (startMenu) {
+                        startMenu.classList.add('active');
+                    }
+                    this.returnToStartBattleMenu = false;
+                } else if (cbMenu) {
                     cbMenu.classList.add('active');
                 }
-                
+
                 console.log('[AI BATTLE] Returned to Circuit Breaker menu');
+            },
+
+            startEasyAIBattle() {
+                console.log('[AI BATTLE] Easy difficulty selected');
+                this.currentBattleMode = 'ai';
+                this.currentAIDifficulty = 'easy';
+                this.pendingBattleLaunch = 'easy-ai';
+                this.returnToStartBattleMenu = false;
+
+                this.ensureEasyAIDeckReady();
+                this.closeAIBattleSelector();
+            },
+
+            ensureEasyAIDeckReady() {
+                if (!Array.isArray(this.data.currentDeck)) {
+                    this.data.currentDeck = [];
+                }
+
+                const preparedDeck = this.data.currentDeck.filter(Boolean).slice(0, 6);
+
+                if (preparedDeck.length < 6 && typeof TeamManager !== 'undefined' && typeof TeamManager.getAvailableRobots === 'function') {
+                    const availableRobots = TeamManager.getAvailableRobots();
+                    for (const robotId of availableRobots) {
+                        if (preparedDeck.length >= 6) {
+                            break;
+                        }
+                        if (!preparedDeck.includes(robotId)) {
+                            preparedDeck.push(robotId);
+                        }
+                    }
+                }
+
+                this.data.currentDeck = preparedDeck.slice(0, 6);
+
+                if (this.data.currentDeck.length === 6) {
+                    console.log('[AI BATTLE] Easy mode deck prepared:', this.data.currentDeck);
+                } else {
+                    console.warn('[AI BATTLE] Easy mode deck is incomplete. Player must finish team selection manually.');
+                }
             },
 
             // ============================================
@@ -2260,14 +4164,14 @@
             storeToBattleRobotMap: {
                 'JACKOBOT': 'unit-001-uc-0',          // Jack-o'-Bot → Bulbasaur stats
                 'MEGAROCKETMAN': 'unit-006-ex-0',      // Mega Rocket Man → Charizard stats
-                'PIKABOT': 'unit-025-r-0',             // Pika-Bot → Pikachu stats
+                'VOLTBOT': 'unit-025-r-0',             // Volt-Bot → Pikachu stats
                 'BUZZBOT': 'unit-150-ex-0',            // Buzz Lite → Mewtwo stats
                 'CLOWNBOT': 'clown-bot',               // Clown Bot (custom)
                 'WITCHBOT': 'witch-bot',               // Witch-Bot (custom)
                 'FREEZY': 'freezy',                    // Freezy (custom)
                 'GHOSTBOT': 'ghost-bot',               // Ghost Bot (custom)
                 'SUNIC': 'sunic',                      // Sunic (custom)
-                'OUIJABOT': 'ouija-bot'                // Ouija-Bot (custom)
+                'SPIRITBOT': 'spirit-bot'              // Spirit-Bot (custom)
                 // Note: 'default' is the chore mascot robot, not a battle robot
             },
             
@@ -2279,6 +4183,12 @@
                 if (cbMenu) {
                     cbMenu.classList.remove('active');
                 }
+
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                this.returnToStartBattleMenu = false;
                 
                 // Open hangar modal
                 const hangar = document.getElementById('chorebotHangarModal');
@@ -2289,12 +4199,28 @@
                 }
             },
             
-            closeChorebotHangar() {
+            closeChorebotHangar(reopenCircuitBreaker = true) {
                 console.log('[HANGAR] Closing ChoreBot Hangar');
                 const hangar = document.getElementById('chorebotHangarModal');
                 if (hangar) {
                     hangar.classList.remove('active');
                 }
+
+                const cbMenu = document.getElementById('circuitBreakerMenu');
+                if (reopenCircuitBreaker) {
+                    if (cbMenu) {
+                        cbMenu.classList.add('active');
+                        console.log('[HANGAR] Returned to Circuit Breaker menu');
+                    }
+                } else if (cbMenu) {
+                    cbMenu.classList.remove('active');
+                }
+
+                const startMenu = document.getElementById('startBattleMenu');
+                if (startMenu) {
+                    startMenu.classList.remove('active');
+                }
+                this.returnToStartBattleMenu = false;
                 
                 // Close any open inspection modal
                 this.closeHangarInspection();
@@ -2848,6 +4774,10 @@
             
             startBattleFromHangar() {
                 console.log('[HANGAR] Starting battle from ChoreBot Hangar');
+                if (!this.currentBattleMode) {
+                    this.currentBattleMode = 'debug';
+                    this.currentAIDifficulty = null;
+                }
                 
                 // Validate deck has exactly 6 robots
                 if (this.data.currentDeck.length !== 6) {
@@ -2857,17 +4787,24 @@
                 }
                 
                 // Close the hangar
-                this.closeChorebotHangar();
+                this.closeChorebotHangar(false);
                 
                 // Set player team from current deck
                 const playerTeam = [...this.data.currentDeck];
                 TeamManager.selectedTeam = playerTeam;
                 console.log('[HANGAR] Player team set:', playerTeam);
                 
-                // Set opponent team as a copy of player's team with '-opp' suffix for unique IDs
-                const opponentTeam = this.data.currentDeck.map(robotId => robotId + '-opp');
-                TeamManager.opponentTeam = opponentTeam;
-                console.log('[HANGAR] Opponent team set (mirror match with -opp suffix):', opponentTeam);
+                // Build opponent team based on current battle mode
+                let opponentTeam;
+                if (this.currentBattleMode === 'ai' && this.currentAIDifficulty === 'easy') {
+                    opponentTeam = this.getEasyAIOpponentTeam(playerTeam);
+                    TeamManager.opponentTeam = opponentTeam.slice();
+                    console.log('[HANGAR] Easy AI opponent team prepared:', opponentTeam);
+                } else {
+                    opponentTeam = this.data.currentDeck.map(robotId => robotId + '-opp');
+                    TeamManager.opponentTeam = opponentTeam;
+                    console.log('[HANGAR] Opponent team set (mirror match with -opp suffix):', opponentTeam);
+                }
                 
                 // Hide all other views
                 document.querySelectorAll('.view').forEach(view => {
@@ -2886,8 +4823,18 @@
                 // Initialize battle with both teams after a short delay
                 setTimeout(() => {
                     BattleSystem.initializeBattleWithTeams(playerTeam, opponentTeam);
-                    BattleSystem.enableDebugMode();
-                    console.log('[HANGAR] Battle initialized with teams on board!');
+
+                    if (this.currentBattleMode === 'ai' && this.currentAIDifficulty === 'easy') {
+                        BattleSystem.disableDebugMode();
+                        BattleSystem.currentControlTeam = 'player';
+                        if (typeof app.hideDebugControlUI === 'function') {
+                            app.hideDebugControlUI();
+                        }
+                        console.log('[HANGAR] Easy AI battle initialized from hangar');
+                    } else {
+                        BattleSystem.enableDebugMode();
+                        console.log('[HANGAR] Battle initialized with full debug control');
+                    }
                 }, 500);
                 
                 console.log('[HANGAR] Battle started successfully!');
@@ -3732,12 +5679,42 @@
             },
 
             addCurrency(amount) {
+                if (this.unlimitedBoltsActive) {
+                    const currentActual = this.unlimitedBoltsActualCurrency ?? this.data.currency ?? 0;
+                    this.unlimitedBoltsActualCurrency = currentActual + amount;
+
+                    // Keep display currency topped up for debugging
+                    const minimumDisplay = 999999;
+                    if ((this.data.currency ?? 0) < minimumDisplay) {
+                        this.data.currency = minimumDisplay;
+                    }
+
+                    this.saveData();
+                    this.updateCurrencyDisplay();
+                    return;
+                }
+
                 this.data.currency += amount;
                 this.saveData();
                 this.updateCurrencyDisplay();
             },
 
             deductCurrency(amount) {
+                if (this.unlimitedBoltsActive) {
+                    const currentActual = this.unlimitedBoltsActualCurrency ?? this.data.currency ?? 0;
+                    this.unlimitedBoltsActualCurrency = Math.max(0, currentActual - amount);
+
+                    // Maintain large display value while debugging
+                    const minimumDisplay = 999999;
+                    if ((this.data.currency ?? 0) < minimumDisplay) {
+                        this.data.currency = minimumDisplay;
+                    }
+
+                    this.saveData();
+                    this.updateCurrencyDisplay();
+                    return true;
+                }
+
                 if (this.data.currency >= amount) {
                     this.data.currency -= amount;
                     this.saveData();
@@ -3981,6 +5958,233 @@
                 }, 1500);
             },
 
+            // Store Tab Switching
+            switchStoreTab(tab) {
+                const robotsTabBtn = document.getElementById('robotsTabBtn');
+                const itemsTabBtn = document.getElementById('itemsTabBtn');
+                const robotStoreGrid = document.getElementById('robotStoreGrid');
+                const itemsStoreGrid = document.getElementById('itemsStoreGrid');
+                
+                if (tab === 'robots') {
+                    robotsTabBtn.classList.add('active');
+                    itemsTabBtn.classList.remove('active');
+                    robotStoreGrid.style.display = 'grid';
+                    itemsStoreGrid.style.display = 'none';
+                    
+                    // Scrappy speaks about robots
+                    const message = this.getRandomDialogue('greeting');
+                    this.showScrappyDialogue(message, 'happy');
+                } else if (tab === 'items') {
+                    robotsTabBtn.classList.remove('active');
+                    itemsTabBtn.classList.add('active');
+                    robotStoreGrid.style.display = 'none';
+                    itemsStoreGrid.style.display = 'grid';
+                    
+                    // Render items store
+                    this.renderItemsStore();
+                    
+                    // Scrappy speaks about items
+                    const itemMessages = [
+                        "Need maintenance supplies? You've come to the right place!",
+                        "Keep your robots running smooth with these quality items!",
+                        "Battery running low? I've got just what you need!",
+                        "Fresh stock of maintenance items, all top quality!"
+                    ];
+                    this.showScrappyDialogue(itemMessages[Math.floor(Math.random() * itemMessages.length)], 'happy');
+                }
+            },
+
+            // Render Items Store
+            renderItemsStore() {
+                const grid = document.getElementById('itemsStoreGrid');
+                if (!grid) return;
+                
+                grid.innerHTML = '';
+                
+                // Render actual items (EXACT robot store structure)
+                this.storeItems.forEach(item => {
+                    const owned = this.data.itemInventory[item.id] || 0;
+                    const canAfford = this.data.currency >= item.cost;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'item-store-card';
+                    card.innerHTML = `
+                        <img src="${item.imagePath}" 
+                             alt="${item.name}" 
+                             class="robot-store-card-image"
+                             onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\\'robot-store-card-image placeholder-icon\\'>${this.getItemEmoji(item.id)}</div>')">
+                        <div class="robot-store-card-name">${item.name}</div>
+                        <div class="robot-store-card-cost">
+                            <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="robot-store-card-cost-bolt">
+                            <span>${item.cost} Bolts</span>
+                        </div>
+                        <button class="robot-store-card-button" ${!canAfford ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="app.initiateItemPurchase('${item.id}')">
+                            ${canAfford ? 'BUY' : 'NOT ENOUGH BOLTS'}
+                        </button>
+                    `;
+                    grid.appendChild(card);
+                });
+                
+                // Add "Coming Soon" placeholder cards (EXACT robot store structure)
+                for (let i = 0; i < 30; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'item-store-card placeholder';
+                    card.innerHTML = `
+                        <div class="robot-store-card-image placeholder-icon">❓</div>
+                        <div class="robot-store-card-name">Coming Soon</div>
+                        <div class="robot-store-card-cost">
+                            <img src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" class="robot-store-card-cost-bolt">
+                            <span>??? Bolts</span>
+                        </div>
+                        <button class="robot-store-card-button" style="opacity: 0.5; cursor: not-allowed;" disabled>LOCKED</button>
+                    `;
+                    grid.appendChild(card);
+                }
+            },
+
+            // Get emoji fallback for items
+            getItemEmoji(itemId) {
+                const emojis = {
+                    OILDRINK: '🛢️',
+                    BATTERY: '🔋',
+                    MEGABATTERY: '⚡',
+                    SOLARPANEL: '☀️'
+                };
+                return emojis[itemId] || '📦';
+            },
+
+            // Initiate Item Purchase (Show Confirmation)
+            initiateItemPurchase(itemId) {
+                const item = this.storeItems.find(i => i.id === itemId);
+                if (!item) return;
+                
+                // Store the item being purchased
+                this.pendingItemPurchase = item;
+                
+                // Get item emoji/icon
+                const itemEmoji = this.getItemEmoji(itemId);
+                
+                // Show confirmation modal
+                const modal = document.getElementById('itemPurchaseConfirmModal');
+                const iconDisplay = document.getElementById('itemPurchaseIcon');
+                const titleDisplay = document.getElementById('itemPurchaseTitle');
+                const descriptionDisplay = document.getElementById('itemPurchaseDescription');
+                const costDisplay = document.getElementById('itemPurchaseConfirmCost');
+                
+                // Show item image if available, otherwise show emoji
+                if (item.imagePath) {
+                    iconDisplay.innerHTML = `
+                        <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                            <img src="${item.imagePath}" 
+                                 style="max-width: 80px; max-height: 80px; width: auto; height: auto; object-fit: contain;"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size: 48px;\\'>${itemEmoji}</div>';">
+                        </div>
+                    `;
+                } else {
+                    iconDisplay.innerHTML = `<div style="font-size: 48px;">${itemEmoji}</div>`;
+                }
+                
+                titleDisplay.textContent = `Purchase ${item.name}?`;
+                descriptionDisplay.textContent = item.description;
+                costDisplay.textContent = item.cost;
+                
+                modal.classList.add('active');
+            },
+            
+            // Cancel Item Purchase
+            cancelItemPurchase() {
+                const modal = document.getElementById('itemPurchaseConfirmModal');
+                modal.classList.remove('active');
+                this.pendingItemPurchase = null;
+            },
+            
+            // Confirm Item Purchase
+            confirmItemPurchase() {
+                if (!this.pendingItemPurchase) return;
+                
+                const item = this.pendingItemPurchase;
+                const itemId = item.id;
+                
+                // Close modal
+                const modal = document.getElementById('itemPurchaseConfirmModal');
+                modal.classList.remove('active');
+                
+                // Check if user has enough currency
+                if (this.data.currency < item.cost) {
+                    this.showScrappyDialogue(`You need ${item.cost} bolts! You only have ${this.data.currency}.`, 'sad');
+                    this.pendingItemPurchase = null;
+                    return;
+                }
+                
+                // Deduct currency
+                this.data.currency -= item.cost;
+                this.updateCurrencyDisplay();
+                
+                // Add item to inventory
+                if (!this.data.itemInventory[itemId]) {
+                    this.data.itemInventory[itemId] = 0;
+                }
+                this.data.itemInventory[itemId]++;
+                
+                // Save data
+                this.saveData();
+                
+                // Scrappy celebrates
+                const purchaseMessages = [
+                    `One ${item.name}, coming right up!`,
+                    `Excellent choice! Here's your ${item.name}!`,
+                    `Sold! Your ${item.name} is ready to use!`,
+                    `Great purchase! That ${item.name} will keep your robot happy!`
+                ];
+                this.showScrappyDialogue(purchaseMessages[Math.floor(Math.random() * purchaseMessages.length)], 'happy');
+                
+                // Refresh items grid to show updated inventory
+                this.renderItemsStore();
+                
+                console.log(`✅ Purchased ${item.name} for ${item.cost} bolts`);
+                
+                this.pendingItemPurchase = null;
+            },
+            
+            // Purchase Item (Legacy - now called from confirmItemPurchase)
+            purchaseItem(itemId) {
+                const item = this.storeItems.find(i => i.id === itemId);
+                if (!item) return;
+                
+                // Check if user has enough currency
+                if (this.data.currency < item.cost) {
+                    this.showScrappyDialogue(`You need ${item.cost} bolts! You only have ${this.data.currency}.`, 'sad');
+                    return;
+                }
+                
+                // Deduct currency
+                this.data.currency -= item.cost;
+                this.updateCurrencyDisplay();
+                
+                // Add item to inventory
+                if (!this.data.itemInventory[itemId]) {
+                    this.data.itemInventory[itemId] = 0;
+                }
+                this.data.itemInventory[itemId]++;
+                
+                // Save data
+                this.saveData();
+                
+                // Scrappy celebrates
+                const purchaseMessages = [
+                    `One ${item.name}, coming right up!`,
+                    `Excellent choice! Here's your ${item.name}!`,
+                    `Sold! Your ${item.name} is ready to use!`,
+                    `Great purchase! That ${item.name} will keep your robot happy!`
+                ];
+                this.showScrappyDialogue(purchaseMessages[Math.floor(Math.random() * purchaseMessages.length)], 'happy');
+                
+                // Refresh items grid to show updated inventory
+                this.renderItemsStore();
+                
+                console.log(`✅ Purchased ${item.name} for ${item.cost} bolts`);
+            },
+
             // Function to generate cryptic name based on robot ID
             generateCrypticName(robotId) {
                 const crypticChars = ['█', '▓', '▒', '░', '▀', '▄', '■', '□', '▪', '▫', '◆', '◇', '○', '●', '◉', '◎'];
@@ -4074,7 +6278,12 @@
                 }
 
                 const robot = this.storeRobots.find(r => r.id === robotId);
-                if (!robot) return;
+                if (!robot) {
+                    console.error('Robot not found:', robotId);
+                    return;
+                }
+
+                console.log('Initiating purchase for robot:', robot.name, 'Clue:', robot.clue);
 
                 // Store the robot being purchased
                 this.pendingPurchase = robot;
@@ -4082,7 +6291,24 @@
                 // Show confirmation modal
                 const modal = document.getElementById('purchaseConfirmModal');
                 const costDisplay = document.getElementById('purchaseConfirmCost');
+                const messageDisplay = document.getElementById('purchaseConfirmMessage');
+                
+                if (!modal || !costDisplay || !messageDisplay) {
+                    console.error('Modal elements not found!', {modal, costDisplay, messageDisplay});
+                    return;
+                }
+                
                 costDisplay.textContent = robot.cost;
+                
+                // Display clue instead of generic message if available
+                if (robot.clue) {
+                    console.log('Setting clue text:', robot.clue);
+                    messageDisplay.textContent = robot.clue;
+                } else {
+                    console.log('No clue found, using default message');
+                    messageDisplay.textContent = 'Are you sure you want to purchase this mystery robot?';
+                }
+                
                 modal.classList.add('active');
             },
 
@@ -4112,7 +6338,7 @@
                 const robot = this.pendingPurchase;
 
                 // Check if player has enough currency (unless cheat is active)
-                if (!this.isObonxoCheatActive && this.data.currency < robot.cost) {
+                if (!this.isObonxoCheatActive && !this.unlimitedBoltsActive && this.data.currency < robot.cost) {
                     this.cancelPurchase();
                     this.showSpeechBubble('Not enough Bolts! Complete more tasks to earn currency!', 'regular');
                     
@@ -4147,12 +6373,16 @@
                 }
 
                 // Deduct currency (only if cheat is not active)
-                if (!this.isObonxoCheatActive) {
+                if (!this.isObonxoCheatActive || this.unlimitedBoltsActive) {
                     this.deductCurrency(robot.cost);
                 }
 
                 // Add robot to owned list
                 this.data.ownedRobots.push(robot.id);
+                
+                // Initialize durability for new robot
+                this.initializeRobotDurability(robot.id);
+                
                 this.saveData();
 
                 // Scrappy celebrates successful purchase
@@ -7257,6 +9487,10 @@
                     if (wonPrize.type === 'robot') {
                         // Add robot to owned robots and remove from store
                         this.data.ownedRobots.push(wonPrize.id);
+                        
+                        // Initialize durability for new robot
+                        this.initializeRobotDurability(wonPrize.id);
+                        
                         this.showSpeechBubble(`Amazing! You won a free ${wonPrize.name} robot!`, 'regular');
                         
                         // Update robot store display if it's open
@@ -7522,13 +9756,20 @@
             
             console.log('🚀 Starting battle with selected team:', TeamManager.selectedTeam);
             
-            // DEBUG MODE: Use same team for both sides (player controls both)
             const playerTeam = TeamManager.selectedTeam;
-            // Clone the team and append '-opp' to each robot ID to make them unique
-            const opponentTeam = TeamManager.selectedTeam.map(robotId => robotId + '-opp');
-            console.log('🎮 DEBUG MODE: Player controls both sides');
-            console.log('👤 Player Team:', playerTeam);
-            console.log('🤖 Opponent Team:', opponentTeam);
+            let opponentTeam = [];
+
+            if (app.currentBattleMode === 'ai' && app.currentAIDifficulty === 'easy') {
+                opponentTeam = app.getEasyAIOpponentTeam(playerTeam);
+                TeamManager.opponentTeam = opponentTeam.slice();
+                console.log('🤖 Easy AI Team:', opponentTeam);
+            } else {
+                opponentTeam = TeamManager.selectedTeam.map(robotId => robotId + '-opp');
+                TeamManager.opponentTeam = opponentTeam.slice();
+                console.log('🎮 DEBUG MODE: Player controls both sides');
+                console.log('👤 Player Team:', playerTeam);
+                console.log('🤖 Opponent Team:', opponentTeam);
+            }
             
             // Transition to battle game phase
             app.showBattleGamePhase();
@@ -7536,8 +9777,40 @@
             // Initialize battle with both teams
             setTimeout(() => {
                 BattleSystem.initializeBattleWithTeams(playerTeam, opponentTeam);
-                BattleSystem.enableDebugMode();
+
+                if (app.currentBattleMode === 'ai' && app.currentAIDifficulty === 'easy') {
+                    BattleSystem.disableDebugMode();
+                    BattleSystem.currentControlTeam = 'player';
+                    if (typeof app.hideDebugControlUI === 'function') {
+                        app.hideDebugControlUI();
+                    }
+                    console.log('[AI BATTLE] Easy mode battle initialized');
+                } else {
+                    BattleSystem.enableDebugMode();
+                }
             }, 500);
+        };
+
+        app.getEasyAIOpponentTeam = function(playerTeam) {
+            const opponentTeam = [];
+            for (const robotId of playerTeam) {
+                opponentTeam.push(`${robotId}-opp`);
+            }
+            return opponentTeam;
+        };
+
+        app.hideDebugControlUI = function() {
+            const debugBtn = document.getElementById('debug-switch-btn');
+            if (debugBtn && debugBtn.parentNode) {
+                debugBtn.parentNode.removeChild(debugBtn);
+            }
+
+            const statusIndicator = document.getElementById('turn-status-indicator');
+            if (statusIndicator && statusIndicator.parentNode) {
+                statusIndicator.parentNode.removeChild(statusIndicator);
+            }
+
+            console.log('[AI BATTLE] Debug controls disabled for AI mode');
         };
 
         app.showBattleGamePhase = function() {
