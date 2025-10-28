@@ -1,7 +1,7 @@
 # 🎯 UP-KEEP PROJECT - MASTER DOCUMENTATION
 
-**Last Updated:** October 25, 2025 (Gamification System)  
-**Version:** 2.4 (Task Steps + Group Categories + Battle System + Gamification)
+**Last Updated:** October 28, 2025 (Task List Template System)  
+**Version:** 2.5 (Task Steps + Group Categories + Battle System + Gamification + Global Task Templates)
 
 ---
 
@@ -35,6 +35,7 @@
 
 ### Core Features:
 - **Chore Management** - Track tasks across categories with freshness decay
+- **Task List Templates** - Global default list + user-created templates with configurable maintenance
 - **Gamification System** - Particle effects, streaks, achievements, sound effects
 - **Robot Companions** - Purchasable robots with unique personalities
 - **Battle System** - Strategic grid-based combat (Pokémon Duel-style)
@@ -217,24 +218,32 @@ python -m http.server 8000
 
 ### `js/` - JavaScript Modules (8 files)
 
-**⚠️ CRITICAL LOADING ORDER** (from `index.html` lines 1634-1641):
+**⚠️ CRITICAL LOADING ORDER** (from `index.html` lines 2138-2148):
 
 ```html
-<script src="js/chore-robot-loader.js"></script>  <!-- Load 1st: Registry loader -->
-<script src="js/chore-system.js"></script>        <!-- Load 2nd: Core app logic -->
-<script src="js/battle-system.js"></script>       <!-- Load 3rd: Battle engine -->
-<script src="js/robot-loader.js"></script>        <!-- Load 4th: Battle robot loader -->
-<script src="js/robot-database.js"></script>      <!-- Load 5th: Robot data -->
-<script src="js/combat-system.js"></script>       <!-- Load 6th: Combat rules -->
-<script src="js/team-manager.js"></script>        <!-- Load 7th: Team selection -->
-<script src="js/main.js"></script>                <!-- Load 8th: Init & globals -->
+<script src="js/gamification.js"></script>        <!-- Load 1st: Gamification system -->
+<script src="js/chore-robot-loader.js"></script>  <!-- Load 2nd: Registry loader -->
+<script src="js/default-task-list.js"></script>   <!-- Load 3rd: Global task template -->
+<script src="js/chore-system.js"></script>        <!-- Load 4th: Core app logic -->
+<script src="js/battle-system.js"></script>       <!-- Load 5th: Battle engine -->
+<script src="js/robot-loader.js"></script>        <!-- Load 6th: Battle robot loader -->
+<script src="js/robot-database.js"></script>      <!-- Load 7th: Robot data -->
+<script src="js/combat-system.js"></script>       <!-- Load 8th: Combat rules -->
+<script src="js/team-manager.js"></script>        <!-- Load 9th: Team selection -->
+<script src="js/main.js"></script>                <!-- Load 10th: Init & globals -->
 ```
 
 **This order CANNOT be changed** - scripts depend on each other in sequence!
 
 ---
 
-#### 1. `chore-robot-loader.js` (12 KB) - **Store Robot Loader**
+#### 1. `gamification.js` - **Gamification System**
+- **Purpose:** Particle effects, streaks, achievements, visual feedback
+- **Provides:** Enhanced user experience with animations and rewards
+
+---
+
+#### 2. `chore-robot-loader.js` (12 KB) - **Store Robot Loader**
 - **Purpose:** Loads purchasable robots for the store
 - **Global Object:** `ChoreRobotLoader`
 - **Key Functions:**
@@ -251,7 +260,23 @@ python -m http.server 8000
 
 ---
 
-#### 2. `chore-system.js` (348 KB) - **Core App Logic**
+#### 3. `default-task-list.js` (35 KB) - **Global Task Template**
+- **Purpose:** Defines the global "Default List" task template
+- **Global Constant:** `DEFAULT_TASK_LIST`
+- **Contains:**
+  - 14 categories (Kitchen, Bathroom, Bedroom, Guest Bedroom, Living Room, Hallway, Laundry Room, Back Porch, Front Porch, Vehicle, Sweep/Mop/Vacuum, Deep Cleaning, Shampoo, Trash)
+  - 70+ household tasks with proper decay times
+  - Linked task system across categories
+  - Group categories (Sweep/Mop/Vacuum, Deep Cleaning, Shampoo, Trash)
+  - Task steps for complex tasks
+- **Source:** Extracted from "THIS" save file (thisone.upkeep)
+- **All tasks initialized with:** `lastCompleted: null`, `freshness: 0`
+- **Provides to:** `chore-system.js` task list loading system
+- **Used by:** "LOAD TASK LIST" feature in Options menu
+
+---
+
+#### 4. `chore-system.js` (348 KB) - **Core App Logic**
 - **Purpose:** Main application controller
 - **Global Object:** `app`
 - **Manages:**
@@ -259,6 +284,7 @@ python -m http.server 8000
   - Currency system (bolts earned from chores)
   - Robot store (purchase/selection)
   - Save/load system (LocalStorage)
+  - Task list templates (global & user-created)
   - Daily missions & rewards
   - Scrappy dialogue delivery
   - TTS (Text-to-Speech) system
@@ -270,8 +296,10 @@ python -m http.server 8000
   - `app.data.selectedRobotId` - Active companion
   - `app.robots[]` - Store robot catalog
   - `app.scrappyDialogue{}` - Shopkeeper lines
+  - `DEFAULT_TASK_LIST` - Global task template (constant)
 - **LocalStorage Keys:**
   - `upkeep_data_[saveFileName]` - Complete app state
+  - `upkeepTaskLists` - User-created task list templates
 - **Dependencies:**
   - Requires: `ChoreRobotLoader` (loads first)
   - Provides: `app` object to all other scripts
@@ -281,7 +309,7 @@ python -m http.server 8000
 
 ---
 
-#### 3. `battle-system.js` (465 KB) - **Battle Engine**
+#### 5. `battle-system.js` (465 KB) - **Battle Engine**
 - **Purpose:** Complete battle game system
 - **Global Object:** `BattleSystem` (also aliased as `GameBoard`)
 - **Features:**
@@ -320,7 +348,7 @@ python -m http.server 8000
 
 ---
 
-#### 4. `robot-loader.js` (16 KB) - **Component Robot Loader**
+#### 6. `robot-loader.js` (16 KB) - **Component Robot Loader**
 - **Purpose:** Loads battle robots from component folders
 - **Global Object:** `RobotLoader`
 - **Key Functions:**
@@ -338,7 +366,7 @@ python -m http.server 8000
 
 ---
 
-#### 5. `robot-database.js` (36 KB) - **Battle Robot Data**
+#### 7. `robot-database.js` (36 KB) - **Battle Robot Data**
 - **Purpose:** Central battle robot registry
 - **Global Object:** `RobotDatabase`
 - **Contains:**
@@ -364,7 +392,7 @@ python -m http.server 8000
 
 ---
 
-#### 6. `combat-system.js` (5 KB) - **Combat Rules**
+#### 8. `combat-system.js` (5 KB) - **Combat Rules**
 - **Purpose:** Move priority & combat resolution
 - **Global Object:** `CombatSystem`
 - **Move Priority:** Blue > Gold > Purple > White > Red
@@ -375,7 +403,7 @@ python -m http.server 8000
 
 ---
 
-#### 7. `team-manager.js` (5 KB) - **Team Management**
+#### 9. `team-manager.js` (5 KB) - **Team Management**
 - **Purpose:** Battle team selection (6 robots max)
 - **Global Object:** `TeamManager`
 - **Features:**
@@ -391,7 +419,7 @@ python -m http.server 8000
 
 ---
 
-#### 8. `main.js` (1.4 KB) - **Initialization**
+#### 10. `main.js` (1.4 KB) - **Initialization**
 - **Purpose:** App startup & global registration
 - **Runs on Load:**
   ```javascript
@@ -837,6 +865,96 @@ Parses: JSON → app.data object
    ↓
 State restored
 ```
+
+### Task List Template System Data Flow:
+
+**Added:** October 28, 2025
+
+**Purpose:** Allows users to save, load, and apply task list templates with configurable initial maintenance percentages.
+
+**Key Components:**
+
+1. **Global Default List Template**
+   - Constant: `DEFAULT_TASK_LIST` (defined in `default-task-list.js`)
+   - Contains: 14 categories with 70+ household tasks
+   - Accessible: To all users and all save files
+   - Location: `js/default-task-list.js` (loaded before chore-system.js)
+   - Source: Extracted from "THIS" save file (thisone.upkeep)
+
+2. **User-Created Templates**
+   - Storage: `localStorage.getItem('upkeepTaskLists')` (JSON array)
+   - Created via: "SAVE TASK LIST" button in Options menu
+   - Each template stores complete category/task structure
+
+**Loading Flow:**
+
+```
+User clicks "LOAD TASK LIST" button (Options menu)
+   ↓
+app.loadTaskList() opens selection modal
+   ↓
+Modal displays:
+  🌟 Global Default List (always shown first, green theme)
+  📋 User Custom Lists (if any exist, blue theme)
+   ↓
+User selects a template → app.selectTaskListToLoad(index)
+   ↓
+Shows WARNING modal: "Data will be overwritten"
+   ↓
+User confirms → app.showMaintenancePercentagePrompt(listIdentifier)
+   ↓
+Maintenance Configuration Modal displays 3 options:
+  🔴 Zero All Tasks (0% Maintenance) - Tasks appear urgent/decayed
+  🟢 Complete All Tasks (100% Maintenance) - Tasks freshly completed
+  🔵 Set Custom Percentage - Slider input (0-100%)
+   ↓
+User selects percentage → app.confirmLoadTaskList(listIdentifier, percentage)
+   ↓
+System applies percentage to all tasks:
+  - 0%: lastCompleted = null, freshness = 0
+  - 100%: lastCompleted = now, freshness = 100
+  - Custom: Calculates lastCompleted based on decay time & percentage
+   ↓
+Tasks loaded into app.data.categories
+   ↓
+Dashboard refreshed, save prompt shown
+   ↓
+User saves → New task list persisted
+```
+
+**Key Functions:**
+
+- `loadTaskList()` - Displays global + user templates
+- `selectTaskListToLoad(index)` - Handles selection (global or user)
+- `showMaintenancePercentagePrompt(listIdentifier)` - Shows percentage config modal
+- `confirmLoadTaskList(listIdentifier, maintenancePercentage)` - Applies percentage & loads tasks
+- `generateTaskList()` - Saves current tasks as user template
+
+**Maintenance Percentage Logic:**
+
+```javascript
+// 0% - Urgent tasks
+task.lastCompleted = null;
+task.freshness = 0;
+
+// 100% - Fresh tasks  
+task.lastCompleted = now;
+task.freshness = 100;
+
+// Custom % - Calculated decay
+const timeSinceCompletion = decayMs * (1 - (percentage / 100));
+task.lastCompleted = now - timeSinceCompletion;
+task.freshness = percentage;
+```
+
+**UI Elements:**
+
+- Button: "LOAD TASK LIST" (Options menu, Settings modal)
+- Button: "SAVE TASK LIST" (Options menu, Settings modal)
+- Modal: Task list selection (global + user lists)
+- Modal: Warning confirmation
+- Modal: Maintenance percentage configuration
+- Modal: Save prompt after load
 
 ---
 
@@ -1332,8 +1450,9 @@ Add entry to `robots/unified-registry.json`:
 - Circuit Breaker bubble hidden in Self Care view
 - **Currency display remains visible** (to track bolt earnings)
 - Missions bubble, robot bubbles hidden
+- **FAB (+) button hidden** - No task addition allowed in Self Care (predefined tasks only)
 - Focus on self-care tasks without distractions
-- All bubbles restored when returning to dashboard
+- All bubbles and buttons restored when returning to dashboard or regular categories
 
 ⚠️ **Real-Time Currency Updates:**
 - Currency display updates immediately when bolts awarded
@@ -2366,9 +2485,391 @@ Settings → Save Game → Download backup
 
 ---
 
-**Last Updated:** October 24, 2025  
+**Last Updated:** October 28, 2025  
 **Maintained by:** Development Team  
 **Version:** 2.4 (Self Care Category + Task Steps Feature + Action Group Categories + Battle System Bug Fixes)
+
+**Recent Changes (Oct 28, 2025):**
+- ✅ **Complete All Tasks Button for Group Categories:**
+  - **Available in**: Shampoo, Deep Cleaning, Trash, Sweep/Mop/Vacuum (sub-categories), and all custom group categories created by users
+  - **Location**: Positioned at top of task list, below category header, above "Tasks" section heading
+  - **Button Text**: "COMPLETE ALL [CATEGORY NAME] TASKS" (e.g., "COMPLETE ALL SHAMPOO TASKS")
+  - **Button States**:
+    - **Enabled (green)**: When there are incomplete tasks (freshness < 100%)
+    - **Disabled (grayed out)**: When all tasks are at 100% freshness
+    - Always visible to prevent UI jumping
+  - **Functionality**:
+    - Confirmation dialog before bulk completion
+    - Completes all tasks in the category simultaneously
+    - Full gamification effects: staggered confetti/sounds (200ms intervals per task)
+    - Mission progress updates, log entries for each task
+    - Streak celebrations, milestone checks, category completion celebrations
+    - Syncs with linked tasks automatically
+    - Resets task steps for next completion cycle
+  - **Implementation**:
+    - HTML: Added `completeAllGroupBtn` button in categoryView
+    - CSS: Button in normal document flow - **scrolls naturally with page content**
+    - Button appears below header title, above "Tasks" section
+    - When scrolling down, button scrolls up and out of view (normal page behavior)
+    - Group category view has `padding-top: 10px` - minimal spacing for compact layout
+    - Sub-category views (Sweep/Mop/Vacuum) have `padding-top: 80px` to account for internal header
+    - Button has `margin-bottom: 15px` - tight spacing between button and tasks
+    - JS: New `completeAllGroupTasks()` function with full gamification integration
+    - Button visibility controlled by `category.isGroupCategory` flag
+    - State updates automatically after all task actions (complete, snooze, delete, etc.)
+    - **Natural scroll behavior - button not fixed to screen**
+  - Files modified: index.html, js/chore-system.js, css/main.css
+
+- ✅ **Task List Import/Export Management System:**
+  - **Core Feature**: Save and load complete task list templates for different scenarios
+  - **UI Location**: New "📋 Task List Templates" card in Options/Backup & Restore menu
+  - **Two Main Functions**:
+    - **💾 SAVE TASK LIST**: Export current task structure as named template
+    - **📂 LOAD TASK LIST**: Import previously saved task list template
+  - **Save Functionality**:
+    - Prompts user for template name (e.g., "Apartment Deep Clean", "Work Office Upkeep")
+    - Creates compressed JSON structure containing all categories, tasks, decay times, settings
+    - Stores in localStorage under `upkeepTaskLists` key (separate from main save files)
+    - Checks for duplicate names and prompts for overwrite confirmation
+    - Data structure includes: version, name, createdDate, full category array (deep cloned)
+  - **Load Functionality** (Critical Safety Features):
+    - **Step 1 - Selection**: Displays list of all saved templates with metadata
+      - Shows: Template name, creation date, category count, task count
+      - Clickable cards with hover effects for selection
+    - **Step 2 - Data Loss Warning**: 
+      - ⚠️ CRITICAL modal warning before import
+      - Text: "WARNING: Loading a saved task list will completely overwrite your current task categories and all active tasks."
+      - Clear explanation of consequences (progress, decay times, customizations lost)
+      - "This action cannot be undone unless you have a backup!"
+      - Options: [⚠️ Yes, Overwrite My Tasks] / [Cancel]
+    - **Step 3 - Import Action**: 
+      - Clears current categories
+      - Deep clones template data into active session
+      - Resets view to dashboard
+    - **Step 4 - Save Prompt**:
+      - ✅ SUCCESS modal after load completion
+      - Prompt: "Would you like to save your main progress file now to finalize these changes?"
+      - Explanation: Changes lost if not saved when app closes
+      - Options: [💾 Yes, Save Game] / [No, Continue Without Saving]
+  - **Storage Strategy**:
+    - Templates stored separately from save slots (prevents conflicts)
+    - Can have multiple templates (apartment, office, vacation home, etc.)
+    - Templates are save-file-agnostic (work across different save slots)
+  - **Use Cases**:
+    - Switching between different living spaces (apartment vs house)
+    - Seasonal task list changes (winter vs summer maintenance)
+    - Sharing task lists across devices
+    - Quick reset to predefined task structure
+    - Creating "starter pack" templates for new users
+  - **Safety Features**:
+    - Overwrite warning before loading (prevents accidental data loss)
+    - Save prompt after loading (ensures changes are finalized)
+    - Duplicate name detection when saving
+    - Confirmation dialogs for all destructive actions
+  - **Technical Details**:
+    - Deep clone used to prevent reference issues
+    - Custom modal system (`showCustomPrompt()`) for flexible UI
+    - Mascot provides feedback after all operations
+    - Template selection shows rich metadata (date, counts)
+  - Files modified: index.html (lines 1110-1122), js/chore-system.js (lines 6113-6316)
+
+- ✅ **Intelligent Sorting by Maintenance Priority:**
+  - **Core Feature**: All task lists automatically sort by urgency (lowest freshness first)
+  - **Two-Tier Sorting System**:
+    - **Tier 1 - Category Integrity**: Preserves visual separation between Main Task categories and Group Task categories
+    - **Tier 2 - Urgency Priority**: Within each category, tasks sorted by maintenance % (ascending)
+  - **Sorting Rules**:
+    - Tasks with **lowest freshness** (most urgent) appear **at the top**
+    - Tasks with **highest freshness** (recently completed) appear **at the bottom**
+    - Formula: `sort((a, b) => a.freshness - b.freshness)` (ascending order)
+  - **Application Scope**:
+    - ✅ Regular category views (Daily, Weekly, Monthly, etc.)
+    - ✅ Group category views (Yearly, Deep Clean, etc.)
+    - ✅ Sub-category views (Sweep, Mop, Vacuum)
+    - ✅ Both regular tasks and group tasks within categories
+  - **User Experience**:
+    - Most critical tasks always visible at top of list
+    - Actionable priority without manual sorting
+    - Predictable category structure maintained
+    - No configuration needed - always active
+  - **Examples**:
+    - **Daily Tasks**: Task at 15% freshness → Top, Task at 85% freshness → Bottom
+    - **Weekly Tasks**: 3 tasks sorted: 30% (top), 55% (middle), 92% (bottom)
+    - **Group Tasks**: Same urgency-based sorting within group task section
+  - **Technical Details**:
+    - Sorting applied in `renderCategory()` before HTML generation
+    - Sorting applied in `renderSubCategoryTasks()` for sub-categories
+    - Automatic re-sort on every render/refresh
+    - No performance impact (O(n log n) for small task lists)
+  - Files modified: js/chore-system.js (lines 2052-2064, 2364-2369)
+
+- ✅ **Dual Display System - Total Decay + Live Countdown:**
+  - **Core Feature**: Task cards now show two distinct time values simultaneously
+  - **Data Slot 1 - Total Set Decay Time**: Static display of user's set duration using hierarchical format
+  - **Data Slot 2 - Live Countdown**: Dynamic timer showing time remaining until freshness = 0
+  - **Strict Hierarchical Conversion Rules**:
+    - **RULE 1**: Hours > 24 → Convert to "X Days Y Hours" (e.g., 50 hours → "2 Days 2 Hours")
+    - **RULE 2**: Days > 7 → Convert to "X Weeks Y Days" (e.g., 10 days → "1 Week 3 Days")
+    - **RULE 3**: Weeks → NEVER convert to months (stays as weeks forever, e.g., 12 weeks → "12 Weeks")
+    - **RULE 4**: Months → Only displayed if user explicitly selected "months" during creation
+  - **Visual Design**:
+    - **Ultra-Compact Single Line Layout** (maximum space efficiency):
+      - Format: `Last: 2h ago • Set: 6 Weeks • ⏳ 5w 2d left` (all inline)
+      - Everything flows horizontally with bullet separators (•)
+      - Countdown badge integrated inline with other data
+    - Color coding: Blue for total decay (goal), Green inline badge for countdown (urgency)
+    - Minimal spacing (6px top margin, 6px gap between elements)
+    - Flex-wrap enabled for responsive behavior on narrow screens
+  - **Live Countdown Logic**:
+    - Calculation: `timeLeft = task.decayMs - (Date.now() - task.lastCompleted)`
+    - Scale-adaptive formatting:
+      - ≥1 week: "2w 3d left"
+      - ≥1 day: "3d 5h left"
+      - ≥1 hour: "4h 30m left"
+      - <1 hour: "45m left"
+    - Special states: "Never started" (no lastCompleted), "Decayed" (timeLeft ≤ 0)
+  - **User Experience Benefits**:
+    - ✅ Users see BOTH what they set AND how much time remains
+    - ✅ No confusion about decay duration vs. time remaining
+    - ✅ Clear visual distinction between goal and progress
+    - ✅ Hierarchical display prevents awkward conversions (no more "1.4 months")
+  - **Examples**:
+    - User sets "6 weeks" for task, completes it 1 week ago:
+      - Display: `Last: 1w ago • Set: 6 Weeks • ⏳ 5w 0d left`
+    - User sets "50 hours" for task, completes it 26 hours ago:
+      - Display: `Last: 1d ago • Set: 2 Days 2 Hours • ⏳ 1d 0h left`
+  - **Technical Implementation**:
+    - New function: `formatDecayTimeHierarchical(ms, originalUnit)` (lines 1617-1691)
+    - New function: `formatLiveCountdown(task)` (lines 1693-1740)
+    - Updated task card HTML (lines 1949-1968)
+    - CSS: `.task-meta-dual` container with nested `.meta-row` elements (lines 669-720)
+  - Files modified: js/chore-system.js, css/main.css
+
+- ✅ **Input Integrity System - Preserve User's Chosen Time Units:**
+  - **Core Feature**: System now stores and displays decay time using the EXACT unit the user selected during task creation
+  - **Primary Rule**: If user selects "6 weeks", display ALWAYS shows "6w" - never auto-converts to "1mo"
+  - **Problem Solved**: Eliminates frustrating automatic conversions that cause confusion
+    - OLD: User sets "6 weeks" → System displays "1mo" ❌ (50% error)
+    - NEW: User sets "6 weeks" → System displays "6w" ✅ (100% accurate)
+  - **Technical Implementation**:
+    - **Phase 1**: Added `decayUnit` field to all task objects
+    - **Phase 2**: Modified `formatDecayTime(ms, originalUnit)` to accept and respect original unit parameter
+    - **Phase 3**: Updated task creation to store both `decayMs` AND `decayUnit`
+    - **Phase 4**: Updated task editing to preserve and sync `decayUnit` to linked tasks
+  - **Display Logic**:
+    - **WITH decayUnit** (new tasks): Uses EXACT unit user selected
+      - 6 weeks → "6w" (never "1mo")
+      - 10 weeks → "10w" (never "2mo")
+      - 4 weeks → "4w" (never "1mo")
+    - **WITHOUT decayUnit** (old tasks): Uses smart fallback with improved thresholds
+      - < 24 hours: Display in hours
+      - < 7 days: Display in days
+      - < 8 weeks: Display in weeks (was < 4 weeks)
+      - ≥ 8 weeks: Display in months
+  - **Backward Compatibility**:
+    - `loadData()` automatically assigns `decayUnit` to existing tasks without it
+    - Infers most likely unit based on decayMs divisibility (30 days→months, 7 days→weeks, etc.)
+    - Ensures smooth transition for existing saves
+  - **Examples - Input Integrity Enforced**:
+    | User Input | Stored Unit | Display | Old Buggy Display |
+    |-----------|-------------|---------|-------------------|
+    | 6 weeks | `weeks` | **6w** ✅ | 1mo ❌ |
+    | 10 weeks | `weeks` | **10w** ✅ | 2mo ❌ |
+    | 42 days | `days` | **42d** ✅ | 6w (auto-convert) |
+    | 2 months | `months` | **2mo** ✅ | 2mo ✅ |
+  - **User Experience**:
+    - ✅ User sees EXACTLY what they input
+    - ✅ No more "wait, I set 6 weeks, why does it say 1 month?"
+    - ✅ Transparency and trust in the system
+  - Files modified: js/chore-system.js (lines 1559-1590, 1801, 3035, 3053, 3110, 3148, 3158, 1313-1333)
+
+- ✅ **Group Task Visibility Toggle in Regular Categories:**
+  - **Core Feature**: Simple UI toggle to show/hide linked group tasks in regular category views
+  - **Purpose**: Keeps regular category lists clean and focused on high-frequency tasks
+  - **Default State**: Group tasks are HIDDEN by default (collapsed state)
+  - **Placement**: Toggle button renders **inline** in task list, appearing **after** all regular tasks
+  - **Layout Flow**:
+    1. Regular tasks display first (high-frequency tasks)
+    2. Toggle button appears at bottom: "▶ Show Group Tasks"
+    3. When clicked, group tasks populate **below** the button
+    4. Button changes to: "▼ Hide Group Tasks"
+  - **Visibility Logic**:
+    - Button only shows in regular categories (Daily, Weekly, etc.) that contain group tasks
+    - Hidden in group categories (Shampoo, Deep Cleaning, Trash, etc.)
+    - Hidden if no group tasks exist in the current category
+  - **Identification System**:
+    - Group tasks identified by `linkedCategoryId` pointing to a category with `isGroupCategory: true`
+    - System checks each task's linked category to determine if it's from a group
+  - **Toggle States**:
+    - **Collapsed (Default)**: "▶ Show Group Tasks" - group tasks hidden from view
+    - **Expanded**: "▼ Hide Group Tasks" - group tasks visible in list
+  - **Behavior**:
+    - State persists across sessions (saved in data structure)
+    - Re-renders task list when toggled
+    - Only affects current category view
+    - Does not delete or modify tasks - purely visual filtering
+  - **Technical Implementation**:
+    - Added `showGroupTasksInRegularCategories` boolean to data structure (line 10, default: false)
+    - Toggle function `toggleGroupTaskVisibility()` updates state and re-renders category
+    - `renderCategory()` separates tasks into `regularTasks` and `groupTasks` arrays
+    - Button rendered inline as part of `taskList.innerHTML` (not separate header element)
+    - Rendering order: Regular tasks → Toggle button → Group tasks (if expanded)
+    - Identifies group tasks by checking if `linkedCategoryId` points to group category
+    - CSS animation for expand/collapse icon rotation
+  - **UI Design**:
+    - Blue gradient background to distinguish from task cards and green "Complete All" button
+    - Arrow icon (▶/▼) rotates 90° on expand
+    - Full-width button with 16px vertical margin for spacing
+    - Smooth transitions, hover effects, and shadow on hover
+    - Renders seamlessly within task list flow
+  - Files modified: index.html, js/chore-system.js, css/main.css
+
+- ✅ **Auto-Snooze on Completion Feature:**
+  - **Core Feature**: Automatically re-activates tasks after completion based on their decay time
+  - **Toggle Location**: Settings modal → "⏰ Automatic Task Snooze" card
+  - **Default State**: ON by default for all users (including existing saves via backward compatibility)
+  - **Snooze Rules**:
+    - **Rule 1**: Tasks with decay time ≥1 week (168 hours) → 24-hour auto-snooze
+    - **Rule 2**: Tasks with decay time ≤24 hours → 3-hour auto-snooze
+    - **Rule 3**: Tasks with decay time >24 hours AND <1 week → 8-hour auto-snooze
+  - **Behavior**:
+    - Triggers immediately when any task is marked complete
+    - Applies to individual task completion, bulk sub-category completion, and bulk group completion
+    - Task status changes from "complete" (100% freshness) to "snoozed" with timer
+    - Timer automatically expires after calculated duration, re-activating the task
+    - Manual unsnooze always available - user can re-activate before timer expires
+    - If toggle is OFF, tasks remain complete indefinitely (traditional behavior)
+  - **Technical Implementation**:
+    - Added `autoSnoozeEnabled` boolean to data structure (line 9, default: true)
+    - Logic integrated into `toggleTask()`, `completeAllSubCategoryTasks()`, `completeAllGroupTasks()`
+    - Calculates decay time from `task.decayMs` property
+    - Sets `task.snoozedUntil` timestamp based on calculated snooze duration
+    - Activity log entries created for auto-snooze events
+    - Toggle function `toggleAutoSnoozeSwitch()` with mascot voice feedback
+    - Backward compatibility ensures existing saves default to ON
+  - **UI Components**:
+    - Settings card with toggle switch (matches TTS toggle style)
+    - Explanation text describing feature purpose
+    - Visual rule breakdown showing all three snooze duration rules
+    - Toggle state properly synced in `showSettingsModal()`
+  - Files modified: index.html, js/chore-system.js
+
+- ✅ **Sweep/Mop/Vacuum Sub-Category System (REFACTORED):**
+  - Complete overhaul of Sweep/Mop/Vacuum grouped tasks with sub-categorization
+  - **Phase 1 - Task Creation with Sub-Categories:**
+    - **Smart Auto-Selection:** When adding tasks from SWEEP/MOP/VACUUM sub-views, sub-category is automatically set
+    - No need to ask "What type of task is this?" - system already knows from context
+    - Sub-category selector hidden and auto-filled when in sub-category view
+    - Three sub-category options: 🧹 Sweep, 🪣 Mop, 🌀 Vacuum
+    - Sub-category data saved to task.subCategory field
+    - Applies to both group task and linked standard category task
+  - **Phase 2 - Sub-Category Menu Navigation:**
+    - Sweep/Mop/Vacuum now opens a sub-category menu instead of task list
+    - Three large, tappable buttons with icons: SWEEP, MOP, VACUUM
+    - Mobile-optimized design with gradient buttons and hover effects
+    - Back button returns to dashboard
+  - **Phase 3 - Filtered Task Lists:**
+    - Each sub-category shows only its tasks (filtered by subCategory field)
+    - "COMPLETE ALL [TYPE] TASKS" button positioned at top, with "Tasks" heading below it
+    - Button remains visible at all times (never disappears to prevent UI jumping)
+    - Button is **enabled (green)** when there are incomplete tasks
+    - Button is **disabled (grayed out)** when all tasks are at 100%
+    - Bulk completion with confirmation prompt
+    - All filtered tasks marked complete simultaneously
+    - Syncs with linked tasks automatically
+    - **Full gamification effects**: Staggered confetti/sounds for each task (200ms intervals)
+    - Mission progress updates, log entries, streak celebrations, category completion checks
+    - Creates a cascade of celebrations for satisfying bulk completion experience
+  - **Implementation Details:**
+    - New HTML views: subCategoryMenuView, subCategoryTaskView
+    - New CSS: .subcategory-menu-grid, .subcategory-menu-btn, .btn-complete-all
+    - New JS functions:
+      - showSubCategoryMenu() - Displays sub-category selection screen
+      - showSubCategoryTasks(subCategory) - Shows filtered task list
+      - renderSubCategoryTasks(subCategory) - Renders tasks for specific sub-category
+      - completeAllSubCategoryTasks() - Bulk completion handler
+      - backToSubCategoryMenu() - Navigation back to sub-menu
+      - generateTaskCardHTML(task, category) - Reusable task card renderer
+    - Modified showCategory() to redirect to sub-menu for Sweep/Mop/Vacuum
+    - Modified showAddTaskModal() to show sub-category selector
+    - Modified addTask() to save subCategory metadata
+  - **Smart Task Naming:**
+    - Tasks created from sub-category views use specific name (e.g., "Sweep - Kitchen")
+    - NOT the generic "Sweep/Mop/Vacuum - Kitchen"
+    - Makes task names clearer and more specific
+  - **User Workflow:**
+    - Create task → Select Sweep/Mop/Vacuum → Choose sub-category (Sweep/Mop/Vacuum) → Task saved with metadata
+    - Open Sweep/Mop/Vacuum → Sub-menu appears → Tap SWEEP/MOP/VACUUM → Filtered task list → Complete All button
+    - Task names automatically use the specific sub-category (e.g., "Mop - Living Room")
+  - **Bug Fixes & UX Improvements:**
+    - **CRITICAL FIX #1:** Sub-category buttons (SWEEP/MOP/VACUUM) no longer appear on main dashboard
+    - Fixed sub-category views not being properly hidden when returning to dashboard
+    - Updated render() function to explicitly hide sub-category views in all non-subcategory contexts
+    - **CRITICAL FIX #2:** After adding task in sub-category view, stays in filtered view (doesn't show all tasks)
+    - System now calls renderSubCategoryTasks() instead of render() when in sub-category context
+    - Complete All button state properly updated after task creation
+    - **CRITICAL FIX #2B:** All task actions now maintain filtered view (completing, snoozing, resuming, deleting tasks)
+    - Updated toggleTask(), confirmSnooze(), unsnoozeTask(), deleteTask() to be context-aware
+    - All functions check if currentSubCategory exists and render filtered list accordingly
+    - Complete All button state updates after every task action
+    - **BUG FIX #3:** Complete All button positioned in normal document flow
+    - Button appears below header title, above "Tasks" section in natural page layout
+    - Normal scroll behavior: button scrolls up and out of view when user scrolls down
+    - Sub-category view has `padding-top: 80px` to account for internal header (SWEEP/MOP/VACUUM Tasks title)
+    - Button has `margin-bottom: 15px` - tight spacing between button and tasks
+    - No clipping with header text in any sub-category view
+    - Button, "Tasks" heading, and all content scroll naturally together
+    - Button stays visible when at top of page (prevents UI jumping when tasks complete)
+    - Button changes to grayed out/disabled state when all tasks are 100%
+    - Green/enabled when incomplete tasks exist
+    - Enhanced button styling: full width, larger padding, better shadows, uppercase text
+    - **Natural page behavior - button scrolls with content like any normal element**
+    - **BUG FIX #4:** Complete All button now triggers full gamification effects
+    - Added confetti and sound effects for each task (staggered at 200ms intervals)
+    - Mission progress updates and log entries for each completion
+    - Streak celebrations and milestone checks
+    - Category completion celebration if all tasks reach 100%
+    - Creates satisfying cascade of visual/audio feedback matching individual task completions
+    - Fixed title overlap issue (both titles showing at once)
+    - Fixed UI elements not hiding in sub-category task view
+    - Fixed task naming to use specific sub-category instead of full group name
+    - Eliminated redundant "What type of task is this?" prompt when already in sub-category view
+    - System now intelligently detects context and auto-selects sub-category
+  - Files modified: index.html, js/chore-system.js, css/main.css
+
+- ✅ **File Select Modal Z-Index Fix (NEW):**
+  - Fixed z-index issue where save/load/view saves modals appeared behind settings modal
+  - Changed `.file-select-modal` z-index from 1100 to 2100 (above settings modal at 2000)
+  - Save Progress, Load, and View All Saves windows now appear correctly on top
+  - Implementation: Updated z-index in `css/main.css`
+
+- ✅ **Removed Battle System Combat Tester from Settings (NEW):**
+  - Removed "⚔️ Battle System" card from settings modal
+  - Removed "🎯 Test Combat System" button
+  - Removed "Data Disk combat testing" section (no longer needed)
+  - Cleaned up settings UI for production use
+  - Implementation: Removed HTML section from `index.html` lines 1132-1139
+
+- ✅ **Settings Save Confirmation Z-Index Fix:**
+  - Fixed z-index issue where save confirmation alert appeared behind settings modal
+  - Alert now shows BEFORE reopening settings modal
+  - Ensures confirmation message is visible on top of all UI elements
+  - Affected functions: `createNewSave()` and `overwriteSave()`
+  - Implementation: Swapped order of `alert()` and `showSettingsModal()` calls
+
+- ✅ **Circuit Breaker Bubble Dashboard-Only Visibility (NEW):**
+  - Circuit Breaker bubble now only visible on main dashboard/home screen
+  - Hidden when viewing regular categories
+  - Hidden when viewing Self Care
+  - Automatically restored when returning to dashboard
+  - Implementation: Added `battleModeBubble.classList.add('hidden')` to `showCategory()` function
+
+- ✅ **Self Care FAB Button Hidden (NEW):**
+  - FAB (+) button now hidden in Self Care view
+  - Prevents users from adding custom tasks to predefined self-care groups
+  - Maintains integrity of curated wellness tasks
+  - Button automatically restored when viewing regular categories
+  - Implementation: Added `.hidden` class toggle in `showSelfCare()` and `showCategory()` functions
 
 **Recent Changes (Oct 25, 2025):**
 - ✅ **Robot Self Care Reminders (NEW):**

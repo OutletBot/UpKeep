@@ -1,3 +1,7 @@
+        // Global Default Task List Template - Loaded from js/default-task-list.js
+        // Contains the complete household task management system from "THIS" save file
+        // DEFAULT_TASK_LIST constant is now defined in that external file
+
         const app = {
             data: {
                 categories: [],
@@ -6,6 +10,8 @@
                 currentSaveFile: 'default',
                 lastSaveTime: null,
                 ttsEnabled: true,
+                autoSnoozeEnabled: true,
+                showGroupTasksInRegularCategories: false,
                 activityLog: [],
                 voiceStyle: 'robotic',
                 voicePitch: 1.5,
@@ -766,6 +772,10 @@
                 }
                 
                 document.getElementById('itemPromptContent').innerHTML = htmlContent;
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 modal.classList.add('active');
             },
             
@@ -1298,6 +1308,38 @@
                         this.data.scrappyRate = 1.3;
                     }
                     
+                    // Ensure auto-snooze setting exists (default ON for backward compatibility)
+                    if (this.data.autoSnoozeEnabled === undefined) {
+                        this.data.autoSnoozeEnabled = true;
+                    }
+                    
+                    // Ensure group task visibility toggle exists (default OFF/hidden for backward compatibility)
+                    if (this.data.showGroupTasksInRegularCategories === undefined) {
+                        this.data.showGroupTasksInRegularCategories = false;
+                    }
+                    
+                    // INPUT INTEGRITY: Ensure all tasks have decayUnit for accurate display
+                    // This preserves user's chosen unit (e.g., "6 weeks" stays as "6w", never converts to "1mo")
+                    this.data.categories.forEach(category => {
+                        if (category.tasks) {
+                            category.tasks.forEach(task => {
+                                if (!task.decayUnit && task.decayMs) {
+                                    // Backward compatibility: infer most likely unit from decayMs
+                                    const day = 24 * 60 * 60 * 1000;
+                                    if (task.decayMs % (30 * day) === 0) {
+                                        task.decayUnit = 'months';
+                                    } else if (task.decayMs % (7 * day) === 0) {
+                                        task.decayUnit = 'weeks';
+                                    } else if (task.decayMs % day === 0) {
+                                        task.decayUnit = 'days';
+                                    } else {
+                                        task.decayUnit = 'hours';
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    
                     // Ensure itemInventory exists (for backward compatibility with old saves)
                     if (!this.data.itemInventory) {
                         this.data.itemInventory = {
@@ -1368,6 +1410,7 @@
                                         id: Date.now() + 1,
                                         name: 'Wipe down counters',
                                         decayMs: 2 * 24 * 60 * 60 * 1000, // 2 days
+                                        decayUnit: 'days',
                                         lastCompleted: Date.now() - (1 * 24 * 60 * 60 * 1000), // 1 day ago
                                         freshness: 50
                                     },
@@ -1375,6 +1418,7 @@
                                         id: Date.now() + 2,
                                         name: 'Clean stovetop',
                                         decayMs: 3 * 24 * 60 * 60 * 1000, // 3 days
+                                        decayUnit: 'days',
                                         lastCompleted: Date.now() - (2 * 24 * 60 * 60 * 1000), // 2 days ago
                                         freshness: 33
                                     }
@@ -1388,6 +1432,7 @@
                                         id: Date.now() + 101,
                                         name: 'Clean toilet',
                                         decayMs: 7 * 24 * 60 * 60 * 1000, // 7 days
+                                        decayUnit: 'weeks',
                                         lastCompleted: Date.now() - (3 * 24 * 60 * 60 * 1000), // 3 days ago
                                         freshness: 57
                                     }
@@ -1544,15 +1589,162 @@
                 return `${months}mo ago`;
             },
 
-            formatDecayTime(ms) {
+            formatDecayTime(ms, originalUnit) {
+                // STRICT INPUT INTEGRITY: If originalUnit is provided, use it exclusively
+                // This ensures "6 weeks" ALWAYS displays as "6w", never auto-converts to "1mo"
+                if (originalUnit) {
+                    const day = 24 * 60 * 60 * 1000;
+                    switch (originalUnit) {
+                        case 'hours':
+                            const hours = Math.round(ms / (60 * 60 * 1000));
+                            return `${hours}h`;
+                        case 'days':
+                            const days = Math.round(ms / day);
+                            return `${days}d`;
+                        case 'weeks':
+                            const weeks = Math.round(ms / (7 * day));
+                            return `${weeks}w`;
+                        case 'months':
+                            const months = Math.round(ms / (30 * day));
+                            return `${months}mo`;
+                    }
+                }
+                
+                // FALLBACK: Only used for old tasks without stored unit (backward compatibility)
                 const hours = ms / (60 * 60 * 1000);
                 if (hours < 24) return `${Math.round(hours)}h`;
                 const days = hours / 24;
                 if (days < 7) return `${Math.round(days)}d`;
                 const weeks = days / 7;
-                if (weeks < 4) return `${Math.round(weeks)}w`;
+                // Display as weeks if less than 8 weeks (56 days) to avoid "6 weeks = 1 month" error
+                if (weeks < 8) return `${Math.round(weeks)}w`;
                 const months = days / 30;
                 return `${Math.round(months)}mo`;
+            },
+
+            // STRICT HIERARCHICAL CONVERSION - Full human-readable format
+            // RULE 1: Hours > 24 → Convert to "X Days Y Hours"
+            // RULE 2: Days > 7 → Convert to "X Weeks Y Days"  
+            // RULE 3: Weeks → NEVER convert to months (stays as weeks forever)
+            // RULE 4: Months → Only if explicitly set by user
+            formatDecayTimeHierarchical(ms, originalUnit) {
+                const hour = 60 * 60 * 1000;
+                const day = 24 * hour;
+                const week = 7 * day;
+                const month = 30 * day;
+
+                // If user explicitly set months, display in months
+                if (originalUnit === 'months') {
+                    const totalMonths = Math.floor(ms / month);
+                    const remainingDays = Math.floor((ms % month) / day);
+                    if (remainingDays > 0) {
+                        return `${totalMonths} Month${totalMonths !== 1 ? 's' : ''} ${remainingDays} Day${remainingDays !== 1 ? 's' : ''}`;
+                    }
+                    return `${totalMonths} Month${totalMonths !== 1 ? 's' : ''}`;
+                }
+
+                // If user set weeks, display in weeks (NEVER convert to months)
+                if (originalUnit === 'weeks') {
+                    const totalWeeks = Math.floor(ms / week);
+                    const remainingDays = Math.floor((ms % week) / day);
+                    if (remainingDays > 0) {
+                        return `${totalWeeks} Week${totalWeeks !== 1 ? 's' : ''} ${remainingDays} Day${remainingDays !== 1 ? 's' : ''}`;
+                    }
+                    return `${totalWeeks} Week${totalWeeks !== 1 ? 's' : ''}`;
+                }
+
+                // If user set days, convert to weeks if > 7 days
+                if (originalUnit === 'days') {
+                    const totalDays = Math.floor(ms / day);
+                    if (totalDays >= 7) {
+                        const weeks = Math.floor(totalDays / 7);
+                        const days = totalDays % 7;
+                        if (days > 0) {
+                            return `${weeks} Week${weeks !== 1 ? 's' : ''} ${days} Day${days !== 1 ? 's' : ''}`;
+                        }
+                        return `${weeks} Week${weeks !== 1 ? 's' : ''}`;
+                    }
+                    return `${totalDays} Day${totalDays !== 1 ? 's' : ''}`;
+                }
+
+                // If user set hours, convert to days if > 24 hours
+                if (originalUnit === 'hours') {
+                    const totalHours = Math.floor(ms / hour);
+                    if (totalHours >= 24) {
+                        const days = Math.floor(totalHours / 24);
+                        const hours = totalHours % 24;
+                        if (hours > 0) {
+                            return `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''}`;
+                        }
+                        return `${days} Day${days !== 1 ? 's' : ''}`;
+                    }
+                    return `${totalHours} Hour${totalHours !== 1 ? 's' : ''}`;
+                }
+
+                // Fallback for tasks without unit
+                const totalDays = Math.floor(ms / day);
+                if (totalDays >= 7) {
+                    const weeks = Math.floor(totalDays / 7);
+                    const days = totalDays % 7;
+                    if (days > 0) {
+                        return `${weeks} Week${weeks !== 1 ? 's' : ''} ${days} Day${days !== 1 ? 's' : ''}`;
+                    }
+                    return `${weeks} Week${weeks !== 1 ? 's' : ''}`;
+                }
+                if (totalDays > 0) {
+                    return `${totalDays} Day${totalDays !== 1 ? 's' : ''}`;
+                }
+                const totalHours = Math.floor(ms / hour);
+                return `${totalHours} Hour${totalHours !== 1 ? 's' : ''}`;
+            },
+
+            // LIVE COUNTDOWN - Shows time remaining until freshness = 0
+            formatLiveCountdown(task) {
+                if (!task.lastCompleted) {
+                    return 'Never started';
+                }
+
+                const elapsed = Date.now() - task.lastCompleted;
+                const timeLeft = task.decayMs - elapsed;
+
+                if (timeLeft <= 0) {
+                    return 'Decayed';
+                }
+
+                const hour = 60 * 60 * 1000;
+                const day = 24 * hour;
+                const week = 7 * day;
+
+                // Format countdown based on time scale
+                if (timeLeft >= week) {
+                    const weeks = Math.floor(timeLeft / week);
+                    const days = Math.floor((timeLeft % week) / day);
+                    if (days > 0) {
+                        return `${weeks}w ${days}d left`;
+                    }
+                    return `${weeks}w left`;
+                }
+
+                if (timeLeft >= day) {
+                    const days = Math.floor(timeLeft / day);
+                    const hours = Math.floor((timeLeft % day) / hour);
+                    if (hours > 0) {
+                        return `${days}d ${hours}h left`;
+                    }
+                    return `${days}d left`;
+                }
+
+                if (timeLeft >= hour) {
+                    const hours = Math.floor(timeLeft / hour);
+                    const minutes = Math.floor((timeLeft % hour) / (60 * 1000));
+                    if (minutes > 0) {
+                        return `${hours}h ${minutes}m left`;
+                    }
+                    return `${hours}h left`;
+                }
+
+                const minutes = Math.floor(timeLeft / (60 * 1000));
+                return `${minutes}m left`;
             },
 
             getDecayMs(value, unit) {
@@ -1570,18 +1762,26 @@
             render() {
                 const dashboardView = document.getElementById('dashboardView');
                 const categoryView = document.getElementById('categoryView');
+                const subCategoryMenuView = document.getElementById('subCategoryMenuView');
+                const subCategoryTaskView = document.getElementById('subCategoryTaskView');
                 
                 if (this.data.currentCategoryId === 'SELFCARE') {
                     dashboardView.classList.remove('active');
                     categoryView.classList.add('active');
+                    subCategoryMenuView.classList.remove('active');
+                    subCategoryTaskView.classList.remove('active');
                     this.renderSelfCare();
                 } else if (this.data.currentCategoryId) {
                     dashboardView.classList.remove('active');
                     categoryView.classList.add('active');
+                    subCategoryMenuView.classList.remove('active');
+                    subCategoryTaskView.classList.remove('active');
                     this.renderCategory();
                 } else {
                     dashboardView.classList.add('active');
                     categoryView.classList.remove('active');
+                    subCategoryMenuView.classList.remove('active');
+                    subCategoryTaskView.classList.remove('active');
                     this.renderDashboard();
                 }
                 
@@ -1685,23 +1885,8 @@
                 }
             },
 
-            renderCategory() {
-                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
-                if (!category) return;
-
-                document.getElementById('categoryTitle').textContent = category.name;
-                
-                const taskList = document.getElementById('taskList');
-                if (!category.tasks || category.tasks.length === 0) {
-                    taskList.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
-                            <div class="empty-text">No tasks yet. Add one to start tracking!</div>
-                        </div>
-                    `;
-                } else {
-                    taskList.innerHTML = category.tasks.map(task => {
-                        const freshness = task.freshness || 0;
+            generateTaskCardHTML(task, category) {
+                const freshness = task.freshness || 0;
                         const isSnoozed = task.snoozedUntil && task.snoozedUntil > Date.now();
                         
                         // Calculate countdown for snoozed tasks
@@ -1769,10 +1954,19 @@
                                     </div>
                                     <div class="task-info">
                                         <div class="task-name">${task.name}${linkedBadge}</div>
-                                        <div class="task-meta">
-                                            ${isSnoozed ? `💤 Snoozed - ${countdownText}` :
-                                              `Last done: ${this.formatTimeAgo(task.lastCompleted)} • Decays in ${this.formatDecayTime(task.decayMs)}`}
-                                        </div>
+                                        ${isSnoozed ? `
+                                            <div class="task-meta">
+                                                💤 Snoozed - ${countdownText}
+                                            </div>
+                                        ` : `
+                                            <div class="task-meta-oneline">
+                                                <span class="meta-item">Last: ${this.formatTimeAgo(task.lastCompleted)}</span>
+                                                <span class="meta-separator">•</span>
+                                                <span class="meta-item meta-decay-inline">Set: ${this.formatDecayTimeHierarchical(task.decayMs, task.decayUnit)}</span>
+                                                <span class="meta-separator">•</span>
+                                                <span class="countdown-badge-inline">⏳ ${this.formatLiveCountdown(task)}</span>
+                                            </div>
+                                        `}
                                     </div>
                                     <div class="task-actions">
                                         <button class="edit-btn-img" onclick="app.showEditTaskModal(${task.id})"><img src="Imag/Edit.png" alt="Edit"></button>
@@ -1800,8 +1994,110 @@
                                 ${stepsDisplay}
                             </div>
                         `;
-                    }).join('');
+            },
+            
+            renderCategory() {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category) return;
+
+                document.getElementById('categoryTitle').textContent = category.name;
+                
+                // Show/hide Complete All button for group categories
+                const completeAllGroupBtn = document.getElementById('completeAllGroupBtn');
+                if (completeAllGroupBtn) {
+                    if (category.isGroupCategory && category.tasks && category.tasks.length > 0) {
+                        // Update button text with category name
+                        completeAllGroupBtn.textContent = `COMPLETE ALL ${category.name.toUpperCase()} TASKS`;
+                        
+                        // Check if there are incomplete tasks
+                        const incompleteTasks = category.tasks.filter(t => t.freshness < 100);
+                        completeAllGroupBtn.disabled = incompleteTasks.length === 0;
+                        completeAllGroupBtn.style.display = 'block';
+                    } else {
+                        completeAllGroupBtn.style.display = 'none';
+                    }
                 }
+                
+                // Handle Group Task Visibility Toggle (only for regular categories)
+                // Hide the toggle button in header area - we'll render it inline
+                const groupTaskToggleBtn = document.getElementById('groupTaskToggleBtn');
+                if (groupTaskToggleBtn) {
+                    groupTaskToggleBtn.style.display = 'none';
+                }
+                
+                const taskList = document.getElementById('taskList');
+                
+                if (!category.tasks || category.tasks.length === 0) {
+                    taskList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+                            <div class="empty-text">No tasks yet. Add one to start tracking!</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Separate regular tasks from group tasks
+                const regularTasks = [];
+                const groupTasks = [];
+                
+                if (!category.isGroupCategory) {
+                    category.tasks.forEach(task => {
+                        if (task.linkedCategoryId) {
+                            const linkedCat = this.data.categories.find(c => c.id === task.linkedCategoryId);
+                            if (linkedCat && linkedCat.isGroupCategory) {
+                                groupTasks.push(task);
+                                return;
+                            }
+                        }
+                        regularTasks.push(task);
+                    });
+                } else {
+                    // If this is a group category, all tasks are regular
+                    regularTasks.push(...category.tasks);
+                }
+                
+                // INTELLIGENT SORTING: Sort tasks by maintenance priority (lowest freshness first = most urgent)
+                // This preserves category groupings while prioritizing urgent tasks within each group
+                regularTasks.sort((a, b) => {
+                    const freshnessA = a.freshness || 0;
+                    const freshnessB = b.freshness || 0;
+                    return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
+                });
+                
+                groupTasks.sort((a, b) => {
+                    const freshnessA = a.freshness || 0;
+                    const freshnessB = b.freshness || 0;
+                    return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
+                });
+                
+                // Build HTML: Regular tasks + Toggle button (if needed) + Group tasks (if expanded)
+                let taskListHTML = '';
+                
+                // 1. Render regular tasks (now sorted by urgency)
+                taskListHTML += regularTasks.map(task => this.generateTaskCardHTML(task, category)).join('');
+                
+                // 2. If there are group tasks, add inline toggle button
+                if (groupTasks.length > 0 && !category.isGroupCategory) {
+                    const isExpanded = this.data.showGroupTasksInRegularCategories;
+                    const icon = isExpanded ? '▼' : '▶';
+                    const text = isExpanded ? 'Hide Group Tasks' : 'Show Group Tasks';
+                    const expandedClass = isExpanded ? 'expanded' : '';
+                    
+                    taskListHTML += `
+                        <button class="group-task-toggle-btn-inline ${expandedClass}" onclick="app.toggleGroupTaskVisibility()">
+                            <span class="group-task-toggle-icon">${icon}</span>
+                            <span>${text}</span>
+                        </button>
+                    `;
+                    
+                    // 3. If expanded, render group tasks below the button
+                    if (isExpanded) {
+                        taskListHTML += groupTasks.map(task => this.generateTaskCardHTML(task, category)).join('');
+                    }
+                }
+                
+                taskList.innerHTML = taskListHTML;
             },
             
             renderSelfCare() {
@@ -1933,6 +2229,12 @@
 
             showDashboard() {
                 this.data.currentCategoryId = null;
+                this.data.currentSubCategory = null; // Clear sub-category state
+                
+                // Hide sub-category views
+                document.getElementById('subCategoryMenuView').classList.remove('active');
+                document.getElementById('subCategoryTaskView').classList.remove('active');
+                
                 // Restore main background
                 document.body.style.backgroundImage = `url('Imag/Main Background 2.png')`;
                 // Reset category title margin
@@ -1950,24 +2252,373 @@
 
             showCategory(id) {
                 this.data.currentCategoryId = id;
+                const category = this.data.categories.find(c => c.id === id);
+                
+                // Check if this is Sweep/Mop/Vacuum - show sub-category menu instead
+                if (category && category.name === 'Sweep/Mop/Vacuum') {
+                    this.showSubCategoryMenu();
+                    return;
+                }
+                
                 // Reset category title margin
                 document.getElementById('categoryTitle').style.marginTop = '';
                 // Change background to category-specific if available, otherwise keep main background
-                const category = this.data.categories.find(c => c.id === id);
                 if (category && this.ui.categoryBackgrounds[category.name]) {
                     document.body.style.backgroundImage = `url('${this.ui.categoryBackgrounds[category.name]}')`;
                 }
                 // For custom categories or categories without specific backgrounds, keep main background
-                // Hide settings, currency display, missions bubble, store bubble, and robot bubble
+                // Hide settings, currency display, missions bubble, store bubble, battle bubble, and robot bubble
                 document.getElementById('settingsBtn').classList.add('hidden');
                 document.getElementById('currencyDisplay').classList.add('hidden');
                 document.getElementById('missionsBubble').classList.add('hidden');
                 document.querySelector('.robot-store-bubble').classList.add('hidden');
                 document.querySelector('.robot-select-bubble').classList.add('hidden');
+                document.getElementById('battleModeBubble').classList.add('hidden');
+                // Show the FAB button in regular categories
+                const categoryFab = document.querySelector('#categoryView .fab');
+                if (categoryFab) categoryFab.classList.remove('hidden');
                 this.render();
                 setTimeout(() => this.mascotGreet(), 500);
             },
             
+            showSubCategoryMenu() {
+                // Hide all views
+                document.getElementById('dashboardView').classList.remove('active');
+                document.getElementById('categoryView').classList.remove('active');
+                document.getElementById('subCategoryTaskView').classList.remove('active');
+                
+                // Show sub-category menu view
+                document.getElementById('subCategoryMenuView').classList.add('active');
+                
+                // Hide UI elements
+                document.getElementById('settingsBtn').classList.add('hidden');
+                document.getElementById('currencyDisplay').classList.add('hidden');
+                document.getElementById('missionsBubble').classList.add('hidden');
+                document.querySelector('.robot-store-bubble').classList.add('hidden');
+                document.querySelector('.robot-select-bubble').classList.add('hidden');
+                document.getElementById('battleModeBubble').classList.add('hidden');
+            },
+            
+            showSubCategoryTasks(subCategory) {
+                this.data.currentSubCategory = subCategory;
+                
+                // Hide other views
+                document.getElementById('dashboardView').classList.remove('active');
+                document.getElementById('categoryView').classList.remove('active');
+                document.getElementById('subCategoryMenuView').classList.remove('active');
+                
+                // Show sub-category task view
+                document.getElementById('subCategoryTaskView').classList.add('active');
+                
+                // Hide UI elements (same as regular category view)
+                document.getElementById('settingsBtn').classList.add('hidden');
+                document.getElementById('currencyDisplay').classList.add('hidden');
+                document.getElementById('missionsBubble').classList.add('hidden');
+                document.querySelector('.robot-store-bubble').classList.add('hidden');
+                document.querySelector('.robot-select-bubble').classList.add('hidden');
+                document.getElementById('battleModeBubble').classList.add('hidden');
+                
+                // Update title
+                const subCategoryNames = {
+                    'sweep': 'SWEEP Tasks',
+                    'mop': 'MOP Tasks',
+                    'vacuum': 'VACUUM Tasks'
+                };
+                document.getElementById('subCategoryTaskTitle').textContent = subCategoryNames[subCategory] || 'Tasks';
+                
+                // Update Complete All button text
+                const completeAllBtn = document.getElementById('completeAllBtn');
+                const completeAllLabels = {
+                    'sweep': 'COMPLETE ALL SWEEP TASKS',
+                    'mop': 'COMPLETE ALL MOP TASKS',
+                    'vacuum': 'COMPLETE ALL VACUUM TASKS'
+                };
+                completeAllBtn.textContent = completeAllLabels[subCategory] || 'COMPLETE ALL TASKS';
+                
+                // Render filtered tasks
+                this.renderSubCategoryTasks(subCategory);
+                
+                // Update Complete All button state (always visible, but disabled if all tasks are 100%)
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (category && category.tasks) {
+                    const filteredTasks = category.tasks.filter(t => t.subCategory === subCategory);
+                    const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                    
+                    // Always show button, but disable if no incomplete tasks
+                    completeAllBtn.disabled = incompleteTasks.length === 0;
+                }
+            },
+            
+            backToSubCategoryMenu() {
+                this.data.currentSubCategory = null;
+                this.showSubCategoryMenu();
+            },
+            
+            renderSubCategoryTasks(subCategory) {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks) {
+                    document.getElementById('subCategoryTaskList').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No tasks yet. Add a task to get started!</p>';
+                    return;
+                }
+                
+                // Filter tasks by sub-category
+                const filteredTasks = category.tasks.filter(t => t.subCategory === subCategory);
+                
+                if (filteredTasks.length === 0) {
+                    document.getElementById('subCategoryTaskList').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No tasks in this category yet. Add a task to get started!</p>';
+                    return;
+                }
+                
+                // INTELLIGENT SORTING: Sort sub-category tasks by maintenance priority (lowest freshness first = most urgent)
+                filteredTasks.sort((a, b) => {
+                    const freshnessA = a.freshness || 0;
+                    const freshnessB = b.freshness || 0;
+                    return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
+                });
+                
+                // Render tasks using the same rendering logic as regular categories
+                const taskListHTML = filteredTasks.map(task => {
+                    // Use existing task rendering logic - we'll call the same function that renderCategory uses
+                    return this.generateTaskCardHTML(task, category);
+                }).join('');
+                
+                document.getElementById('subCategoryTaskList').innerHTML = taskListHTML;
+            },
+            
+            completeAllSubCategoryTasks() {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks || !this.data.currentSubCategory) return;
+                
+                // Filter tasks by current sub-category
+                const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                
+                if (filteredTasks.length === 0) return;
+                
+                // Confirm with user
+                const subCategoryLabel = this.data.currentSubCategory.toUpperCase();
+                if (!confirm(`Complete all ${subCategoryLabel} tasks? This will mark ${filteredTasks.length} task(s) as complete.`)) {
+                    return;
+                }
+                
+                // Update mission progress for each task
+                this.updateChoreProgress();
+                
+                // Complete all filtered tasks with gamification effects
+                filteredTasks.forEach((task, index) => {
+                    task.lastCompleted = Date.now();
+                    task.freshness = 100;
+                    
+                    // AUTO-SNOOZE FEATURE: Check if auto-snooze is enabled
+                    if (this.data.autoSnoozeEnabled) {
+                        const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                        let snoozeHours;
+                        
+                        if (decayTimeHours >= 168) {
+                            snoozeHours = 24;
+                        } else if (decayTimeHours <= 24) {
+                            snoozeHours = 3;
+                        } else {
+                            snoozeHours = 8;
+                        }
+                        
+                        task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                    } else {
+                        delete task.snoozedUntil; // Clear any snooze if auto-snooze disabled
+                    }
+                    
+                    // Reset steps
+                    if (task.steps && task.steps.length > 0) {
+                        task.steps.forEach(step => {
+                            step.completed = false;
+                        });
+                    }
+                    
+                    // Sync linked task if exists
+                    if (task.linkedTaskId && task.linkedCategoryId) {
+                        this.syncLinkedTaskCompletion(task.id);
+                    }
+                    
+                    // Log each completion
+                    if (this.addLogEntry) {
+                        this.addLogEntry(
+                            'completed',
+                            `Completed: ${task.name}`,
+                            `Part of ${subCategoryLabel} bulk completion`
+                        );
+                    }
+                    
+                    // GAMIFICATION: Celebrate each task completion with staggered timing
+                    if (typeof Gamification !== 'undefined') {
+                        setTimeout(() => {
+                            // Find the task card element for visual effects
+                            const taskCards = document.querySelectorAll('.task-card');
+                            const taskElement = taskCards[index];
+                            
+                            if (taskElement) {
+                                // Celebrate with confetti and sounds
+                                Gamification.celebrateTaskCompletion(taskElement, task.name);
+                            }
+                        }, index * 200); // Stagger celebrations by 200ms each
+                    }
+                });
+                
+                this.saveData();
+                this.renderSubCategoryTasks(this.data.currentSubCategory);
+                
+                // Update Complete All button state (keep visible but disable)
+                const completeAllBtn = document.getElementById('completeAllBtn');
+                const remainingTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory && t.freshness < 100);
+                if (completeAllBtn) {
+                    completeAllBtn.disabled = remainingTasks.length === 0;
+                }
+                
+                // GAMIFICATION: Show streak updates and check for category completion
+                if (typeof Gamification !== 'undefined') {
+                    // Update and check streak
+                    const currentStreak = Gamification.updateStreak();
+                    
+                    // Show streak notification for milestones
+                    setTimeout(() => {
+                        if (currentStreak > 1 && Gamification.checkStreakMilestone(currentStreak)) {
+                            Gamification.celebrateMilestone(
+                                currentStreak,
+                                `${currentStreak} days in a row! You're unstoppable!`
+                            );
+                        } else if (currentStreak > 1 && currentStreak % 2 === 0) {
+                            // Show streak every 2 days
+                            Gamification.celebrateStreak(currentStreak);
+                        }
+                    }, filteredTasks.length * 200 + 500);
+                    
+                    // Check if entire category is now 100% complete
+                    setTimeout(() => {
+                        const allComplete = category.tasks.every(t => t.freshness === 100);
+                        if (allComplete) {
+                            Gamification.celebrateCategoryCompletion(category.name);
+                        }
+                    }, filteredTasks.length * 200 + 1000);
+                }
+                
+                // Show success message
+                setTimeout(() => {
+                    this.mascotSpeak(`Great job! All ${subCategoryLabel} tasks completed!`);
+                }, filteredTasks.length * 200 + 300);
+            },
+            
+            completeAllGroupTasks() {
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks || !category.isGroupCategory) return;
+                
+                const allTasks = category.tasks;
+                if (allTasks.length === 0) return;
+                
+                // Confirm with user
+                const categoryName = category.name.toUpperCase();
+                if (!confirm(`Complete all ${categoryName} tasks? This will mark ${allTasks.length} task(s) as complete.`)) {
+                    return;
+                }
+                
+                // Update mission progress for each task
+                this.updateChoreProgress();
+                
+                // Complete all tasks with gamification effects
+                allTasks.forEach((task, index) => {
+                    task.lastCompleted = Date.now();
+                    task.freshness = 100;
+                    
+                    // AUTO-SNOOZE FEATURE: Check if auto-snooze is enabled
+                    if (this.data.autoSnoozeEnabled) {
+                        const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                        let snoozeHours;
+                        
+                        if (decayTimeHours >= 168) {
+                            snoozeHours = 24;
+                        } else if (decayTimeHours <= 24) {
+                            snoozeHours = 3;
+                        } else {
+                            snoozeHours = 8;
+                        }
+                        
+                        task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                    } else {
+                        delete task.snoozedUntil; // Clear any snooze if auto-snooze disabled
+                    }
+                    
+                    // Reset steps if they exist
+                    if (task.steps && task.steps.length > 0) {
+                        task.steps.forEach(step => {
+                            step.completed = false;
+                        });
+                    }
+                    
+                    // Sync linked task if exists
+                    if (task.linkedTaskId && task.linkedCategoryId) {
+                        this.syncLinkedTaskCompletion(task.id);
+                    }
+                    
+                    // Log each completion
+                    if (this.addLogEntry) {
+                        this.addLogEntry(
+                            'completed',
+                            `Completed: ${task.name}`,
+                            `Part of ${categoryName} bulk completion`
+                        );
+                    }
+                    
+                    // GAMIFICATION: Celebrate each task completion with staggered timing
+                    if (typeof Gamification !== 'undefined') {
+                        setTimeout(() => {
+                            // Find the task card element for visual effects
+                            const taskCards = document.querySelectorAll('.task-card');
+                            const taskElement = taskCards[index];
+                            
+                            if (taskElement) {
+                                // Celebrate with confetti and sounds
+                                Gamification.celebrateTaskCompletion(taskElement, task.name);
+                            }
+                        }, index * 200); // Stagger celebrations by 200ms each
+                    }
+                });
+                
+                this.saveData();
+                this.renderCategory();
+                
+                // Update Complete All button state (keep visible but disable)
+                const completeAllGroupBtn = document.getElementById('completeAllGroupBtn');
+                if (completeAllGroupBtn) {
+                    completeAllGroupBtn.disabled = true;
+                }
+                
+                // GAMIFICATION: Show streak updates and check for category completion
+                if (typeof Gamification !== 'undefined') {
+                    // Update and check streak
+                    const currentStreak = Gamification.updateStreak();
+                    
+                    // Show streak notification for milestones
+                    setTimeout(() => {
+                        if (currentStreak > 1 && Gamification.checkStreakMilestone(currentStreak)) {
+                            Gamification.celebrateMilestone(
+                                currentStreak,
+                                `${currentStreak} days in a row! You're unstoppable!`
+                            );
+                        } else if (currentStreak > 1 && currentStreak % 2 === 0) {
+                            // Show streak every 2 days
+                            Gamification.celebrateStreak(currentStreak);
+                        }
+                    }, allTasks.length * 200 + 500);
+                    
+                    // Category completion celebration
+                    setTimeout(() => {
+                        Gamification.celebrateCategoryCompletion(category.name);
+                    }, allTasks.length * 200 + 1000);
+                }
+                
+                // Show success message
+                setTimeout(() => {
+                    this.mascotSpeak(`Amazing! All ${categoryName} tasks completed!`);
+                }, allTasks.length * 200 + 300);
+            },
+
             showSelfCare() {
                 // Check for daily reset
                 this.checkSelfCareReset();
@@ -1980,6 +2631,9 @@
                 document.querySelector('.robot-store-bubble').classList.add('hidden');
                 document.querySelector('.robot-select-bubble').classList.add('hidden');
                 document.getElementById('battleModeBubble').classList.add('hidden');
+                // Hide the FAB button in Self Care
+                const categoryFab = document.querySelector('#categoryView .fab');
+                if (categoryFab) categoryFab.classList.add('hidden');
                 this.render();
             },
             
@@ -2040,6 +2694,10 @@
                     if (allCompleted && !group.bonusEarned) {
                         // Store the group ID for later use in reward functions
                         this.data.currentBonusGroupId = groupId;
+                        
+                        // Lock body scroll
+                        document.body.style.overflow = 'hidden';
+                        
                         // Show choice modal instead of immediate reward
                         document.getElementById('selfCareGroupBonusModal').classList.add('active');
                     }
@@ -2067,6 +2725,10 @@
             showBedtimeModal() {
                 const currentTime = this.data.selfCare?.bedtimeTarget || '22:00';
                 document.getElementById('bedtimeInput').value = currentTime;
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('bedtimeModal').classList.add('active');
             },
             
@@ -2134,6 +2796,9 @@
                 
                 // Clear the input field
                 document.getElementById('robotChanceInput').value = '';
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 // Show the mini-game modal
                 document.getElementById('robotChanceModal').classList.add('active');
@@ -2285,14 +2950,26 @@
             },
 
             showAddCategoryModal() {
-                document.getElementById('categorySelect').value = '';
-                document.getElementById('categoryName').value = '';
-                document.getElementById('customCategoryGroup').style.display = 'none';
-                const groupInput = document.getElementById('groupCategoryName');
-                if (groupInput) {
+                const customInput = document.getElementById('categoryName');
+                const select = document.getElementById('categorySelect');
+                
+                // Reset form
+                select.value = '';
+                customInput.value = '';
+                customInput.style.display = 'none';
+                
+                // Reset group category inputs
+                const isGroupCheckbox = document.getElementById('customCategoryIsGroup');
+                const groupInput = document.getElementById('customCategoryGroup');
+                if (isGroupCheckbox) {
+                    isGroupCheckbox.checked = false;
                     groupInput.value = '';
                     document.getElementById('customGroupCategoryGroup').style.display = 'none';
                 }
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('addCategoryModal').classList.add('active');
             },
 
@@ -2327,6 +3004,10 @@
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
                 if (!category) return;
                 document.getElementById('editCategoryName').value = category.name;
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('editCategoryModal').classList.add('active');
             },
 
@@ -2336,6 +3017,10 @@
                 document.getElementById('taskName').value = '';
                 document.getElementById('taskDecayValue').value = 7;
                 document.getElementById('taskDecayUnit').value = 'days';
+                
+                // Handle sub-category selector
+                const subCategoryGroup = document.getElementById('subCategoryGroup');
+                const subCategorySelect = document.getElementById('subCategorySelect');
                 
                 // Show/hide linked category selection based on category type
                 const linkedCategoryGroup = document.getElementById('linkedCategoryGroup');
@@ -2353,6 +3038,33 @@
                             linkedCategorySelect.required = true;
                         }
                         
+                        // Handle sub-category selector for Sweep/Mop/Vacuum
+                        if (subCategoryGroup && category.name === 'Sweep/Mop/Vacuum') {
+                            // If we're already in a sub-category view, auto-select and hide the selector
+                            if (this.data.currentSubCategory) {
+                                // Auto-select the current sub-category
+                                if (subCategorySelect) {
+                                    subCategorySelect.value = this.data.currentSubCategory;
+                                    subCategorySelect.required = false; // Not required since it's auto-set
+                                }
+                                // Hide the selector since user already chose by clicking SWEEP/MOP/VACUUM
+                                subCategoryGroup.style.display = 'none';
+                            } else {
+                                // Show selector if user is creating from main Sweep/Mop/Vacuum view
+                                subCategoryGroup.style.display = 'block';
+                                if (subCategorySelect) {
+                                    subCategorySelect.value = '';
+                                    subCategorySelect.required = true;
+                                }
+                            }
+                        } else if (subCategoryGroup) {
+                            subCategoryGroup.style.display = 'none';
+                            if (subCategorySelect) {
+                                subCategorySelect.value = '';
+                                subCategorySelect.required = false;
+                            }
+                        }
+                        
                         // Hide task name field for group categories (auto-generated)
                         if (taskNameField) {
                             taskNameField.parentElement.style.display = 'none';
@@ -2363,6 +3075,14 @@
                         }
                     } else {
                         linkedCategoryGroup.style.display = 'none';
+                        
+                        // Hide sub-category selector for standard categories
+                        if (subCategoryGroup) {
+                            subCategoryGroup.style.display = 'none';
+                            if (subCategorySelect) {
+                                subCategorySelect.required = false;
+                            }
+                        }
                         
                         // Disable linked category select for standard categories
                         if (linkedCategorySelect) {
@@ -2379,6 +3099,9 @@
                         }
                     }
                 }
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 document.getElementById('addTaskModal').classList.add('active');
             },
@@ -2401,11 +3124,19 @@
 
                 document.getElementById('editTaskDecayValue').value = value;
                 document.getElementById('editTaskDecayUnit').value = unit;
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('editTaskModal').classList.add('active');
             },
 
             closeModal(modalId) {
                 document.getElementById(modalId).classList.remove('active');
+                
+                // Unlock body scroll when modal closes
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
             },
 
             addCategory(event) {
@@ -2523,6 +3254,7 @@
                 const decayValue = document.getElementById('taskDecayValue').value;
                 const decayUnit = document.getElementById('taskDecayUnit').value;
                 const linkedCategoryId = document.getElementById('linkedCategorySelect')?.value;
+                const subCategory = document.getElementById('subCategorySelect')?.value;
 
                 const decayMs = this.getDecayMs(decayValue, decayUnit);
 
@@ -2534,29 +3266,48 @@
                         return;
                     }
                     
+                    // Determine the display name (use sub-category if provided, otherwise full category name)
+                    let displayName = category.name;
+                    if (subCategory) {
+                        // Capitalize first letter of sub-category
+                        displayName = subCategory.charAt(0).toUpperCase() + subCategory.slice(1);
+                    }
+                    
                     // Create task in group category
                     const groupTaskId = Date.now();
                     const groupTask = {
                         id: groupTaskId,
-                        name: `${category.name} - ${linkedCategory.name}`,
+                        name: `${displayName} - ${linkedCategory.name}`,
                         decayMs: decayMs,
+                        decayUnit: decayUnit, // Store original unit for display integrity
                         lastCompleted: null,
                         freshness: 0,
                         linkedCategoryId: linkedCategory.id,
                         linkedTaskId: groupTaskId + 1 // Will link to the standard category task
                     };
                     
+                    // Add sub-category if provided (for Sweep/Mop/Vacuum)
+                    if (subCategory) {
+                        groupTask.subCategory = subCategory;
+                    }
+                    
                     // Create linked task in standard category
                     const standardTaskId = groupTaskId + 1;
                     const standardTask = {
                         id: standardTaskId,
-                        name: `${category.name} - ${linkedCategory.name}`,
+                        name: `${displayName} - ${linkedCategory.name}`,
                         decayMs: decayMs,
+                        decayUnit: decayUnit, // Store original unit for display integrity
                         lastCompleted: null,
                         freshness: 0,
                         linkedCategoryId: category.id,
                         linkedTaskId: groupTaskId // Link back to group task
                     };
+                    
+                    // Add sub-category to standard task as well
+                    if (subCategory) {
+                        standardTask.subCategory = subCategory;
+                    }
                     
                     // Add tasks to their respective categories
                     if (!category.tasks) category.tasks = [];
@@ -2579,7 +3330,21 @@
                     
                     this.saveData();
                     this.checkObonxoCheatStatus();
-                    this.render();
+                    
+                    // If in sub-category view, re-render filtered list; otherwise render normally
+                    if (this.data.currentSubCategory) {
+                        this.renderSubCategoryTasks(this.data.currentSubCategory);
+                        // Update Complete All button state
+                        const completeAllBtn = document.getElementById('completeAllBtn');
+                        const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                        const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                        if (completeAllBtn) {
+                            completeAllBtn.disabled = incompleteTasks.length === 0;
+                        }
+                    } else {
+                        this.render();
+                    }
+                    
                     this.closeModal('addTaskModal');
                     this.mascotNewTask(groupTask.name, category.name);
                     
@@ -2589,6 +3354,7 @@
                         id: Date.now(),
                         name: taskName,
                         decayMs: decayMs,
+                        decayUnit: decayUnit, // Store original unit for display integrity
                         lastCompleted: null,
                         freshness: 0
                     };
@@ -2626,8 +3392,9 @@
                 const decayValue = parseInt(document.getElementById('editTaskDecayValue').value);
                 const decayUnit = document.getElementById('editTaskDecayUnit').value;
                 task.decayMs = this.getDecayMs(decayValue, decayUnit);
+                task.decayUnit = decayUnit; // Preserve original unit for display integrity
 
-                // If this is a linked task, also update the linked task's name
+                // If this is a linked task, also update the linked task's name and decay
                 if (task.linkedCategoryId && task.linkedTaskId) {
                     const linkedCategory = this.data.categories.find(c => c.id === task.linkedCategoryId);
                     if (linkedCategory) {
@@ -2635,6 +3402,7 @@
                         if (linkedTask) {
                             linkedTask.name = newName;
                             linkedTask.decayMs = task.decayMs;
+                            linkedTask.decayUnit = decayUnit; // Sync unit to linked task
                         }
                     }
                 }
@@ -2665,7 +3433,21 @@
                 category.tasks = category.tasks.filter(t => t.id !== this.data.currentTaskId);
                 this.saveData();
                 this.checkObonxoCheatStatus();
-                this.render();
+                
+                // If in sub-category view, re-render filtered list; otherwise render normally
+                if (this.data.currentSubCategory) {
+                    this.renderSubCategoryTasks(this.data.currentSubCategory);
+                    // Update Complete All button state
+                    const completeAllBtn = document.getElementById('completeAllBtn');
+                    if (completeAllBtn && category && category.tasks) {
+                        const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                        const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                        completeAllBtn.disabled = incompleteTasks.length === 0;
+                    }
+                } else {
+                    this.render();
+                }
+                
                 this.closeModal('editTaskModal');
             },
 
@@ -2692,6 +3474,10 @@
                 this.data.currentTaskId = taskId;
                 document.getElementById('stepLabel').textContent = `Step ${nextLabel}.`;
                 document.getElementById('stepDescription').value = '';
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('addStepModal').classList.add('active');
             },
             
@@ -2791,6 +3577,10 @@
                 if (allCompleted && task.steps.length > 0) {
                     // Store the task ID for later use
                     this.data.currentTaskIdForCompletion = taskId;
+                    
+                    // Lock body scroll
+                    document.body.style.overflow = 'hidden';
+                    
                     // Show confirmation modal
                     document.getElementById('completeTaskModal').classList.add('active');
                 }
@@ -2876,8 +3666,40 @@
                 task.lastCompleted = Date.now();
                 task.freshness = 100;
                 
-                // Clear any snooze status
-                delete task.snoozedUntil;
+                // AUTO-SNOOZE FEATURE: Check if auto-snooze is enabled
+                if (this.data.autoSnoozeEnabled) {
+                    // Get task decay time in hours
+                    const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                    
+                    let snoozeHours;
+                    
+                    // Apply snooze rules based on decay time
+                    if (decayTimeHours >= 168) {
+                        // Rule 1: 1 week or more → 24-hour snooze
+                        snoozeHours = 24;
+                    } else if (decayTimeHours <= 24) {
+                        // Rule 2: 24 hours or less → 3-hour snooze
+                        snoozeHours = 3;
+                    } else {
+                        // Rule 3: More than 24 hours AND less than 1 week → 8-hour snooze
+                        snoozeHours = 8;
+                    }
+                    
+                    // Set auto-snooze timestamp
+                    task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                    
+                    // Log the auto-snooze
+                    if (this.addLogEntry) {
+                        this.addLogEntry(
+                            'snoozed',
+                            `Auto-Snoozed: ${task.name}`,
+                            `Will re-activate in ${snoozeHours} hour${snoozeHours > 1 ? 's' : ''}`
+                        );
+                    }
+                } else {
+                    // Clear any snooze status if auto-snooze is disabled
+                    delete task.snoozedUntil;
+                }
                 
                 // Reset all step completions (so they can be checked off again next time)
                 if (task.steps && task.steps.length > 0) {
@@ -2895,7 +3717,23 @@
                 }
 
                 this.saveData();
-                this.render();
+                
+                // If in sub-category view, re-render filtered list; otherwise render normally
+                if (this.data.currentSubCategory) {
+                    this.renderSubCategoryTasks(this.data.currentSubCategory);
+                    // Update Complete All button state
+                    const completeAllBtn = document.getElementById('completeAllBtn');
+                    if (completeAllBtn) {
+                        const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                        if (category && category.tasks) {
+                            const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                            const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                            completeAllBtn.disabled = incompleteTasks.length === 0;
+                        }
+                    }
+                } else {
+                    this.render();
+                }
             },
 
             snoozeTask(taskId) {
@@ -2905,6 +3743,9 @@
                 // Reset modal inputs
                 document.getElementById('snoozeAmount').value = '24';
                 document.getElementById('snoozeUnit').value = 'hours';
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 // Show the snooze modal
                 document.getElementById('snoozeModal').classList.add('active');
@@ -2948,7 +3789,21 @@
                 task.frozenFreshness = task.freshness;
 
                 this.saveData();
-                this.render();
+                
+                // If in sub-category view, re-render filtered list; otherwise render normally
+                if (this.data.currentSubCategory) {
+                    this.renderSubCategoryTasks(this.data.currentSubCategory);
+                    // Update Complete All button state
+                    const completeAllBtn = document.getElementById('completeAllBtn');
+                    if (completeAllBtn && category && category.tasks) {
+                        const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                        const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                        completeAllBtn.disabled = incompleteTasks.length === 0;
+                    }
+                } else {
+                    this.render();
+                }
+                
                 this.closeSnoozeModal();
                 
                 const durationText = unit === 'hours' && amount >= 24 ? 
@@ -2989,7 +3844,20 @@
                 delete task.snoozedUntil;
 
                 this.saveData();
-                this.render();
+                
+                // If in sub-category view, re-render filtered list; otherwise render normally
+                if (this.data.currentSubCategory) {
+                    this.renderSubCategoryTasks(this.data.currentSubCategory);
+                    // Update Complete All button state
+                    const completeAllBtn = document.getElementById('completeAllBtn');
+                    if (completeAllBtn && category && category.tasks) {
+                        const filteredTasks = category.tasks.filter(t => t.subCategory === this.data.currentSubCategory);
+                        const incompleteTasks = filteredTasks.filter(t => t.freshness < 100);
+                        completeAllBtn.disabled = incompleteTasks.length === 0;
+                    }
+                } else {
+                    this.render();
+                }
                 
                 const phrases = [
                     `Welcome back! ${task.name} is ready for action!`,
@@ -3052,6 +3920,9 @@
                         linkedCategoryGroup.style.display = 'none';
                     }
                 }
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 document.getElementById('addTaskModal').classList.add('active');
             },
@@ -5012,6 +5883,18 @@
                 // Show custom settings if custom style is selected
                 customSettings.style.display = this.data.voiceStyle === 'custom' ? 'block' : 'none';
                 
+                // Update Auto-Snooze toggle state
+                const autoSnoozeToggleSwitch = document.getElementById('autoSnoozeToggleSwitch');
+                if (this.data.autoSnoozeEnabled) {
+                    autoSnoozeToggleSwitch.classList.add('active');
+                } else {
+                    autoSnoozeToggleSwitch.classList.remove('active');
+                }
+                
+                // Lock body scroll when modal opens
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('settingsModal').classList.add('active');
             },
 
@@ -5041,6 +5924,30 @@
                 this.saveData();
             },
 
+            toggleAutoSnoozeSwitch() {
+                this.data.autoSnoozeEnabled = !this.data.autoSnoozeEnabled;
+                const toggleSwitch = document.getElementById('autoSnoozeToggleSwitch');
+                
+                if (this.data.autoSnoozeEnabled) {
+                    toggleSwitch.classList.add('active');
+                    this.mascotSpeak("Auto-Snooze enabled! Tasks will automatically re-activate after completion.");
+                } else {
+                    toggleSwitch.classList.remove('active');
+                    this.mascotSpeak("Auto-Snooze disabled. Tasks will stay complete.");
+                }
+                
+                this.saveData();
+            },
+
+            toggleGroupTaskVisibility() {
+                // Toggle the state
+                this.data.showGroupTasksInRegularCategories = !this.data.showGroupTasksInRegularCategories;
+                
+                // Save and re-render (button state updated by render function)
+                this.saveData();
+                this.renderCategory();
+            },
+
             showSaveFileSelect() {
                 const saveFiles = JSON.parse(localStorage.getItem('upkeepSaveFiles') || '[]');
                 const saveFileList = document.getElementById('saveFileList');
@@ -5059,6 +5966,9 @@
                     fileItem.onclick = () => this.overwriteSave(file.name);
                     saveFileList.appendChild(fileItem);
                 });
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 document.getElementById('saveFileSelectModal').classList.add('active');
             },
@@ -5088,8 +5998,8 @@
                 this.saveData();
                 
                 this.closeSaveFileSelect();
-                this.showSettingsModal();
                 alert(`Progress saved as "${sanitizedName}"!`);
+                this.showSettingsModal();
             },
 
             overwriteSave(fileName) {
@@ -5102,8 +6012,8 @@
                 this.saveData();
                 
                 this.closeSaveFileSelect();
-                this.showSettingsModal();
                 alert(`Progress saved to "${fileName}"!`);
+                this.showSettingsModal();
             },
 
             showLoadFileSelect() {
@@ -5128,6 +6038,9 @@
                         loadFileList.appendChild(fileItem);
                     });
                 }
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 document.getElementById('loadFileSelectModal').classList.add('active');
             },
@@ -5267,6 +6180,335 @@
                 reader.readAsText(file);
             },
 
+            // Task List Template Management System
+            generateTaskList() {
+                // Prompt user for task list name
+                const listName = prompt('Enter a name for this task list template:\n(e.g., "Apartment Deep Clean", "Work Office Upkeep")');
+                
+                if (!listName || listName.trim() === '') {
+                    this.showSpeechBubble("Task list save cancelled.");
+                    return;
+                }
+                
+                const sanitizedName = listName.trim();
+                
+                // Create compressed data structure with all task information
+                const taskListData = {
+                    version: '1.0',
+                    name: sanitizedName,
+                    createdDate: new Date().toISOString(),
+                    categories: JSON.parse(JSON.stringify(this.data.categories)) // Deep clone
+                };
+                
+                // Get existing task lists from localStorage
+                const savedLists = JSON.parse(localStorage.getItem('upkeepTaskLists') || '[]');
+                
+                // Check if name already exists
+                const existingIndex = savedLists.findIndex(list => list.name === sanitizedName);
+                
+                if (existingIndex !== -1) {
+                    if (!confirm(`A task list named "${sanitizedName}" already exists. Overwrite it?`)) {
+                        this.showSpeechBubble("Task list save cancelled.");
+                        return;
+                    }
+                    // Overwrite existing
+                    savedLists[existingIndex] = taskListData;
+                } else {
+                    // Add new
+                    savedLists.push(taskListData);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('upkeepTaskLists', JSON.stringify(savedLists));
+                
+                this.showSpeechBubble(`✅ Task list "${sanitizedName}" saved successfully! You can load it anytime from the Options menu.`);
+            },
+            
+            loadTaskList() {
+                // Get all saved task lists
+                const savedLists = JSON.parse(localStorage.getItem('upkeepTaskLists') || '[]');
+                
+                // Create selection modal HTML
+                let listHTML = '<div style="max-height: 400px; overflow-y: auto;">';
+                
+                // Always show Global Default List first
+                const defaultTaskCount = DEFAULT_TASK_LIST.categories.reduce((sum, cat) => sum + (cat.tasks ? cat.tasks.length : 0), 0);
+                listHTML += `
+                    <div onclick="app.selectTaskListToLoad('global')" style="padding: 16px; margin-bottom: 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%); border: 2px solid rgba(16, 185, 129, 0.4); border-radius: 12px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <div style="font-size: 16px; font-weight: 700; color: #059669; margin-bottom: 6px;">
+                            🌟 ${DEFAULT_TASK_LIST.name} <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); padding: 2px 8px; border-radius: 6px; margin-left: 6px;">GLOBAL TEMPLATE</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">
+                            <span>📝 ${DEFAULT_TASK_LIST.categories.length} categories</span> • 
+                            <span>✓ ${defaultTaskCount} tasks</span> •
+                            <span>🌍 Available to all users</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Show user-created lists if any exist
+                if (savedLists.length > 0) {
+                    listHTML += '<div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin: 16px 0 8px 4px;">Your Custom Lists</div>';
+                    savedLists.forEach((list, index) => {
+                        const date = new Date(list.createdDate).toLocaleDateString();
+                        const taskCount = list.categories.reduce((sum, cat) => sum + (cat.tasks ? cat.tasks.length : 0), 0);
+                        
+                        listHTML += `
+                            <div onclick="app.selectTaskListToLoad(${index})" style="padding: 16px; margin-bottom: 12px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <div style="font-size: 16px; font-weight: 700; color: #2563eb; margin-bottom: 6px;">📋 ${list.name}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">
+                                    <span>📅 Created: ${date}</span> • 
+                                    <span>📝 ${list.categories.length} categories</span> • 
+                                    <span>✓ ${taskCount} tasks</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                listHTML += '</div>';
+                
+                listHTML += `
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border);">
+                        <button onclick="app.closeModal('customPrompt')" style="width: 100%; padding: 12px; background: var(--border); color: var(--text); border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                `;
+                
+                // Show custom modal
+                this.showCustomPrompt('Select a Task List Template', listHTML);
+            },
+            
+            selectTaskListToLoad(index) {
+                // Determine if loading global or user list
+                let selectedList;
+                let listIdentifier;
+                
+                if (index === 'global') {
+                    selectedList = DEFAULT_TASK_LIST;
+                    listIdentifier = 'global';
+                } else {
+                    const savedLists = JSON.parse(localStorage.getItem('upkeepTaskLists') || '[]');
+                    selectedList = savedLists[index];
+                    listIdentifier = index;
+                    
+                    if (!selectedList) {
+                        alert('Error: Task list not found!');
+                        return;
+                    }
+                }
+                
+                // Close selection modal
+                this.closeModal('customPrompt');
+                
+                // Show critical warning modal
+                const warningHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #dc2626; margin-bottom: 16px;">
+                            WARNING: DATA WILL BE OVERWRITTEN
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 24px; padding: 16px; background: rgba(220, 38, 38, 0.1); border-radius: 12px; border: 2px solid rgba(220, 38, 38, 0.3);">
+                            Loading the task list "<strong>${selectedList.name}</strong>" will <strong>completely overwrite</strong> your current task categories and all active tasks.
+                            <br><br>
+                            All your current progress, decay times, and task customizations will be replaced with the template data.
+                            <br><br>
+                            <strong>This action cannot be undone unless you have a backup!</strong>
+                        </div>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <button onclick="app.showMaintenancePercentagePrompt('${listIdentifier}')" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);">
+                                ⚠️ Yes, Continue
+                            </button>
+                            <button onclick="app.closeModal('customPrompt')" style="flex: 1; padding: 14px; background: var(--border); color: var(--text); border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                this.showCustomPrompt('⚠️ Confirm Overwrite', warningHTML);
+            },
+            
+            showMaintenancePercentagePrompt(listIdentifier) {
+                // Close warning modal
+                this.closeModal('customPrompt');
+                
+                // Show maintenance percentage configuration prompt
+                const maintenanceHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔧</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #3b82f6; margin-bottom: 16px;">
+                            Set Initial Maintenance Percentage
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 24px; padding: 16px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 2px solid rgba(59, 130, 246, 0.3);">
+                            How should the maintenance percentage of the imported tasks be initialized?
+                            <br><br>
+                            <strong>Choose one of the following options:</strong>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+                            <button onclick="app.confirmLoadTaskList('${listIdentifier}', 0)" style="padding: 14px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+                                🔴 Zero All Tasks (0% Maintenance)
+                                <div style="font-size: 11px; font-weight: 400; margin-top: 4px; opacity: 0.9;">Tasks appear immediately urgent/decayed</div>
+                            </button>
+                            
+                            <button onclick="app.confirmLoadTaskList('${listIdentifier}', 100)" style="padding: 14px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                                🟢 Complete All Tasks (100% Maintenance)
+                                <div style="font-size: 11px; font-weight: 400; margin-top: 4px; opacity: 0.9;">Tasks treated as freshly completed</div>
+                            </button>
+                            
+                            <div style="padding: 14px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 10px;">
+                                <div style="font-size: 14px; font-weight: 700; color: #2563eb; margin-bottom: 8px;">🔵 Set Custom Percentage</div>
+                                <input type="number" id="customMaintenanceValue" min="0" max="100" value="50" style="width: 100%; padding: 10px; border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 8px; font-size: 14px; margin-bottom: 8px;">
+                                <input type="range" id="customMaintenanceSlider" min="0" max="100" value="50" style="width: 100%; margin-bottom: 8px;" oninput="document.getElementById('customMaintenanceValue').value = this.value">
+                                <button onclick="app.confirmLoadTaskList('${listIdentifier}', parseInt(document.getElementById('customMaintenanceValue').value))" style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                                    Apply Custom Percentage
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div style="padding-top: 16px; border-top: 2px solid var(--border);">
+                            <button onclick="app.loadTaskList()" style="width: 100%; padding: 12px; background: var(--border); color: var(--text); border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                                ← Back to List Selection
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Sync slider and input
+                setTimeout(() => {
+                    const slider = document.getElementById('customMaintenanceSlider');
+                    const input = document.getElementById('customMaintenanceValue');
+                    if (slider && input) {
+                        slider.addEventListener('input', function() {
+                            input.value = this.value;
+                        });
+                        input.addEventListener('input', function() {
+                            slider.value = this.value;
+                        });
+                    }
+                }, 100);
+                
+                this.showCustomPrompt('🔧 Configure Maintenance', maintenanceHTML);
+            },
+            
+            confirmLoadTaskList(listIdentifier, maintenancePercentage = 0) {
+                // Get the selected list
+                let selectedList;
+                
+                if (listIdentifier === 'global') {
+                    selectedList = JSON.parse(JSON.stringify(DEFAULT_TASK_LIST)); // Deep clone
+                } else {
+                    const savedLists = JSON.parse(localStorage.getItem('upkeepTaskLists') || '[]');
+                    selectedList = savedLists[listIdentifier];
+                    
+                    if (!selectedList) {
+                        alert('Error: Task list not found!');
+                        return;
+                    }
+                    
+                    selectedList = JSON.parse(JSON.stringify(selectedList)); // Deep clone
+                }
+                
+                // Close maintenance modal
+                this.closeModal('customPrompt');
+                
+                // Apply maintenance percentage to all tasks
+                const now = Date.now();
+                selectedList.categories.forEach(category => {
+                    if (category.tasks) {
+                        category.tasks.forEach(task => {
+                            if (maintenancePercentage === 0) {
+                                // Set to 0% - tasks appear urgent/decayed
+                                task.lastCompleted = null;
+                                task.freshness = 0;
+                            } else if (maintenancePercentage === 100) {
+                                // Set to 100% - tasks freshly completed
+                                task.lastCompleted = now;
+                                task.freshness = 100;
+                            } else {
+                                // Custom percentage - calculate appropriate lastCompleted time
+                                const decayTime = task.decayMs || 604800000; // Default to 7 days if not set
+                                const timeSinceCompletion = decayTime * (1 - (maintenancePercentage / 100));
+                                task.lastCompleted = now - timeSinceCompletion;
+                                task.freshness = maintenancePercentage;
+                            }
+                        });
+                    }
+                });
+                
+                // Clear current categories and load template data
+                this.data.categories = selectedList.categories;
+                
+                // Reset current view to dashboard
+                this.data.currentCategoryId = null;
+                this.showDashboard();
+                
+                // Show save prompt
+                const savePromptHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #10b981; margin-bottom: 16px;">
+                            Task List Loaded Successfully!
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 24px; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3);">
+                            The task list "<strong>${selectedList.name}</strong>" has been loaded into your current session.
+                            <br><br>
+                            <strong>Would you like to save your main progress file now to finalize these changes?</strong>
+                            <br><br>
+                            If you don't save, these changes will be lost when you close the app.
+                        </div>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <button onclick="app.saveAfterTaskListLoad()" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);">
+                                💾 Yes, Save Game
+                            </button>
+                            <button onclick="app.closeModal('customPrompt')" style="flex: 1; padding: 14px; background: var(--border); color: var(--text); border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                                No, Continue Without Saving
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                this.showCustomPrompt('💾 Save Your Progress?', savePromptHTML);
+                
+                this.showSpeechBubble(`Task list "${selectedList.name}" loaded! Don't forget to save your progress.`);
+            },
+            
+            saveAfterTaskListLoad() {
+                this.closeModal('customPrompt');
+                this.saveData();
+                this.showSpeechBubble("✅ Your progress has been saved with the new task list!");
+            },
+            
+            showCustomPrompt(title, contentHTML) {
+                // Create or get custom prompt modal
+                let modal = document.getElementById('customPrompt');
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = 'customPrompt';
+                    modal.className = 'modal';
+                    document.body.appendChild(modal);
+                }
+                
+                modal.innerHTML = `
+                    <div class="modal-content" style="max-width: 600px;">
+                        <div class="modal-header">
+                            <div class="modal-title">${title}</div>
+                            <button class="close-btn" onclick="app.closeModal('customPrompt')"><img src="Imag/Close.png" alt="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ${contentHTML}
+                        </div>
+                    </div>
+                `;
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
+                modal.classList.add('active');
+            },
+
             // Manage Saves Functions
             showManageSaves() {
                 const saveFiles = JSON.parse(localStorage.getItem('upkeepSaveFiles') || '[]');
@@ -5293,6 +6535,9 @@
                         manageSavesList.appendChild(fileItem);
                     });
                 }
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
                 
                 document.getElementById('manageSavesModal').classList.add('active');
             },
@@ -5383,6 +6628,10 @@
 
             openLogbook() {
                 this.renderLogbook();
+                
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+                
                 document.getElementById('logbookModal').classList.add('active');
             },
 

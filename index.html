@@ -87,11 +87,78 @@
             </div>
 
             <div class="content">
+                <button class="btn-complete-all" id="completeAllGroupBtn" onclick="app.completeAllGroupTasks()" style="display: none;">
+                    COMPLETE ALL TASKS
+                </button>
+                
+                <!-- Group Task Visibility Toggle (only shows in regular categories with group tasks) -->
+                <button id="groupTaskToggleBtn" class="group-task-toggle-btn" onclick="app.toggleGroupTaskVisibility()" style="display: none;">
+                    <span id="groupTaskToggleIcon">▶</span>
+                    <span id="groupTaskToggleText">Show Group Tasks</span>
+                </button>
+                
                 <div class="section-header">
                     <div class="section-title">Tasks</div>
                     <button class="fab" onclick="app.showAddTaskModal()"><img src="Imag/Add.png" alt="Add Task"></button>
                 </div>
                 <div class="task-list" id="taskList"></div>
+            </div>
+        </div>
+
+        <!-- Sub-Category Menu View (for Sweep/Mop/Vacuum) -->
+        <div id="subCategoryMenuView" class="view">
+            <div class="header">
+                <div class="header-top">
+                    <button class="back-btn" onclick="app.showDashboard()"><img src="Imag/Back.png" alt="Back"></button>
+                    <div style="flex: 1; text-align: center;">
+                        <h1 id="subCategoryMenuTitle">Sweep/Mop/Vacuum</h1>
+                    </div>
+                    <button class="edit-btn-img" onclick="app.showEditCategoryModal()"><img src="Imag/edit-category.png" alt="Edit Category"></button>
+                </div>
+            </div>
+
+            <div class="content">
+                <div style="padding: 20px; text-align: center; color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                    Choose a task type to view and manage
+                </div>
+                <div class="subcategory-menu-grid">
+                    <button class="subcategory-menu-btn" onclick="app.showSubCategoryTasks('sweep')">
+                        <div class="subcategory-icon">🧹</div>
+                        <div class="subcategory-label">SWEEP</div>
+                    </button>
+                    <button class="subcategory-menu-btn" onclick="app.showSubCategoryTasks('mop')">
+                        <div class="subcategory-icon">🪣</div>
+                        <div class="subcategory-label">MOP</div>
+                    </button>
+                    <button class="subcategory-menu-btn" onclick="app.showSubCategoryTasks('vacuum')">
+                        <div class="subcategory-icon">🌀</div>
+                        <div class="subcategory-label">VACUUM</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-Category Task List View -->
+        <div id="subCategoryTaskView" class="view">
+            <div class="header">
+                <div class="header-top">
+                    <button class="back-btn" onclick="app.backToSubCategoryMenu()"><img src="Imag/Back.png" alt="Back"></button>
+                    <div style="flex: 1; text-align: center;">
+                        <h1 id="subCategoryTaskTitle">Tasks</h1>
+                    </div>
+                    <div style="width: 50px;"></div>
+                </div>
+            </div>
+
+            <div class="content">
+                <button class="btn-complete-all" id="completeAllBtn" onclick="app.completeAllSubCategoryTasks()">
+                    COMPLETE ALL TASKS
+                </button>
+                <div class="section-header">
+                    <div class="section-title">Tasks</div>
+                    <button class="fab" onclick="app.showAddTaskModal()"><img src="Imag/Add.png" alt="Add Task"></button>
+                </div>
+                <div class="task-list" id="subCategoryTaskList"></div>
             </div>
         </div>
 
@@ -794,6 +861,7 @@
                         <option value="GROUP:Sweep/Mop/Vacuum" style="color: #4040ff;">🔷 Sweep/Mop/Vacuum</option>
                         <option value="GROUP:Shampoo" style="color: #4040ff;">🔷 Shampoo</option>
                         <option value="GROUP:Deep Cleaning" style="color: #4040ff;">🔷 Deep Cleaning</option>
+                        <option value="GROUP:Trash" style="color: #4040ff;">🔷 Trash</option>
                         <option value="customgroup" style="color: #4040ff;">✏️ Custom Group Category</option>
                     </select>
                 </div>
@@ -841,6 +909,16 @@
                         <option value="">-- Select Standard Category --</option>
                     </select>
                     <small style="color: #bbb; display: block; margin-top: 4px;">Task will appear in both this group and the selected category</small>
+                </div>
+                <div class="form-group" id="subCategoryGroup" style="display: none;">
+                    <label class="form-label">What type of task is this?</label>
+                    <select class="form-select" id="subCategorySelect" required>
+                        <option value="">-- Select Task Type --</option>
+                        <option value="sweep">🧹 Sweep</option>
+                        <option value="mop">🪣 Mop</option>
+                        <option value="vacuum">🌀 Vacuum</option>
+                    </select>
+                    <small style="color: #bbb; display: block; margin-top: 4px;">Choose the cleaning type for better organization</small>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Task Name</label>
@@ -1029,12 +1107,43 @@
                 <p style="font-size: 11px; color: var(--text-secondary); text-align: center; margin-top: 12px;">Export creates a .upkeep file you can save anywhere</p>
             </div>
             
+            <!-- Task List Templates Card -->
+            <div class="settings-card">
+                <div class="settings-card-title">📋 Task List Templates</div>
+                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 12px;">
+                    <button type="button" class="template-btn" onclick="app.generateTaskList()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                        💾 SAVE TASK LIST
+                    </button>
+                    <button type="button" class="template-btn" onclick="app.loadTaskList()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                        📂 LOAD TASK LIST
+                    </button>
+                </div>
+                <p style="font-size: 11px; color: var(--text-secondary); text-align: center; margin-top: 12px;">Save or load complete task list templates</p>
+            </div>
+            
             <!-- Logbook Card -->
             <div class="settings-card">
                 <button type="button" class="backup-btn-large" onclick="app.openLogbook()" style="width: 100%;">
                     <img src="Imag/LogBook.png" alt="Logbook">
                 </button>
                 <p style="font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 12px;">View your activity history</p>
+            </div>
+            
+            <!-- Auto-Snooze Settings Card -->
+            <div class="settings-card">
+                <div class="settings-card-title">⏰ Automatic Task Snooze</div>
+                <div class="voice-toggle" onclick="app.toggleAutoSnoozeSwitch()">
+                    <span style="font-size: 15px; font-weight: 500;">Enable Auto-Snooze</span>
+                    <div class="toggle-switch" id="autoSnoozeToggleSwitch">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Automatically re-activate tasks after completion based on their decay time</p>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                    <div style="margin-bottom: 4px;">• ≥1 week tasks: 24-hour snooze</div>
+                    <div style="margin-bottom: 4px;">• ≤24 hour tasks: 3-hour snooze</div>
+                    <div>• Other tasks: 8-hour snooze</div>
+                </div>
             </div>
             
             <!-- Voice Settings Card -->
@@ -1127,15 +1236,6 @@
                 <button type="button" class="btn-primary" style="margin-top: 12px; padding: 12px;" onclick="app.testScrappyVoice()">🔊 Test Scrappy's Voice</button>
                 
                 <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Customize the store manager's voice</p>
-            </div>
-            
-            <!-- Battle System Card (Temporary) -->
-            <div class="settings-card">
-                <div class="settings-card-title">⚔️ Battle System</div>
-                <button type="button" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600;" onclick="app.openCombatTester()">
-                    🎯 Test Combat System
-                </button>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; text-align: center;">Data Disk combat testing</p>
             </div>
         </div>
     </div>
@@ -2038,6 +2138,7 @@
     <!-- JavaScript Modules: Load in dependency order -->
     <script src="js/gamification.js"></script>
     <script src="js/chore-robot-loader.js"></script>
+    <script src="js/default-task-list.js"></script>  <!-- Global task template -->
     <script src="js/chore-system.js"></script>
     <script src="js/battle-system.js"></script>
     <script src="js/robot-loader.js"></script>
