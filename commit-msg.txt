@@ -1,0 +1,23 @@
+Critical bug fixes: Snoozed task freshness depletion and dust bunny images
+
+SNOOZE BUG FIX (Critical):
+- Fixed freshness continuing to deplete for snoozed tasks across ALL completion paths
+- Root cause: Auto-snooze was setting snoozedUntil but NOT frozenFreshness
+- Added frozenFreshness preservation in single tasks, bulk completions, and linked tasks
+- Added migration fix to repair existing broken snoozed tasks on load
+- Ensures all snooze operations properly manage both snoozedUntil and frozenFreshness
+
+DUST BUNNY IMAGE FIX:
+- Fixed 404 error for dust bunny images on category cards
+- Corrected CSS paths from Imag/DUST BUNNY.png to ../Imag/DUST BUNNY.png
+- Updated css/main.css and css/main-fixed.css
+
+FILES MODIFIED:
+- js/chore-system.js (snooze fixes + migration)
+- css/main.css (dust bunny path)
+- css/main-fixed.css (dust bunny path)
+
+NEW FILES:
+- SNOOZE-BUG-FIX-REPORT.md (comprehensive documentation)
+
+All task types now correctly maintain freshness during snooze periods.

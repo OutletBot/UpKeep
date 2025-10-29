@@ -1,0 +1,15 @@
+FIX: Snooze freshness preservation bug for linked tasks
+
+Fixed critical bug where linked tasks would lose their frozen freshness when re-syncing snooze state.
+
+Problem:
+- When manually snoozing a task, linked tasks would freeze at their CURRENT freshness
+- If a linked task was already snoozed, re-syncing would overwrite frozenFreshness
+- This caused freshness to appear to decay during snooze
+
+Solution:
+- Only set frozenFreshness on first snooze (when undefined)
+- Preserve existing frozenFreshness during re-sync operations
+- This ensures freshness stays exactly as it was when first snoozed
+
+Line 3991: Added check to prevent overwriting existing frozenFreshness

@@ -1,0 +1,14 @@
+REMOVE OLD TUTORIAL: Complete removal of buggy tutorial system
+
+Removed all old tutorial code that was appearing unexpectedly:
+- Removed tutorial HTML overlay from index.html (lines 2138-2264)
+- Removed tutorial JavaScript from chore-system.js (11387-11703)
+- Deleted tutorialData object, startUpkeepTutorial(), showTutorialStep()
+- Deleted completeTutorial(), skipTutorial(), and all tutorial helper functions
+
+The old tutorial was triggering on page load and interfering with normal operation.
+Project is now clean and ready for new robot-guided tutorial implementation.
+
+Files modified:
+- index.html: Removed tutorial overlay HTML
+- js/chore-system.js: Reduced from 11,695 to 11,403 lines (removed 292 lines of tutorial code)

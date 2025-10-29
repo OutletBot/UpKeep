@@ -1,0 +1,13 @@
+CRITICAL FIX: Linked task snooze sync bug
+
+Fixed issue where manually snoozing/unsnoozing tasks in one location would not sync to linked tasks in other locations (e.g., Deep Cleaning - Kitchen not showing as snoozed when Deep Cleaning category shows it snoozed).
+
+Changes:
+- Added syncLinkedTaskSnooze() function to sync snooze state across linked tasks
+- Updated confirmSnooze() to call syncLinkedTaskSnooze()
+- Updated unsnoozeTask() to call syncLinkedTaskSnooze()
+- Now manually snoozed/unsnoozed tasks properly sync with their linked counterparts
+
+Files modified: js/chore-system.js
+
+This ensures linked tasks (regular category tasks and group category tasks) maintain consistent snooze state across all views.

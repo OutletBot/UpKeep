@@ -1,0 +1,5 @@
+Disable old tutorial triggers
+
+Tutorial gate check in showDashboard() is now commented out.
+Old tutorial code remains in file but is completely unreachable and harmless.
+No functions call startUpkeepTutorial() anymore.

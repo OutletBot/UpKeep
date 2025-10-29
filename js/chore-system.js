@@ -2024,9 +2024,9 @@
                         // Update button text with category name
                         completeAllGroupBtn.textContent = `COMPLETE ALL ${category.name.toUpperCase()} TASKS`;
                         
-                        // Check if there are incomplete tasks
-                        const incompleteTasks = category.tasks.filter(t => t.freshness < 100);
-                        completeAllGroupBtn.disabled = incompleteTasks.length === 0;
+                        // Enable button if there are any unsnoozed tasks (regardless of freshness)
+                        const unsnoozedTasks = category.tasks.filter(t => !t.snoozedUntil || t.snoozedUntil <= Date.now());
+                        completeAllGroupBtn.disabled = unsnoozedTasks.length === 0;
                         completeAllGroupBtn.style.display = 'block';
                     } else {
                         completeAllGroupBtn.style.display = 'none';
@@ -2075,12 +2075,30 @@
                 // INTELLIGENT SORTING: Sort tasks by maintenance priority (lowest freshness first = most urgent)
                 // This preserves category groupings while prioritizing urgent tasks within each group
                 regularTasks.sort((a, b) => {
+                    const isSnoozedA = a.snoozedUntil && a.snoozedUntil > Date.now();
+                    const isSnoozedB = b.snoozedUntil && b.snoozedUntil > Date.now();
+                    
+                    // First priority: unsnoozed tasks come before snoozed tasks
+                    if (isSnoozedA !== isSnoozedB) {
+                        return isSnoozedA ? 1 : -1; // unsnoozed (false) comes first
+                    }
+                    
+                    // Second priority: sort by freshness (lowest/most urgent first)
                     const freshnessA = a.freshness || 0;
                     const freshnessB = b.freshness || 0;
                     return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
                 });
                 
                 groupTasks.sort((a, b) => {
+                    const isSnoozedA = a.snoozedUntil && a.snoozedUntil > Date.now();
+                    const isSnoozedB = b.snoozedUntil && b.snoozedUntil > Date.now();
+                    
+                    // First priority: unsnoozed tasks come before snoozed tasks
+                    if (isSnoozedA !== isSnoozedB) {
+                        return isSnoozedA ? 1 : -1;
+                    }
+                    
+                    // Second priority: sort by freshness (lowest/most urgent first)
                     const freshnessA = a.freshness || 0;
                     const freshnessB = b.freshness || 0;
                     return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
@@ -2390,8 +2408,17 @@
                     return;
                 }
                 
-                // INTELLIGENT SORTING: Sort sub-category tasks by maintenance priority (lowest freshness first = most urgent)
+                // INTELLIGENT SORTING: Prioritize unsnoozed tasks over snoozed, then sort by urgency
                 filteredTasks.sort((a, b) => {
+                    const isSnoozedA = a.snoozedUntil && a.snoozedUntil > Date.now();
+                    const isSnoozedB = b.snoozedUntil && b.snoozedUntil > Date.now();
+                    
+                    // First priority: unsnoozed tasks come before snoozed tasks
+                    if (isSnoozedA !== isSnoozedB) {
+                        return isSnoozedA ? 1 : -1; // unsnoozed (false) comes first
+                    }
+                    
+                    // Second priority: sort by freshness (lowest/most urgent first)
                     const freshnessA = a.freshness || 0;
                     const freshnessB = b.freshness || 0;
                     return freshnessA - freshnessB; // Ascending: lowest freshness (most urgent) first
@@ -2434,11 +2461,17 @@
                         const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
                         let snoozeHours;
                         
-                        if (decayTimeHours >= 168) {
+                        if (decayTimeHours >= 7920) {
+                            // 11 months or more → 1 week snooze
+                            snoozeHours = 168;
+                        } else if (decayTimeHours >= 168) {
+                            // 1 week or more → 24-hour snooze
                             snoozeHours = 24;
                         } else if (decayTimeHours <= 24) {
+                            // 24 hours or less → 3-hour snooze
                             snoozeHours = 3;
                         } else {
+                            // More than 24 hours AND less than 1 week → 8-hour snooze
                             snoozeHours = 8;
                         }
                         
@@ -2534,20 +2567,21 @@
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
                 if (!category || !category.tasks || !category.isGroupCategory) return;
                 
-                const allTasks = category.tasks;
-                if (allTasks.length === 0) return;
+                // Filter for unsnoozed tasks only
+                const unsnoozedTasks = category.tasks.filter(t => !t.snoozedUntil || t.snoozedUntil <= Date.now());
+                if (unsnoozedTasks.length === 0) return;
                 
                 // Confirm with user
                 const categoryName = category.name.toUpperCase();
-                if (!confirm(`Complete all ${categoryName} tasks? This will mark ${allTasks.length} task(s) as complete.`)) {
+                if (!confirm(`Complete all ${categoryName} tasks? This will mark ${unsnoozedTasks.length} unsnoozed task(s) as complete.`)) {
                     return;
                 }
                 
                 // Update mission progress for each task
                 this.updateChoreProgress();
                 
-                // Complete all tasks with gamification effects
-                allTasks.forEach((task, index) => {
+                // Complete all unsnoozed tasks with gamification effects
+                unsnoozedTasks.forEach((task, index) => {
                     task.lastCompleted = Date.now();
                     task.freshness = 100;
                     
@@ -2556,11 +2590,17 @@
                         const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
                         let snoozeHours;
                         
-                        if (decayTimeHours >= 168) {
+                        if (decayTimeHours >= 7920) {
+                            // 11 months or more → 1 week snooze
+                            snoozeHours = 168;
+                        } else if (decayTimeHours >= 168) {
+                            // 1 week or more → 24-hour snooze
                             snoozeHours = 24;
                         } else if (decayTimeHours <= 24) {
+                            // 24 hours or less → 3-hour snooze
                             snoozeHours = 3;
                         } else {
+                            // More than 24 hours AND less than 1 week → 8-hour snooze
                             snoozeHours = 8;
                         }
                         
@@ -2612,10 +2652,11 @@
                 this.saveData();
                 this.renderCategory();
                 
-                // Update Complete All button state (keep visible but disable)
+                // Update Complete All button state (check for remaining unsnoozed tasks)
                 const completeAllGroupBtn = document.getElementById('completeAllGroupBtn');
                 if (completeAllGroupBtn) {
-                    completeAllGroupBtn.disabled = true;
+                    const remainingUnsnoozed = category.tasks.filter(t => !t.snoozedUntil || t.snoozedUntil <= Date.now());
+                    completeAllGroupBtn.disabled = remainingUnsnoozed.length === 0;
                 }
                 
                 // GAMIFICATION: Show streak updates and check for category completion
@@ -2634,18 +2675,18 @@
                             // Show streak every 2 days
                             Gamification.celebrateStreak(currentStreak);
                         }
-                    }, allTasks.length * 200 + 500);
+                    }, unsnoozedTasks.length * 200 + 500);
                     
                     // Category completion celebration
                     setTimeout(() => {
                         Gamification.celebrateCategoryCompletion(category.name);
-                    }, allTasks.length * 200 + 1000);
+                    }, unsnoozedTasks.length * 200 + 1000);
                 }
                 
                 // Show success message
                 setTimeout(() => {
-                    this.mascotSpeak(`Amazing! All ${categoryName} tasks completed!`);
-                }, allTasks.length * 200 + 300);
+                    this.mascotSpeak(`Amazing! All unsnoozed ${categoryName} tasks completed!`);
+                }, unsnoozedTasks.length * 200 + 300);
             },
 
             showSelfCare() {
@@ -3631,6 +3672,7 @@
 
             toggleTask(taskId) {
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks) return;
                 const task = category.tasks.find(t => t.id === taskId);
                 if (!task) return;
 
@@ -3703,14 +3745,17 @@
                     let snoozeHours;
                     
                     // Apply snooze rules based on decay time
-                    if (decayTimeHours >= 168) {
-                        // Rule 1: 1 week or more → 24-hour snooze
+                    if (decayTimeHours >= 7920) {
+                        // Rule 1: 11 months or more → 1 week snooze
+                        snoozeHours = 168;
+                    } else if (decayTimeHours >= 168) {
+                        // Rule 2: 1 week or more → 24-hour snooze
                         snoozeHours = 24;
                     } else if (decayTimeHours <= 24) {
-                        // Rule 2: 24 hours or less → 3-hour snooze
+                        // Rule 3: 24 hours or less → 3-hour snooze
                         snoozeHours = 3;
                     } else {
-                        // Rule 3: More than 24 hours AND less than 1 week → 8-hour snooze
+                        // Rule 4: More than 24 hours AND less than 1 week → 8-hour snooze
                         snoozeHours = 8;
                     }
                     
@@ -3770,6 +3815,13 @@
             },
 
             snoozeTask(taskId) {
+                // Verify category exists before proceeding
+                const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks) {
+                    console.error('Cannot snooze task: category not found');
+                    return;
+                }
+                
                 // Store the task ID for later use
                 this.data.currentSnoozeTaskId = taskId;
                 
@@ -3780,7 +3832,6 @@
                 // Lock body scroll
                 document.body.style.overflow = 'hidden';
                 
-                // Show the snooze modal
                 document.getElementById('snoozeModal').classList.add('active');
             },
 
@@ -3794,6 +3845,7 @@
                 if (!taskId) return;
 
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks) return;
                 const task = category.tasks.find(t => t.id === taskId);
                 if (!task) return;
 
@@ -3867,6 +3919,7 @@
 
             unsnoozeTask(taskId) {
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
+                if (!category || !category.tasks) return;
                 const task = category.tasks.find(t => t.id === taskId);
                 if (!task) return;
 
@@ -3940,11 +3993,17 @@
                                 const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
                                 let snoozeHours;
                                 
-                                if (decayTimeHours >= 168) {
+                                if (decayTimeHours >= 7920) {
+                                    // 11 months or more → 1 week snooze
+                                    snoozeHours = 168;
+                                } else if (decayTimeHours >= 168) {
+                                    // 1 week or more → 24-hour snooze
                                     snoozeHours = 24;
                                 } else if (decayTimeHours <= 24) {
+                                    // 24 hours or less → 3-hour snooze
                                     snoozeHours = 3;
                                 } else {
+                                    // More than 24 hours AND less than 1 week → 8-hour snooze
                                     snoozeHours = 8;
                                 }
                                 
