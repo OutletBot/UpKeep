@@ -1,4 +1,4 @@
-﻿        @font-face {
+        @font-face {
             font-family: 'Cocogoose';
             src: url('Font/cocogoose/Cocogoose-Condensed/Cocogoose-Condensed-Regular-trial.ttf') format('truetype');
             font-weight: normal;
@@ -463,7 +463,7 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            background-image: url('Imag/DUST BUNNY.png');
+            background-image: url('../Imag/DUST BUNNY.png');
             background-size: contain;
             background-repeat: no-repeat;
             pointer-events: none;

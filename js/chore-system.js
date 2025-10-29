@@ -1340,6 +1340,20 @@
                         }
                     });
                     
+                    // MIGRATION FIX: Ensure all snoozed tasks have frozenFreshness set
+                    // This fixes any tasks that were snoozed before the frozenFreshness fix
+                    this.data.categories.forEach(category => {
+                        if (category.tasks) {
+                            category.tasks.forEach(task => {
+                                const isSnoozed = task.snoozedUntil && task.snoozedUntil > Date.now();
+                                if (isSnoozed && task.frozenFreshness === undefined) {
+                                    // Freeze freshness at current level to prevent further decay
+                                    task.frozenFreshness = task.freshness || 0;
+                                }
+                            });
+                        }
+                    });
+                    
                     // Ensure itemInventory exists (for backward compatibility with old saves)
                     if (!this.data.itemInventory) {
                         this.data.itemInventory = {
@@ -2422,8 +2436,12 @@
                         }
                         
                         task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                        
+                        // CRITICAL: Freeze freshness at current level (100%) to prevent decay during snooze
+                        task.frozenFreshness = task.freshness;
                     } else {
                         delete task.snoozedUntil; // Clear any snooze if auto-snooze disabled
+                        delete task.frozenFreshness; // Clear frozen freshness as well
                     }
                     
                     // Reset steps
@@ -2540,8 +2558,12 @@
                         }
                         
                         task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                        
+                        // CRITICAL: Freeze freshness at current level (100%) to prevent decay during snooze
+                        task.frozenFreshness = task.freshness;
                     } else {
                         delete task.snoozedUntil; // Clear any snooze if auto-snooze disabled
+                        delete task.frozenFreshness; // Clear frozen freshness as well
                     }
                     
                     // Reset steps if they exist
@@ -3688,6 +3710,9 @@
                     // Set auto-snooze timestamp
                     task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
                     
+                    // CRITICAL: Freeze freshness at current level (100%) to prevent decay during snooze
+                    task.frozenFreshness = task.freshness;
+                    
                     // Log the auto-snooze
                     if (this.addLogEntry) {
                         this.addLogEntry(
@@ -3699,6 +3724,7 @@
                 } else {
                     // Clear any snooze status if auto-snooze is disabled
                     delete task.snoozedUntil;
+                    delete task.frozenFreshness;
                 }
                 
                 // Reset all step completions (so they can be checked off again next time)
@@ -3895,7 +3921,26 @@
                         if (task.linkedTaskId === taskId || completedTask.linkedTaskId === task.id) {
                             task.lastCompleted = completedTask.lastCompleted;
                             task.freshness = 100;
-                            delete task.snoozedUntil;
+                            
+                            // Apply auto-snooze to linked tasks if enabled
+                            if (this.data.autoSnoozeEnabled) {
+                                const decayTimeHours = (task.decayMs || (3 * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                                let snoozeHours;
+                                
+                                if (decayTimeHours >= 168) {
+                                    snoozeHours = 24;
+                                } else if (decayTimeHours <= 24) {
+                                    snoozeHours = 3;
+                                } else {
+                                    snoozeHours = 8;
+                                }
+                                
+                                task.snoozedUntil = Date.now() + (snoozeHours * 60 * 60 * 1000);
+                                task.frozenFreshness = task.freshness;
+                            } else {
+                                delete task.snoozedUntil;
+                                delete task.frozenFreshness;
+                            }
                         }
                     }
                 }

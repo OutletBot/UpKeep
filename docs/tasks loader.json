@@ -1,0 +1,2764 @@
+{
+  "version": "1.0",
+  "exportDate": "2025-10-28T21:32:14.431Z",
+  "currentSaveFile": "presets",
+  "allSaves": {
+    "default": {
+      "displayName": "Default Save",
+      "lastModified": 1760901399611,
+      "data": {
+        "categories": [
+          {
+            "id": 1760849068983,
+            "name": "Kitchen",
+            "tasks": [
+              {
+                "id": 1760849068986,
+                "name": "Clean stovetop",
+                "decayMs": 259200000,
+                "lastCompleted": 1760676268984,
+                "freshness": 13.144054398148157
+              },
+              {
+                "id": 1760849068984,
+                "name": "Wipe down counters",
+                "decayMs": 172800000,
+                "lastCompleted": 1760762668983,
+                "freshness": 19.716080439814803
+              }
+            ]
+          },
+          {
+            "id": 1760849069084,
+            "name": "Bathroom",
+            "tasks": [
+              {
+                "id": 1760849069085,
+                "name": "Clean toilet",
+                "decayMs": 604800000,
+                "lastCompleted": 1760589868984,
+                "freshness": 48.490308862433864
+              }
+            ]
+          },
+          {
+            "id": 1760849174936,
+            "name": "OBONXO",
+            "tasks": [
+              {
+                "id": 1760849182322,
+                "name": "OBONXO ",
+                "decayMs": 604800000,
+                "lastCompleted": null,
+                "freshness": 0
+              }
+            ]
+          },
+          {
+            "id": 1760863845400,
+            "name": "Obonxo",
+            "tasks": [
+              {
+                "id": 1760863854231,
+                "name": "Obonxo",
+                "decayMs": 604800000,
+                "lastCompleted": null,
+                "freshness": 0
+              }
+            ]
+          }
+        ],
+        "currentCategoryId": null,
+        "currentTaskId": null,
+        "currentSaveFile": "default",
+        "lastSaveTime": 1760901399597,
+        "ttsEnabled": true,
+        "activityLog": [
+          {
+            "id": 1760863854232,
+            "type": "added",
+            "title": "New Task Added: Obonxo",
+            "description": "Added to Obonxo category",
+            "timestamp": 1760863854232
+          },
+          {
+            "id": 1760849182323,
+            "type": "added",
+            "title": "New Task Added: OBONXO ",
+            "description": "Added to OBONXO category",
+            "timestamp": 1760849182323
+          }
+        ],
+        "voiceStyle": "robotic",
+        "voicePitch": 1.5,
+        "voiceRate": 1.2,
+        "scrappyPitch": 0.5,
+        "scrappyRate": 1.3,
+        "selectedRobotId": "CLOWNBOT",
+        "currency": 40,
+        "ownedRobots": [
+          "default",
+          "CLOWNBOT",
+          "WITCHBOT"
+        ],
+        "currentDeck": [],
+        "savedDecks": [],
+        "lastDailyResetDate": "Sat Oct 18 2025",
+        "lastDailyReset": 1760849232950,
+        "dailyChoresCompleted": 0,
+        "dailyBonusClaimed": false,
+        "dailyMissionStatus": {
+          "checkIn": "claimed",
+          "twoChores": "incomplete",
+          "fourChores": "incomplete"
+        },
+        "mysteryGamePlayed": true,
+        "mysteryGameState": {
+          "isActive": false,
+          "gamePhase": "start",
+          "prizes": [],
+          "selectedBox": null,
+          "wonPrize": null,
+          "isLocked": false
+        },
+        "currentMissionTab": "daily"
+      }
+    },
+    "Yes": {
+      "displayName": "Yes",
+      "lastModified": 1760901036427,
+      "data": {
+        "categories": [
+          {
+            "id": 1760849068983,
+            "name": "Kitchen",
+            "tasks": [
+              {
+                "id": 1760849068986,
+                "name": "Clean stovetop",
+                "decayMs": 259200000,
+                "lastCompleted": 1760676268984,
+                "freshness": 13.315033179012346
+              },
+              {
+                "id": 1760849068984,
+                "name": "Wipe down counters",
+                "decayMs": 172800000,
+                "lastCompleted": 1760762668983,
+                "freshness": 20.008446759259257
+              }
+            ]
+          },
+          {
+            "id": 1760849069084,
+            "name": "Bathroom",
+            "tasks": [
+              {
+                "id": 1760849069085,
+                "name": "Clean toilet",
+                "decayMs": 604800000,
+                "lastCompleted": 1760589868984,
+                "freshness": 48.608950727513225
+              }
+            ]
+          },
+          {
+            "id": 1760849174936,
+            "name": "OBONXO",
+            "tasks": [
+              {
+                "id": 1760849182322,
+                "name": "OBONXO ",
+                "decayMs": 604800000,
+                "lastCompleted": null,
+                "freshness": 0
+              }
+            ]
+          },
+          {
+            "id": 1760863845400,
+            "name": "Obonxo",
+            "tasks": [
+              {
+                "id": 1760863854231,
+                "name": "Obonxo",
+                "decayMs": 604800000,
+                "lastCompleted": null,
+                "freshness": 0
+              }
+            ]
+          }
+        ],
+        "currentCategoryId": null,
+        "currentTaskId": null,
+        "currentSaveFile": "Yes",
+        "lastSaveTime": 1760901036425,
+        "ttsEnabled": true,
+        "activityLog": [
+          {
+            "id": 1760863854232,
+            "type": "added",
+            "title": "New Task Added: Obonxo",
+            "description": "Added to Obonxo category",
+            "timestamp": 1760863854232
+          },
+          {
+            "id": 1760849182323,
+            "type": "added",
+            "title": "New Task Added: OBONXO ",
+            "description": "Added to OBONXO category",
+            "timestamp": 1760849182323
+          }
+        ],
+        "voiceStyle": "robotic",
+        "voicePitch": 1.5,
+        "voiceRate": 1.2,
+        "scrappyPitch": 0.5,
+        "scrappyRate": 1.3,
+        "selectedRobotId": "CLOWNBOT",
+        "currency": 40,
+        "ownedRobots": [
+          "default",
+          "CLOWNBOT",
+          "WITCHBOT"
+        ],
+        "currentDeck": [],
+        "savedDecks": [],
+        "lastDailyResetDate": "Sat Oct 18 2025",
+        "lastDailyReset": 1760849232950,
+        "dailyChoresCompleted": 0,
+        "dailyBonusClaimed": false,
+        "dailyMissionStatus": {
+          "checkIn": "claimed",
+          "twoChores": "incomplete",
+          "fourChores": "incomplete"
+        },
+        "mysteryGamePlayed": true,
+        "mysteryGameState": {
+          "isActive": false,
+          "gamePhase": "start",
+          "prizes": [],
+          "selectedBox": null,
+          "wonPrize": null,
+          "isLocked": false
+        },
+        "currentMissionTab": "daily"
+      }
+    },
+    "yes": {
+      "displayName": "yes",
+      "lastModified": 1761668038390,
+      "data": {
+        "categories": [
+          {
+            "id": 1760978983172,
+            "name": "Kitchen",
+            "tasks": [
+              {
+                "id": 1760979179387,
+                "name": "Celling Fan",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623219965,
+                "freshness": 92.5895472883598
+              },
+              {
+                "id": 1761555682815,
+                "name": "Sweep/Mop/Vacuum - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623216420,
+                "freshness": 92.58896114417989,
+                "linkedCategoryId": 1761555676362,
+                "linkedTaskId": 1761555682814
+              }
+            ]
+          },
+          {
+            "id": 1760990395499,
+            "name": "Bedroom",
+            "tasks": [
+              {
+                "id": 1761555508488,
+                "name": "Make bed",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623233961,
+                "freshness": 92.59186144179894
+              },
+              {
+                "id": 1761555529120,
+                "name": "Shampoo - Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761623230925,
+                "freshness": 99.85594310056584,
+                "linkedCategoryId": 1761555518737,
+                "linkedTaskId": 1761555529119
+              },
+              {
+                "id": 1761555686164,
+                "name": "Sweep/Mop/Vacuum - Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623236263,
+                "freshness": 92.59224206349207,
+                "linkedCategoryId": 1761555676362,
+                "linkedTaskId": 1761555686163
+              }
+            ]
+          },
+          {
+            "id": 1761078936827,
+            "name": "Laundry Room",
+            "tasks": [
+              {
+                "id": 1761555563133,
+                "name": "Do laudry",
+                "decayMs": 604800000,
+                "lastCompleted": 1761557670287,
+                "freshness": 81.75130687830688
+              },
+              {
+                "id": 1761555689600,
+                "name": "Sweep/Mop/Vacuum - Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761557669628,
+                "freshness": 81.75119791666667,
+                "linkedCategoryId": 1761555676362,
+                "linkedTaskId": 1761555689599
+              }
+            ]
+          },
+          {
+            "id": 1761555518737,
+            "name": "Shampoo",
+            "tasks": [
+              {
+                "id": 1761555529119,
+                "name": "Shampoo - Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761623230925,
+                "freshness": 99.85594310056584,
+                "linkedCategoryId": 1760990395499,
+                "linkedTaskId": 1761555529120
+              }
+            ],
+            "isGroupCategory": true
+          },
+          {
+            "id": 1761555676362,
+            "name": "Sweep/Mop/Vacuum",
+            "tasks": [
+              {
+                "id": 1761555682814,
+                "name": "Sweep/Mop/Vacuum - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623216420,
+                "freshness": 92.58896114417989,
+                "linkedCategoryId": 1760978983172,
+                "linkedTaskId": 1761555682815
+              },
+              {
+                "id": 1761555686163,
+                "name": "Sweep/Mop/Vacuum - Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761623236263,
+                "freshness": 92.59224206349207,
+                "linkedCategoryId": 1760990395499,
+                "linkedTaskId": 1761555686164
+              },
+              {
+                "id": 1761555689599,
+                "name": "Sweep/Mop/Vacuum - Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761557669628,
+                "freshness": 81.75119791666667,
+                "linkedCategoryId": 1761078936827,
+                "linkedTaskId": 1761555689600
+              }
+            ],
+            "isGroupCategory": true
+          }
+        ],
+        "currentCategoryId": null,
+        "currentTaskId": null,
+        "currentSaveFile": "yes",
+        "lastSaveTime": 1761668038388,
+        "ttsEnabled": true,
+        "activityLog": [
+          {
+            "id": 1761623236257,
+            "type": "completed",
+            "title": "Completed: Bedroom Sweep/Mop/Vacuum - Bedroom Refreshed!",
+            "description": "Bedroom cleanliness boosted by 11%",
+            "timestamp": 1761623236257
+          },
+          {
+            "id": 1761623233956,
+            "type": "completed",
+            "title": "Completed: Bedroom Make bed Refreshed!",
+            "description": "Bedroom cleanliness boosted by 11%",
+            "timestamp": 1761623233956
+          },
+          {
+            "id": 1761623230917,
+            "type": "completed",
+            "title": "Completed: Bedroom Shampoo - Bedroom Refreshed!",
+            "description": "Bedroom cleanliness boosted by 0%",
+            "timestamp": 1761623230917
+          },
+          {
+            "id": 1761623219960,
+            "type": "completed",
+            "title": "Completed: Kitchen Celling Fan Refreshed!",
+            "description": "Kitchen cleanliness boosted by 11%",
+            "timestamp": 1761623219960
+          },
+          {
+            "id": 1761623216366,
+            "type": "completed",
+            "title": "Completed: Kitchen Sweep/Mop/Vacuum - Kitchen Refreshed!",
+            "description": "Kitchen cleanliness boosted by 11%",
+            "timestamp": 1761623216366
+          },
+          {
+            "id": 1761557670282,
+            "type": "completed",
+            "title": "Completed: Laundry Room Do laudry Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 0%",
+            "timestamp": 1761557670282
+          },
+          {
+            "id": 1761557669619,
+            "type": "completed",
+            "title": "Completed: Laundry Room Sweep/Mop/Vacuum - Laundry Room Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761557669619
+          },
+          {
+            "id": 1761557659959,
+            "type": "completed",
+            "title": "Completed: Kitchen Celling Fan Refreshed!",
+            "description": "Kitchen cleanliness boosted by 0%",
+            "timestamp": 1761557659959
+          },
+          {
+            "id": 1761557659146,
+            "type": "completed",
+            "title": "Completed: Kitchen Sweep/Mop/Vacuum - Kitchen Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761557659146
+          },
+          {
+            "id": 1761557638065,
+            "type": "completed",
+            "title": "Completed: Bedroom Sweep/Mop/Vacuum - Bedroom Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761557638065
+          },
+          {
+            "id": 1761557634516,
+            "type": "completed",
+            "title": "Completed: Bedroom Make bed Refreshed!",
+            "description": "Bedroom cleanliness boosted by 0%",
+            "timestamp": 1761557634516
+          },
+          {
+            "id": 1761555689599,
+            "type": "added",
+            "title": "New Linked Task: Sweep/Mop/Vacuum - Laundry Room",
+            "description": "Created in Sweep/Mop/Vacuum and Laundry Room",
+            "timestamp": 1761555689599
+          },
+          {
+            "id": 1761555686163,
+            "type": "added",
+            "title": "New Linked Task: Sweep/Mop/Vacuum - Bedroom",
+            "description": "Created in Sweep/Mop/Vacuum and Bedroom",
+            "timestamp": 1761555686163
+          },
+          {
+            "id": 1761555682814,
+            "type": "added",
+            "title": "New Linked Task: Sweep/Mop/Vacuum - Kitchen",
+            "description": "Created in Sweep/Mop/Vacuum and Kitchen",
+            "timestamp": 1761555682814
+          },
+          {
+            "id": 1761555568899,
+            "type": "completed",
+            "title": "Completed: Laundry Room Do laudry Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761555568899
+          },
+          {
+            "id": 1761555563133,
+            "type": "added",
+            "title": "New Task Added: Do laudry",
+            "description": "Added to Laundry Room category",
+            "timestamp": 1761555563133
+          },
+          {
+            "id": 1761555545928,
+            "type": "completed",
+            "title": "Completed: Kitchen Celling Fan Refreshed!",
+            "description": "Kitchen cleanliness boosted by 95%",
+            "timestamp": 1761555545928
+          },
+          {
+            "id": 1761555538570,
+            "type": "completed",
+            "title": "Completed: Bedroom Make bed Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761555538570
+          },
+          {
+            "id": 1761555535838,
+            "type": "completed",
+            "title": "Completed: Bedroom Shampoo - Bedroom Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761555535838
+          },
+          {
+            "id": 1761555529124,
+            "type": "added",
+            "title": "New Linked Task: Shampoo - Bedroom",
+            "description": "Created in Shampoo and Bedroom",
+            "timestamp": 1761555529125
+          },
+          {
+            "id": 1761555508492,
+            "type": "added",
+            "title": "New Task Added: Make bed",
+            "description": "Added to Bedroom category",
+            "timestamp": 1761555508492
+          },
+          {
+            "id": 1760979217265,
+            "type": "completed",
+            "title": "Completed: Kitchen Celling Fan Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1760979217265
+          },
+          {
+            "id": 1760979179388,
+            "type": "added",
+            "title": "New Task Added: Celling Fan",
+            "description": "Added to Kitchen category",
+            "timestamp": 1760979179388
+          }
+        ],
+        "voiceStyle": "robotic",
+        "voicePitch": 1.5,
+        "voiceRate": 1.2,
+        "scrappyPitch": 0.5,
+        "scrappyRate": 1.3,
+        "selectedRobotId": "VOLTBOT",
+        "currency": 995048,
+        "ownedRobots": [
+          "default",
+          "PIKABOT",
+          "VOLTBOT",
+          "JACKOBOT",
+          "MEGAROCKETMAN",
+          "BUZZBOT",
+          "CLOWNBOT"
+        ],
+        "currentDeck": [
+          "unit-003-ex-0",
+          "unit-006-ex-0",
+          "unit-025-r-0",
+          "unit-150-ex-0",
+          "unit-001-uc-0",
+          "clown-bot"
+        ],
+        "savedDecks": [
+          {
+            "name": "test",
+            "robots": [
+              "unit-003-ex-0",
+              "unit-006-ex-0",
+              "unit-025-r-0",
+              "unit-150-ex-0",
+              "unit-001-uc-0",
+              "clown-bot"
+            ]
+          }
+        ],
+        "lastDailyReset": 1761557648938,
+        "lastDailyResetDate": "Mon Oct 27 2025",
+        "dailyChoresCompleted": 9,
+        "dailyBonusClaimed": true,
+        "dailyMissionStatus": {
+          "checkIn": "claimed",
+          "twoChores": "claimed",
+          "fourChores": "claimed"
+        },
+        "currentMissionTab": "achievements",
+        "mysteryGamePlayed": true,
+        "mysteryGameState": {
+          "isActive": false,
+          "gamePhase": "start",
+          "prizes": [],
+          "selectedBox": null,
+          "wonPrize": null,
+          "isLocked": false
+        },
+        "itemInventory": {
+          "OILDRINK": 2,
+          "BATTERY": 2,
+          "MEGABATTERY": 2,
+          "SOLARPANEL": 3
+        },
+        "robotBonds": {
+          "default": {
+            "durability": {
+              "battery": 100,
+              "lastUpdate": 1761545588618,
+              "isBroken": false,
+              "totalRepairs": 0,
+              "hasSolarPanel": true
+            }
+          },
+          "PIKABOT": {
+            "durability": {
+              "battery": 89.21681930555556,
+              "lastUpdate": 1761622938202,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          },
+          "VOLTBOT": {
+            "durability": {
+              "battery": 100,
+              "lastUpdate": 1761545693471,
+              "isBroken": false,
+              "totalRepairs": 0,
+              "hasSolarPanel": true
+            }
+          },
+          "JACKOBOT": {
+            "durability": {
+              "battery": 83.66175305555556,
+              "lastUpdate": 1761622938207,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          },
+          "MEGAROCKETMAN": {
+            "durability": {
+              "battery": 89.08291624999998,
+              "lastUpdate": 1761622938207,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          },
+          "BUZZBOT": {
+            "durability": {
+              "battery": 89.2781623611111,
+              "lastUpdate": 1761622938207,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          },
+          "CLOWNBOT": {
+            "durability": {
+              "battery": 89.28276055555556,
+              "lastUpdate": 1761622938208,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          }
+        },
+        "selfCare": {
+          "enabled": true,
+          "lastReset": 1761545588618,
+          "bedtimeTarget": "22:00",
+          "groups": [
+            {
+              "id": "basic",
+              "name": "Basic Self-Care & Hygiene",
+              "tasks": [
+                {
+                  "id": "bed",
+                  "name": "Get out of bed",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "brush",
+                  "name": "Brush teeth",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "floss",
+                  "name": "Floss",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "wash-face",
+                  "name": "Wash face",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "shower",
+                  "name": "Take a shower or bath",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "dressed",
+                  "name": "Get dressed (even just into clean pajamas)",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "medication",
+                  "name": "Take vitamins/ medication",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                }
+              ],
+              "bonusEarned": true
+            },
+            {
+              "id": "physical",
+              "name": "Physical Health",
+              "tasks": [
+                {
+                  "id": "water",
+                  "name": "Drink Water",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "breakfast",
+                  "name": "Eat breakfast / lunch / dinner",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "healthy",
+                  "name": "Eat something healthy",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "walk",
+                  "name": "Go for a walk",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "outside",
+                  "name": "Step outside for 5 minutes",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "stretch",
+                  "name": "Stretch for 5 minutes",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "workout",
+                  "name": "Complete a workout",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "bedtime",
+                  "name": "Go to bed by set time",
+                  "completed": true,
+                  "earnedToday": true
+                }
+              ],
+              "bonusEarned": true
+            },
+            {
+              "id": "other",
+              "name": "Other Tasks",
+              "tasks": [
+                {
+                  "id": "cash",
+                  "name": "Set aside extra cash for yourself if possible",
+                  "completed": true,
+                  "earnedToday": true,
+                  "optional": true
+                },
+                {
+                  "id": "mail",
+                  "name": "Check mail",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "plants",
+                  "name": "Water plants",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                },
+                {
+                  "id": "pet",
+                  "name": "Feed a pet",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                },
+                {
+                  "id": "study",
+                  "name": "Study for 20 minutes",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "bill",
+                  "name": "Pay a bill",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                }
+              ],
+              "bonusEarned": true
+            }
+          ]
+        },
+        "gamification": {
+          "streaks": {
+            "current": 1,
+            "best": 1,
+            "lastCompletionDate": "Mon Oct 27 2025",
+            "milestones": [
+              3,
+              5,
+              7,
+              10,
+              15,
+              20,
+              30,
+              50,
+              100
+            ]
+          }
+        }
+      }
+    },
+    "presets": {
+      "displayName": "presets",
+      "lastModified": 1761687000938,
+      "data": {
+        "categories": [
+          {
+            "id": 1761668076644,
+            "name": "Kitchen",
+            "tasks": [
+              {
+                "id": 1761668101362,
+                "name": "Ceiling fan",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761671253509,
+                "freshness": 99.39246041666667
+              },
+              {
+                "id": 1761668127517,
+                "name": "Wash dishes",
+                "decayMs": 86400000,
+                "lastCompleted": 1761672937709,
+                "freshness": 83.72311805555556
+              },
+              {
+                "id": 1761668136606,
+                "name": "Put away dishes",
+                "decayMs": 86400000,
+                "lastCompleted": 1761672938492,
+                "freshness": 83.72402430555556
+              },
+              {
+                "id": 1761668244465,
+                "name": "Whipe countertops",
+                "decayMs": 86400000,
+                "lastCompleted": 1761672939805,
+                "freshness": 83.72554398148148
+              },
+              {
+                "id": 1761668460829,
+                "name": "Organize cabniets ",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761671259185,
+                "freshness": 99.39267939814815
+              },
+              {
+                "id": 1761668479264,
+                "name": "Organize fridge/freezer",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761671298270,
+                "freshness": 99.39418730709876,
+                "steps": [
+                  {
+                    "id": 1761671285413,
+                    "label": "A",
+                    "description": "Organize Fridge",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761671292911,
+                    "label": "B",
+                    "description": "Organize freezer",
+                    "completed": false
+                  }
+                ]
+              },
+              {
+                "id": 1761668498988,
+                "name": "Tidy up top of fridge",
+                "decayMs": 7776000000,
+                "lastCompleted": 1761672404949,
+                "freshness": 99.81229441872428
+              },
+              {
+                "id": 1761668516358,
+                "name": "Throw out old food",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672407928,
+                "freshness": 97.58713508597883
+              },
+              {
+                "id": 1761668368968,
+                "name": "Sweep - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670871464,
+                "freshness": 97.33309011243387,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761668368967
+              },
+              {
+                "id": 1761668391753,
+                "name": "Mop - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670872135,
+                "freshness": 97.33320105820106,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761668391752
+              },
+              {
+                "id": 1761668554003,
+                "name": "Trash - Kitchen",
+                "decayMs": 345600000,
+                "lastCompleted": 1761671305849,
+                "freshness": 95.45859780092593,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761668554002
+              },
+              {
+                "id": 1761670594155,
+                "name": "Deep Cleaning - Kitchen",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670834625,
+                "freshness": 100,
+                "linkedCategoryId": 1761668330498,
+                "linkedTaskId": 1761670594154,
+                "steps": [
+                  {
+                    "id": 1761672431873,
+                    "label": "A",
+                    "description": "Behind fridge",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672436846,
+                    "label": "B",
+                    "description": "Behind oven",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672447470,
+                    "label": "C",
+                    "description": "Clean fridge",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672453472,
+                    "label": "D",
+                    "description": "Clean oven",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672467818,
+                    "label": "E",
+                    "description": "Dust/dirt cabniets",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672489302,
+                    "label": "F",
+                    "description": "Clean trash can",
+                    "completed": false
+                  }
+                ]
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668277744,
+            "name": "Bathroom",
+            "tasks": [
+              {
+                "id": 1761669261916,
+                "name": "Organize medicine cabinet ",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672503265,
+                "freshness": 99.4406763117284
+              },
+              {
+                "id": 1761669282505,
+                "name": "Organize other cabinets and drawers",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761671371270,
+                "freshness": 99.39700366512346
+              },
+              {
+                "id": 1761669314284,
+                "name": "Clean toilet",
+                "decayMs": 1209600000,
+                "lastCompleted": 1761671374456,
+                "freshness": 98.70812838955027
+              },
+              {
+                "id": 1761669338017,
+                "name": "Clean shower area",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672506719,
+                "freshness": 99.44080956790124
+              },
+              {
+                "id": 1761669415369,
+                "name": "Clean/wipe glass /mirrors",
+                "decayMs": 1209600000,
+                "lastCompleted": 1761672508035,
+                "freshness": 98.80184358465608
+              },
+              {
+                "id": 1761669480730,
+                "name": "Change drying towels",
+                "decayMs": 345600000,
+                "lastCompleted": 1761672509319,
+                "freshness": 95.80682407407407
+              },
+              {
+                "id": 1761670281864,
+                "name": "Trash - Bathroom",
+                "decayMs": 432000000,
+                "lastCompleted": 1761671380019,
+                "freshness": 96.38404722222222,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761670281863
+              },
+              {
+                "id": 1761669206828,
+                "name": "Sweep - Bathroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670873234,
+                "freshness": 97.33338277116403,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669206827
+              },
+              {
+                "id": 1761669212014,
+                "name": "Mop - Bathroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670874556,
+                "freshness": 97.33360135582011,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669212013
+              },
+              {
+                "id": 1761670732998,
+                "name": "Deep Cleaning - Bathroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670830963,
+                "freshness": 100,
+                "linkedCategoryId": 1761668330498,
+                "linkedTaskId": 1761670732997
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668281652,
+            "name": "Bedroom",
+            "tasks": [
+              {
+                "id": 1761669881763,
+                "name": "Vacuum- Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670875879,
+                "freshness": 97.33382010582011,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669881762
+              },
+              {
+                "id": 1761670309491,
+                "name": "Trash - Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670846883,
+                "freshness": 97.3290257936508,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761670309490
+              },
+              {
+                "id": 1761670348947,
+                "name": "Shampoo - Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670778801,
+                "freshness": 100,
+                "linkedCategoryId": 1761668335651,
+                "linkedTaskId": 1761670348946
+              },
+              {
+                "id": 1761671826419,
+                "name": "Wash beddings ",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761671889837,
+                "freshness": 99.4170101080247
+              },
+              {
+                "id": 1761671848678,
+                "name": "Organize Drawers ",
+                "decayMs": 7776000000,
+                "lastCompleted": 1761673472526,
+                "freshness": 99.8260235468107
+              },
+              {
+                "id": 1761671861895,
+                "name": "Organize closet",
+                "decayMs": 7776000000,
+                "lastCompleted": 1761672946396,
+                "freshness": 99.81925747170781
+              },
+              {
+                "id": 1761672605766,
+                "name": "Wipe/dust tv",
+                "decayMs": 7776000000,
+                "lastCompleted": 1761672608161,
+                "freshness": 99.81490774176955
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668284936,
+            "name": "Guest Bedroom",
+            "tasks": [
+              {
+                "id": 1761669888789,
+                "name": "Vacuum - Guest Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670864253,
+                "freshness": 97.33189781746032,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669888788
+              },
+              {
+                "id": 1761670314634,
+                "name": "Trash - Guest Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670848075,
+                "freshness": 97.32922288359788,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761670314633
+              },
+              {
+                "id": 1761670362896,
+                "name": "Shampoo - Guest Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670780842,
+                "freshness": 100,
+                "linkedCategoryId": 1761668335651,
+                "linkedTaskId": 1761670362895
+              },
+              {
+                "id": 1761671926873,
+                "name": "Wash bedding ",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761671929037,
+                "freshness": 100
+              },
+              {
+                "id": 1761671940234,
+                "name": "Organize closet",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761671941949,
+                "freshness": 100
+              },
+              {
+                "id": 1761671952888,
+                "name": "Organize room",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761671954534,
+                "freshness": 100
+              },
+              {
+                "id": 1761672629416,
+                "name": "Wipe/dust tv",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761672631288,
+                "freshness": 100
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668289006,
+            "name": "Living Room",
+            "tasks": [
+              {
+                "id": 1761669897822,
+                "name": "Vacuum - Living Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670864987,
+                "freshness": 97.33201917989417,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669897821
+              },
+              {
+                "id": 1761670319673,
+                "name": "Trash - Living Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670849597,
+                "freshness": 97.32947453703704,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761670319672
+              },
+              {
+                "id": 1761670378944,
+                "name": "Shampoo - Living Room",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670782733,
+                "freshness": 100,
+                "linkedCategoryId": 1761668335651,
+                "linkedTaskId": 1761670378943
+              },
+              {
+                "id": 1761671483286,
+                "name": "Wipe down surfaces",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672644570,
+                "freshness": 97.62626240079365
+              },
+              {
+                "id": 1761671499380,
+                "name": "Dust / wipe down TV",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672645337,
+                "freshness": 99.4461574845679
+              },
+              {
+                "id": 1761671523577,
+                "name": "Organize cabinets",
+                "decayMs": 3628800000,
+                "lastCompleted": 1761671972387,
+                "freshness": 99.585853505291
+              },
+              {
+                "id": 1761671615256,
+                "name": "Organize displays",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761671973154,
+                "freshness": 100
+              },
+              {
+                "id": 1761671699962,
+                "name": "Deep Cleaning - Living Room",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761671732652,
+                "freshness": 100,
+                "linkedCategoryId": 1761668330498,
+                "linkedTaskId": 1761671699961,
+                "steps": [
+                  {
+                    "id": 1761672715894,
+                    "label": "A",
+                    "description": "Fireplace",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672729739,
+                    "label": "B",
+                    "description": "Behind couch",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672743494,
+                    "label": "C",
+                    "description": "Under couch cushions",
+                    "completed": false
+                  }
+                ]
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668292748,
+            "name": "Hallway",
+            "tasks": [
+              {
+                "id": 1761669901897,
+                "name": "Vacuum - Hallway",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672218060,
+                "freshness": 97.55574156746032,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761669901896
+              },
+              {
+                "id": 1761670391097,
+                "name": "Shampoo - Hallway",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670784172,
+                "freshness": 100,
+                "linkedCategoryId": 1761668335651,
+                "linkedTaskId": 1761670391096
+              },
+              {
+                "id": 1761672283896,
+                "name": "Organize Closets",
+                "decayMs": 10368000000,
+                "lastCompleted": 1761672305654,
+                "freshness": 99.85826310763889,
+                "steps": [
+                  {
+                    "id": 1761672291124,
+                    "label": "A",
+                    "description": "Closet 1",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672296010,
+                    "label": "B",
+                    "description": "Closet 2",
+                    "completed": false
+                  }
+                ]
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668296519,
+            "name": "Laundry Room",
+            "tasks": [
+              {
+                "id": 1761670472239,
+                "name": "Wash clothes ",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672329814,
+                "freshness": 97.57421941137567
+              },
+              {
+                "id": 1761670487145,
+                "name": "Put away/fold clothes",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672330402,
+                "freshness": 97.57431663359789
+              },
+              {
+                "id": 1761670529824,
+                "name": "Organize cabinets",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672044402,
+                "freshness": 99.42297326388889
+              },
+              {
+                "id": 1761670562696,
+                "name": "Wipe down washing and dryer machines",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672332091,
+                "freshness": 97.57459589947089
+              },
+              {
+                "id": 1761670021010,
+                "name": "Sweep- Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672049603,
+                "freshness": 97.52788822751323,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761670021009
+              },
+              {
+                "id": 1761670216690,
+                "name": "Mop - Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672051194,
+                "freshness": 97.52815128968254,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761670216689
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668305103,
+            "name": "Back Porch",
+            "tasks": [
+              {
+                "id": 1761671333100,
+                "name": "Sweep",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672059457,
+                "freshness": 99.42355408950617
+              },
+              {
+                "id": 1761671352508,
+                "name": "Pick up/organize",
+                "decayMs": 2592000000,
+                "lastCompleted": 1761672060206,
+                "freshness": 99.42358298611111
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668314133,
+            "name": "Front Porch",
+            "tasks": [
+              {
+                "id": 1761672005788,
+                "name": "Takeout trash/recycle ",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672008243,
+                "freshness": 97.5210496031746
+              },
+              {
+                "id": 1761672022848,
+                "name": "Wipe down glass table",
+                "decayMs": 10368000000,
+                "lastCompleted": 1761672023766,
+                "freshness": 99.8555442804784
+              },
+              {
+                "id": 1761672370148,
+                "name": "Pickup/organize ",
+                "decayMs": 10368000000,
+                "lastCompleted": 1761672373109,
+                "freshness": 99.85891371527778
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668318618,
+            "name": "Vehicle",
+            "tasks": [
+              {
+                "id": 1761670329522,
+                "name": "Trash - Vehicle",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672067568,
+                "freshness": 97.53085863095238,
+                "linkedCategoryId": 1761668531264,
+                "linkedTaskId": 1761670329521
+              },
+              {
+                "id": 1761670414357,
+                "name": "Shampoo - Vehicle",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670785507,
+                "freshness": 100,
+                "linkedCategoryId": 1761668335651,
+                "linkedTaskId": 1761670414356
+              },
+              {
+                "id": 1761672146159,
+                "name": "Deep Cleaning - Vehicle",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761672170100,
+                "freshness": 100,
+                "linkedCategoryId": 1761668330498,
+                "linkedTaskId": 1761672146158
+              },
+              {
+                "id": 1761672192115,
+                "name": "Vacuum - Vehicle",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761672200600,
+                "freshness": 100,
+                "linkedCategoryId": 1761668324676,
+                "linkedTaskId": 1761672192114
+              }
+            ],
+            "isGroupCategory": false
+          },
+          {
+            "id": 1761668324676,
+            "name": "Sweep/Mop/Vacuum",
+            "tasks": [
+              {
+                "id": 1761668368967,
+                "name": "Sweep - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670871464,
+                "freshness": 97.33308994708995,
+                "linkedCategoryId": 1761668076644,
+                "linkedTaskId": 1761668368968
+              },
+              {
+                "id": 1761668391752,
+                "name": "Mop - Kitchen",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670872135,
+                "freshness": 97.33320089285715,
+                "linkedCategoryId": 1761668076644,
+                "linkedTaskId": 1761668391753
+              },
+              {
+                "id": 1761669206827,
+                "name": "Sweep - Bathroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670873234,
+                "freshness": 97.3333826058201,
+                "linkedCategoryId": 1761668277744,
+                "linkedTaskId": 1761669206828
+              },
+              {
+                "id": 1761669212013,
+                "name": "Mop - Bathroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670874556,
+                "freshness": 97.33360119047619,
+                "linkedCategoryId": 1761668277744,
+                "linkedTaskId": 1761669212014
+              },
+              {
+                "id": 1761669881762,
+                "name": "Vacuum- Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670875879,
+                "freshness": 97.33381994047619,
+                "linkedCategoryId": 1761668281652,
+                "linkedTaskId": 1761669881763
+              },
+              {
+                "id": 1761669888788,
+                "name": "Vacuum - Guest Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670864253,
+                "freshness": 97.3318976521164,
+                "linkedCategoryId": 1761668284936,
+                "linkedTaskId": 1761669888789
+              },
+              {
+                "id": 1761669897821,
+                "name": "Vacuum - Living Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670864987,
+                "freshness": 97.33201901455027,
+                "linkedCategoryId": 1761668289006,
+                "linkedTaskId": 1761669897822
+              },
+              {
+                "id": 1761669901896,
+                "name": "Vacuum - Hallway",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672218060,
+                "freshness": 97.5557414021164,
+                "linkedCategoryId": 1761668292748,
+                "linkedTaskId": 1761669901897
+              },
+              {
+                "id": 1761670021009,
+                "name": "Sweep- Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672049603,
+                "freshness": 97.52788806216931,
+                "linkedCategoryId": 1761668296519,
+                "linkedTaskId": 1761670021010
+              },
+              {
+                "id": 1761670216689,
+                "name": "Mop - Laundry Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672051194,
+                "freshness": 97.52815112433862,
+                "linkedCategoryId": 1761668296519,
+                "linkedTaskId": 1761670216690
+              },
+              {
+                "id": 1761672192114,
+                "name": "Vacuum - Vehicle",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761672200600,
+                "freshness": 100,
+                "linkedCategoryId": 1761668318618,
+                "linkedTaskId": 1761672192115
+              }
+            ],
+            "isGroupCategory": true
+          },
+          {
+            "id": 1761668330498,
+            "name": "Deep Cleaning",
+            "tasks": [
+              {
+                "id": 1761670594154,
+                "name": "Deep Cleaning - Kitchen",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670834625,
+                "freshness": 100,
+                "linkedCategoryId": 1761668076644,
+                "linkedTaskId": 1761670594155,
+                "steps": [
+                  {
+                    "id": 1761670611819,
+                    "label": "A",
+                    "description": "Stove top",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761670618267,
+                    "label": "B",
+                    "description": "Oven",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761670630913,
+                    "label": "C",
+                    "description": "Behind fridge",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761670639217,
+                    "label": "D",
+                    "description": "Behind oven",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761670664821,
+                    "label": "E",
+                    "description": "Cabinets (dust/dirt)",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761670715388,
+                    "label": "F",
+                    "description": "Spot clean areas",
+                    "completed": false
+                  }
+                ]
+              },
+              {
+                "id": 1761670732997,
+                "name": "Deep Cleaning - Bathroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670830963,
+                "freshness": 100,
+                "linkedCategoryId": 1761668277744,
+                "linkedTaskId": 1761670732998,
+                "steps": []
+              },
+              {
+                "id": 1761671699961,
+                "name": "Deep Cleaning - Living Room",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761671732652,
+                "freshness": 100,
+                "linkedCategoryId": 1761668289006,
+                "linkedTaskId": 1761671699962
+              },
+              {
+                "id": 1761672146158,
+                "name": "Deep Cleaning - Vehicle",
+                "decayMs": 15552000000,
+                "lastCompleted": 1761672170100,
+                "freshness": 100,
+                "linkedCategoryId": 1761668318618,
+                "linkedTaskId": 1761672146159,
+                "steps": [
+                  {
+                    "id": 1761672781463,
+                    "label": "A",
+                    "description": "Wipe down surfaces",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672795131,
+                    "label": "B",
+                    "description": "Clean glass/mirros",
+                    "completed": false
+                  },
+                  {
+                    "id": 1761672800304,
+                    "label": "C",
+                    "description": "Wash car",
+                    "completed": false
+                  }
+                ]
+              }
+            ],
+            "isGroupCategory": true
+          },
+          {
+            "id": 1761668335651,
+            "name": "Shampoo",
+            "tasks": [
+              {
+                "id": 1761670348946,
+                "name": "Shampoo - Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670778801,
+                "freshness": 100,
+                "linkedCategoryId": 1761668281652,
+                "linkedTaskId": 1761670348947
+              },
+              {
+                "id": 1761670362895,
+                "name": "Shampoo - Guest Bedroom",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670780842,
+                "freshness": 100,
+                "linkedCategoryId": 1761668284936,
+                "linkedTaskId": 1761670362896
+              },
+              {
+                "id": 1761670378943,
+                "name": "Shampoo - Living Room",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670782733,
+                "freshness": 100,
+                "linkedCategoryId": 1761668289006,
+                "linkedTaskId": 1761670378944
+              },
+              {
+                "id": 1761670391096,
+                "name": "Shampoo - Hallway",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670784172,
+                "freshness": 100,
+                "linkedCategoryId": 1761668292748,
+                "linkedTaskId": 1761670391097
+              },
+              {
+                "id": 1761670414356,
+                "name": "Shampoo - Vehicle",
+                "decayMs": 31104000000,
+                "lastCompleted": 1761670785507,
+                "freshness": 100,
+                "linkedCategoryId": 1761668318618,
+                "linkedTaskId": 1761670414357
+              }
+            ],
+            "isGroupCategory": true
+          },
+          {
+            "id": 1761668531264,
+            "name": "Trash",
+            "tasks": [
+              {
+                "id": 1761668554002,
+                "name": "Trash - Kitchen",
+                "decayMs": 345600000,
+                "lastCompleted": 1761671305849,
+                "freshness": 95.45859751157407,
+                "linkedCategoryId": 1761668076644,
+                "linkedTaskId": 1761668554003
+              },
+              {
+                "id": 1761670281863,
+                "name": "Trash - Bathroom",
+                "decayMs": 432000000,
+                "lastCompleted": 1761671380019,
+                "freshness": 96.38404699074074,
+                "linkedCategoryId": 1761668277744,
+                "linkedTaskId": 1761670281864
+              },
+              {
+                "id": 1761670309490,
+                "name": "Trash - Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670846883,
+                "freshness": 97.32902562830688,
+                "linkedCategoryId": 1761668281652,
+                "linkedTaskId": 1761670309491
+              },
+              {
+                "id": 1761670314633,
+                "name": "Trash - Guest Bedroom",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670848075,
+                "freshness": 97.32922271825397,
+                "linkedCategoryId": 1761668284936,
+                "linkedTaskId": 1761670314634
+              },
+              {
+                "id": 1761670319672,
+                "name": "Trash - Living Room",
+                "decayMs": 604800000,
+                "lastCompleted": 1761670849597,
+                "freshness": 97.32947437169312,
+                "linkedCategoryId": 1761668289006,
+                "linkedTaskId": 1761670319673
+              },
+              {
+                "id": 1761670329521,
+                "name": "Trash - Vehicle",
+                "decayMs": 604800000,
+                "lastCompleted": 1761672067568,
+                "freshness": 97.53085846560846,
+                "linkedCategoryId": 1761668318618,
+                "linkedTaskId": 1761670329522
+              }
+            ],
+            "isGroupCategory": true
+          }
+        ],
+        "currentCategoryId": null,
+        "currentTaskId": null,
+        "currentSaveFile": "presets",
+        "lastSaveTime": 1761687000937,
+        "ttsEnabled": true,
+        "activityLog": [
+          {
+            "id": 1761673472480,
+            "type": "completed",
+            "title": "Completed: Bedroom Organize Drawers  Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761673472480
+          },
+          {
+            "id": 1761672946386,
+            "type": "completed",
+            "title": "Completed: Bedroom Organize closet Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761672946386
+          },
+          {
+            "id": 1761672939797,
+            "type": "completed",
+            "title": "Completed: Kitchen Whipe countertops Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761672939797
+          },
+          {
+            "id": 1761672938474,
+            "type": "completed",
+            "title": "Completed: Kitchen Put away dishes Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761672938474
+          },
+          {
+            "id": 1761672937618,
+            "type": "completed",
+            "title": "Completed: Kitchen Wash dishes Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761672937618
+          },
+          {
+            "id": 1761672645314,
+            "type": "completed",
+            "title": "Completed: Living Room Dust / wipe down TV Refreshed!",
+            "description": "Living Room cleanliness boosted by 100%",
+            "timestamp": 1761672645314
+          },
+          {
+            "id": 1761672644559,
+            "type": "completed",
+            "title": "Completed: Living Room Wipe down surfaces Refreshed!",
+            "description": "Living Room cleanliness boosted by 100%",
+            "timestamp": 1761672644559
+          },
+          {
+            "id": 1761672631280,
+            "type": "completed",
+            "title": "Completed: Guest Bedroom Wipe/dust tv Refreshed!",
+            "description": "Guest Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761672631280
+          },
+          {
+            "id": 1761672629416,
+            "type": "added",
+            "title": "New Task Added: Wipe/dust tv",
+            "description": "Added to Guest Bedroom category",
+            "timestamp": 1761672629416
+          },
+          {
+            "id": 1761672608143,
+            "type": "completed",
+            "title": "Completed: Bedroom Wipe/dust tv Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761672608143
+          },
+          {
+            "id": 1761672605766,
+            "type": "added",
+            "title": "New Task Added: Wipe/dust tv",
+            "description": "Added to Bedroom category",
+            "timestamp": 1761672605766
+          },
+          {
+            "id": 1761672509314,
+            "type": "completed",
+            "title": "Completed: Bathroom Change drying towels Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761672509314
+          },
+          {
+            "id": 1761672508020,
+            "type": "completed",
+            "title": "Completed: Bathroom Clean/wipe glass /mirrors Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761672508020
+          },
+          {
+            "id": 1761672506715,
+            "type": "completed",
+            "title": "Completed: Bathroom Clean shower area Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761672506715
+          },
+          {
+            "id": 1761672503245,
+            "type": "completed",
+            "title": "Completed: Bathroom Organize medicine cabinet  Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761672503245
+          },
+          {
+            "id": 1761672407924,
+            "type": "completed",
+            "title": "Completed: Kitchen Throw out old food Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761672407924
+          },
+          {
+            "id": 1761672404944,
+            "type": "completed",
+            "title": "Completed: Kitchen Tidy up top of fridge Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761672404944
+          },
+          {
+            "id": 1761672373097,
+            "type": "completed",
+            "title": "Completed: Front Porch Pickup/organize  Refreshed!",
+            "description": "Front Porch cleanliness boosted by 100%",
+            "timestamp": 1761672373097
+          },
+          {
+            "id": 1761672370148,
+            "type": "added",
+            "title": "New Task Added: Pickup/organize ",
+            "description": "Added to Front Porch category",
+            "timestamp": 1761672370148
+          },
+          {
+            "id": 1761672332086,
+            "type": "completed",
+            "title": "Completed: Laundry Room Wipe down washing and dryer machines Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761672332086
+          },
+          {
+            "id": 1761672330396,
+            "type": "completed",
+            "title": "Completed: Laundry Room Put away/fold clothes Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761672330396
+          },
+          {
+            "id": 1761672329804,
+            "type": "completed",
+            "title": "Completed: Laundry Room Wash clothes  Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761672329804
+          },
+          {
+            "id": 1761672305608,
+            "type": "completed",
+            "title": "Completed: Hallway Organize Closets Refreshed!",
+            "description": "Hallway cleanliness boosted by 100%",
+            "timestamp": 1761672305608
+          },
+          {
+            "id": 1761672283896,
+            "type": "added",
+            "title": "New Task Added: Organize Closets",
+            "description": "Added to Hallway category",
+            "timestamp": 1761672283896
+          },
+          {
+            "id": 1761672218053,
+            "type": "completed",
+            "title": "Completed: Hallway Vacuum - Hallway Refreshed!",
+            "description": "Hallway cleanliness boosted by 0%",
+            "timestamp": 1761672218053
+          },
+          {
+            "id": 1761672200594,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Vacuum - Vehicle Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761672200594
+          },
+          {
+            "id": 1761672192114,
+            "type": "added",
+            "title": "New Linked Task: Sweep/Mop/Vacuum - Vehicle",
+            "description": "Created in Sweep/Mop/Vacuum and Vehicle",
+            "timestamp": 1761672192114
+          },
+          {
+            "id": 1761672170094,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - Wipe down surfaces - Vehicle Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761672170094
+          },
+          {
+            "id": 1761672146158,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Vehicle",
+            "description": "Created in Deep Cleaning and Vehicle",
+            "timestamp": 1761672146158
+          },
+          {
+            "id": 1761672117225,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - wipe/clean glass/mirrors - Vehicle Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761672117225
+          },
+          {
+            "id": 1761672091604,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Vehicle",
+            "description": "Created in Deep Cleaning and Vehicle",
+            "timestamp": 1761672091604
+          },
+          {
+            "id": 1761672067563,
+            "type": "completed",
+            "title": "Completed: Vehicle Trash - Vehicle Refreshed!",
+            "description": "Vehicle cleanliness boosted by 0%",
+            "timestamp": 1761672067563
+          },
+          {
+            "id": 1761672060200,
+            "type": "completed",
+            "title": "Completed: Back Porch Pick up Refreshed!",
+            "description": "Back Porch cleanliness boosted by 100%",
+            "timestamp": 1761672060200
+          },
+          {
+            "id": 1761672059446,
+            "type": "completed",
+            "title": "Completed: Back Porch Sweep Refreshed!",
+            "description": "Back Porch cleanliness boosted by 100%",
+            "timestamp": 1761672059446
+          },
+          {
+            "id": 1761672051186,
+            "type": "completed",
+            "title": "Completed: Laundry Room Mop - Laundry Room Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 0%",
+            "timestamp": 1761672051186
+          },
+          {
+            "id": 1761672049597,
+            "type": "completed",
+            "title": "Completed: Laundry Room Sweep- Laundry Room Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 0%",
+            "timestamp": 1761672049597
+          },
+          {
+            "id": 1761672044395,
+            "type": "completed",
+            "title": "Completed: Laundry Room Organize cabinets Refreshed!",
+            "description": "Laundry Room cleanliness boosted by 100%",
+            "timestamp": 1761672044395
+          },
+          {
+            "id": 1761672023754,
+            "type": "completed",
+            "title": "Completed: Front Porch Wipe down glass table Refreshed!",
+            "description": "Front Porch cleanliness boosted by 100%",
+            "timestamp": 1761672023754
+          },
+          {
+            "id": 1761672022848,
+            "type": "added",
+            "title": "New Task Added: Wipe down glass table",
+            "description": "Added to Front Porch category",
+            "timestamp": 1761672022848
+          },
+          {
+            "id": 1761672008239,
+            "type": "completed",
+            "title": "Completed: Front Porch Takeout trash/recycle  Refreshed!",
+            "description": "Front Porch cleanliness boosted by 100%",
+            "timestamp": 1761672008239
+          },
+          {
+            "id": 1761672005788,
+            "type": "added",
+            "title": "New Task Added: Takeout trash/recycle ",
+            "description": "Added to Front Porch category",
+            "timestamp": 1761672005788
+          },
+          {
+            "id": 1761671973148,
+            "type": "completed",
+            "title": "Completed: Living Room Organize displays Refreshed!",
+            "description": "Living Room cleanliness boosted by 100%",
+            "timestamp": 1761671973148
+          },
+          {
+            "id": 1761671972382,
+            "type": "completed",
+            "title": "Completed: Living Room Organize cabinets Refreshed!",
+            "description": "Living Room cleanliness boosted by 100%",
+            "timestamp": 1761671972382
+          },
+          {
+            "id": 1761671954526,
+            "type": "completed",
+            "title": "Completed: Guest Bedroom Organize room Refreshed!",
+            "description": "Guest Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761671954526
+          },
+          {
+            "id": 1761671952888,
+            "type": "added",
+            "title": "New Task Added: Organize room",
+            "description": "Added to Guest Bedroom category",
+            "timestamp": 1761671952888
+          },
+          {
+            "id": 1761671941943,
+            "type": "completed",
+            "title": "Completed: Guest Bedroom Organize closet Refreshed!",
+            "description": "Guest Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761671941943
+          },
+          {
+            "id": 1761671940234,
+            "type": "added",
+            "title": "New Task Added: Organize closet",
+            "description": "Added to Guest Bedroom category",
+            "timestamp": 1761671940234
+          },
+          {
+            "id": 1761671929029,
+            "type": "completed",
+            "title": "Completed: Guest Bedroom Wash bedding  Refreshed!",
+            "description": "Guest Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761671929029
+          },
+          {
+            "id": 1761671926873,
+            "type": "added",
+            "title": "New Task Added: Wash bedding ",
+            "description": "Added to Guest Bedroom category",
+            "timestamp": 1761671926873
+          },
+          {
+            "id": 1761671889764,
+            "type": "completed",
+            "title": "Completed: Bedroom Wash beddings  Refreshed!",
+            "description": "Bedroom cleanliness boosted by 100%",
+            "timestamp": 1761671889764
+          },
+          {
+            "id": 1761671861895,
+            "type": "added",
+            "title": "New Task Added: Organize closet",
+            "description": "Added to Bedroom category",
+            "timestamp": 1761671861895
+          },
+          {
+            "id": 1761671848678,
+            "type": "added",
+            "title": "New Task Added: Organize Drawers ",
+            "description": "Added to Bedroom category",
+            "timestamp": 1761671848678
+          },
+          {
+            "id": 1761671826419,
+            "type": "added",
+            "title": "New Task Added: Wash beddings ",
+            "description": "Added to Bedroom category",
+            "timestamp": 1761671826419
+          },
+          {
+            "id": 1761671777691,
+            "type": "snoozed",
+            "title": "Snoozed: Deep Cleaning - Fire place - Living Room",
+            "description": "Task paused for 24 weeks",
+            "timestamp": 1761671777691
+          },
+          {
+            "id": 1761671767043,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - Fire place - Living Room Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761671767043
+          },
+          {
+            "id": 1761671753687,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Living Room",
+            "description": "Created in Deep Cleaning and Living Room",
+            "timestamp": 1761671753687
+          },
+          {
+            "id": 1761671732645,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - under/in-between cushions- Living Room Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761671732645
+          },
+          {
+            "id": 1761671699961,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Living Room",
+            "description": "Created in Deep Cleaning and Living Room",
+            "timestamp": 1761671699961
+          },
+          {
+            "id": 1761671685290,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Laundry Room",
+            "description": "Created in Deep Cleaning and Laundry Room",
+            "timestamp": 1761671685290
+          },
+          {
+            "id": 1761671667481,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - behind couch - Living Room Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761671667481
+          },
+          {
+            "id": 1761671647574,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Living Room",
+            "description": "Created in Deep Cleaning and Living Room",
+            "timestamp": 1761671647574
+          },
+          {
+            "id": 1761671615259,
+            "type": "added",
+            "title": "New Task Added: Organize displays",
+            "description": "Added to Living Room category",
+            "timestamp": 1761671615259
+          },
+          {
+            "id": 1761671523577,
+            "type": "added",
+            "title": "New Task Added: Organize cabinets",
+            "description": "Added to Living Room category",
+            "timestamp": 1761671523577
+          },
+          {
+            "id": 1761671499380,
+            "type": "added",
+            "title": "New Task Added: Dust / wipe down TV",
+            "description": "Added to Living Room category",
+            "timestamp": 1761671499380
+          },
+          {
+            "id": 1761671483286,
+            "type": "added",
+            "title": "New Task Added: Wipe down surfaces",
+            "description": "Added to Living Room category",
+            "timestamp": 1761671483286
+          },
+          {
+            "id": 1761671380011,
+            "type": "completed",
+            "title": "Completed: Bathroom Trash - Bathroom Refreshed!",
+            "description": "Bathroom cleanliness boosted by 0%",
+            "timestamp": 1761671380011
+          },
+          {
+            "id": 1761671374450,
+            "type": "completed",
+            "title": "Completed: Bathroom Clean toilet Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761671374450
+          },
+          {
+            "id": 1761671371227,
+            "type": "completed",
+            "title": "Completed: Bathroom Organize other cabinets and drawers Refreshed!",
+            "description": "Bathroom cleanliness boosted by 100%",
+            "timestamp": 1761671371227
+          },
+          {
+            "id": 1761671352508,
+            "type": "added",
+            "title": "New Task Added: Pick up",
+            "description": "Added to Back Porch category",
+            "timestamp": 1761671352508
+          },
+          {
+            "id": 1761671333100,
+            "type": "added",
+            "title": "New Task Added: Sweep",
+            "description": "Added to Back Porch category",
+            "timestamp": 1761671333100
+          },
+          {
+            "id": 1761671305842,
+            "type": "completed",
+            "title": "Completed: Kitchen Trash - Kitchen Refreshed!",
+            "description": "Kitchen cleanliness boosted by 0%",
+            "timestamp": 1761671305842
+          },
+          {
+            "id": 1761671261339,
+            "type": "completed",
+            "title": "Completed: Kitchen Organize fridge/freezer Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761671261339
+          },
+          {
+            "id": 1761671259180,
+            "type": "completed",
+            "title": "Completed: Kitchen Organize cabniets  Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761671259180
+          },
+          {
+            "id": 1761671253424,
+            "type": "completed",
+            "title": "Completed: Kitchen Ceiling fan Refreshed!",
+            "description": "Kitchen cleanliness boosted by 100%",
+            "timestamp": 1761671253424
+          },
+          {
+            "id": 1761670875874,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Vacuum- Bedroom Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670875874
+          },
+          {
+            "id": 1761670874553,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Mop - Bathroom Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670874553
+          },
+          {
+            "id": 1761670873230,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Sweep - Bathroom Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670873230
+          },
+          {
+            "id": 1761670872131,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Mop - Kitchen Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670872131
+          },
+          {
+            "id": 1761670871460,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Sweep - Kitchen Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670871460
+          },
+          {
+            "id": 1761670868811,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Mop - Laundry Room Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670868811
+          },
+          {
+            "id": 1761670867501,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Sweep- Laundry Room Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670867501
+          },
+          {
+            "id": 1761670866237,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Vacuum - Hallway Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670866237
+          },
+          {
+            "id": 1761670864958,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Vacuum - Living Room Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670864958
+          },
+          {
+            "id": 1761670864246,
+            "type": "completed",
+            "title": "Completed: Sweep/Mop/Vacuum Vacuum - Guest Bedroom Refreshed!",
+            "description": "Sweep/Mop/Vacuum cleanliness boosted by 100%",
+            "timestamp": 1761670864246
+          },
+          {
+            "id": 1761670851252,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Vehicle Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670851252
+          },
+          {
+            "id": 1761670849592,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Living Room Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670849592
+          },
+          {
+            "id": 1761670848069,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Guest Bedroom Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670848069
+          },
+          {
+            "id": 1761670846879,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Bedroom Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670846879
+          },
+          {
+            "id": 1761670845182,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Bathroom Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670845182
+          },
+          {
+            "id": 1761670844271,
+            "type": "completed",
+            "title": "Completed: Trash Trash - Kitchen Refreshed!",
+            "description": "Trash cleanliness boosted by 100%",
+            "timestamp": 1761670844271
+          },
+          {
+            "id": 1761670834617,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - Kitchen Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761670834617
+          },
+          {
+            "id": 1761670830955,
+            "type": "completed",
+            "title": "Completed: Deep Cleaning Deep Cleaning - Bathroom Refreshed!",
+            "description": "Deep Cleaning cleanliness boosted by 100%",
+            "timestamp": 1761670830955
+          },
+          {
+            "id": 1761670785500,
+            "type": "completed",
+            "title": "Completed: Shampoo Shampoo - Vehicle Refreshed!",
+            "description": "Shampoo cleanliness boosted by 100%",
+            "timestamp": 1761670785500
+          },
+          {
+            "id": 1761670784164,
+            "type": "completed",
+            "title": "Completed: Shampoo Shampoo - Hallway Refreshed!",
+            "description": "Shampoo cleanliness boosted by 100%",
+            "timestamp": 1761670784164
+          },
+          {
+            "id": 1761670782725,
+            "type": "completed",
+            "title": "Completed: Shampoo Shampoo - Living Room Refreshed!",
+            "description": "Shampoo cleanliness boosted by 100%",
+            "timestamp": 1761670782725
+          },
+          {
+            "id": 1761670780835,
+            "type": "completed",
+            "title": "Completed: Shampoo Shampoo - Guest Bedroom Refreshed!",
+            "description": "Shampoo cleanliness boosted by 100%",
+            "timestamp": 1761670780835
+          },
+          {
+            "id": 1761670778706,
+            "type": "completed",
+            "title": "Completed: Shampoo Shampoo - Bedroom Refreshed!",
+            "description": "Shampoo cleanliness boosted by 100%",
+            "timestamp": 1761670778706
+          },
+          {
+            "id": 1761670732997,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Bathroom",
+            "description": "Created in Deep Cleaning and Bathroom",
+            "timestamp": 1761670732997
+          },
+          {
+            "id": 1761670594154,
+            "type": "added",
+            "title": "New Linked Task: Deep Cleaning - Kitchen",
+            "description": "Created in Deep Cleaning and Kitchen",
+            "timestamp": 1761670594154
+          },
+          {
+            "id": 1761670562696,
+            "type": "added",
+            "title": "New Task Added: Wipe down washing and dryer machines",
+            "description": "Added to Laundry Room category",
+            "timestamp": 1761670562696
+          }
+        ],
+        "voiceStyle": "robotic",
+        "voicePitch": 1.5,
+        "voiceRate": 1.2,
+        "scrappyPitch": 0.5,
+        "scrappyRate": 1.3,
+        "selectedRobotId": "default",
+        "currency": 16,
+        "ownedRobots": [
+          "default",
+          "VOLTBOT",
+          "VOLTBOT"
+        ],
+        "currentDeck": [],
+        "savedDecks": [],
+        "gamification": {
+          "streaks": {
+            "current": 2,
+            "best": 2,
+            "lastCompletionDate": "Tue Oct 28 2025",
+            "milestones": [
+              3,
+              5,
+              7,
+              10,
+              15,
+              20,
+              30,
+              50,
+              100
+            ]
+          }
+        },
+        "dailyChoresCompleted": 0,
+        "currentTaskIdForCompletion": null,
+        "currentSnoozeTaskId": null,
+        "itemInventory": {
+          "OILDRINK": 0,
+          "BATTERY": 0,
+          "MEGABATTERY": 0,
+          "SOLARPANEL": 0
+        },
+        "robotBonds": {
+          "default": {
+            "durability": {
+              "battery": 100,
+              "lastUpdate": 1761673458636,
+              "isBroken": false,
+              "totalRepairs": 0,
+              "hasSolarPanel": true
+            }
+          },
+          "VOLTBOT": {
+            "durability": {
+              "battery": 100,
+              "lastUpdate": 1761673458636,
+              "isBroken": false,
+              "totalRepairs": 0
+            }
+          }
+        },
+        "lastDailyReset": 1761673537043,
+        "lastDailyResetDate": "Tue Oct 28 2025",
+        "dailyBonusClaimed": false,
+        "dailyMissionStatus": {
+          "checkIn": "completed",
+          "twoChores": "incomplete",
+          "fourChores": "incomplete"
+        },
+        "currentMissionTab": "daily",
+        "selfCare": {
+          "enabled": true,
+          "lastReset": 1761673458636,
+          "bedtimeTarget": "22:00",
+          "groups": [
+            {
+              "id": "basic",
+              "name": "Basic Self-Care & Hygiene",
+              "tasks": [
+                {
+                  "id": "bed",
+                  "name": "Get out of bed",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "brush",
+                  "name": "Brush teeth",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "floss",
+                  "name": "Floss",
+                  "completed": true,
+                  "earnedToday": true
+                },
+                {
+                  "id": "wash-face",
+                  "name": "Wash face",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "shower",
+                  "name": "Take a shower or bath",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "dressed",
+                  "name": "Get dressed (even just into clean pajamas)",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "medication",
+                  "name": "Take vitamins/ medication",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                }
+              ],
+              "bonusEarned": false
+            },
+            {
+              "id": "physical",
+              "name": "Physical Health",
+              "tasks": [
+                {
+                  "id": "water",
+                  "name": "Drink Water",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "breakfast",
+                  "name": "Eat breakfast / lunch / dinner",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "healthy",
+                  "name": "Eat something healthy",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "walk",
+                  "name": "Go for a walk",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "outside",
+                  "name": "Step outside for 5 minutes",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "stretch",
+                  "name": "Stretch for 5 minutes",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "workout",
+                  "name": "Complete a workout",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "bedtime",
+                  "name": "Go to bed by set time",
+                  "completed": false,
+                  "earnedToday": false
+                }
+              ],
+              "bonusEarned": false
+            },
+            {
+              "id": "other",
+              "name": "Other Tasks",
+              "tasks": [
+                {
+                  "id": "cash",
+                  "name": "Set aside extra cash for yourself if possible",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                },
+                {
+                  "id": "mail",
+                  "name": "Check mail",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "plants",
+                  "name": "Water plants",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                },
+                {
+                  "id": "pet",
+                  "name": "Feed a pet",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                },
+                {
+                  "id": "study",
+                  "name": "Study for 20 minutes",
+                  "completed": false,
+                  "earnedToday": false
+                },
+                {
+                  "id": "bill",
+                  "name": "Pay a bill",
+                  "completed": false,
+                  "earnedToday": false,
+                  "optional": true
+                }
+              ],
+              "bonusEarned": false
+            }
+          ]
+        },
+        "mysteryGamePlayed": false,
+        "mysteryGameState": {
+          "isActive": false,
+          "gamePhase": "start",
+          "prizes": [],
+          "selectedBox": null,
+          "wonPrize": null,
+          "isLocked": false
+        }
+      }
+    }
+  }
+}
