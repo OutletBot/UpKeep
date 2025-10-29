@@ -4200,7 +4200,23 @@
             },
 
             // Mascot Logic
-            showSpeechBubble(message, emotion = null) {
+            async showSpeechBubble(message, emotion = null) {
+                // ===== ENHANCED INTELLIGENCE: AI API CALL =====
+                // Check if this is a placeholder for AI-powered response
+                if (message && message.includes('ENHANCED_INTELLIGENCE_ACTIVE')) {
+                    console.log('🤖 [API Bot] Enhanced Intelligence detected, calling AI...');
+                    
+                    // Extract context
+                    const context = this.extractAIContext();
+                    
+                    // Try Netlify function first, then fall back to local API
+                    const aiResponse = await this.callAIFunction(context);
+                    
+                    // Replace message with AI response
+                    message = aiResponse;
+                    console.log('✅ [API Bot] AI response received:', message);
+                }
+                
                 // ===== CRITICAL: SINGLE-SPEAKER RULE ENFORCEMENT =====
                 // Block if another speech bubble is already visible (one at a time!)
                 const bubble = document.getElementById('speechBubble');
@@ -4356,6 +4372,134 @@
                     "Clean your room. Please. I'm begging you. My sanity depends on it."
                 ];
                 return madPhrases[Math.floor(Math.random() * madPhrases.length)];
+            },
+
+            // ===== ENHANCED INTELLIGENCE: AI HELPER FUNCTIONS =====
+            extractAIContext() {
+                try {
+                    // Try to get current task/category info
+                    const currentTask = this.data.currentTaskId ? 
+                        this.data.categories.flatMap(c => c.tasks).find(t => t.id === this.data.currentTaskId) : null;
+                    const currentCategory = this.data.currentCategoryId ?
+                        this.data.categories.find(c => c.id === this.data.currentCategoryId) : null;
+                        
+                    if (currentTask && currentCategory) {
+                        return `User completed task: "${currentTask.name}" in "${currentCategory.name}"`;
+                    } else if (currentCategory) {
+                        return `User viewing category: "${currentCategory.name}"`;
+                    } else {
+                        const overallScore = this.calculateOverallScore();
+                        return `User on dashboard. Overall home score: ${overallScore}%`;
+                    }
+                } catch (error) {
+                    console.warn('[AI Context] Error extracting context:', error);
+                    return 'General greeting';
+                }
+            },
+
+            async callAIFunction(context) {
+                try {
+                    console.log('🌐 [API Bot] Trying Netlify function...');
+                    
+                    // Try Netlify function first
+                    const netlifyResponse = await fetch('/.netlify/functions/ai-response', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ context }),
+                        timeout: 10000
+                    });
+                    
+                    if (netlifyResponse.ok) {
+                        const data = await netlifyResponse.json();
+                        console.log('✅ [API Bot] Netlify response:', data.response);
+                        return data.response;
+                    } else {
+                        throw new Error(`Netlify function returned ${netlifyResponse.status}`);
+                    }
+                    
+                } catch (netlifyError) {
+                    console.log('⚠️ [API Bot] Netlify failed, trying local API file...', netlifyError.message);
+                    
+                    // Fallback: Try loading local API file
+                    try {
+                        const apiFileResponse = await fetch('API');
+                        if (!apiFileResponse.ok) {
+                            throw new Error(`API file not found: ${apiFileResponse.status}`);
+                        }
+                        
+                        const apiFileText = await apiFileResponse.text();
+                        const lines = apiFileText.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+                        
+                        if (lines.length === 0 || !lines[0].startsWith('sk-')) {
+                            throw new Error('Invalid API key format in API file');
+                        }
+                        
+                        const apiKey = lines[0];
+                        console.log('🔑 [API Bot] Local API key found, calling DeepSeek...');
+                        
+                        // Call DeepSeek API directly
+                        const deepseekResponse = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${apiKey}`
+                            },
+                            body: JSON.stringify({
+                                model: 'deepseek-chat',
+                                messages: [
+                                    {
+                                        role: 'system',
+                                        content: 'You are Default Bot 2.0, a helpful and encouraging robot assistant in a chore-tracking app. Respond in 14 words or less with a single sentence. Be contextual, unique, and uplifting. Never repeat the same response twice.'
+                                    },
+                                    {
+                                        role: 'user',
+                                        content: context
+                                    }
+                                ],
+                                temperature: 1.4,
+                                max_tokens: 100,
+                                top_p: 0.95,
+                                frequency_penalty: 1.2,
+                                presence_penalty: 0.8
+                            })
+                        });
+                        
+                        if (!deepseekResponse.ok) {
+                            throw new Error(`DeepSeek API error: ${deepseekResponse.status}`);
+                        }
+                        
+                        const deepseekData = await deepseekResponse.json();
+                        let text = deepseekData.choices?.[0]?.message?.content || 'Great job!';
+                        
+                        // Enforce 14-word limit
+                        text = text.split(/[.!?]+/)[0].trim(); // First sentence only
+                        const words = text.split(/\s+/);
+                        if (words.length > 14) {
+                            text = words.slice(0, 14).join(' ');
+                        }
+                        
+                        // Add punctuation if missing
+                        if (!/[.!?]$/.test(text)) {
+                            text += ['!', '.', '...'][Math.floor(Math.random() * 3)];
+                        }
+                        
+                        console.log('✅ [API Bot] DeepSeek response:', text);
+                        return text;
+                        
+                    } catch (localError) {
+                        console.error('❌ [API Bot] Both Netlify and local API failed:', localError);
+                        
+                        // Final fallback: Generic encouraging messages
+                        const fallbacks = [
+                            "Great work! Keep it up!",
+                            "Nice job on that task!",
+                            "Your home is looking better!",
+                            "Well done! That's progress!",
+                            "Excellent! Keep going!"
+                        ];
+                        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+                    }
+                }
             },
 
             showThoughtBubble(message) {
