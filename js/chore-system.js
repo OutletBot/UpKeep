@@ -3820,6 +3820,9 @@
                 
                 // Freeze freshness at current level
                 task.frozenFreshness = task.freshness;
+                
+                // CRITICAL: Sync snooze status to linked tasks
+                this.syncLinkedTaskSnooze(taskId);
 
                 this.saveData();
                 
@@ -3875,6 +3878,9 @@
 
                 // Clear snooze status
                 delete task.snoozedUntil;
+                
+                // CRITICAL: Sync unsnooze status to linked tasks
+                this.syncLinkedTaskSnooze(taskId);
 
                 this.saveData();
                 
@@ -3947,6 +3953,47 @@
                             } else {
                                 delete task.snoozedUntil;
                                 delete task.frozenFreshness;
+                            }
+                        }
+                    }
+                }
+            },
+            
+            syncLinkedTaskSnooze(taskId) {
+                // Find the task that was just snoozed/unsnoozed
+                let sourceTask = null;
+                let sourceCategory = null;
+                
+                for (const cat of this.data.categories) {
+                    const task = cat.tasks.find(t => t.id === taskId);
+                    if (task) {
+                        sourceTask = task;
+                        sourceCategory = cat;
+                        break;
+                    }
+                }
+                
+                if (!sourceTask) return;
+                
+                // Sync snooze state to all linked tasks
+                for (const category of this.data.categories) {
+                    for (const task of category.tasks) {
+                        // Skip the task we just modified
+                        if (task.id === taskId) continue;
+                        
+                        // Check if this task is linked to the source task
+                        if (task.linkedTaskId === taskId || sourceTask.linkedTaskId === task.id) {
+                            // Copy snooze state from source task
+                            if (sourceTask.snoozedUntil) {
+                                task.snoozedUntil = sourceTask.snoozedUntil;
+                                task.frozenFreshness = task.freshness; // Freeze at current freshness
+                            } else {
+                                // Unsnooze - restore frozen freshness if it exists
+                                if (task.frozenFreshness !== undefined) {
+                                    task.freshness = task.frozenFreshness;
+                                    delete task.frozenFreshness;
+                                }
+                                delete task.snoozedUntil;
                             }
                         }
                     }
