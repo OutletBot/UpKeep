@@ -30,7 +30,6 @@
                     twoChores: 'incomplete',
                     fourChores: 'incomplete'
                 },
-                upkeepTutorialCompleted: false,  // Tutorial gate flag
 
                 currentMissionTab: 'daily',
                 mysteryGamePlayed: false,
@@ -2278,12 +2277,6 @@
             },
 
             showDashboard() {
-                // Tutorial Gate: DISABLED - Old tutorial system removed
-                // if (!this.data.upkeepTutorialCompleted) {
-                //     this.startUpkeepTutorial();
-                //     return;
-                // }
-                
                 this.data.currentCategoryId = null;
                 this.data.currentSubCategory = null; // Clear sub-category state
                 
@@ -11459,9 +11452,4 @@
                 }
             }, 500);
         };
-
-        // ==============================================
-        // OLD TUTORIAL CODE REMOVED (303 lines deleted)
-        // Building new interactive tutorial in docs/TUTORIAL/
-        // ==============================================
 
