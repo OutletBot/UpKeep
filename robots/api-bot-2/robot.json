@@ -1,0 +1,15 @@
+{
+  "id": "api-bot-2",
+  "battleId": null,
+  "name": "Default Bot 2.0",
+  "number": 999,
+  "rarity": "LEGENDARY",
+  "type": "Intelligence",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": true,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "hasEnhancedIntelligence": true,
+  "notes": "Premium AI-powered robot with enhanced intelligence - 10,000 bolts"
+}

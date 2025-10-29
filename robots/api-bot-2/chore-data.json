@@ -1,0 +1,23 @@
+{
+  "id": "APIBOT2",
+  "purchasable": true,
+  "cost": 10000,
+  "unlockRequirements": [],
+  "description": "The ultimate companion upgrade with enhanced intelligence, infinite knowledge, and chaotic charm! Never hear the same dialogue twice.",
+  "imagePaths": {
+    "happy": "Imag/mascot.png",
+    "sad": "Imag/mascot.png",
+    "thinking": "Imag/mascot.png",
+    "shadow": "Imag/mascot.png"
+  },
+  "battery": {
+    "hoursToDeplete": 50,
+    "comment": "Premium robot with standard battery life. Enhanced intelligence requires charging."
+  },
+  "specialFeatures": {
+    "enhancedIntelligence": true,
+    "uniqueEveryTime": true,
+    "electricGreenBubble": true,
+    "chaoticPersonality": true
+  }
+}

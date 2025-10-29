@@ -1,0 +1,26 @@
+# Netlify Configuration for UP-KEEP
+
+[build]
+  # No build process needed - static site
+  publish = "."
+  
+[functions]
+  # Serverless functions location
+  directory = "netlify/functions"
+
+# Redirect rules (optional)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+# Environment hints (actual keys go in Netlify dashboard)
+# DEEPSEEK_API_KEY = "set-this-in-netlify-dashboard"

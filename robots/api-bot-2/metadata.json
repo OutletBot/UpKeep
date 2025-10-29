@@ -1,0 +1,15 @@
+{
+    "id": "APIBOT2",
+    "name": "Default Bot 2.0",
+    "cost": 10000,
+    "happyImage": "Imag/mascot.png",
+    "sadImage": "Imag/mascot.png",
+    "thinkingImage": "Imag/mascot.png",
+    "hasCustomDialogue": true,
+    "hasEnhancedIntelligence": true,
+    "choreData": {
+        "battery": {
+            "hoursToDeplete": 50
+        }
+    }
+}

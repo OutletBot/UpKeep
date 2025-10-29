@@ -1,0 +1,226 @@
+// Global Default Task List Template - Complete household task management system
+// Extracted from "THIS" save file - thisone.upkeep
+// This template is accessible to all users and all save files
+
+const DEFAULT_TASK_LIST = {
+    version: '1.0',
+    name: 'Default List',
+    createdDate: '2025-10-28T00:00:00.000Z',
+    isGlobal: true,
+    categories: [
+        {
+            id: 1761668076644,
+            name: 'Kitchen',
+            tasks: [
+                { id: 1761668101362, name: 'Ceiling fan', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761668127517, name: 'Wash dishes', decayMs: 86400000, decayUnit: 'days', lastCompleted: null, freshness: 0 },
+                { id: 1761668136606, name: 'Put away dishes', decayMs: 86400000, decayUnit: 'days', lastCompleted: null, freshness: 0 },
+                { id: 1761668244465, name: 'Whipe countertops', decayMs: 86400000, decayUnit: 'days', lastCompleted: null, freshness: 0 },
+                { id: 1761668460829, name: 'Organize cabniets ', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761668479264, name: 'Organize fridge/freezer', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0, steps: [
+                    { id: 1761671285413, label: 'A', description: 'Organize Fridge', completed: false },
+                    { id: 1761671292911, label: 'B', description: 'Organize freezer', completed: false }
+                ]},
+                { id: 1761668498988, name: 'Tidy up top of fridge', decayMs: 7776000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761668516358, name: 'Throw out old food', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761668368968, name: 'Sweep - Kitchen', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761668368967, subCategory: 'sweep' },
+                { id: 1761668391753, name: 'Mop - Kitchen', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761668391752, subCategory: 'mop' },
+                { id: 1761668554003, name: 'Trash - Kitchen', decayMs: 345600000, decayUnit: 'days', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761668554002 },
+                { id: 1761670594155, name: 'Deep Cleaning - Kitchen', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668330498, linkedTaskId: 1761670594154, steps: [
+                    { id: 1761672431873, label: 'A', description: 'Behind fridge', completed: false },
+                    { id: 1761672436846, label: 'B', description: 'Behind oven', completed: false },
+                    { id: 1761672447470, label: 'C', description: 'Clean fridge', completed: false },
+                    { id: 1761672453472, label: 'D', description: 'Clean oven', completed: false },
+                    { id: 1761672467818, label: 'E', description: 'Dust/dirt cabniets', completed: false },
+                    { id: 1761672489302, label: 'F', description: 'Clean trash can', completed: false }
+                ]}
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668277744,
+            name: 'Bathroom',
+            tasks: [
+                { id: 1761669261916, name: 'Organize medicine cabinet ', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761669282505, name: 'Organize other cabinets and drawers', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761669314284, name: 'Clean toilet', decayMs: 1209600000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761669338017, name: 'Clean shower area', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761669415369, name: 'Clean/wipe glass /mirrors', decayMs: 1209600000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761669480730, name: 'Change drying towels', decayMs: 345600000, decayUnit: 'days', lastCompleted: null, freshness: 0 },
+                { id: 1761670281864, name: 'Trash - Bathroom', decayMs: 432000000, decayUnit: 'days', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761670281863 },
+                { id: 1761669206828, name: 'Sweep - Bathroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669206827, subCategory: 'sweep' },
+                { id: 1761669212014, name: 'Mop - Bathroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669212013, subCategory: 'mop' },
+                { id: 1761670732998, name: 'Deep Cleaning - Bathroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668330498, linkedTaskId: 1761670732997 }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668281652,
+            name: 'Bedroom',
+            tasks: [
+                { id: 1761669881763, name: 'Vacuum- Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669881762, subCategory: 'vacuum' },
+                { id: 1761670309491, name: 'Trash - Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761670309490 },
+                { id: 1761670348947, name: 'Shampoo - Bedroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668335651, linkedTaskId: 1761670348946 },
+                { id: 1761671826419, name: 'Wash beddings ', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671848678, name: 'Organize Drawers ', decayMs: 7776000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671861895, name: 'Organize closet', decayMs: 7776000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761672605766, name: 'Wipe/dust tv', decayMs: 7776000000, decayUnit: 'months', lastCompleted: null, freshness: 0 }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668284936,
+            name: 'Guest Bedroom',
+            tasks: [
+                { id: 1761669888789, name: 'Vacuum - Guest Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669888788, subCategory: 'vacuum' },
+                { id: 1761670314634, name: 'Trash - Guest Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761670314633 },
+                { id: 1761670362896, name: 'Shampoo - Guest Bedroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668335651, linkedTaskId: 1761670362895 },
+                { id: 1761671926873, name: 'Wash bedding ', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671940234, name: 'Organize closet', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671952888, name: 'Organize room', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761672629416, name: 'Wipe/dust tv', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0 }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668289006,
+            name: 'Living Room',
+            tasks: [
+                { id: 1761669897822, name: 'Vacuum - Living Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669897821, subCategory: 'vacuum' },
+                { id: 1761670319673, name: 'Trash - Living Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761670319672 },
+                { id: 1761670378944, name: 'Shampoo - Living Room', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668335651, linkedTaskId: 1761670378943 },
+                { id: 1761671483286, name: 'Wipe down surfaces', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761671499380, name: 'Dust / wipe down TV', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671523577, name: 'Organize cabinets', decayMs: 3628800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761671615256, name: 'Organize displays', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671699962, name: 'Deep Cleaning - Living Room', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668330498, linkedTaskId: 1761671699961, steps: [
+                    { id: 1761672715894, label: 'A', description: 'Fireplace', completed: false },
+                    { id: 1761672729739, label: 'B', description: 'Behind couch', completed: false },
+                    { id: 1761672743494, label: 'C', description: 'Under couch cushions', completed: false }
+                ]}
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668292748,
+            name: 'Hallway',
+            tasks: [
+                { id: 1761669901897, name: 'Vacuum - Hallway', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761669901896, subCategory: 'vacuum' },
+                { id: 1761670391097, name: 'Shampoo - Hallway', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668335651, linkedTaskId: 1761670391096 },
+                { id: 1761672283896, name: 'Organize Closets', decayMs: 10368000000, decayUnit: 'months', lastCompleted: null, freshness: 0, steps: [
+                    { id: 1761672291124, label: 'A', description: 'Closet 1', completed: false },
+                    { id: 1761672296010, label: 'B', description: 'Closet 2', completed: false }
+                ]}
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668296519,
+            name: 'Laundry Room',
+            tasks: [
+                { id: 1761670472239, name: 'Wash clothes ', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761670487145, name: 'Put away/fold clothes', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761670529824, name: 'Organize cabinets', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761670562696, name: 'Wipe down washing and dryer machines', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761670021010, name: 'Sweep- Laundry Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761670021009, subCategory: 'sweep' },
+                { id: 1761670216690, name: 'Mop - Laundry Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761670216689, subCategory: 'mop' }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668305103,
+            name: 'Back Porch',
+            tasks: [
+                { id: 1761671333100, name: 'Sweep', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761671352508, name: 'Pick up/organize', decayMs: 2592000000, decayUnit: 'months', lastCompleted: null, freshness: 0 }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668314133,
+            name: 'Front Porch',
+            tasks: [
+                { id: 1761672005788, name: 'Takeout trash/recycle ', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0 },
+                { id: 1761672022848, name: 'Wipe down glass table', decayMs: 10368000000, decayUnit: 'months', lastCompleted: null, freshness: 0 },
+                { id: 1761672370148, name: 'Pickup/organize ', decayMs: 10368000000, decayUnit: 'months', lastCompleted: null, freshness: 0 }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668318618,
+            name: 'Vehicle',
+            tasks: [
+                { id: 1761670329522, name: 'Trash - Vehicle', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668531264, linkedTaskId: 1761670329521 },
+                { id: 1761670414357, name: 'Shampoo - Vehicle', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668335651, linkedTaskId: 1761670414356 },
+                { id: 1761672146159, name: 'Deep Cleaning - Vehicle', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668330498, linkedTaskId: 1761672146158 },
+                { id: 1761672192115, name: 'Vacuum - Vehicle', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668324676, linkedTaskId: 1761672192114, subCategory: 'vacuum' }
+            ],
+            isGroupCategory: false
+        },
+        {
+            id: 1761668324676,
+            name: 'Sweep/Mop/Vacuum',
+            tasks: [
+                { id: 1761668368967, name: 'Sweep - Kitchen', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668076644, linkedTaskId: 1761668368968, subCategory: 'sweep' },
+                { id: 1761668391752, name: 'Mop - Kitchen', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668076644, linkedTaskId: 1761668391753, subCategory: 'mop' },
+                { id: 1761669206827, name: 'Sweep - Bathroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668277744, linkedTaskId: 1761669206828, subCategory: 'sweep' },
+                { id: 1761669212013, name: 'Mop - Bathroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668277744, linkedTaskId: 1761669212014, subCategory: 'mop' },
+                { id: 1761669881762, name: 'Vacuum- Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668281652, linkedTaskId: 1761669881763, subCategory: 'vacuum' },
+                { id: 1761669888788, name: 'Vacuum - Guest Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668284936, linkedTaskId: 1761669888789, subCategory: 'vacuum' },
+                { id: 1761669897821, name: 'Vacuum - Living Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668289006, linkedTaskId: 1761669897822, subCategory: 'vacuum' },
+                { id: 1761669901896, name: 'Vacuum - Hallway', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668292748, linkedTaskId: 1761669901897, subCategory: 'vacuum' },
+                { id: 1761670021009, name: 'Sweep- Laundry Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668296519, linkedTaskId: 1761670021010, subCategory: 'sweep' },
+                { id: 1761670216689, name: 'Mop - Laundry Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668296519, linkedTaskId: 1761670216690, subCategory: 'mop' },
+                { id: 1761672192114, name: 'Vacuum - Vehicle', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668318618, linkedTaskId: 1761672192115, subCategory: 'vacuum' }
+            ],
+            isGroupCategory: true
+        },
+        {
+            id: 1761668330498,
+            name: 'Deep Cleaning',
+            tasks: [
+                { id: 1761670594154, name: 'Deep Cleaning - Kitchen', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668076644, linkedTaskId: 1761670594155, steps: [
+                    { id: 1761670611819, label: 'A', description: 'Stove top', completed: false },
+                    { id: 1761670618267, label: 'B', description: 'Oven', completed: false },
+                    { id: 1761670630913, label: 'C', description: 'Behind fridge', completed: false },
+                    { id: 1761670639217, label: 'D', description: 'Behind oven', completed: false },
+                    { id: 1761670664821, label: 'E', description: 'Cabinets (dust/dirt)', completed: false },
+                    { id: 1761670715388, label: 'F', description: 'Spot clean areas', completed: false }
+                ]},
+                { id: 1761670732997, name: 'Deep Cleaning - Bathroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668277744, linkedTaskId: 1761670732998 },
+                { id: 1761671699961, name: 'Deep Cleaning - Living Room', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668289006, linkedTaskId: 1761671699962 },
+                { id: 1761672146158, name: 'Deep Cleaning - Vehicle', decayMs: 15552000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668318618, linkedTaskId: 1761672146159, steps: [
+                    { id: 1761672781463, label: 'A', description: 'Wipe down surfaces', completed: false },
+                    { id: 1761672795131, label: 'B', description: 'Clean glass/mirros', completed: false },
+                    { id: 1761672800304, label: 'C', description: 'Wash car', completed: false }
+                ]}
+            ],
+            isGroupCategory: true
+        },
+        {
+            id: 1761668335651,
+            name: 'Shampoo',
+            tasks: [
+                { id: 1761670348946, name: 'Shampoo - Bedroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668281652, linkedTaskId: 1761670348947 },
+                { id: 1761670362895, name: 'Shampoo - Guest Bedroom', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668284936, linkedTaskId: 1761670362896 },
+                { id: 1761670378943, name: 'Shampoo - Living Room', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668289006, linkedTaskId: 1761670378944 },
+                { id: 1761670391096, name: 'Shampoo - Hallway', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668292748, linkedTaskId: 1761670391097 },
+                { id: 1761670414356, name: 'Shampoo - Vehicle', decayMs: 31104000000, decayUnit: 'months', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668318618, linkedTaskId: 1761670414357 }
+            ],
+            isGroupCategory: true
+        },
+        {
+            id: 1761668531264,
+            name: 'Trash',
+            tasks: [
+                { id: 1761668554002, name: 'Trash - Kitchen', decayMs: 345600000, decayUnit: 'days', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668076644, linkedTaskId: 1761668554003 },
+                { id: 1761670281863, name: 'Trash - Bathroom', decayMs: 432000000, decayUnit: 'days', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668277744, linkedTaskId: 1761670281864 },
+                { id: 1761670309490, name: 'Trash - Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668281652, linkedTaskId: 1761670309491 },
+                { id: 1761670314633, name: 'Trash - Guest Bedroom', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668284936, linkedTaskId: 1761670314634 },
+                { id: 1761670319672, name: 'Trash - Living Room', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668289006, linkedTaskId: 1761670319673 },
+                { id: 1761670329521, name: 'Trash - Vehicle', decayMs: 604800000, decayUnit: 'weeks', lastCompleted: null, freshness: 0, linkedCategoryId: 1761668318618, linkedTaskId: 1761670329522 }
+            ],
+            isGroupCategory: true
+        }
+    ]
+};

@@ -23,3 +23,13 @@ npm-debug.log*
 # Environment
 .env
 .env.local
+
+# API Keys (NEVER commit these!)
+API
+api-keys.txt
+*.key
+secrets.txt
+g api
+google-api*
+*api-key*
+*apikey*

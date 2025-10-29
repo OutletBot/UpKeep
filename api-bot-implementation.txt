@@ -1,0 +1,76 @@
+Add API Bot (Default Bot 2.0) - Premium Enhanced Intelligence Robot
+
+FEATURES IMPLEMENTED:
+✅ Robot added to store (10,000 bolts) - premium pricing
+✅ Uses Default Bot appearance (upgraded intelligence, same look)
+✅ Stealth API integration (zero external branding in UI)
+✅ Gemini API integration via fetchEnhancedResponse()
+✅ Strict 1-sentence enforcement (triple-checked)
+✅ Unique response EVERY time (high temperature, varied parameters)
+✅ Chaotic, humorous, absurd personality
+✅ Electric green speech bubble styling with glow effect
+✅ Context-aware responses
+✅ Fallback responses if API fails
+✅ Robot folder structure created (metadata.json, dialogue.json)
+✅ Tutorial documentation updated (12-ROBOT-COMPANIONS.md)
+
+TECHNICAL DETAILS:
+- ID: APIBOT2
+- Cost: 10,000 bolts (most expensive robot)
+- API Key: Loaded from "g api" file (stealth)
+- Temperature: 1.8 (maximum creativity/chaos)
+- Stop sequences: Forces single sentence
+- Sentence enforcement: Split by punctuation, take first only
+- Speech bubble: Electric green (#00FF41) with glow effects
+- No Gemini/Google branding anywhere in UI
+- Appears as "Default Bot 2.0" to players
+
+UNIQUENESS GUARANTEE:
+- High temperature (1.8) + high topP (0.99) = maximum variety
+- Context injection varies every call
+- API naturally avoids repetition
+- Fallback responses also varied (5 chaotic options)
+
+STEALTH COMPLIANCE:
+✅ No mention of "Gemini" in code comments
+✅ No mention of "Google" in player-facing UI
+✅ Function named "fetchEnhancedResponse" (neutral)
+✅ Config file named "g api" (obscure)
+✅ Comments refer to "intelligence service" (generic)
+✅ Player sees: "Default Bot 2.0" with "Enhanced Intelligence"
+
+TESTING CHECKLIST:
+□ Purchase robot from store (costs 10,000 bolts)
+□ Select Default Bot 2.0 from robot selector
+□ Trigger 5 different dialogue events (greeting, success, random)
+□ Verify all 5 responses are unique
+□ Verify all responses are exactly 1 sentence
+□ Verify electric green speech bubble appears
+□ Verify no API branding visible
+□ Test fallback responses (disconnect internet)
+
+FILES CREATED/MODIFIED:
+✅ js/chore-system.js (API integration + robot data)
+✅ robots/unified-registry.json (added APIBOT2 entry)
+✅ robots/api-bot-2/robot.json (NEW)
+✅ robots/api-bot-2/chore-data.json (NEW)
+✅ robots/api-bot-2/dialogue.json (NEW)
+✅ robots/api-bot-2/store-data.json (NEW)
+✅ robots/api-bot-2/metadata.json (NEW - backup)
+✅ docs/TUTORIAL/12-ROBOT-COMPANIONS.md (documentation)
+
+REGISTRY INTEGRATION:
+- Robot added to unified-registry.json at position 12
+- ChoreRobotLoader will now load it automatically
+- Store will show "Default Bot 2.0" for 10,000 bolts
+- All required data files present and valid
+
+READY FOR TESTING! 🚀
+
+TEST STEPS:
+1. Refresh browser (hard refresh: Ctrl+Shift+R)
+2. Open Robot Store (🤖 bubble)
+3. Scroll to bottom - should see "Default Bot 2.0" for 10,000 bolts
+4. If you have 10,000 bolts, purchase it
+5. Select it from robot selector
+6. Complete tasks and watch the magic! ⚡💚

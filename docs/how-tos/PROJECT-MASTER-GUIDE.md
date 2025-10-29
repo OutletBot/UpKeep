@@ -1,7 +1,7 @@
 # 🎯 UP-KEEP PROJECT - MASTER DOCUMENTATION
 
-**Last Updated:** October 28, 2025 (Task List Template System)  
-**Version:** 2.5 (Task Steps + Group Categories + Battle System + Gamification + Global Task Templates)
+**Last Updated:** October 29, 2025 (DeepSeek API Integration + Speech Cooldown System)  
+**Version:** 2.6 (Task Steps + Group Categories + Battle System + Gamification + Global Task Templates + AI Bot Enhancements)
 
 ---
 
@@ -153,6 +153,16 @@ python -m http.server 8000
 #### `.gitignore` (0.3 KB) ✅
 - **Purpose:** Git version control exclusions
 - **Ignores:** Backups, node_modules/, IDE configs, OS files
+
+#### `API` (0.1 KB) ✅ **AI API KEY** **[Added Oct 29, 2025]**
+- **Purpose:** DeepSeek AI API key storage
+- **Format:** 3 lines of text
+  - Line 1: "DEEP SEEK API"
+  - Line 2: "STONKS"
+  - Line 3: API key (sk-...)
+- **Used by:** `chore-system.js` (Default Bot 2.0 intelligence)
+- **Security:** ⚠️ Keep this file private, do not commit to public repos
+- **Legacy File:** `g api` (contained deprecated Gemini API key)
 
 ### Documentation:
 
@@ -306,6 +316,45 @@ python -m http.server 8000
 - **Data Files Used:**
   - Fallback: `robots/store-robots.json` (if registry fails)
   - Fallback: `robots/scrappy-dialogue.json` (if loader fails)
+- **AI Integration (Default Bot 2.0):**
+  - **API Service:** DeepSeek AI (OpenAI-compatible format) **[Updated Oct 29, 2025]**
+  - **Previous Service:** Google Gemini (deprecated - model `gemini-pro` returned 404)
+  - **Endpoint:** `https://api.deepseek.com/v1/chat/completions`
+  - **Model:** `deepseek-chat`
+  - **API Key File:** `API` (line 3 contains DeepSeek API key) **🔐 NEVER COMMIT THIS FILE!**
+  - **Security:** Protected by `.gitignore` - See [API-SETUP.md](../../API-SETUP.md)
+  - **Function:** `fetchEnhancedResponse(context)`
+  - **Purpose:** Generates unique, humorous, chaotic responses for Default Bot 2.0
+  - **Parameters:**
+    - `temperature: 1.5` - High creativity/unpredictability
+    - `max_tokens: 100` - Single sentence limit
+    - `frequency_penalty: 0.5` - Discourages repetition
+    - `presence_penalty: 0.5` - Encourages variety
+  - **Response Constraints:** **[Added Oct 29, 2025]**
+    - **14-word maximum:** All responses truncated to 14 words or less
+    - **Single sentence only:** No multiple sentences allowed
+    - **Word count enforcement:** Post-processing splits and truncates if needed
+  - **Contextual Intelligence System:** **[Enhanced Oct 29, 2025]**
+    - **Temperature: 1.4** - Balanced creativity with contextual accuracy
+    - **Frequency penalty: 1.2** - Strong anti-repetition enforcement
+    - **Presence penalty: 0.8** - Variety while maintaining context
+    - **Random style injection:** 12 different personality styles per request (sarcastic, enthusiastic, philosophical, etc.)
+    - **Random topic injection:** 12 different reference topics per request (quantum physics, pop culture, sci-fi, etc.)
+    - **Context clarity:** Simple, explicit context format AI cannot miss
+    - **Response formula:** [Acknowledge specific task/room] + [Fun observation] (14 words max)
+    - **Mandatory specificity:** AI MUST reference exact task name and room/category completed
+  - **Cooldown System:** **[Added Oct 29, 2025]**
+    - **30-second cooldown:** Prevents speech spam from automatic triggers
+    - **Bypass for user interactions:** Task completion, robot click, category open bypass cooldown
+    - **Tracked via:** `mascotState.lastSpeechTime` timestamp
+    - **Console logging:** Shows remaining cooldown seconds when blocked
+  - **Example Responses:** **[Oct 29, 2025]**
+    - Task: "Mop Floor" in "Kitchen" → *"Kitchen floor gleaming! You've conquered mopping with legendary efficiency and grace."* (11 words)
+    - Task: "Vacuum" in "Living Room" → *"Living room vacuum complete! The dust bunnies never stood a chance today."* (13 words)
+    - Greeting: Home 85% → *"Good evening! Your 85% home score is impressive, keep that excellence flowing!"* (12 words)
+    - Greeting: "Bathroom" 45% → *"Your bathroom's at 45% freshness—time to unleash some cleaning magic there!"* (12 words)
+  - **Fallback System:** Single "error" message if API fails (easy to identify issues)
+  - **Error Handling:** Comprehensive logging with full error details
 
 ---
 

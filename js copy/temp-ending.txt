@@ -1,0 +1,16 @@
+
+        // All tutorial code removed - ready for new robot-guided tutorial implementation
+
+    }; // End of app object
+
+    return app;
+})();
+
+// Initialize the app when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        app.init();
+    });
+} else {
+    app.init();
+}

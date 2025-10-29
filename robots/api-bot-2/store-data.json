@@ -1,0 +1,12 @@
+{
+  "id": "APIBOT2",
+  "name": "Default Bot 2.0",
+  "cost": 10000,
+  "purchasable": true,
+  "featured": true,
+  "category": "premium",
+  "tags": ["premium", "ai", "unique", "legendary", "chaotic", "intelligent"],
+  "displayOrder": 999,
+  "availability": "always",
+  "description": "The ultimate companion upgrade with enhanced intelligence! Every response is unique, chaotic, and brilliantly unpredictable. Worth every bolt!"
+}

@@ -197,5 +197,23 @@
       "store": "robots/spirit-bot/store-data.json",
       "battle": "robots/spirit-bot/battle-data.json"
     }
+  },
+  {
+    "id": "APIBOT2",
+    "folder": "api-bot-2",
+    "name": "Default Bot 2.0",
+    "purchasable": true,
+    "cost": 10000,
+    "clue": "🤖 \"The ultimate upgrade - enhanced intelligence, infinite knowledge, chaotic charm...\"",
+    "enabled": true,
+    "hasBattleData": false,
+    "hasChoreData": true,
+    "dataFiles": {
+      "robot": "robots/api-bot-2/robot.json",
+      "chore": "robots/api-bot-2/chore-data.json",
+      "dialogue": "robots/api-bot-2/dialogue.json",
+      "store": "robots/api-bot-2/store-data.json"
+    },
+    "notes": "Premium robot with AI-powered enhanced intelligence - 10,000 bolts"
   }
 ]

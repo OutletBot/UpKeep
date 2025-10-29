@@ -1,0 +1,20 @@
+# API Configuration Template
+# Copy this file to "API" (no extension) and add your actual API keys
+
+# DeepSeek API Key (for Default Bot 2.0 AI responses)
+sk-your-deepseek-api-key-here
+
+# Instructions:
+# 1. Get your DeepSeek API key from: https://platform.deepseek.com/
+# 2. Copy this file and rename it to "API" (no file extension)
+# 3. Replace line 5 with your actual API key
+# 4. The key should start with "sk-"
+# 5. NEVER commit the "API" file to git - it's in .gitignore
+
+# Format:
+# Line 1: Comment (API Configuration Template)
+# Line 2: Comment (Copy this file...)
+# Line 3: YOUR ACTUAL DEEPSEEK API KEY HERE (starts with sk-)
+
+# Example:
+# sk-1234567890abcdef1234567890abcdef1234567890abcdef
