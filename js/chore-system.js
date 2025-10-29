@@ -4428,13 +4428,24 @@
                         }
                         
                         const apiFileText = await apiFileResponse.text();
-                        const lines = apiFileText.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
                         
-                        if (lines.length === 0 || !lines[0].startsWith('sk-')) {
-                            throw new Error('Invalid API key format in API file');
+                        // Parse API file: look for any line starting with "sk-" that's not a placeholder
+                        const lines = apiFileText.split('\n')
+                            .map(l => l.trim())
+                            .filter(l => l && !l.startsWith('#') && l.startsWith('sk-'));
+                        
+                        // Filter out template placeholders
+                        const validKeys = lines.filter(key => 
+                            !key.toLowerCase().includes('your-') && 
+                            !key.toLowerCase().includes('here') &&
+                            key.length > 10 // Real keys are much longer
+                        );
+                        
+                        if (validKeys.length === 0) {
+                            throw new Error('No valid API key found in API file. Make sure to replace the template placeholder with your actual DeepSeek API key.');
                         }
                         
-                        const apiKey = lines[0];
+                        const apiKey = validKeys[0];
                         console.log('🔑 [API Bot] Local API key found, calling DeepSeek...');
                         
                         // Call DeepSeek API directly
