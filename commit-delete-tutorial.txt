@@ -1,0 +1,13 @@
+REMOVE OLD TUTORIAL CODE - Complete deletion
+
+Deleted 303 lines of broken old tutorial system from chore-system.js
+- Removed tutorialData object and all 8 tutorial functions
+- Removed startUpkeepTutorial, showTutorialStep, tutorialNextStep
+- Removed tutorialShowAddTaskModal, positionTutorialTooltip
+- Removed setTutorialUILocks, completeTutorial, skipTutorial
+
+The old tutorial was buggy and confusing. 
+New tutorial system being built from scratch in docs/TUTORIAL/ folder
+
+File reduced from 11,769 lines to 11,468 lines
+Clean slate for new interactive robot-guided tutorial
