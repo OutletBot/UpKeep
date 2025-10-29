@@ -3,6 +3,8 @@
         // DEFAULT_TASK_LIST constant is now defined in that external file
 
         const app = {
+            // VERSION IDENTIFIER - Update this when making critical changes
+            APP_VERSION: '2.0.1-snooze-fix',
             data: {
                 categories: [],
                 currentCategoryId: null,
@@ -382,6 +384,10 @@
             },
 
             async init() {
+                // Log version for debugging
+                console.log(`%c🤖 UpKeep App Version: ${this.APP_VERSION}`, 'color: #00c8ff; font-weight: bold; font-size: 16px;');
+                console.log('%cIf GitHub version shows different version than localhost, clear browser cache!', 'color: #ff9500; font-weight: bold;');
+                
                 // Load external data first (with fallbacks to hardcoded)
                 await this.loadExternalData();
                 
@@ -11453,17 +11459,9 @@
                 }
             }, 500);
         };
-
-        // ==============================================
-        // UPKEEP TUTORIAL SYSTEM
-        // ==============================================
         
+        // Tutorial data structure
         app.tutorialData = {
-            currentStep: 0,
-            totalSteps: 6,
-            isActive: false,
-            tutorialCategoryId: null,
-            tutorialTaskId: null,
             originalData: null,  // Store original data to restore if needed
             steps: [
                 { id: 1, name: 'welcome', type: 'modal' },
