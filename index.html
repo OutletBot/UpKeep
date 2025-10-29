@@ -12,6 +12,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/gamification.css">
+    <link rel="stylesheet" href="css/loading-screen.css">
     <link rel="stylesheet" href="css/debug.css">
 </head>
 <body>
@@ -32,6 +33,42 @@
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
         </symbol>
     </svg>
+
+    <!-- Upkeep Loading Screen -->
+    <div id="upkeepLoadingScreen" class="upkeep-loading-screen">
+        <div class="upkeep-loading-content">
+            <!-- Animated Background Grid -->
+            <div class="loading-grid-bg"></div>
+            
+            <!-- Main Robot Graphic -->
+            <div class="loading-robot-container">
+                <img src="Imag/Default Robot.png" alt="Default Robot" class="loading-robot-image">
+                <div class="loading-hologram-effect"></div>
+            </div>
+            
+            <!-- Loading Animation -->
+            <div class="loading-spinner-container">
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+            </div>
+            
+            <!-- Loading Text -->
+            <div class="loading-text-container">
+                <h2 class="loading-title">SYSTEM RECALIBRATING</h2>
+                <p class="loading-subtitle" id="loadingSubtext">Calculating upkeep priority...</p>
+            </div>
+            
+            <!-- Progress Indicators -->
+            <div class="loading-progress-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Currency Display -->
     <div class="currency-display" id="currencyDisplay">
@@ -2136,6 +2173,7 @@
     </div>
 
     <!-- JavaScript Modules: Load in dependency order -->
+    <script src="js/loading-screen.js"></script>  <!-- Loading Screen (must load first) -->
     <script src="js/gamification.js"></script>
     <script src="js/chore-robot-loader.js"></script>
     <script src="js/default-task-list.js"></script>  <!-- Global task template -->

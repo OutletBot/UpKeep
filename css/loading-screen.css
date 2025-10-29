@@ -1,0 +1,269 @@
+/* ============================================
+   UPKEEP LOADING SCREEN
+   Professional, themed loading screen for dashboard initialization
+   ============================================ */
+
+.upkeep-loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.upkeep-loading-screen.active {
+    display: flex;
+    opacity: 1;
+}
+
+.upkeep-loading-content {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Animated Grid Background */
+.loading-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(101, 212, 110, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(101, 212, 110, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridScroll 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes gridScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(50px); }
+}
+
+/* Robot Container */
+.loading-robot-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 30px;
+    animation: robotFloat 3s ease-in-out infinite;
+}
+
+@keyframes robotFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.loading-robot-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(101, 212, 110, 0.5));
+    position: relative;
+    z-index: 2;
+}
+
+/* Hologram Effect */
+.loading-hologram-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    border: 2px solid rgba(101, 212, 110, 0.3);
+    border-radius: 50%;
+    animation: hologramPulse 2s ease-in-out infinite;
+}
+
+@keyframes hologramPulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+.loading-hologram-effect::before,
+.loading-hologram-effect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(101, 212, 110, 0.2);
+    border-radius: 50%;
+}
+
+.loading-hologram-effect::before {
+    width: 140px;
+    height: 140px;
+    animation: hologramPulse 2s ease-in-out infinite 0.3s;
+}
+
+.loading-hologram-effect::after {
+    width: 100px;
+    height: 100px;
+    animation: hologramPulse 2s ease-in-out infinite 0.6s;
+}
+
+/* Loading Spinner */
+.loading-spinner-container {
+    margin-bottom: 30px;
+}
+
+.loading-spinner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.spinner-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top-color: #65D46E;
+    border-radius: 50%;
+    animation: spinnerRotate 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.spinner-ring:nth-child(2) {
+    border-top-color: #4CAF50;
+    animation-delay: 0.3s;
+    width: 70px;
+    height: 70px;
+    top: 5px;
+    left: 5px;
+}
+
+.spinner-ring:nth-child(3) {
+    border-top-color: #00c8ff;
+    animation-delay: 0.6s;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    left: 20px;
+}
+
+@keyframes spinnerRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loading Text */
+.loading-text-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.loading-title {
+    font-family: 'Cocogoose', 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #65D46E;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px rgba(101, 212, 110, 0.5);
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(101, 212, 110, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(101, 212, 110, 0.8); }
+}
+
+.loading-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 400;
+    animation: subtextFade 2s ease-in-out infinite;
+}
+
+@keyframes subtextFade {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Progress Dots */
+.loading-progress-dots {
+    display: flex;
+    gap: 12px;
+}
+
+.loading-progress-dots .dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(101, 212, 110, 0.3);
+    border-radius: 50%;
+    animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.loading-progress-dots .dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.loading-progress-dots .dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes dotPulse {
+    0%, 100% { 
+        background: rgba(101, 212, 110, 0.3);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(101, 212, 110, 0.9);
+        transform: scale(1.3);
+    }
+}
+
+/* Fade Out Animation */
+.upkeep-loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .loading-robot-container {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .loading-title {
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+    
+    .loading-subtitle {
+        font-size: 12px;
+    }
+    
+    .loading-spinner {
+        width: 60px;
+        height: 60px;
+    }
+}

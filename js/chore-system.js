@@ -383,15 +383,31 @@
             },
 
             async init() {
+                // ===== SHOW LOADING SCREEN ON INITIAL APP LOAD =====
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.show('System initializing...');
+                    console.log('🔄 [Init] Loading screen activated for initial load');
+                }
+                
                 // Log version for debugging
                 console.log(`%c🤖 UpKeep App Version: ${this.APP_VERSION}`, 'color: #00c8ff; font-weight: bold; font-size: 16px;');
                 console.log('%cIf GitHub version shows different version than localhost, clear browser cache!', 'color: #ff9500; font-weight: bold;');
+                
+                // Update loading message
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.updateMessage('Loading robot data...');
+                }
                 
                 // Load external data first (with fallbacks to hardcoded)
                 await this.loadExternalData();
                 
                 // DEBUG: Check if Scrappy dialogue loaded properly
                 this.checkScrappyDialogue();
+                
+                // Update loading message
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.updateMessage('Loading save data...');
+                }
                 
                 this.loadData();
                 // Always start on the dashboard
@@ -401,6 +417,12 @@
                 this.setRandomMainBackground();
                 // Load selected robot
                 this.loadSelectedRobot();
+                
+                // Update loading message
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.updateMessage('Calculating maintenance...');
+                }
+                
                 this.render();
                 // Update currency display
                 this.updateCurrencyDisplay();
@@ -408,8 +430,12 @@
                 setInterval(() => this.updateDecay(), 60000);
                 // Initial decay update
                 this.updateDecay();
-                // Mascot greeting
-                setTimeout(() => this.mascotGreet(), 1000);
+                
+                // Update loading message
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.updateMessage('Finalizing...');
+                }
+                
                 // Mascot dodge behavior
                 this.initMascotDodge();
                 // Load TTS voices
@@ -421,6 +447,16 @@
                 }
                 // Check cheat status on startup
                 this.checkObonxoCheatStatus();
+                
+                // ===== HIDE LOADING SCREEN AFTER INITIALIZATION =====
+                setTimeout(() => {
+                    if (window.UpkeepLoadingScreen) {
+                        UpkeepLoadingScreen.hide();
+                        console.log('✅ [Init] Initial load complete, loading screen hidden');
+                    }
+                    // Mascot greeting after loading screen is gone
+                    setTimeout(() => this.mascotGreet(), 300);
+                }, 100);
             },
 
             initTTS() {
@@ -2277,26 +2313,66 @@
             },
 
             showDashboard() {
-                this.data.currentCategoryId = null;
-                this.data.currentSubCategory = null; // Clear sub-category state
+                // ===== PHASE 1: SHOW LOADING SCREEN =====
+                if (window.UpkeepLoadingScreen) {
+                    UpkeepLoadingScreen.show('Calculating upkeep priority...');
+                    console.log('🔄 [Dashboard] Loading screen activated');
+                }
                 
-                // Hide sub-category views
-                document.getElementById('subCategoryMenuView').classList.remove('active');
-                document.getElementById('subCategoryTaskView').classList.remove('active');
-                
-                // Restore main background
-                document.body.style.backgroundImage = `url('Imag/Main Background 2.png')`;
-                // Reset category title margin
-                document.getElementById('categoryTitle').style.marginTop = '';
-                // Show settings, currency display, missions bubble, store bubble, and robot bubble
-                document.getElementById('settingsBtn').classList.remove('hidden');
-                document.getElementById('currencyDisplay').classList.remove('hidden');
-                document.getElementById('missionsBubble').classList.remove('hidden');
-                document.querySelector('.robot-store-bubble').classList.remove('hidden');
-                document.querySelector('.robot-select-bubble').classList.remove('hidden');
-                document.getElementById('battleModeBubble').classList.remove('hidden');
-                this.render();
-                setTimeout(() => this.mascotGreet(), 500);
+                // Small delay to ensure loading screen renders before heavy calculations
+                setTimeout(() => {
+                    try {
+                        // ===== PHASE 2: PERFORM CALCULATIONS =====
+                        console.log('⚙️ [Dashboard] Starting calculations...');
+                        
+                        this.data.currentCategoryId = null;
+                        this.data.currentSubCategory = null; // Clear sub-category state
+                        
+                        // Hide sub-category views
+                        document.getElementById('subCategoryMenuView').classList.remove('active');
+                        document.getElementById('subCategoryTaskView').classList.remove('active');
+                        
+                        // Restore main background
+                        document.body.style.backgroundImage = `url('Imag/Main Background 2.png')`;
+                        // Reset category title margin
+                        document.getElementById('categoryTitle').style.marginTop = '';
+                        // Show settings, currency display, missions bubble, store bubble, and robot bubble
+                        document.getElementById('settingsBtn').classList.remove('hidden');
+                        document.getElementById('currencyDisplay').classList.remove('hidden');
+                        document.getElementById('missionsBubble').classList.remove('hidden');
+                        document.querySelector('.robot-store-bubble').classList.remove('hidden');
+                        document.querySelector('.robot-select-bubble').classList.remove('hidden');
+                        document.getElementById('battleModeBubble').classList.remove('hidden');
+                        
+                        // Update loading message
+                        if (window.UpkeepLoadingScreen) {
+                            UpkeepLoadingScreen.updateMessage('Rendering dashboard...');
+                        }
+                        
+                        // ===== PHASE 3: RENDER UI =====
+                        this.render();
+                        
+                        console.log('✅ [Dashboard] Calculations complete');
+                        
+                        // ===== PHASE 4: HIDE LOADING SCREEN =====
+                        // Wait for render to complete, then hide loading screen
+                        setTimeout(() => {
+                            if (window.UpkeepLoadingScreen) {
+                                UpkeepLoadingScreen.hide();
+                                console.log('✅ [Dashboard] Loading screen hidden');
+                            }
+                            // Greet after loading screen is gone
+                            setTimeout(() => this.mascotGreet(), 300);
+                        }, 100);
+                        
+                    } catch (error) {
+                        console.error('❌ [Dashboard] Error during initialization:', error);
+                        // Force hide loading screen on error
+                        if (window.UpkeepLoadingScreen) {
+                            UpkeepLoadingScreen.forceHide();
+                        }
+                    }
+                }, 50); // 50ms delay to ensure loading screen renders
             },
 
             showCategory(id) {
