@@ -1,20 +1,20 @@
 {
   "name": "Upkeep",
   "short_name": "Upkeep",
-  "start_url": "/index.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#6366f1",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icons/icon-192x192.png",
+      "src": "Imag/LOGO.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512x512.png",
+      "src": "Imag/LOGO.png",
       "sizes": "512x512",
       "type": "image/png"
     }

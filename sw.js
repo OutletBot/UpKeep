@@ -2,11 +2,13 @@
 
 const CACHE_NAME = 'upkeep-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  './',
+  './index.html',
+  './manifest.json',
+  './css/main.css',
+  './css/gamification.css',
+  './js/chore-system.js',
+  './Imag/LOGO.png'
 ];
 
 // Install event - cache all necessary files
