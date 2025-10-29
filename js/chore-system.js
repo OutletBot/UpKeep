@@ -233,13 +233,13 @@
                     'Guest Bedroom': 'Imag/Guest Bedroom background.png',
                     'Living Room': 'Imag/Living room background.png',
                     'Hallway': 'Imag/Hallway Background.png',
-                    'Laundry Room': 'Imag/Laundry Room Background.png',
+                    'Laundry Room': 'Imag/Laundry room background.png',
                     'Backyard': 'Imag/Backyard Background.png',
                     'Back Porch': 'Imag/Back Portch Background.png',
                     'Vehicle': 'Imag/Vehicle Background.png',
                     'Vacuum & Sweeping': 'Imag/Vacum and Sweeping background.png',
                     'Front Yard': 'Imag/Front Yard Background.png',
-                    'Front Porch': 'Imag/Front Porch Background.png'
+                    'Front Porch': 'Imag/Front Porch background.png'
                 },
                 mainBackgrounds: [
                     'Imag/Main Background.png',
@@ -2026,6 +2026,17 @@
                         
                         // Enable button if there are any unsnoozed tasks (regardless of freshness)
                         const unsnoozedTasks = category.tasks.filter(t => !t.snoozedUntil || t.snoozedUntil <= Date.now());
+                        console.log('[Complete All Button]', {
+                            category: category.name,
+                            totalTasks: category.tasks.length,
+                            unsnoozedCount: unsnoozedTasks.length,
+                            tasks: category.tasks.map(t => ({
+                                name: t.name,
+                                snoozedUntil: t.snoozedUntil,
+                                isSnoozed: t.snoozedUntil && t.snoozedUntil > Date.now(),
+                                freshness: t.freshness
+                            }))
+                        });
                         completeAllGroupBtn.disabled = unsnoozedTasks.length === 0;
                         completeAllGroupBtn.style.display = 'block';
                     } else {
