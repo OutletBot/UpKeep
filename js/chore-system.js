@@ -28,7 +28,6 @@
                     twoChores: 'incomplete',
                     fourChores: 'incomplete'
                 },
-                upkeepTutorialCompleted: false,  // Tutorial gate flag
 
                 currentMissionTab: 'daily',
                 mysteryGamePlayed: false,
@@ -2243,12 +2242,6 @@
             },
 
             showDashboard() {
-                // Tutorial Gate: Check if tutorial needs to be shown
-                if (!this.data.upkeepTutorialCompleted) {
-                    this.startUpkeepTutorial();
-                    return;
-                }
-                
                 this.data.currentCategoryId = null;
                 this.data.currentSubCategory = null; // Clear sub-category state
                 
