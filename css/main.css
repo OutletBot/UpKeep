@@ -1093,6 +1093,216 @@ h1 {
     display: none;
 }
 
+/* Tutorial Overlay System */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+.tutorial-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.tutorial-step {
+    position: relative;
+    z-index: 10000;
+}
+
+.tutorial-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 3px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.tutorial-modal > * {
+    background: white;
+    border-radius: 17px;
+}
+
+.tutorial-header {
+    padding: 24px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.tutorial-header h2 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 28px;
+}
+
+.tutorial-progress {
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tutorial-content {
+    padding: 24px;
+    color: #444;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.tutorial-content p {
+    margin: 12px 0;
+}
+
+.tutorial-highlight-box {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+    border: 2px solid #4CAF50;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.tutorial-tip {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+    border-left: 4px solid #FFC107;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+}
+
+.tutorial-info-box {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+    border: 2px solid #2196F3;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.tutorial-requirements {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+}
+
+.tutorial-requirements li {
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.tutorial-action-required {
+    background: #FFF3CD;
+    border: 2px solid #FFC107;
+    color: #856404;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 16px;
+}
+
+.tutorial-actions {
+    padding: 24px;
+    border-top: 2px solid #f0f0f0;
+    text-align: center;
+}
+
+.tutorial-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+}
+
+.tutorial-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.tutorial-btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tutorial-btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+/* Tutorial Tooltip */
+.tutorial-tooltip {
+    position: absolute;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    border: 3px solid #667eea;
+    max-width: 400px;
+    z-index: 10001;
+}
+
+.tutorial-tooltip .tutorial-arrow {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 3px solid #667eea;
+    transform: rotate(45deg);
+    border-right: none;
+    border-bottom: none;
+}
+
+.tutorial-tooltip.pointing-down .tutorial-arrow {
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.tutorial-tooltip.pointing-up .tutorial-arrow {
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%) rotate(225deg);
+}
+
+.tutorial-tooltip h3 {
+    margin: 0 0 12px 0;
+    color: #333;
+    font-size: 20px;
+}
+
+.tutorial-spotlight {
+    position: relative;
+    z-index: 10002 !important;
+    pointer-events: auto !important;
+}
+
+.tutorial-disabled {
+    pointer-events: none !important;
+    opacity: 0.4 !important;
+}
+
 .btn-danger {
     width: 100%;
     padding: 14px;
