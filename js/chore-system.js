@@ -6062,13 +6062,20 @@
 
                 const parsedData = JSON.parse(savedData);
                 
-                // Calculate real-time decay
+                // Calculate real-time decay (skip snoozed tasks)
                 parsedData.categories.forEach(category => {
                     if (!category.tasks) return;
                     category.tasks.forEach(task => {
-                        if (task.lastCompleted) {
+                        // Check if task is snoozed
+                        const isSnoozed = task.snoozedUntil && task.snoozedUntil > Date.now();
+                        
+                        // Only recalculate freshness if not snoozed
+                        if (task.lastCompleted && !isSnoozed) {
                             const totalElapsed = (Date.now() - task.lastCompleted);
                             task.freshness = Math.max(0, Math.min(100, 100 - (totalElapsed / task.decayMs) * 100));
+                        } else if (isSnoozed && task.frozenFreshness !== undefined) {
+                            // Restore frozen freshness for snoozed tasks
+                            task.freshness = task.frozenFreshness;
                         }
                     });
                 });
@@ -6856,16 +6863,23 @@
                 // Parse the saved data
                 const parsedData = JSON.parse(savedData);
                 
-                // Calculate real-time decay based on lastSaveTime
+                // Calculate real-time decay based on lastSaveTime (skip snoozed tasks)
                 const timeSinceSave = Date.now() - (parsedData.lastSaveTime || Date.now());
                 
                 parsedData.categories.forEach(category => {
                     if (!category.tasks) return;
                     category.tasks.forEach(task => {
-                        if (task.lastCompleted) {
+                        // Check if task is snoozed
+                        const isSnoozed = task.snoozedUntil && task.snoozedUntil > Date.now();
+                        
+                        // Only recalculate freshness if not snoozed
+                        if (task.lastCompleted && !isSnoozed) {
                             // Recalculate freshness as if time has passed
                             const totalElapsed = (Date.now() - task.lastCompleted);
                             task.freshness = Math.max(0, Math.min(100, 100 - (totalElapsed / task.decayMs) * 100));
+                        } else if (isSnoozed && task.frozenFreshness !== undefined) {
+                            // Restore frozen freshness for snoozed tasks
+                            task.freshness = task.frozenFreshness;
                         }
                     });
                 });
