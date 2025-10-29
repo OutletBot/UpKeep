@@ -4900,8 +4900,9 @@
                     return; // Don't speak when these modals are open
                 }
                 
-                // 20% chance to show mad dialogue for random/idle state
-                const showMad = Math.random() < 0.2;
+                // 20% chance to show mad dialogue for random/idle state (if mad dialogue exists)
+                const hasMadDialogue = robot.dialogue.mad && robot.dialogue.mad.length > 0;
+                const showMad = hasMadDialogue && Math.random() < 0.2;
                 
                 if (showMad) {
                     const message = robot.dialogue.mad[Math.floor(Math.random() * robot.dialogue.mad.length)];
@@ -4909,7 +4910,22 @@
                 } else {
                     // Use greeting or random dialogue
                     const useGreeting = Math.random() < 0.5;
-                    const dialogueSet = useGreeting ? robot.dialogue.greeting : robot.dialogue.random;
+                    const hasGreeting = robot.dialogue.greeting && robot.dialogue.greeting.length > 0;
+                    const hasRandom = robot.dialogue.random && robot.dialogue.random.length > 0;
+                    
+                    let dialogueSet;
+                    if (useGreeting && hasGreeting) {
+                        dialogueSet = robot.dialogue.greeting;
+                    } else if (hasRandom) {
+                        dialogueSet = robot.dialogue.random;
+                    } else if (hasGreeting) {
+                        dialogueSet = robot.dialogue.greeting;
+                    } else {
+                        // Fallback: use greeting if nothing else works
+                        console.warn('[Dialogue] No dialogue arrays found for robot:', robot.id);
+                        return;
+                    }
+                    
                     const message = dialogueSet[Math.floor(Math.random() * dialogueSet.length)];
                     this.showSpeechBubble(message, 'regular');
                 }
