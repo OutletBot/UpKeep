@@ -239,6 +239,23 @@
                 } catch (error) {
                     console.error(`❌ Failed to load chore robot ${robotId}:`, error);
                     this.stats.failedLoads++;
+                    
+                    // CRITICAL: For APIBOT2, retry with longer delays
+                    if (robotId === 'APIBOT2') {
+                        console.error(`🚨 APIBOT2 load failed! This is critical. Retrying with 500ms delay...`);
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        
+                        // Clear cache and try one more time
+                        delete this.loadedRobots[robotId];
+                        
+                        try {
+                            return await this.loadRobot(robotId);
+                        } catch (retryError) {
+                            console.error(`❌❌ APIBOT2 retry also failed:`, retryError);
+                            return null;
+                        }
+                    }
+                    
                     return null;
                 }
             },

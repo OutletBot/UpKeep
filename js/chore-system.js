@@ -265,6 +265,18 @@
                         if (initialized && ChoreRobotLoader.robotRegistry.length > 0) {
                             console.log(`✅ ChoreRobotLoader initialized: ${ChoreRobotLoader.robotRegistry.length} robots available`);
                             
+                            // PRIORITY: If user owns APIBOT2, load it first with extra time
+                            if (this.data.ownedRobots && this.data.ownedRobots.includes('APIBOT2')) {
+                                console.log('🚨 Priority loading APIBOT2 (user owns it)...');
+                                const apiBot = await ChoreRobotLoader.loadRobot('APIBOT2');
+                                if (!apiBot) {
+                                    console.error('❌ CRITICAL: APIBOT2 failed priority load! Retrying...');
+                                    await new Promise(resolve => setTimeout(resolve, 300));
+                                    // One more try
+                                    await ChoreRobotLoader.loadRobot('APIBOT2');
+                                }
+                            }
+                            
                             // Load all robots into this.robots array
                             const loadPromises = ChoreRobotLoader.robotRegistry.map(r => ChoreRobotLoader.loadRobot(r.id));
                             const loadedRobots = await Promise.all(loadPromises);
@@ -1015,7 +1027,29 @@
                     robot && robot.id && this.data.ownedRobots.includes(robot.id)
                 );
                 
-                console.log(`🤖 [renderRobotOptions] Rendering ${ownedRobots.length} owned robots`);
+                console.log(`🤖 [renderRobotOptions] Total robots available: ${this.robots.length}`);
+                console.log(`🤖 [renderRobotOptions] Owned robot IDs:`, this.data.ownedRobots);
+                console.log(`🤖 [renderRobotOptions] Rendering ${ownedRobots.length} owned robots:`, ownedRobots.map(r => r.name));
+                
+                // CRITICAL: If user owns APIBOT2 but it's not in ownedRobots, something is wrong
+                if (this.data.ownedRobots.includes('APIBOT2')) {
+                    const apiBot2Present = ownedRobots.some(r => r.id === 'APIBOT2');
+                    if (!apiBot2Present) {
+                        console.error('🚨🚨🚨 CRITICAL: User owns APIBOT2 but it did not load!');
+                        console.error('Available robot IDs:', this.robots.map(r => r.id));
+                        console.error('This should have been caught by priority loading. Attempting emergency reload...');
+                        
+                        // Emergency: Try to reload APIBOT2 right now
+                        setTimeout(async () => {
+                            const apiBot = await ChoreRobotLoader.loadRobot('APIBOT2');
+                            if (apiBot && !this.robots.some(r => r.id === 'APIBOT2')) {
+                                this.robots.push(apiBot);
+                                console.log('✅ Emergency reload successful! Re-rendering...');
+                                this.renderRobotOptions();
+                            }
+                        }, 500);
+                    }
+                }
                 
                 // Validate robot data
                 ownedRobots.forEach(robot => {
@@ -3150,15 +3184,17 @@
                 // Reset form
                 select.value = '';
                 customInput.value = '';
-                customInput.style.display = 'none';
+                
+                // Hide the container divs, not the inputs themselves
+                document.getElementById('customCategoryGroup').style.display = 'none';
+                document.getElementById('customGroupCategoryGroup').style.display = 'none';
                 
                 // Reset group category inputs
                 const isGroupCheckbox = document.getElementById('customCategoryIsGroup');
-                const groupInput = document.getElementById('customCategoryGroup');
+                const groupInput = document.getElementById('groupCategoryName');
                 if (isGroupCheckbox) {
                     isGroupCheckbox.checked = false;
                     groupInput.value = '';
-                    document.getElementById('customGroupCategoryGroup').style.display = 'none';
                 }
                 
                 // Lock body scroll
