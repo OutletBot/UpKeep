@@ -121,24 +121,47 @@
             // ROBOT DATA LOADING
             // ==========================================
             
-            async loadDialogue(robotFolder) {
-                try {
-                    const dialoguePath = `${this.robotBasePath}${robotFolder}/dialogue.json`;
-                    const response = await fetch(dialoguePath);
-                    
-                    if (!response.ok) {
-                        console.log(`ℹ️ No custom dialogue found for ${robotFolder}`);
-                        return null;
+            async loadDialogue(robotFolder, retries = 3) {
+                const dialoguePath = `${this.robotBasePath}${robotFolder}/dialogue.json`;
+                
+                for (let attempt = 1; attempt <= retries; attempt++) {
+                    try {
+                        const response = await fetch(dialoguePath, {
+                            cache: 'no-cache' // Force fresh load
+                        });
+                        
+                        if (!response.ok) {
+                            if (attempt === retries) {
+                                console.log(`ℹ️ No custom dialogue found for ${robotFolder} after ${retries} attempts`);
+                                return null;
+                            }
+                            // Retry after delay
+                            await new Promise(resolve => setTimeout(resolve, 100 * attempt));
+                            continue;
+                        }
+                        
+                        const dialogue = await response.json();
+                        
+                        // Validate dialogue structure
+                        if (!dialogue || typeof dialogue !== 'object') {
+                            throw new Error('Invalid dialogue structure');
+                        }
+                        
+                        console.log(`✅ Loaded dialogue for ${robotFolder} (attempt ${attempt}/${retries})`);
+                        return dialogue;
+                        
+                    } catch (error) {
+                        if (attempt === retries) {
+                            console.warn(`⚠️ Failed to load dialogue for ${robotFolder} after ${retries} attempts:`, error.message);
+                            return null;
+                        }
+                        // Retry after delay
+                        console.log(`🔄 Retrying dialogue load for ${robotFolder} (attempt ${attempt}/${retries})`);
+                        await new Promise(resolve => setTimeout(resolve, 100 * attempt));
                     }
-                    
-                    const dialogue = await response.json();
-                    console.log(`✅ Loaded dialogue for ${robotFolder}`);
-                    return dialogue;
-                    
-                } catch (error) {
-                    console.log(`ℹ️ No custom dialogue for ${robotFolder}:`, error.message);
-                    return null;
                 }
+                
+                return null;
             },
             
             async loadRobot(robotId) {
@@ -170,6 +193,18 @@
                     
                     const robotData = await dataResponse.json();
                     
+                    // Validate dialogue for robots that require it (like APIBOT2)
+                    const requiresDialogue = robotData.id === 'APIBOT2' || robotData.specialFeatures?.enhancedIntelligence;
+                    if (requiresDialogue && !dialogueData) {
+                        console.error(`❌ CRITICAL: ${robotData.id} requires dialogue but it failed to load!`);
+                        // Try one more time synchronously
+                        console.log(`🔄 Final attempt to load dialogue for ${robotData.id}...`);
+                        dialogueData = await this.loadDialogue(robotInfo.folder, 1);
+                        if (!dialogueData) {
+                            throw new Error(`Failed to load required dialogue for ${robotData.id}`);
+                        }
+                    }
+                    
                     // Build full robot object with resolved paths from new structure
                     const fullRobot = {
                         id: robotData.id,
@@ -187,7 +222,10 @@
                         
                         // Dialogue loaded from separate dialogue.json file
                         hasCustomDialogue: dialogueData !== null && dialogueData.hasCustomDialogue !== false,
-                        dialogue: dialogueData
+                        dialogue: dialogueData,
+                        
+                        // Store complete choreData for battery system
+                        choreData: robotData
                     };
                     
                     // Cache the robot

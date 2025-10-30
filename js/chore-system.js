@@ -468,9 +468,15 @@
                 }
             },
 
-            openRobotSelect() {
+            async openRobotSelect() {
                 const modal = document.getElementById('robotSelectModal');
                 modal.style.display = 'flex';
+                
+                // Defensive check: Ensure robots are loaded before opening
+                if (!this.robots || this.robots.length === 0) {
+                    console.warn('⚠️ [openRobotSelect] Robots not loaded, attempting to load...');
+                    await this.loadExternalData();
+                }
                 
                 // Update all battery levels before rendering
                 this.updateAllBatteries();
@@ -997,10 +1003,36 @@
                 
                 if (!container) return;
                 
-                // Filter to only show owned robots
+                // Defensive check: Ensure robots are loaded
+                if (!this.robots || this.robots.length === 0) {
+                    console.warn('⚠️ [renderRobotOptions] Robots not loaded yet, retrying in 100ms...');
+                    setTimeout(() => this.renderRobotOptions(), 100);
+                    return;
+                }
+                
+                // Filter to only show owned robots with valid data
                 const ownedRobots = this.robots.filter(robot => 
-                    this.data.ownedRobots.includes(robot.id)
+                    robot && robot.id && this.data.ownedRobots.includes(robot.id)
                 );
+                
+                console.log(`🤖 [renderRobotOptions] Rendering ${ownedRobots.length} owned robots`);
+                
+                // Validate robot data
+                ownedRobots.forEach(robot => {
+                    if (!robot.happyImage) {
+                        console.warn(`⚠️ [renderRobotOptions] Robot ${robot.id} missing happyImage:`, robot);
+                    }
+                    // Special validation for APIBOT2
+                    if (robot.id === 'APIBOT2') {
+                        if (!robot.dialogue) {
+                            console.error(`❌ [renderRobotOptions] APIBOT2 missing dialogue! This will cause issues.`);
+                        } else if (!robot.dialogue.success || !Array.isArray(robot.dialogue.success)) {
+                            console.error(`❌ [renderRobotOptions] APIBOT2 dialogue malformed:`, robot.dialogue);
+                        } else {
+                            console.log(`✅ [renderRobotOptions] APIBOT2 validated - dialogue loaded properly`);
+                        }
+                    }
+                });
                 
                 // Create zig-zag layout using the specified slot pattern
                 // Pattern: [1][2][5][7][9]...
@@ -1089,7 +1121,10 @@
                     const repairCost = Math.floor(robot.cost * 0.5);
                     
                     // Show broken image if robot is broken
-                    const robotImage = isBroken ? robot.thinkingImage : robot.happyImage;
+                    // Defensive: Use fallback image if robot images are missing
+                    const robotImage = isBroken ? 
+                        (robot.thinkingImage || robot.sadImage || robot.happyImage || 'Imag/mascot.png') : 
+                        (robot.happyImage || 'Imag/mascot.png');
                     
                     // Get time remaining
                     const timeRemaining = this.getBatteryTimeRemaining(robot.id);
@@ -1102,7 +1137,10 @@
                              ondragover="app.handleRobotDragOver(event)"
                              ondragleave="app.handleRobotDragLeave(event)"
                              ondrop="app.handleRobotDrop(event, '${robot.id}')">
-                            <img src="${robotImage}" alt="${robot.name}" class="robot-select-card-image">
+                            <img src="${robotImage}" 
+                                 alt="${robot.name}" 
+                                 class="robot-select-card-image"
+                                 onerror="this.src='Imag/mascot.png'; console.warn('Failed to load image for ${robot.name}')">
                             <div class="robot-select-card-name">${robot.name}${hasSolarPanel ? ' ☀️' : ''}</div>
                             
                             <!-- Battery Bar with Label and Timer -->
