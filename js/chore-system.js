@@ -1962,6 +1962,15 @@
                         const bgImage = this.ui.categoryBackgrounds[category.name] || '';
                         const bgStyle = bgImage ? `background-image: url('${bgImage}');` : `background: ${color.bg};`;
                         
+                        // Drag and drop attributes
+                        const dragAttrs = `draggable="true" 
+                            ondragstart="app.handleCategoryDragStart(event, ${category.id})" 
+                            ondragover="app.handleCategoryDragOver(event)" 
+                            ondragenter="app.handleCategoryDragEnter(event)" 
+                            ondragleave="app.handleCategoryDragLeave(event)" 
+                            ondrop="app.handleCategoryDrop(event, ${category.id})" 
+                            ondragend="app.handleCategoryDragEnd(event)"`;
+                        
                         // Add dust effect based on score
                         let dustClass = '';
                         if (score < 70 && score >= 50) {
@@ -1992,7 +2001,11 @@
                             'color: #4040ff; font-weight: 700; text-shadow: 0 0 8px rgba(64, 64, 255, 0.3);' : '';
                         
                         return `
-                            <div class="category-card ${dustClass}" onclick="app.showCategory(${category.id})" style="${bgStyle}">
+                            <div class="category-card ${dustClass}" 
+                                 data-category-id="${category.id}"
+                                 ${dragAttrs}
+                                 onclick="app.showCategory(${category.id})" 
+                                 style="${bgStyle}">
                                 ${groupBadge}
                                 ${dustBunnies}
                                 <div class="category-header">
@@ -2012,6 +2025,148 @@
                     categoryList.innerHTML = selfCareCard + regularCategoriesHTML;
                 }
             },
+
+            // ==========================================
+            // DRAG AND DROP CATEGORY SORTING
+            // ==========================================
+            
+            dragState: {
+                draggedCategoryId: null,
+                draggedElement: null
+            },
+
+            handleCategoryDragStart(event, categoryId) {
+                this.dragState.draggedCategoryId = categoryId;
+                this.dragState.draggedElement = event.target;
+                
+                // Add dragging class for visual feedback
+                event.target.style.opacity = '0.5';
+                event.target.style.cursor = 'grabbing';
+                
+                // Set drag data
+                event.dataTransfer.effectAllowed = 'move';
+                event.dataTransfer.setData('text/html', event.target.innerHTML);
+                
+                console.log('🎯 Started dragging category:', categoryId);
+            },
+
+            handleCategoryDragOver(event) {
+                if (event.preventDefault) {
+                    event.preventDefault(); // Necessary to allow drop
+                }
+                event.dataTransfer.dropEffect = 'move';
+                return false;
+            },
+
+            handleCategoryDragEnter(event) {
+                const card = event.target.closest('.category-card');
+                if (card && card !== this.dragState.draggedElement) {
+                    // Add visual feedback
+                    card.style.transform = 'scale(1.05)';
+                    card.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+                    card.style.border = '2px dashed var(--primary)';
+                }
+            },
+
+            handleCategoryDragLeave(event) {
+                const card = event.target.closest('.category-card');
+                if (card && card !== this.dragState.draggedElement) {
+                    // Remove visual feedback
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    card.style.border = '';
+                }
+            },
+
+            handleCategoryDrop(event, targetCategoryId) {
+                if (event.stopPropagation) {
+                    event.stopPropagation(); // Stops some browsers from redirecting
+                }
+                
+                const draggedId = this.dragState.draggedCategoryId;
+                
+                // Don't do anything if dropping on itself
+                if (draggedId === targetCategoryId) {
+                    return false;
+                }
+                
+                console.log(`📦 Dropped category ${draggedId} onto ${targetCategoryId}`);
+                
+                // Find indices
+                const draggedIndex = this.data.categories.findIndex(c => c.id === draggedId);
+                const targetIndex = this.data.categories.findIndex(c => c.id === targetCategoryId);
+                
+                if (draggedIndex === -1 || targetIndex === -1) {
+                    console.error('❌ Could not find category indices');
+                    return false;
+                }
+                
+                // Reorder array
+                const [draggedCategory] = this.data.categories.splice(draggedIndex, 1);
+                this.data.categories.splice(targetIndex, 0, draggedCategory);
+                
+                console.log('✅ Reordered categories:', this.data.categories.map(c => c.name));
+                
+                // Save and re-render
+                this.saveData();
+                this.renderDashboard();
+                
+                // Show success feedback
+                this.showNotification('Categories reordered! 📋', 'success');
+                
+                return false;
+            },
+
+            handleCategoryDragEnd(event) {
+                // Reset opacity and remove visual feedback from all cards
+                const allCards = document.querySelectorAll('.category-card');
+                allCards.forEach(card => {
+                    card.style.opacity = '';
+                    card.style.cursor = '';
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    card.style.border = '';
+                });
+                
+                // Clear drag state
+                this.dragState.draggedCategoryId = null;
+                this.dragState.draggedElement = null;
+                
+                console.log('🏁 Drag ended');
+            },
+
+            showNotification(message, type = 'info') {
+                // Simple notification system (you can style this better later)
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    font-size: 14px;
+                    font-weight: 600;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    animation: slideDown 0.3s ease;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 2 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideUp 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            },
+
+            // ==========================================
+            // END DRAG AND DROP
+            // ==========================================
 
             generateTaskCardHTML(task, category) {
                 const freshness = task.freshness || 0;
