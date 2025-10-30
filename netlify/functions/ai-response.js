@@ -2,10 +2,28 @@
 // Your API key is stored in Netlify environment variables, never exposed to client
 
 exports.handler = async (event, context) => {
+    // CORS headers for cross-origin requests
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json'
+    };
+
+    // Handle preflight OPTIONS request
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
+    }
+
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
+            headers,
             body: JSON.stringify({ error: 'Method not allowed' })
         };
     }
@@ -21,6 +39,7 @@ exports.handler = async (event, context) => {
             console.error('❌ DEEPSEEK_API_KEY not configured');
             return {
                 statusCode: 500,
+                headers,
                 body: JSON.stringify({ error: 'API key not configured' })
             };
         }
@@ -82,6 +101,7 @@ RESPONSE FORMULA: [Acknowledge specific task/room] + [Fun observation/pun/wisdom
             console.error('❌ DeepSeek API error:', response.status, errorText);
             return {
                 statusCode: response.status,
+                headers,
                 body: JSON.stringify({ error: 'AI service error' })
             };
         }
@@ -97,9 +117,7 @@ RESPONSE FORMULA: [Acknowledge specific task/room] + [Fun observation/pun/wisdom
 
         return {
             statusCode: 200,
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers,
             body: JSON.stringify({
                 response: truncated,
                 wordCount: words.length
@@ -110,6 +128,7 @@ RESPONSE FORMULA: [Acknowledge specific task/room] + [Fun observation/pun/wisdom
         console.error('❌ Function error:', error);
         return {
             statusCode: 500,
+            headers,
             body: JSON.stringify({ error: 'Internal server error' })
         };
     }
