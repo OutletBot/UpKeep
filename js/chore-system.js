@@ -32,6 +32,7 @@
                 },
 
                 currentMissionTab: 'daily',
+                currentCategoryTab: 'all', // 'all', 'regular', 'group'
                 mysteryGamePlayed: false,
                 mysteryGameState: {
                     isActive: false,
@@ -1956,7 +1957,29 @@
                         </div>
                     `;
                 } else {
-                    const regularCategoriesHTML = this.data.categories.map((category, index) => {
+                    // Filter categories based on active tab
+                    let filteredCategories = this.data.categories;
+                    if (this.data.currentCategoryTab === 'regular') {
+                        filteredCategories = this.data.categories.filter(cat => !cat.isGroupCategory);
+                    } else if (this.data.currentCategoryTab === 'group') {
+                        filteredCategories = this.data.categories.filter(cat => cat.isGroupCategory);
+                    }
+                    
+                    // Check if filtered list is empty
+                    if (filteredCategories.length === 0) {
+                        const emptyMessage = this.data.currentCategoryTab === 'regular' 
+                            ? 'No regular categories yet. Add one with the \'+\' button!'
+                            : 'No group categories yet. Create one with the \'+\' button!';
+                        categoryList.innerHTML = selfCareCard + `
+                            <div class="empty-state" style="grid-column: 1 / -1;">
+                                <div class="empty-icon">📋</div>
+                                <div class="empty-text">${emptyMessage}</div>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    const regularCategoriesHTML = filteredCategories.map((category, index) => {
                         const score = this.calculateCategoryScore(category);
                         const color = this.ui.categoryColors[index % this.ui.categoryColors.length];
                         const bgImage = this.ui.categoryBackgrounds[category.name] || '';
@@ -2024,6 +2047,43 @@
                     // Combine Self Care card (first) + regular categories
                     categoryList.innerHTML = selfCareCard + regularCategoriesHTML;
                 }
+            },
+
+            // ==========================================
+            // CATEGORY TAB SWITCHING
+            // ==========================================
+            
+            switchCategoryTab(tabName) {
+                // Update active tab state
+                this.data.currentCategoryTab = tabName;
+                
+                // Update tab button active states and animate indicator
+                const tabs = document.querySelectorAll('.category-tab');
+                const tabsContainer = document.querySelector('.category-tabs');
+                let activeIndex = 0;
+                
+                tabs.forEach((tab, index) => {
+                    if (tab.dataset.tab === tabName) {
+                        tab.classList.add('active');
+                        activeIndex = index;
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+                
+                // Animate the slide indicator
+                if (tabsContainer) {
+                    const translateX = activeIndex * (100 / 3);
+                    tabsContainer.style.setProperty('--tab-indicator-position', `${translateX}%`);
+                }
+                
+                // Re-render dashboard with filtered categories
+                this.renderDashboard();
+                
+                // Save the preference
+                this.saveData();
+                
+                console.log(`📑 Switched to ${tabName} tab`);
             },
 
             // ==========================================
@@ -2506,7 +2566,7 @@
                                 </div>
                                 <div style="flex: 1; ${task.completed ? 'text-decoration: line-through; opacity: 0.7;' : ''}">
                                     <div style="font-size: 15px; font-weight: 500; color: var(--text);">${taskName}${optionalLabel}</div>
-                                    ${task.earnedToday ? '<div style="font-size: 12px; color: #4CAF50; font-weight: 600;">✓ +2 bolts earned</div>' : ''}
+                                    ${task.earnedToday ? '<div style="font-size: 12px; color: #4CAF50; font-weight: 600;">✓ +10 bolts earned</div>' : ''}
                                     ${bedtimeDisabledMessage}
                                 </div>
                                 ${isBedtime ? `<button onclick="app.showBedtimeModal()" style="padding: 6px 12px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 13px; cursor: pointer;">⏰ Set Time</button>` : ''}
@@ -2515,8 +2575,8 @@
                     }).join('');
                     
                     const bonusBadge = group.bonusEarned ? 
-                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: #4CAF50; color: white; border-radius: 4px; font-size: 11px; font-weight: bold;">✓ BONUS EARNED +15</div>' :
-                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border-radius: 4px; font-size: 11px; font-weight: bold;">Complete all for +15 bonus</div>';
+                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: #4CAF50; color: white; border-radius: 4px; font-size: 11px; font-weight: bold;">✓ BONUS EARNED +75</div>' :
+                        '<div style="display: inline-block; margin-left: 8px; padding: 4px 8px; background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border-radius: 4px; font-size: 11px; font-weight: bold;">Complete all for +75 bonus</div>';
                     
                     return `
                         <div style="margin-bottom: 24px; background: rgba(255, 255, 255, 0.95); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
@@ -3059,16 +3119,33 @@
                 
                 task.completed = !task.completed;
                 
-                // Award 2 bolts for completing the task (only once per day)
+                // Award 10 bolts for completing the task (only once per day)
                 if (task.completed && !task.earnedToday) {
-                    this.data.currency += 2;
+                    this.data.currency += 10;
                     task.earnedToday = true;
                     
                     // Update currency display immediately
                     this.updateCurrencyDisplay();
                     
                     // Show bolt notification
-                    this.showBoltNotification(2);
+                    this.showBoltNotification(10);
+                    
+                    // 25% chance for robot to say something encouraging
+                    if (Math.random() < 0.25 && this.mascotSpeak) {
+                        const encouragements = [
+                            `Great job taking care of yourself! ${task.name} ✓`,
+                            `Self-care is important! Nice work on ${task.name}!`,
+                            `You're doing great! ${task.name} complete! 💚`,
+                            `Love to see it! ${task.name} done!`,
+                            `Taking care of yourself? That's what I like to see!`,
+                            `Your wellness matters! Good job with ${task.name}!`,
+                            `Proud of you for ${task.name}! Keep it up!`,
+                            `Self-care champion! ${task.name} ✓`,
+                            `You're worth it! ${task.name} complete!`,
+                            `Looking after yourself? That's the spirit!`
+                        ];
+                        this.mascotSpeak(encouragements[Math.floor(Math.random() * encouragements.length)]);
+                    }
                     
                     // Check if all required tasks in group are complete for bonus
                     const requiredTasks = group.tasks.filter(t => !t.optional);
@@ -3090,19 +3167,105 @@
                 this.render();
             },
             
-            showBoltNotification(amount) {
+            showBoltNotification(amount, customMessage = null) {
                 // Create notification element
                 const notification = document.createElement('div');
                 notification.className = 'bolt-notification';
-                notification.innerHTML = `<span>+${amount}</span><span>⚡</span>`;
+                
+                // Refined sizing - consistent and elegant
+                const fontSize = '16px';
+                const boltSize = '18px';
+                
+                // Get current total bolts
+                const currentTotal = this.data.currency || 0;
+                
+                // Clean, minimal HTML structure with IDs for animation
+                notification.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                        <div style="display: inline-flex; align-items: center; gap: 8px;">
+                            <img id="bolt-icon-${Date.now()}" src="Imag/Achivments/Images/Finished Images/Bolt.png" alt="Bolt" 
+                                 style="width: ${boltSize}; height: ${boltSize}; opacity: 0.9; transform-origin: center;">
+                            <span style="font-size: ${fontSize}; font-weight: 600; background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.2px;">+${amount}</span>
+                        </div>
+                        <div style="font-size: 12px; font-weight: 500; color: #64748B; letter-spacing: -0.1px;">${currentTotal.toLocaleString()} total</div>
+                    </div>
+                `;
+                
+                // Premium iOS/Material-inspired design with subtle gradient
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    left: 50%;
+                    transform: translate(-50%, -20px);
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 252, 250, 0.98) 100%);
+                    padding: 10px 18px;
+                    border-radius: 20px;
+                    text-align: center;
+                    z-index: 10002;
+                    box-shadow: 
+                        0 4px 12px rgba(245, 158, 11, 0.12),
+                        0 2px 6px rgba(0, 0, 0, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                    pointer-events: none;
+                    border: 1px solid rgba(245, 158, 11, 0.15);
+                    backdrop-filter: blur(12px) saturate(180%);
+                    opacity: 0;
+                `;
                 
                 // Add to body
                 document.body.appendChild(notification);
                 
-                // Remove after animation completes
+                // Get the bolt icon for micro-animation
+                const boltIcon = notification.querySelector('img');
+                
+                // Delightful spring animation (iOS-style)
+                notification.animate([
+                    { 
+                        transform: 'translate(-50%, -20px) scale(0.92)', 
+                        opacity: 0 
+                    },
+                    { 
+                        transform: 'translate(-50%, 0px) scale(1)', 
+                        opacity: 1 
+                    }
+                ], {
+                    duration: 400,
+                    easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.15)',
+                    fill: 'forwards'
+                });
+                
+                // Playful bolt spin animation (delayed slightly)
+                if (boltIcon) {
+                    setTimeout(() => {
+                        boltIcon.animate([
+                            { transform: 'rotate(0deg) scale(1)', opacity: 0.9 },
+                            { transform: 'rotate(-12deg) scale(1.15)', opacity: 1, offset: 0.5 },
+                            { transform: 'rotate(0deg) scale(1)', opacity: 0.9 }
+                        ], {
+                            duration: 500,
+                            easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                        });
+                    }, 150);
+                }
+                
+                // Gentle fade out
                 setTimeout(() => {
-                    notification.remove();
-                }, 1500);
+                    notification.animate([
+                        { 
+                            transform: 'translate(-50%, 0px) scale(1)', 
+                            opacity: 1 
+                        },
+                        { 
+                            transform: 'translate(-50%, -10px) scale(0.96)', 
+                            opacity: 0 
+                        }
+                    ], {
+                        duration: 300,
+                        easing: 'cubic-bezier(0.4, 0.0, 0.6, 1)',
+                        fill: 'forwards'
+                    });
+                    setTimeout(() => notification.remove(), 300);
+                }, 1600);
             },
             
             showBedtimeModal() {
@@ -3128,15 +3291,15 @@
             },
             
             chooseBoltsReward() {
-                // User chose the safe option: 15 bolts
+                // User chose the safe option: 75 bolts
                 const groupId = this.data.currentBonusGroupId;
                 if (!groupId) return;
                 
                 const group = this.data.selfCare.groups.find(g => g.id === groupId);
                 if (!group) return;
                 
-                // Award 15 bolts
-                this.data.currency += 15;
+                // Award 75 bolts
+                this.data.currency += 75;
                 group.bonusEarned = true;
                 
                 // Clear the stored group ID
@@ -4023,10 +4186,19 @@
                         
                         // Show streak notification for milestones
                         if (currentStreak > 1 && Gamification.checkStreakMilestone(currentStreak)) {
+                            // Calculate and award streak milestone bolts
+                            const streakBoltReward = Gamification.getStreakMilestoneBoltReward(currentStreak);
+                            if (streakBoltReward > 0) {
+                                this.data.currency += streakBoltReward;
+                                this.updateCurrencyDisplay();
+                                this.saveData();
+                            }
+                            
                             setTimeout(() => {
                                 Gamification.celebrateMilestone(
                                     currentStreak,
-                                    `${currentStreak} days in a row! You're unstoppable!`
+                                    `${currentStreak} days in a row! You're unstoppable!`,
+                                    streakBoltReward
                                 );
                             }, 800);
                         } else if (currentStreak > 1 && currentStreak % 2 === 0) {
@@ -4042,7 +4214,36 @@
                             if (updatedCategory) {
                                 const allComplete = updatedCategory.tasks.every(t => t.freshness === 100);
                                 if (allComplete) {
-                                    Gamification.celebrateCategoryCompletion(updatedCategory.name);
+                                    // Calculate category completion bonus
+                                    const taskCount = updatedCategory.tasks.length;
+                                    let categoryBonus;
+                                    
+                                    if (taskCount <= 5) {
+                                        categoryBonus = 100; // Small category
+                                    } else if (taskCount <= 10) {
+                                        categoryBonus = 200; // Medium category
+                                    } else {
+                                        categoryBonus = 350; // Large category
+                                    }
+                                    
+                                    // Check if this is first-time completion (2x bonus)
+                                    if (!updatedCategory.firstCompletionAwarded) {
+                                        categoryBonus *= 2;
+                                        updatedCategory.firstCompletionAwarded = true;
+                                        this.saveData();
+                                    }
+                                    
+                                    // Award category completion bonus
+                                    this.data.currency += categoryBonus;
+                                    this.updateCurrencyDisplay();
+                                    
+                                    // Show celebration with bolt amount
+                                    Gamification.celebrateCategoryCompletion(updatedCategory.name, categoryBonus);
+                                    
+                                    // Show bolt notification
+                                    setTimeout(() => {
+                                        this.showBoltNotification(categoryBonus, '🎉 CATEGORY BONUS!');
+                                    }, 1500);
                                 }
                             }
                         }, 1000);
@@ -4051,6 +4252,16 @@
 
                 task.lastCompleted = Date.now();
                 task.freshness = 100;
+                
+                // BOLT REWARDS: Award bolts for completing the task
+                const boltReward = this.calculateBoltReward(task);
+                this.data.currency += boltReward;
+                this.updateCurrencyDisplay();
+                
+                // Show bolt notification with visual feedback
+                setTimeout(() => {
+                    this.showBoltNotification(boltReward);
+                }, 400);
                 
                 // AUTO-SNOOZE FEATURE: Check if auto-snooze is enabled
                 if (this.data.autoSnoozeEnabled) {
@@ -7604,6 +7815,26 @@
                 this.data.currency += amount;
                 this.saveData();
                 this.updateCurrencyDisplay();
+            },
+
+            // Calculate bolt reward based on task decay time
+            calculateBoltReward(task) {
+                if (!task || !task.decayMs) return 10; // Default to 10 bolts
+                
+                const decayHours = task.decayMs / (60 * 60 * 1000);
+                
+                // Reward tiers based on decay time
+                if (decayHours <= 24) {
+                    return 10; // Daily tasks
+                } else if (decayHours <= 144) { // 6 days
+                    return 25; // Weekly tasks
+                } else if (decayHours <= 672) { // 4 weeks
+                    return 50; // Bi-weekly tasks
+                } else if (decayHours <= 2160) { // ~3 months
+                    return 100; // Monthly tasks
+                } else {
+                    return 200; // Seasonal tasks
+                }
             },
 
             deductCurrency(amount) {

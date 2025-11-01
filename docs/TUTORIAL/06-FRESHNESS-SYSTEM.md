@@ -226,6 +226,50 @@ Match decay times to **your actual habits**:
 
 **Robot Speech (TTS):** *"Be honest with yourself! UpKeep works best when decay times match YOUR real routine, not some perfect ideal!"*
 
+### ⚠️ IMPORTANT: The Buffer Zone Strategy
+
+**[Robot leans in with important advice]**
+
+**This is CRITICAL for a good experience!**
+
+If you do a task once every 7 days (1 week), **DON'T set the decay period to exactly 7 days!**
+
+Instead, **add a buffer of 2-3 days**:
+
+❌ **Bad:** Task done weekly → 7-day decay  
+✅ **Good:** Task done weekly → 9-10 day decay
+
+**Why this matters:**
+
+```
+Exact Match (7-day decay):
+Day 0: Complete task → 100% ✨
+Day 7: Do it again → 100% ✨
+Day 8: Miss by 1 day → 0% 🔴 PANIC!
+
+With Buffer (9-day decay):
+Day 0: Complete task → 100% ✨
+Day 7: Do it again → 78% 🟢 Still good!
+Day 8: Miss by 1 day → 67% 🟡 No stress!
+Day 9: Still have time → 56% 🟡 Comfortable!
+```
+
+**Real-world example:**
+- You vacuum every Saturday
+- Life happens - you skip one Saturday
+- With 7-day decay: Task hits 0%, looks urgent, feels stressful
+- With 9-10 day decay: Task is still yellow/green, no panic!
+
+**Robot Speech (TTS):** *"Life isn't perfectly scheduled! Give yourself breathing room. If you miss a task by a day or two, it shouldn't look like a disaster. The buffer keeps things realistic and stress-free!"*
+
+**Recommended buffers:**
+- Daily tasks (1 day) → Set 1.5-2 days decay
+- Weekly tasks (7 days) → Set 9-10 days decay  
+- Bi-weekly tasks (14 days) → Set 16-18 days decay
+- Monthly tasks (30 days) → Set 35-40 days decay
+
+**Speech Bubble:** "Buffer = Less stress! 🎯"
+
 ### Common Decay Times by Task Type
 
 | Task Type | Typical Decay Time |

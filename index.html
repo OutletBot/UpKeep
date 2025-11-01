@@ -107,6 +107,22 @@
             </div>
 
             <div class="content-bottom">
+                <!-- Category Tabs -->
+                <div class="category-tabs">
+                    <button class="category-tab" data-tab="regular" onclick="app.switchCategoryTab('regular')">
+                        <span class="tab-icon">✓</span>
+                        <span class="tab-label">Regular</span>
+                    </button>
+                    <button class="category-tab active" data-tab="all" onclick="app.switchCategoryTab('all')">
+                        <span class="tab-icon">📋</span>
+                        <span class="tab-label">All Tasks</span>
+                    </button>
+                    <button class="category-tab" data-tab="group" onclick="app.switchCategoryTab('group')">
+                        <span class="tab-icon">📦</span>
+                        <span class="tab-label">Groups</span>
+                    </button>
+                </div>
+                
                 <div class="category-list" id="categoryList"></div>
             </div>
 

@@ -47,5 +47,12 @@
         "shadowImagePath": "robots/freezy/images/shadow.png",
         "actualImagePath": "robots/freezy/images/happy.png",
         "name": "Freezy"
+    },
+    {
+        "id": "DUSTY",
+        "cost": 150,
+        "shadowImagePath": "robots/dusty/images/shadow.png",
+        "actualImagePath": "robots/dusty/images/happy.png",
+        "name": "Dusty"
     }
 ]

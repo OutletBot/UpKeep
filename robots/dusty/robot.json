@@ -1,0 +1,14 @@
+{
+  "id": "dusty",
+  "battleId": null,
+  "name": "Dusty",
+  "number": 201,
+  "rarity": "Common",
+  "type": "Normal",
+  "variation": 0,
+  "enabled": true,
+  "hasCompleteData": true,
+  "hasBattleData": false,
+  "hasChoreData": true,
+  "notes": "Anxious cleaning bot, chore-only (no battle integration)"
+}

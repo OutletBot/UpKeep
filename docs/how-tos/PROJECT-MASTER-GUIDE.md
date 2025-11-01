@@ -1,7 +1,7 @@
 # 🎯 UP-KEEP PROJECT - MASTER DOCUMENTATION
 
-**Last Updated:** October 29, 2025 (DeepSeek API Integration + Speech Cooldown System)  
-**Version:** 2.6 (Task Steps + Group Categories + Battle System + Gamification + Global Task Templates + AI Bot Enhancements)
+**Last Updated:** November 1, 2025 (Professional UI Polish)  
+**Version:** 2.9 (Task Steps + Group Categories + Battle System + Gamification + Global Task Templates + AI Bot Enhancements + Self-Care Improvements + Category Tabs + Professional UI Polish)
 
 ---
 
@@ -39,10 +39,17 @@
 - **Gamification System** - Particle effects, streaks, achievements, sound effects
 - **Robot Companions** - Purchasable robots with unique personalities
 - **Battle System** - Strategic grid-based combat (Pokémon Duel-style)
-- **Currency System** - Earn bolts by completing chores
+- **Currency System** - Earn **bolts** (🔩 screw/tool bolts, NOT ⚡ lightning) by completing chores
 - **Daily Missions** - Bonus challenges and rewards
 - **Loading Screen System** - Professional themed loading screen for dashboard initialization **[Added Oct 29, 2025]**
 - **PWA Support** - Installable on Android/mobile devices
+
+**⚠️ IMPORTANT ICONOGRAPHY:**
+- **Bolts (Currency):** 🔩 Screw/tool bolts (hardware fasteners) - fits robot/mechanical theme
+- **Custom Image:** `Imag/Achivments/Images/Finished Images/Bolt.png` (already implemented)
+- **NOT lightning bolts** - The ⚡ emoji is used in docs for convenience only
+- **Thematic consistency:** Robots use mechanical bolts, reinforcing the hardware/companion theme
+- **Usage:** Currency display (top center), store currency display, reward animations
 
 ### UI Navigation (Main Screen Bubbles):
 - **🎯 Missions Bubble** - Top left corner, opens daily missions/achievements
@@ -52,6 +59,14 @@
 - **🤖 Robot Select Bubble** - Bottom right (30px from bottom), choose active companion
 - **💰 Currency Display** - Top center, shows current bolt count
 - **➕ Add Category FAB** - Bottom center (main screen only), create new categories
+
+### Category Organization Tabs **[Added Nov 1, 2025]**:
+- **📋 All Tasks Tab** - Shows all categories (regular + group)
+- **✓ Regular Tab** - Shows only regular categories
+- **📦 Groups Tab** - Shows only group categories (e.g., Sweep/Mop/Vacuum)
+- **Design:** Glassmorphism effect with green gradient active state
+- **Location:** Below progress bar, above category grid
+- **State Persistence:** Active tab saved to localStorage
 
 ### Technology Stack:
 - **Frontend:** Vanilla JavaScript (ES6+), HTML5, CSS3
@@ -689,11 +704,101 @@ docs/
 ├── 2025-01-15/  - January 15 development logs
 ├── 2025-10-16/  - October 16 development logs
 ├── 2025-10-17/  - October 17 development logs
-├── how-tos/     - Tutorial documents
+├── how-tos/     - Tutorial documents & project guides
+├── TUTORIAL/    - 24-step user tutorial system (comprehensive app walkthrough)
 └── Old/         - Archived old docs
 ```
 
 **Contains:** Markdown files, planning docs, feature specs, bug reports
+
+**📋 Key Design Documents:**
+- `TASK-COMPLETION-REWARD-SYSTEM.md` - Design for rewarding bolts (🔩 screw/tool bolts) per task completion with anti-cheat system (Oct 31, 2025)
+- `how-tos/CREATING-ROBOT-IMAGES-GUIDE.md` - Complete guide for creating robot companion images using Google AI + Adobe (Oct 31, 2025)
+
+**⚠️ CRITICAL TUTORIAL CONTENT (Added Oct 31, 2025):**
+
+**12 Essential Tips Added to Tutorial System:**
+
+These tips dramatically improve user experience and long-term app retention:
+
+**1. Buffer Zone Strategy** (`06-FRESHNESS-SYSTEM.md`, `24-TIPS-TRICKS.md`)
+- Add 2-3 day buffer to decay times beyond actual frequency
+- Weekly task (7 days) → Set 9-10 day decay
+- Prevents 0% panic when 1-2 days late
+- **Impact:** Reduces stress, improves satisfaction
+
+**2. Decay Calibration Period** (`24-TIPS-TRICKS.md`)
+- First 2-3 weeks are testing phase
+- Expect to adjust 30-50% of tasks
+- Watch for always-red or always-green tasks
+- **Impact:** Sets realistic expectations for onboarding
+
+**3. Minimum Viable Completion** (`24-TIPS-TRICKS.md`)
+- Define "done" minimally to beat perfectionism
+- "Wash dishes" = dishes clean (not entire kitchen spotless)
+- Done > Perfect
+- **Impact:** Prevents task avoidance and overwhelm
+
+**4. Red Zone Triage** (`24-TIPS-TRICKS.md`)
+- When overwhelmed: Focus ONLY on red tasks
+- Pick easiest red task first for momentum
+- Ignore green/yellow temporarily
+- **Impact:** Helps overwhelmed users recover
+
+**5. Snooze is NOT Failure** (`24-TIPS-TRICKS.md`)
+- Snooze = Strategic tool, not laziness
+- Use for illness, vacation, life events
+- App adapts to YOUR life
+- **Impact:** Mental health support, reduces guilt
+
+**6. Anchor Task Strategy** (`24-TIPS-TRICKS.md`)
+- ONE super-easy 30-second task for streaks
+- "Make bed" maintains streak on busy days
+- Consistency > Intensity
+- **Impact:** Streak maintenance without burnout
+
+**7. Task Granularity Sweet Spot** (`24-TIPS-TRICKS.md`)
+- Perfect task = 5-15 minutes
+- Not too broad (overwhelming), not too specific (tedious)
+- 3-7 tasks per category ideal
+- **Impact:** Prevents bad task design
+
+**8. Vacation Mode Setup** (`24-TIPS-TRICKS.md`)
+- Snooze all tasks before vacation (trip length + 2 days)
+- Complete urgent tasks before leaving
+- Return to manageable dashboard
+- **Impact:** Guilt-free vacations, prevents app abandonment
+
+**9. Bolt Budget Strategy** (`24-TIPS-TRICKS.md`)
+- Solar Panels (1000⚡) = Priority #1 investment
+- Keep 200⚡ emergency fund always
+- Resist impulse robot purchases
+- **Impact:** Optimal currency management
+
+**10. New Task Testing Period** (`24-TIPS-TRICKS.md`)
+- Week 1: Add only 3-5 essential tasks
+- Expand gradually based on 80% completion rate
+- Prevents "abandoned task graveyard"
+- **Impact:** Sustainable onboarding, prevents overwhelm
+
+**11. The 100% Mountain** (`24-TIPS-TRICKS.md`)
+- Getting to 100% is HARD (deep cleaning everything)
+- Staying at 100% is EASY (quick maintenance)
+- Tasks decay but spaces stay physically clean
+- Can "just check off" tasks that are still good
+- Digital freshness ≠ Physical cleanliness
+- **Impact:** Motivates initial grind, explains maintenance ease
+
+**12. Indefinite Snooze Strategy** (`24-TIPS-TRICKS.md`)
+- Snooze unused spaces indefinitely (months/years)
+- Guest bedroom: Snooze when empty, unsnooze before guests
+- Seasonal tasks: Snooze outdoor tasks in winter
+- Unsnooze only when real-life decay starts
+- Digital decay ≠ Physical decay for unused spaces
+- **Impact:** Eliminates guilt about unused rooms, prevents wasted effort
+
+**Overall Impact:**
+These tips address the most common user pain points: stress, overwhelm, perfectionism, guilt, poor onboarding, motivation, and wasted effort. They transform UpKeep from a potential source of stress into a sustainable, supportive tool that adapts to real life. The "100% Mountain" tip validates the exhausting initial effort while promising easier maintenance. The "Indefinite Snooze" tip empowers users to ignore unused spaces guilt-free, focusing effort only where it matters.
 
 ---
 

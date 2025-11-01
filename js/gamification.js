@@ -9,8 +9,12 @@ const Gamification = {
         current: 0,
         best: 0,
         lastCompletionDate: null,
-        milestones: [3, 5, 7, 10, 15, 20, 30, 50, 100]
+        milestones: [3, 5, 7, 10, 15, 20, 30, 50, 100],
+        lastMilestoneShown: null // Track which milestone was last shown
     },
+    
+    // Prevent duplicate notifications
+    _activeMilestoneNotification: false,
     
     // Sound effects (Web Audio API)
     sounds: {
@@ -245,7 +249,32 @@ const Gamification = {
     },
     
     checkStreakMilestone(streak) {
-        return this.streaks.milestones.includes(streak);
+        // Only return true if this is a milestone AND we haven't shown it yet
+        const isMilestone = this.streaks.milestones.includes(streak);
+        const notShownYet = this.streaks.lastMilestoneShown !== streak;
+        
+        if (isMilestone && notShownYet) {
+            this.streaks.lastMilestoneShown = streak;
+            return true;
+        }
+        
+        return false;
+    },
+    
+    // Calculate bolt reward for streak milestone
+    getStreakMilestoneBoltReward(streak) {
+        const rewards = {
+            3: 50,
+            5: 100,
+            7: 150,
+            10: 250,
+            15: 400,
+            20: 600,
+            30: 1000,
+            50: 2000,
+            100: 5000
+        };
+        return rewards[streak] || 0;
     },
     
     // Task completion celebration
@@ -332,15 +361,27 @@ const Gamification = {
     },
     
     // Milestone celebration
-    celebrateMilestone(milestone, message) {
+    celebrateMilestone(milestone, message, boltReward = 0) {
+        // Prevent duplicate notifications from appearing simultaneously
+        if (this._activeMilestoneNotification) {
+            console.log('⚠️ Milestone notification already active, skipping duplicate');
+            return;
+        }
+        
+        this._activeMilestoneNotification = true;
         this.sounds.playMilestone();
         
         const notification = document.createElement('div');
         notification.className = 'milestone-notification';
+        
+        const boltDisplay = boltReward > 0 ? 
+            `<div class="milestone-bolts" style="font-size: 20px; margin-top: 10px; color: #FFD700;">🔩 +${boltReward} bolts!</div>` : '';
+        
         notification.innerHTML = `
             <div class="milestone-icon">🏆</div>
             <div class="milestone-title">MILESTONE ACHIEVED!</div>
             <div class="milestone-message">${message}</div>
+            ${boltDisplay}
         `;
         notification.style.cssText = `
             position: fixed;
@@ -392,7 +433,7 @@ const Gamification = {
             }
         }, 300);
         
-        // Exit
+        // Exit (2 seconds visible time after entrance animation)
         setTimeout(() => {
             notification.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
@@ -400,20 +441,28 @@ const Gamification = {
             ], {
                 duration: 400
             });
-            setTimeout(() => notification.remove(), 400);
-        }, 4000);
+            setTimeout(() => {
+                notification.remove();
+                this._activeMilestoneNotification = false; // Allow new notifications
+            }, 400);
+        }, 2800); // 800ms entrance + 2000ms display
     },
     
     // Category completion celebration
-    celebrateCategoryCompletion(categoryName) {
+    celebrateCategoryCompletion(categoryName, boltReward = 0) {
         this.sounds.playMilestone();
         
         const notification = document.createElement('div');
         notification.className = 'category-complete-notification';
+        
+        const boltDisplay = boltReward > 0 ? 
+            `<div style="font-size: 18px; margin-top: 10px; color: #FFD700;">🔩 +${boltReward} bolts!</div>` : '';
+        
         notification.innerHTML = `
             <div style="font-size: 60px; margin-bottom: 10px;">🎉</div>
             <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">AMAZING!</div>
             <div style="font-size: 16px;">${categoryName} is 100% Complete!</div>
+            ${boltDisplay}
         `;
         notification.style.cssText = `
             position: fixed;
@@ -462,7 +511,11 @@ const Gamification = {
     
     loadData(data) {
         if (data && data.streaks) {
-            this.streaks = { ...this.streaks, ...data.streaks };
+            this.streaks = { 
+                ...this.streaks, 
+                ...data.streaks,
+                milestones: [3, 5, 7, 10, 15, 20, 30, 50, 100] // Ensure milestones array is always set
+            };
         }
     }
 };

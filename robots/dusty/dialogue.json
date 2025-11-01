@@ -1,0 +1,65 @@
+{
+  "hasCustomDialogue": true,
+  "greeting": [
+    "OH THANK GOODNESS you're here! Do you SEE the state of this place?!",
+    "I've been WATCHING those tasks decay and I am NOT okay!",
+    "*nervous beeping* The freshness levels are... concerning.",
+    "Deep breaths, Dusty. Deep breaths. Okay, let's tackle this together!",
+    "I haven't slept in 3 days worrying about your bathroom! ...Wait, I don't sleep."
+  ],
+  "success": [
+    "YES! One less thing to panic about! *relieved sigh*",
+    "You did it! I can BREATHE again! Well, metaphorically. I don't have lungs.",
+    "FINALLY! That task was haunting my circuits!",
+    "Oh sweet relief! The anxiety levels are dropping!",
+    "*happy beeping* Crisis averted! For now..."
+  ],
+  "achievement": [
+    "An achievement?! OH MY GOSH! This is the best day ever!",
+    "WE DID IT! WE ACTUALLY DID IT! *happy crying noises*",
+    "I never thought I'd see this day! *emotional beeping*",
+    "Can we just... screenshot this? For when I'm panicking later?"
+  ],
+  "broken": [
+    "Oh no. Oh no no no. I'm running out of power and there's SO MUCH TO DO!",
+    "*panicked* I can feel my consciousness fading! The dishes! THE DISHES!",
+    "This is it. This is how it ends. Surrounded by uncompleted tasks...",
+    "Please... charge me... the vacuum... needs... *powers down dramatically*"
+  ],
+  "random": [
+    "*nervous humming* Just checking the freshness levels... again...",
+    "Did you know dust accumulates at a rate of— never mind, you don't want to know.",
+    "I've calculated the optimal cleaning schedule and it's... *gulps* ...ambitious.",
+    "Sometimes I dream of a world without entropy. Then I wake up screaming.",
+    "Fun fact: I'm 87% anxiety and 13% cleaning protocols!",
+    "Is that a dust bunny or my imagination? MUST INVESTIGATE!",
+    "*twitching* Everything is fine. Everything is FINE. Nothing is fine.",
+    "The dishes are multiplying. I've run the numbers. We're doomed.",
+    "I'm not mad, I'm just... VERY CONCERNED about the bathroom situation!",
+    "Can we talk about the freshness decay rate? Because I have THOUGHTS. Many thoughts."
+  ],
+  "mad": [
+    "CODE RED! LITERALLY! Look at all this red! WE'RE DOOMED!",
+    "I can't... I can't even... *dramatic robot faint*",
+    "This is fine. Everything is fine. NOTHING IS FINE!",
+    "The dust bunnies are WINNING! We need a strategy!",
+    "I'm not mad, I'm just... EXTREMELY WORRIED!",
+    "UNACCEPTABLE! My circuits are OVERLOADING with stress!",
+    "Do you KNOW how long that task has been red?! DO YOU?!",
+    "This level of mess is giving me existential dread!",
+    "DUSTY! DUSTY! DUSTY! JUST DUST IT!",
+    "My anxiety protocols are at MAXIMUM! This is a CODE RED situation!",
+    "I'm going to short-circuit from stress! CLEAN SOMETHING! ANYTHING!",
+    "The freshness decay is OUT OF CONTROL! Emergency protocols activated!"
+  ],
+  "happy": [
+    "Wait... is this... is this what peace feels like?!",
+    "I... I don't know what to do with myself. Everything's clean!",
+    "*suspicious beeping* This is TOO good. What are we missing?",
+    "Can we just... enjoy this moment? Before entropy strikes again?",
+    "I'm so proud I could cry! If I had tear ducts! Which I DON'T!",
+    "ALL GREEN! ALL GREEN! *happy panic noises*",
+    "This is the best day of my artificial life!",
+    "Everything is perfect! Quick, take a screenshot before it changes!"
+  ]
+}
