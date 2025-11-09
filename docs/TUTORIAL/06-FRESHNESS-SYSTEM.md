@@ -187,6 +187,11 @@ When a task is **snoozed**, its freshness **freezes** at the current value!
 
 **Robot Speech (TTS):** *"Think of snooze like putting food in the freezer - it stops aging until you take it out!"*
 
+### MAJOR TIP: Freeze decay to reduce stress
+- Right after completing a task, auto-snooze keeps freshness from instantly dropping.
+- Need extra breathing room? Tap `Snooze` and choose a longer pause.
+- See Step 7: “Snooze Feature” for rules, best practices, and stress-free usage.
+
 ---
 
 ## What Happens at 0% Freshness?

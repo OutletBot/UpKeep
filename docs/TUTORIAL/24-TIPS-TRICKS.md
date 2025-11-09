@@ -1821,8 +1821,915 @@ Once you're up, you stay up.
 
 ---
 
+## 🧠 Mental Health & Focus Tips (Using UpKeep as a Grounding Tool)
+
+**This app isn't just for tracking - it's a tool for calming perfectionism and decision overwhelm!**
+
+---
+
+### 🎯 Open App BEFORE You Start Cleaning (Reality Check Protocol)
+
+**The most powerful technique for perfectionists:**
+
+**The Problem:**
+```
+See one dirty dish → Brain screams "EVERYTHING IS A MESS!"
+→ Panic mode activated
+→ Drop everything to clean
+→ Spend 3 hours stress-cleaning
+→ Exhausted and burned out
+```
+
+**The Solution:**
+```
+See one dirty dish → Pause → Open UpKeep
+→ Look at overall score: 98%
+→ Reality: "One dish ≠ disaster"
+→ Decide: Can this wait?
+→ If yes: Close app, continue your day
+→ If no: Do JUST that task, not everything
+```
+
+**The Technique (Step-by-Step):**
+
+1. **Notice something "wrong"** (dirty dish, messy counter, etc.)
+2. **STOP before cleaning** (this is the hard part!)
+3. **Open UpKeep app**
+4. **Look at overall score FIRST** (not individual tasks)
+5. **Read it as affirmation:** "My home is [score]% clean"
+6. **Ask:** Does this ACTUALLY need doing RIGHT NOW?
+7. **Decide rationally:** Do it, or let it wait
+
+**When It Works Best:**
+- Perfectionism triggers (one thing looks wrong)
+- "Everything must be perfect" spirals
+- Impulsive cleaning urges
+- Before guests arrive (prevent over-cleaning)
+- When feeling overwhelmed
+
+**Why It Works:**
+- **Objective data** beats subjective panic
+- **External validation** grounds racing thoughts
+- **Permission to be imperfect** (98% is amazing!)
+- **Prevents burnout** from over-cleaning
+
+**Real Example:**
+```
+User's Story:
+"I see one thing wrong and I freak out and start cleaning everything. 
+With this app I can open it and see my house is at 98% overall clean 
+level and it calms me down A LOT."
+```
+
+**Robot Wisdom:** *"Your brain sometimes lies about how messy things are. The app tells the truth! If your score is 80%+, you're doing GREAT. That one dirty dish doesn't define your entire home. Trust the data, not the panic!"*
+
+**Speech Bubble:** "Score = Truth, not feelings! 🎯"
+
+---
+
+### 🧘 Trust the Score, Not Your Feelings (Grounding Technique)
+
+**When overwhelmed, the app grounds you in reality:**
+
+**The Feeling vs. Reality Gap:**
+
+| Your Feeling | Actual Score | Reality |
+|--------------|--------------|---------|
+| "Total disaster!" | 92% | One room needs attention |
+| "Everything's falling apart!" | 85% | 2-3 tasks overdue |
+| "I'm failing at this!" | 78% | Slightly behind, very normal |
+| "House is unlivable!" | 65% | Busy week, quick recovery |
+
+**How to Use This:**
+
+**Morning Check-In:**
+1. Wake up, make coffee
+2. Open UpKeep, see score
+3. Say aloud: "My home is [X]% clean. I'm doing well."
+4. Let that set the tone for your day
+
+**Overwhelm Reset:**
+1. Feeling stressed about house?
+2. Check score BEFORE assuming disaster
+3. If score >75%, tell yourself: "My feelings don't match reality"
+4. Take 3 deep breaths
+5. Proceed with your day
+
+**Why This Matters:**
+- Feelings can be inaccurate (especially with perfectionism)
+- Data doesn't lie
+- External validation reduces stress
+- Creates distance from overwhelm
+
+**Practice Affirmation:**
+- "My home is [score]% clean. That's [excellent/good/acceptable]."
+- Say it OUT LOUD for maximum effect
+- Let the number calm you
+
+---
+
+### 🎚️ Set Your "Good Enough" Number (Permission to Stop)
+
+**Perfectionism's kryptonite: A defined finish line**
+
+**The Perfectionist Problem:**
+```
+Home at 95% → "Not good enough, must get to 100%!"
+Spend 2 hours on remaining 5%
+Exhausted, burned out
+Tomorrow: Can't maintain it, drops to 80%
+Guilt and shame cycle
+```
+
+**The "Good Enough" Solution:**
+```
+Decide: "I'm satisfied at 80% overall"
+Home reaches 80% → STOP CLEANING
+Permission to rest and enjoy
+Easier to maintain
+Sustainable long-term
+```
+
+**How to Choose Your Number:**
+
+**Relaxed Standard (70-75%):**
+- Good for busy people
+- Essential areas covered
+- Forgiving of busy weeks
+- Sustainable forever
+
+**Balanced Standard (75-85%):**
+- Most recommended
+- Home feels clean
+- Not perfectionist
+- Maintainable daily
+
+**High Standard (85-90%):**
+- For those who prefer cleaner
+- Requires daily effort
+- Still sustainable
+- Not perfectionist
+
+**Perfectionist Trap (95-100%):**
+- ⚠️ Very hard to reach
+- ⚠️ Impossible to maintain
+- ⚠️ Creates stress
+- ⚠️ Not recommended
+
+**Implementation:**
+
+**Step 1: Pick your number**
+- Be honest about sustainable level
+- Start lower than you think
+- You can always raise it later
+
+**Step 2: Write it down**
+- Put sticky note on mirror
+- Set phone wallpaper reminder
+- Make it visible
+
+**Step 3: Honor it**
+- Hit your number? STOP CLEANING
+- Close the app, walk away
+- Do something fun instead
+- Celebrate hitting your goal
+
+**Step 4: Resist the urge**
+- Brain says "Just one more task..."
+- No. You hit your number. You're done.
+- Practice stopping
+- This is the hardest part
+
+**The Freedom:**
+- You have a FINISH LINE
+- Cleaning has an endpoint
+- You're not chasing infinite perfection
+- "Good enough" is truly enough
+
+**Robot Wisdom:** *"Perfectionism whispers 'Just one more task...' forever. Your 'Good Enough' number gives you permission to rest. Hit your goal? You WON today! Close the app and enjoy your clean home!"*
+
+**Speech Bubble:** "Good Enough = Victory! 🎚️"
+
+---
+
+### 📊 One Red Task ≠ Disaster (Perspective Shift)
+
+**Seeing red tasks triggers panic. Let's fix that perspective:**
+
+**The Math of "Disaster":**
+
+```
+Your Dashboard:
+- Overall Score: 85%
+- 1 task at RED (0%)
+- 29 tasks at GREEN/YELLOW (75-100%)
+
+Reality Check:
+1 red task out of 30 total = 3.3% failure rate
+= 96.7% success rate
+= A+ grade in school!
+```
+
+**Reframe Red Tasks:**
+
+❌ **Old Thinking:** "Red task = I'm failing"
+✅ **New Thinking:** "Red task = One thing needs attention"
+
+❌ **Old Thinking:** "Everything is falling apart"
+✅ **New Thinking:** "29 things are great, 1 thing is overdue"
+
+❌ **Old Thinking:** "I'm a bad person"
+✅ **New Thinking:** "I'm human with priorities"
+
+**Kitchen Example:**
+```
+Kitchen Category Score: 67%
+
+Tasks:
+- Wash dishes: 0% (RED)
+- Wipe counters: 90% (GREEN)
+- Sweep floor: 85% (GREEN)
+- Clean stove: 75% (GREEN)
+
+Reality: 
+- 3 out of 4 tasks = Doing great!
+- Kitchen is mostly clean
+- One thing overdue doesn't cancel the other three
+```
+
+**When You See Red:**
+1. Don't panic
+2. Look at category score (not just one task)
+3. Look at overall score
+4. Count: How many tasks are green vs. red?
+5. Realize: Most things are fine
+
+**Permission Granted:**
+- Your home CAN have some red tasks
+- That's normal life
+- You're still doing well overall
+- Red ≠ Failure
+
+---
+
+### 🏠 Category Scores = Room Triage (Simplify Decisions)
+
+**Too many tasks? Look at categories instead:**
+
+**The Overwhelm:**
+```
+Dashboard shows 30 individual tasks
+Red, orange, yellow everywhere
+"WHERE DO I EVEN START?!"
+Decision paralysis
+Do nothing
+```
+
+**The Solution:**
+```
+Look ONLY at category scores:
+- Kitchen: 45% 🔴
+- Bathroom: 80% 🟢
+- Bedroom: 90% 🟢
+- Living Room: 75% 🟡
+
+Decision: Today = Kitchen Day
+Ignore everything else
+```
+
+**Room Triage Protocol:**
+
+**Step 1: Category-Only View**
+- Hide individual tasks mentally
+- Look ONLY at category names + scores
+- Which room is lowest?
+
+**Step 2: Pick ONE Room**
+- Lowest score = Today's target
+- Ignore all other rooms
+- Full focus on one area
+
+**Step 3: Just That Room**
+- Complete tasks ONLY in that category
+- Don't think about other rooms
+- Finish when category hits your "good enough" number
+
+**Step 4: Tomorrow = Next Room**
+- Rotate through categories
+- One room per day
+- Sustainable, not overwhelming
+
+**Example Week:**
+```
+Monday: Kitchen (raised 45% → 80%)
+Tuesday: Living Room (raised 75% → 90%)
+Wednesday: Bathroom (maintenance, kept at 80%)
+Thursday: Bedroom (maintenance, kept at 90%)
+Friday: Kitchen again (dropped to 70%, raise back up)
+
+Result: All rooms maintained, not overwhelming
+```
+
+**Why This Works:**
+- **One clear target** beats 30 vague options
+- **Room-by-room** feels manageable
+- **Rotation** keeps all areas decent
+- **No decision fatigue** - lowest score = today's room
+
+---
+
+### ⚡ "Just One Task" Momentum Trick (Beat Decision Paralysis)
+
+**Can't decide what to do? Pick ONE red task. Watch the magic:**
+
+**The Paralysis:**
+```
+30 tasks to choose from
+All seem important
+Can't decide where to start
+Stare at dashboard for 10 minutes
+Close app, do nothing
+```
+
+**The Magic:**
+```
+Pick easiest red task (don't overthink it)
+Complete it in 3 minutes
+Overall score jumps 3-5%
+Instant proof of impact
+Dopamine hits
+Motivation unlocked
+Complete 2 more tasks
+```
+
+**The ONE Task Protocol:**
+
+**Rules:**
+1. Must be RED (0-25%)
+2. Must be EASY (under 5 minutes)
+3. Must be NOW (do it immediately)
+4. Don't think, just pick one
+
+**Perfect Candidates:**
+- Take out trash (2 min)
+- Wipe bathroom sink (3 min)
+- Make bed (1 min)
+- Put away 5 items (4 min)
+- Empty dishwasher (5 min)
+
+**After You Complete It:**
+1. Watch score jump
+2. Feel the accomplishment
+3. Momentum activated
+4. Usually leads to doing 2-3 more
+
+**Why It Works:**
+- **Small win** breaks paralysis
+- **Visible progress** motivates
+- **Momentum compounds** (1 becomes 3)
+- **Dopamine reward** feels good
+- **No thinking** required (just pick one)
+
+**The Guarantee:**
+- ONE task is always better than ZERO tasks
+- Even if you stop after one, you made progress
+- Score went up, not down
+- You won
+
+---
+
+### 🟡 Yellow/Orange = Perfect Time (Not Crisis)
+
+**Stop waiting for red. Yellow/orange is your sweet spot:**
+
+**The Mistake:**
+```
+Task at 75% (Yellow) → "Not urgent yet"
+Task at 50% (Orange) → "Still have time"
+Task at 10% (Red) → "EMERGENCY! PANIC!"
+
+Result: Stress-based cleaning, burnout
+```
+
+**The Better Way:**
+```
+Task at 60% (Orange) → "Perfect time to do this!"
+Relaxed, proactive cleaning
+Before it becomes urgent
+Feels good, not stressful
+```
+
+**Color Meanings (Reframed):**
+
+**🟢 Green (75-100%)** = Freshly done, enjoy it!
+**🟡 Yellow (50-74%)** = Ideal maintenance window
+**🟠 Orange (25-49%)** = Great time to do it (not urgent yet!)
+**🔴 Red (0-24%)** = Overdue (but not a disaster)
+
+**The Maintenance Window:**
+
+Tasks at 40-60% are **perfect** because:
+- Not urgent yet (no stress)
+- Not brand new (worth doing)
+- Proactive (prevents future crisis)
+- Feels empowering (you're ahead)
+
+**Stop Waiting for Red:**
+- Red = Reactive cleaning (stressful)
+- Orange = Proactive cleaning (calm)
+- Choose orange tasks for peace of mind
+
+**Try This:**
+- Tomorrow: Do 2-3 orange tasks
+- Notice how calm it feels
+- Compare to doing red tasks (urgent stress)
+- Prefer orange? Build that habit
+
+---
+
+### 🏔️ The 100% Mountain (It Gets EASIER!)
+
+**Getting to 100% is HARD. Staying at 90%+ is EASY. Here's why:**
+
+**The Mountain Climb (Initial Effort):**
+```
+Starting from 60% overall:
+- Deep clean EVERYTHING
+- All tasks at 0-50% need work
+- Tackle neglected areas
+- 8-10 hours of work
+- Exhausting climb
+
+Result: 95-100% overall → THE PEAK!
+```
+
+**The Maintenance Valley (Ongoing Ease):**
+```
+Maintaining 90%+ overall:
+- Quick daily touch-ups
+- Most tasks still high
+- 10-20 min per day
+- Easy, manageable
+- Sustainable forever
+
+Result: Stay at 90-95% indefinitely
+```
+
+**Why Maintenance Is Easier:**
+
+**Physics of Cleaning:**
+- Getting to 100% = Deep cleaning every corner
+- Staying at 90% = Light maintenance of already-clean spaces
+- Clean spaces stay clean longer
+- Dirty spaces get dirty faster
+
+**Real Example:**
+```
+Kitchen deep cleaned to 100%:
+Week 1: Quick wipes daily → Stays at 95%
+Week 2: Quick wipes daily → Stays at 92%
+Week 3: Quick wipes daily → Stays at 90%
+Week 4: Quick wipes daily → Stays at 88%
+
+Total time: 10 min/day
+Stays high with minimal effort!
+
+VS.
+
+Kitchen neglected at 40%:
+Needs 2-hour deep clean to recover
+Then maintenance begins
+```
+
+**The Truth About 100%:**
+- Reaching 100% requires deep cleaning EVERYTHING at once
+- Very hard to achieve
+- Not sustainable daily
+- That's OK!
+
+**The Truth About 90%:**
+- Reaching 90% much more achievable
+- Easy to maintain
+- Home still looks great
+- Sustainable forever
+
+**The Strategy:**
+1. **One-time effort:** Get to 90-95% (invest the time)
+2. **Daily maintenance:** 10-20 minutes keeps you there
+3. **Enjoy the ease:** It's much easier now
+4. **Don't chase 100%:** 90% is amazing
+
+**Motivation:**
+- Yes, the initial climb is tough
+- But you're building a SYSTEM
+- Once you reach the peak, maintenance is easy
+- The hard work pays off forever
+
+**Robot Wisdom:** *"Think of it like pushing a boulder uphill vs. keeping it at the top. Getting to 90% is the hard push uphill - it takes effort! But once you're there, keeping it at 90% is just gentle nudges. The mountain is worth climbing because the valley at the top is easy living!"*
+
+**Speech Bubble:** "Climb is hard, valley is easy! 🏔️"
+
+---
+
+### 🎯 Before Guests: Strategic Snooze (Smart Effort Allocation)
+
+**Guests coming? Focus effort where it matters, ignore what they won't see:**
+
+**The Over-Cleaner Problem:**
+```
+Guests coming tomorrow
+Panic mode: CLEAN EVERYTHING!
+- Deep clean bedroom (they won't enter)
+- Organize closets (they won't see)
+- Detail garage (they won't visit)
+- Scrub basement (they won't go there)
+
+Result: 8 hours of work, exhausted
+```
+
+**The Strategic Solution:**
+```
+Guests coming tomorrow
+Smart priorities:
+- Living Room: 90%+ (they'll sit here)
+- Kitchen: 85%+ (serving food)
+- Guest Bathroom: 95%+ (they'll use this)
+- Entryway: 90%+ (first impression)
+
+Snooze:
+- Your bedroom (door closed)
+- Your bathroom (door closed)
+- Garage (won't see it)
+- Basement (not hosting there)
+
+Result: 2 hours of work, great impression, not exhausted
+```
+
+**Strategic Snooze Protocol:**
+
+**Step 1: List Guest Areas**
+- Where will guests actually be?
+- What rooms will they see/use?
+- What's their path through house?
+
+**Step 2: Prioritize Those**
+- Living Room = High priority
+- Guest Bathroom = High priority
+- Kitchen (if eating) = High priority
+- Entryway = Medium priority
+
+**Step 3: Snooze Private Areas**
+**[NOTE: Category-wide snooze button coming soon!]**
+- Your bedroom → Snooze all tasks
+- Your bathroom → Snooze all tasks
+- Office → Snooze all tasks
+- Storage areas → Snooze all tasks
+
+**Step 4: Focus Your Energy**
+- Clean ONLY guest-visible areas
+- Get those to 85-95%
+- Ignore snoozed areas completely
+- Save energy
+
+**The Reality:**
+- Guests don't inspect your bedroom
+- They won't judge your personal spaces
+- They only see common areas
+- Focus there, snooze the rest
+
+**After Guests Leave:**
+- Unsnooze private areas
+- Resume normal maintenance
+- You saved hours of unnecessary work
+
+---
+
+### 📅 Score Drops Are Normal (Life Happens)
+
+**Your score WILL drop sometimes. That's not failure, that's life:**
+
+**Normal Score Fluctuations:**
+
+**Regular Life (Weekly Cycle):**
+```
+Monday: 88% (maintained over weekend)
+Tuesday: 85% (work day, less time)
+Wednesday: 82% (busy day)
+Thursday: 78% (very busy)
+Friday: 75% (end of week fatigue)
+Saturday: 80% (morning cleaning session)
+Sunday: 88% (back to good)
+
+This is NORMAL and HEALTHY
+```
+
+**Life Events (Temporary Dips):**
+```
+Vacation Week:
+Day 1: 85% (left house clean)
+Day 7: 40% (week of decay)
+Day 8: 45% (back home, unpacked)
+Day 9: 65% (2-hour cleaning session)
+Day 10: 80% (another hour)
+Day 11: 88% (back to normal)
+
+Recovery time: 3-4 days
+```
+
+**What Causes Drops:**
+- Busy work weeks
+- Illness or injury
+- Vacations
+- Guests visiting (ironically!)
+- Major life events
+- Depression/low motivation periods
+- Holidays
+
+**The Important Part:**
+- **Drops are temporary**
+- **Recovery is fast** (2-3 focused hours)
+- **Pattern resumes** once life normalizes
+- **This is expected behavior**
+
+**Don't Panic When:**
+- Score drops 10-15% in a week (normal fluctuation)
+- Score drops 30-40% after vacation (expected)
+- Score drops 20% during busy period (understandable)
+
+**Do Reset When:**
+- Score consistently low for 2+ weeks
+- Feeling overwhelmed by app
+- Need mental health break
+- **[Use Vacation Mode button - coming soon!]**
+
+**Recovery Protocol:**
+1. Don't stress about the drop
+2. Pick 3-5 easiest red tasks
+3. Knock them out in 30 minutes
+4. Score jumps 10-15%
+5. Momentum returns
+
+---
+
+### 😌 Bad Day? Snooze Everything (Self-Care First)
+
+**Mental health is more important than any task. Permission to pause:**
+
+**The Problem:**
+```
+Depression spike, feeling terrible
+Tasks are piling up (makes it worse)
+Dashboard going red (adds guilt)
+Too overwhelmed to function
+Avoids app (more guilt)
+Downward spiral
+```
+
+**The Solution:**
+```
+Bad mental health day hits
+→ Open app
+→ Snooze ALL tasks 24-48 hours
+   **[Vacation Mode button coming soon!]**
+→ Focus ONLY on self-care
+→ Tomorrow will be easier
+→ Zero guilt
+```
+
+**When to Use This:**
+- Depression days
+- High-stress periods
+- Burnout approaching
+- Physically ill
+- Emotionally exhausted
+- Grieving
+- Just need a break
+
+**How to Do It:**
+1. Open UpKeep
+2. Go to each category
+3. Snooze all tasks (24-48 hours)
+   - OR use "Snooze All" category button (coming soon!)
+   - OR use "Vacation Mode" (snoozes everything - coming soon!)
+4. Close app
+5. Focus on REST
+
+**What to Do Instead:**
+- Sleep
+- Eat comfort food
+- Watch favorite show
+- Call a friend
+- Take medication
+- Do ONE tiny self-care task if possible
+- But mostly: REST
+
+**The Recovery:**
+```
+Day 1: Snoozed everything, rested
+Day 2: Feeling slightly better
+Day 3: Tasks unsnooze, do 1-2 easy ones
+Day 4: Back to gentle routine
+Day 5: Normal maintenance resumed
+```
+
+**Permission Granted:**
+- Your mental health > Any chore
+- Rest is productive
+- Snooze is self-care
+- You're not failing
+
+**Robot Wisdom:** *"Hey, I can see you're having a rough time. That's totally OK! Hit snooze on everything and take care of YOU first. The tasks will still be here tomorrow, but right now you need rest. No judgment from me - mental health comes first, always. 💚"*
+
+**Speech Bubble:** "You matter more than tasks! 💚"
+
+---
+
+### 🔄 The "Start of Day" Ritual (Proactive Mindset)
+
+**Begin each day with control, not chaos:**
+
+**The Reactive Start:**
+```
+Wake up → Immediately stressed about house
+Notice mess → Spiral into overwhelm
+Start cleaning randomly
+Exhausted before day begins
+Feeling behind
+```
+
+**The Proactive Start:**
+```
+Wake up → Make coffee
+Open UpKeep → See score (grounding)
+Pick 1 red task → Complete it (5 min)
+Feel accomplished → Day starts with win
+In control, not reactive
+```
+
+**The Morning Ritual:**
+
+**5-Minute UpKeep Check:**
+1. ☕ Make coffee/tea
+2. 📱 Open UpKeep app
+3. 👀 Look at overall score
+4. 🎯 Pick 1 red or orange task
+5. ✅ Complete it immediately
+6. 📊 Watch score improve
+7. 😌 Start day feeling accomplished
+
+**Why This Works:**
+- Sets proactive tone (YOU decide, not chaos)
+- Quick win = Morning dopamine
+- In control feeling carries through day
+- Prevents reactive cleaning spirals
+- One task prevents bigger problems later
+
+**The Psychological Power:**
+- Morning sets mood for entire day
+- Starting with control = Calm all day
+- Starting with chaos = Stress all day
+- Choose control
+
+**Advanced Ritual:**
+- Make it same time daily
+- Pair with existing habit (coffee)
+- Track streak (daily check-ins)
+- Celebrate consistency
+
+---
+
+### 🎮 Batching for ADHD Brains (Momentum Stacking)
+
+**ADHD struggles with task switching. Batch similar tasks for dopamine stack:**
+
+**The ADHD Tax:**
+```
+Switch from dishes → to vacuuming → to bathroom
+Each switch costs mental energy
+Transition time adds up
+Lose momentum each time
+Exhausting, inefficient
+```
+
+**The Batching Win:**
+```
+Do 3 kitchen tasks back-to-back:
+- Wash dishes (5 min)
+- Wipe counters (3 min)  
+- Sweep floor (4 min)
+
+Same location, similar actions
+No transition cost
+Momentum builds
+12 min = 3 tasks done!
+```
+
+**How to Batch:**
+
+**Method 1: By Room**
+- Stay in one room
+- Complete all tasks there
+- Don't leave until room done
+- Example: All bathroom tasks (15 min)
+
+**Method 2: By Action Type**
+- All "wiping" tasks
+- All "sweeping" tasks
+- All "taking out" tasks
+- Example: Sweep kitchen + bedroom + hallway (10 min)
+
+**Method 3: By Time**
+- Set 20-minute timer
+- Do as many red tasks as possible
+- No thinking, just executing
+- Example: Knock out 4-5 quick reds
+
+**The ADHD-Friendly Setup:**
+1. Sort tasks by freshness (ascending)
+2. Pick 3 tasks in same room OR same action
+3. Set timer (creates urgency)
+4. Batch them without breaks
+5. Dopamine stack from multiple completions
+
+**Why This Works:**
+- Reduces task-switching tax
+- Momentum compounds
+- Multiple wins in short time
+- Timer creates urgency (helps ADHD focus)
+- See dashboard improve rapidly
+
+---
+
+### 🌐 Digital ≠ Physical Reality (The Perception Gap)
+
+**Task at 0% freshness doesn't mean room is literally 0% clean:**
+
+**The Misunderstanding:**
+```
+Task: "Clean bathroom"
+Freshness: 0% 
+
+Brain thinks: "Bathroom is DISASTER zone!"
+Reality: Bathroom is slightly messy
+Panic cleaning ensues
+```
+
+**The Truth:**
+```
+Task: "Clean bathroom"
+Freshness: 0% 
+
+What 0% actually means:
+- It's been [decay time] since you cleaned
+- Bathroom could be 70% physically clean still
+- Digital timer expired, not physical cleanliness
+- "Should probably clean soon" not "condemned"
+```
+
+**Understanding the Gap:**
+
+**You set decay based on tolerance, not disaster:**
+- Weekly bathroom cleaning (7 days decay)
+- At day 7: Task hits 0%
+- But bathroom isn't *literally* a disaster at day 7
+- It's just been your usual cleaning interval
+
+**The Reality Check:**
+```
+Task shows 0% → Pause
+Open door, look at actual room
+Ask: "Is it really that bad?"
+Usually: "It's fine, just needs routine cleaning"
+Not: "Oh god, condemned house"
+```
+
+**Digital vs. Physical:**
+
+| Digital Freshness | Physical Reality |
+|------------------|------------------|
+| 0% | Maybe 60-70% actually clean |
+| 25% | Probably 75% actually clean |
+| 50% | Likely 85% actually clean |
+| 100% | Just cleaned, truly fresh |
+
+**Why This Matters:**
+- Don't let 0% trigger panic
+- Check physical reality
+- App is a TIMER, not a cleanliness sensor
+- Your tolerance ≠ disaster threshold
+
+**Use This:**
+- Task at 0%? Look at actual space first
+- Often not as bad as app suggests
+- Adjust expectations
+- Reduces stress
+
+---
+
 ## 🔮 Future Features (Planned)
 
+- **Vacation Mode button** - One-click snooze everything
+- **Category "Snooze All" button** - Snooze entire category at once
 - Premium robot personalities
 - Cloud sync across devices
 - Social features (share progress)

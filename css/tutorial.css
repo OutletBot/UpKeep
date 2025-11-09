@@ -1,0 +1,433 @@
+/**
+ * UpKeep Interactive Tutorial System Styles
+ * Spotlight overlays, robot mascot, and speech bubbles
+ */
+
+/* Spotlight Overlay - Dims everything and blocks clicks except highlighted elements */
+.tutorial-spotlight-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: auto; /* Block all clicks by default */
+}
+
+/* Ensure modals are clickable above tutorial overlay */
+.modal.active {
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure category cards are clickable when highlighted */
+.category-card.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+/* Ensure first category card is always clickable during tutorial */
+.category-card:first-of-type.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+/* Ensure all children of highlighted card are also clickable */
+.category-card.tutorial-highlight-pulse *,
+.category-card:first-of-type.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+}
+
+/* Ensure FAB button in category view is clickable when highlighted */
+#categoryView .fab.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: fixed !important;  /* FAB must stay fixed at bottom center */
+    cursor: pointer !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #10b981 !important;
+}
+
+/* Ensure FAB button content (image) is visible */
+#categoryView .fab.tutorial-highlight-pulse img,
+#categoryView .fab.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}
+
+/* Ensure checkbox is clickable when highlighted in tutorial */
+.task-card .checkbox.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+/* Ensure checkbox content (SVG) is clickable */
+.task-card .checkbox.tutorial-highlight-pulse svg,
+.task-card .checkbox.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+}
+
+/* Make the entire task card visible and bright when checkbox is highlighted */
+.task-card:has(.checkbox.tutorial-highlight-pulse) {
+    z-index: 99999 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    background: white !important;
+    pointer-events: auto !important;
+}
+
+/* Make all content inside the highlighted task card visible and clickable */
+.task-card:has(.checkbox.tutorial-highlight-pulse) * {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.tutorial-spotlight-overlay.active {
+    opacity: 1;
+}
+
+/* Spotlight - Highlights specific element */
+.tutorial-spotlight {
+    position: absolute;
+    border: 3px solid #10b981;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6),
+                inset 0 0 20px rgba(16, 185, 129, 0.3);
+    z-index: 10001;
+    pointer-events: none;
+    animation: spotlightPulse 2s ease-in-out infinite;
+}
+
+@keyframes spotlightPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.6),
+                    inset 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.8),
+                    inset 0 0 30px rgba(16, 185, 129, 0.5);
+    }
+}
+
+/* Pulse effect for highlighted element - make it clickable */
+.tutorial-highlight-pulse {
+    position: relative !important;
+    z-index: 10002 !important;
+    pointer-events: auto !important;
+    animation: elementPulse 1.5s ease-in-out infinite;
+}
+
+/* Exception: Don't change position for fixed elements like FAB */
+.fab.tutorial-highlight-pulse {
+    position: fixed !important;
+    /* Ensure it stays centered during pulse animation */
+    transform-origin: center center !important;
+    left: 50% !important;
+    transform: translateX(-50%) scale(1) !important;
+    /* Much higher z-index to be above everything */
+    z-index: 10005 !important;
+    pointer-events: auto !important;
+}
+
+/* Override pulse animation for FAB */
+@keyframes fabPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+}
+
+.fab.tutorial-highlight-pulse {
+    animation: fabPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes elementPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Robot Mascot Container - ADAPTIVE positioning */
+.tutorial-robot {
+    position: fixed !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    max-width: 450px;
+}
+
+.tutorial-robot.active {
+    opacity: 1;
+}
+
+/* TOP-RIGHT: For dashboard/overview steps - stays out of the way */
+.tutorial-robot.position-top {
+    top: 240px !important;
+    right: 10px !important;
+    flex-direction: column !important;
+    transform: translateX(120%) translateY(-50%);
+    max-width: 280px;
+}
+
+.tutorial-robot.position-top.active {
+    transform: translateX(0) translateY(0);
+}
+
+/* BOTTOM-CENTER: For + button and bottom UI - HIGHER to show button */
+.tutorial-robot.position-bottom-right {
+    bottom: 180px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(100%);
+    flex-direction: column-reverse !important;
+}
+
+.tutorial-robot.position-bottom-right.active {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* CENTER: For welcome/finish */
+.tutorial-robot.position-center {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.8);
+    flex-direction: column !important;
+}
+
+.tutorial-robot.position-center.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Robot Image - Compact and adaptive */
+.tutorial-robot-image {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    animation: robotFloat 3s ease-in-out infinite;
+    flex-shrink: 0 !important;
+}
+
+@keyframes robotFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Speech Bubble - COMPACT and adaptive (no tail) */
+.tutorial-speech-bubble {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 240, 245, 0.98) 100%);
+    border-radius: 16px;
+    padding: 18px 20px;
+    max-width: 320px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    position: relative;
+    pointer-events: all;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Speech Bubble Title - Compact */
+.tutorial-speech-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+/* Speech Bubble Message - Compact */
+.tutorial-speech-message {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #374151;
+    margin-bottom: 14px;
+    white-space: pre-line;
+}
+
+/* Speech Bubble Buttons - Compact */
+.tutorial-speech-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tutorial-speech-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tutorial-btn-next {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.tutorial-btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.tutorial-btn-finish {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.tutorial-btn-finish:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.tutorial-btn-skip {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    flex: 0.6;
+}
+
+.tutorial-btn-skip:hover {
+    background: rgba(107, 114, 128, 0.2);
+}
+
+/* Progress Indicator - Compact */
+.tutorial-progress-indicator {
+    font-size: 11px;
+    color: #9ca3af;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Mobile Responsive - ALWAYS bottom for mobile */
+@media (max-width: 768px) {
+    .tutorial-robot {
+        /* Override ALL positions - force VERY bottom on mobile */
+        top: auto !important;
+        bottom: 10px !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) translateY(100%) !important;
+        flex-direction: column-reverse !important;
+        max-width: calc(100vw - 20px);
+        gap: 8px;
+    }
+    
+    .tutorial-robot.active {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+    
+    /* Override position classes for mobile */
+    .tutorial-robot.position-center {
+        top: auto !important;
+        bottom: 10px !important;
+        left: 50% !important;
+        right: auto !important;
+        flex-direction: column-reverse !important;
+    }
+    
+    /* position-bottom-right stays high to avoid blocking + button */
+    .tutorial-robot.position-bottom-right {
+        top: auto !important;
+        bottom: 140px !important;
+        left: 50% !important;
+        right: auto !important;
+        flex-direction: column-reverse !important;
+    }
+    
+    /* position-top: Step 2 goes to bottom, Step 4 stays high */
+    .tutorial-robot.position-top {
+        top: auto !important;
+        bottom: 10px !important;
+        left: 50% !important;
+        right: auto !important;
+        flex-direction: column-reverse !important;
+    }
+    
+    /* Step-specific positioning for speech bubbles */
+    .tutorial-robot.position-top[data-step="2"] {
+        bottom: 240px !important;
+        top: auto !important;
+    }
+
+    .tutorial-robot.position-top[data-step="4"],
+    .tutorial-robot.position-top[data-step="5"] {
+        bottom: 350px !important;
+        top: auto !important;
+    }
+
+    /* Steps 7, 10, 12: Position above task modal */
+    .tutorial-robot.position-top[data-step="7"],
+    .tutorial-robot.position-top[data-step="10"],
+    .tutorial-robot.position-top[data-step="12"] {
+        top: 60px !important;
+        bottom: auto !important;
+        right: 10px !important;
+    }
+    
+    .tutorial-robot.position-top.active,
+    .tutorial-robot.position-center.active,
+    .tutorial-robot.position-bottom-right.active {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+    
+    .tutorial-speech-bubble {
+        max-width: calc(100vw - 40px);
+        padding: 12px 14px;
+        border-radius: 12px;
+    }
+    
+    /* No tails needed - removed for clean look */
+    
+    .tutorial-robot-image {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .tutorial-speech-title {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+    
+    .tutorial-speech-message {
+        font-size: 11px;
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+    
+    .tutorial-speech-buttons {
+        flex-direction: row;
+        gap: 6px;
+    }
+    
+    .tutorial-speech-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .tutorial-btn-skip {
+        flex: 0.8;
+    }
+    
+    .tutorial-progress-indicator {
+        font-size: 9px;
+        margin-top: 4px;
+    }
+}

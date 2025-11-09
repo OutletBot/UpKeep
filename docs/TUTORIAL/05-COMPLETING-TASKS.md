@@ -106,6 +106,11 @@ The card now shows "Just now" for when you last did this chore.
 - Reduces notification fatigue
 - You can still manually resume if needed
 
+### MAJOR TIP: Snooze prevents immediate stress
+- Auto-snooze freezes freshness briefly after completion so it doesn’t instantly drop.
+- Want more breathing room? Tap `Snooze` on the task to choose a longer pause.
+- Learn more: See “Snooze Feature” (Step 7) for details and best practices.
+
 ---
 
 ## The Freshness Decay Cycle

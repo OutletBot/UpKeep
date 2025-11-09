@@ -4253,6 +4253,11 @@
                 task.lastCompleted = Date.now();
                 task.freshness = 100;
                 
+                // TUTORIAL: Notify tutorial system if waiting for task completion
+                if (window.tutorialSystem && window.tutorialSystem.waitingForTaskComplete) {
+                    window.tutorialSystem.onTaskCompleted(taskId);
+                }
+                
                 // BOLT REWARDS: Award bolts for completing the task
                 const boltReward = this.calculateBoltReward(task);
                 this.data.currency += boltReward;
@@ -4641,6 +4646,13 @@
 
             // Mascot Logic
             async showSpeechBubble(message, emotion = null) {
+                // ===== TUTORIAL MODE: SUPPRESS ALL MASCOT SPEECH =====
+                // Don't speak if tutorial is active
+                if (window.tutorialSystem && window.tutorialSystem.isActive) {
+                    console.log('[DIALOGUE] Blocked: Tutorial is active - mascot speech suppressed');
+                    return; // Tutorial robot speaks only
+                }
+                
                 // ===== ENHANCED INTELLIGENCE: AI API CALL =====
                 // Check if this is a placeholder for AI-powered response
                 if (message && message.includes('ENHANCED_INTELLIGENCE_ACTIVE')) {
@@ -4954,6 +4966,13 @@
             },
 
             showThoughtBubble(message) {
+                // ===== TUTORIAL MODE: SUPPRESS ALL MASCOT THOUGHTS =====
+                // Don't show thought bubble if tutorial is active
+                if (window.tutorialSystem && window.tutorialSystem.isActive) {
+                    console.log('[DIALOGUE] Blocked: Tutorial is active - mascot thoughts suppressed');
+                    return; // Tutorial robot speaks only
+                }
+                
                 // ===== CRITICAL: CONTEXT-AWARE MODE SUPPRESSION =====
                 // STORE MODE: Suppress companion robot thoughts (Scrappy speaks only)
                 if (this.isStoreMode) {
@@ -5028,6 +5047,11 @@
             },
 
             updateMascotMood() {
+                // Don't update mood during tutorial
+                if (window.tutorialSystem && window.tutorialSystem.isActive) {
+                    return; // Tutorial controls the mascot
+                }
+                
                 const mascotImage = document.getElementById('mascotImage');
                 const overallScore = this.calculateOverallScore();
                 
@@ -5140,6 +5164,11 @@
             },
 
             mascotGreet() {
+                // Don't greet if tutorial is active
+                if (window.tutorialSystem && window.tutorialSystem.isActive) {
+                    return; // Tutorial is running, don't interrupt
+                }
+                
                 // Don't greet if certain modals are open
                 const storeModal = document.getElementById('robotStoreModal');
                 const settingsModal = document.getElementById('settingsModal');

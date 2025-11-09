@@ -17,6 +17,11 @@
 - ⏸️ Pausing a video game
 - 🛑 Hitting the snooze button on an alarm
 
+### MAJOR TIP: Snooze = post-completion calm
+- Right after you clear a task, snooze freezes freshness so it doesn’t instantly drop.
+- Auto-Snooze gives you a short breather automatically; Manual Snooze lets you choose longer.
+- Use it guilt-free to avoid stress and enjoy your results.
+
 ---
 
 ## Two Types of Snooze

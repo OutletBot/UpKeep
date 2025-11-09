@@ -139,6 +139,18 @@ This is where the magic happens! **Decay time** determines how fast the task's f
 - After 24 hours, it drops to 0% freshness
 - Linear decay: 50% after 12 hours, 25% after 18 hours, etc.
 
+### MAJOR TIP: Add a buffer (don’t set exact routine)
+- If you usually do a task weekly, don’t set decay to exactly 1 week.
+- Add extra days so being late doesn’t show 0% (complete mess) instantly.
+- Examples:
+  - Dishes once a week → Set decay to **1 week + 3 days** or even **2 weeks**.
+    - If set to 2 weeks and you miss your usual day by a week, freshness is ~**50%**, not 0%.
+  - Shampoo carpet every 12 months → Set to **1 year + 4 months**.
+- Principle: Pick decay to match real life variability so the UI reflects reality, not punishment.
+- Another way to think about it: Set decay to how long it takes to reach “0% reality.”
+  - You may do dishes weekly, but they don’t usually become a total disaster in 7 days.
+  - If “full mess” takes ~10–14 days, set decay closer to that time-to-0%, not the weekly routine.
+
 **[Wait for user to set decay time]**
 
 ---

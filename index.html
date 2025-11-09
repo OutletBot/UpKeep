@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/gamification.css">
     <link rel="stylesheet" href="css/loading-screen.css">
     <link rel="stylesheet" href="css/drag-and-drop.css">
+    <link rel="stylesheet" href="css/tutorial.css">
     <link rel="stylesheet" href="css/debug.css">
 </head>
 <body>
@@ -1183,6 +1184,15 @@
                 <p style="font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 12px;">View your activity history</p>
             </div>
             
+            <!-- Tutorial Card -->
+            <div class="settings-card">
+                <button type="button" class="backup-btn-large" id="tutorial-btn" onclick="tutorialSystem.startTutorial()" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative;">
+                    <div style="font-size: 48px; margin-bottom: 8px;">🎓</div>
+                    <div style="font-size: 18px; font-weight: bold; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">START TUTORIAL</div>
+                </button>
+                <p style="font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 12px;">Learn how to use UpKeep with an interactive guide</p>
+            </div>
+            
             <!-- Auto-Snooze Settings Card -->
             <div class="settings-card">
                 <div class="settings-card-title">⏰ Automatic Task Snooze</div>
@@ -2194,6 +2204,7 @@
     <script src="js/gamification.js"></script>
     <script src="js/chore-robot-loader.js"></script>
     <script src="js/default-task-list.js"></script>  <!-- Global task template -->
+    <script src="js/tutorial-system.js"></script>  <!-- Tutorial System -->
     <script src="js/chore-system.js"></script>  <!-- Includes Enhanced Intelligence AI integration -->
     <script src="js/battle-system.js"></script>
     <script src="js/robot-loader.js"></script>

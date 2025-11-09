@@ -802,6 +802,26 @@ These tips address the most common user pain points: stress, overwhelm, perfecti
 
 ---
 
+### Documentation Updates [Nov 7, 2025]
+- Added MAJOR TIP callouts in tutorial to reduce stress from immediate decay after completion:
+  - Step 5 — Completing Tasks: Emphasizes Auto-Snooze preventing instant drop; links to Snooze.
+  - Step 6 — Freshness System: Reinforces Frozen Freshness and directs to Snooze details.
+  - Step 7 — Snooze Feature: Upfront tip clarifying purpose (post-completion calm, freeze decay).
+- Purpose: Make Snooze’s stress-relief role unmistakable during onboarding.
+- Added MAJOR TIP for buffer strategy when setting decay times:
+  - Step 4 — Adding Tasks: Don’t set decay to exact routine; add buffer days/months.
+  - Examples: Weekly dishes → 1 week + 3 days or 2 weeks; Shampoo carpet yearly → 1 year + 4 months.
+  - Purpose: Prevent 0% panic if late; ensure UI reflects real-life variability.
+  - Clarification: Frame decay as time-to-0% (physical mess threshold), not just routine frequency.
+- Added comprehensive "Mental Health & Focus Tips" section to Step 24 (Tips & Tricks):
+  - 15 advanced techniques for using UpKeep as a grounding tool, not just task tracker.
+  - Addresses perfectionism, ADHD, overwhelm, decision paralysis, and mental health support.
+  - Key tips: Open app before panic-cleaning (reality check), trust score not feelings, set "good enough" number, one red task ≠ disaster, category-based triage, momentum tricks, 100% mountain metaphor, strategic snooze for guests, score fluctuations are normal, bad day protocols, morning rituals, ADHD batching, digital vs. physical reality gap.
+  - Language: Friendly, non-clinical (avoids overusing "anxiety"), warm and supportive tone.
+  - User story included: "I see one thing wrong and I freak out... app shows 98% and calms me down A LOT."
+  - Notes planned features: Vacation Mode button (one-click snooze all), Category Snooze All buttons.
+  - Purpose: Transform app from task tracker into mental health support tool; help perfectionists/ADHD users gain objective perspective and prevent burnout.
+
 ## 🔄 DATA FLOW & CONNECTIONS
 
 ### App Initialization Sequence:
