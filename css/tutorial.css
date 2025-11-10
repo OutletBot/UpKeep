@@ -17,10 +17,47 @@
     pointer-events: auto; /* Block all clicks by default */
 }
 
+/* Block all interactions when tutorial overlay is active */
+body:has(.tutorial-spotlight-overlay.active) .back-btn:not(.tutorial-highlight-pulse),
+body:has(.tutorial-spotlight-overlay.active) .header button:not(.back-btn),
+body:has(.tutorial-spotlight-overlay.active) .header:not(:has(.tutorial-highlight-pulse)),
+body:has(.tutorial-spotlight-overlay.active) .bottom-nav,
+body:has(.tutorial-spotlight-overlay.active) .bottom-nav *,
+body:has(.tutorial-spotlight-overlay.active) .edit-btn-img:not(.tutorial-highlight-pulse),
+body:has(.tutorial-spotlight-overlay.active) .task-snooze-btn,
+body:has(.tutorial-spotlight-overlay.active) .task-resume-btn,
+body:has(.tutorial-spotlight-overlay.active) .task-actions button,
+body:has(.tutorial-spotlight-overlay.active) .task-card button:not(.checkbox),
+body:has(.tutorial-spotlight-overlay.active) .task-card:not(:has(.tutorial-highlight-pulse)),
+body:has(.tutorial-spotlight-overlay.active) .task-card:not(:has(.tutorial-highlight-pulse)) *,
+body:has(.tutorial-spotlight-overlay.active) .category-card:not(.tutorial-highlight-pulse),
+body:has(.tutorial-spotlight-overlay.active) .fab:not(.tutorial-highlight-pulse) {
+    pointer-events: none !important;
+}
+
 /* Ensure modals are clickable above tutorial overlay */
 .modal.active {
-    z-index: 9999 !important;
+    z-index: 99999 !important;
     pointer-events: auto !important;
+}
+
+/* Ensure modal content is above overlay */
+.modal.active .modal-content {
+    position: relative;
+    z-index: 99999;
+}
+
+/* Ensure delete button in modal is always clickable during tutorial */
+.modal.active .delete-task-btn {
+    position: relative !important;
+    z-index: 9999999 !important;
+    pointer-events: auto !important;
+}
+
+/* Make the delete button clickable when highlighted */
+button.delete-task-btn.tutorial-highlight-pulse {
+    pointer-events: auto !important;
+    z-index: 9999999 !important;
 }
 
 /* Ensure category cards are clickable when highlighted */
@@ -29,6 +66,39 @@
     pointer-events: auto !important;
     position: relative !important;
     cursor: pointer !important;
+}
+
+/* Ensure header allows clicking when back button is highlighted */
+.header:has(.back-btn.tutorial-highlight-pulse) {
+    pointer-events: auto !important;
+    z-index: 99999999 !important;
+}
+
+/* Ensure back button is clickable when highlighted */
+.back-btn.tutorial-highlight-pulse {
+    z-index: 99999999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+    outline: 3px solid #10b981 !important;
+    outline-offset: 4px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8) !important;
+}
+
+/* Ensure back button children are also clickable */
+.back-btn.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 99999999 !important;
+}
+
+/* Ensure back button img is visible and clickable */
+.back-btn.tutorial-highlight-pulse img {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 99999999 !important;
 }
 
 /* Ensure first category card is always clickable during tutorial */
@@ -66,18 +136,151 @@
     display: inline-block !important;
 }
 
-/* Ensure checkbox is clickable when highlighted in tutorial */
-.task-card .checkbox.tutorial-highlight-pulse {
+/* Ensure checkboxes are clickable if highlighted */
+.checkbox.tutorial-highlight-pulse {
     z-index: 99999 !important;
     pointer-events: auto !important;
     position: relative !important;
     cursor: pointer !important;
+    outline: 3px solid #10b981 !important;
+    outline-offset: 4px !important;
+    border-radius: 50% !important; /* Match the circular checkbox shape */
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8) !important;
+    animation: checkboxPulse 1.2s ease-in-out infinite !important;
 }
 
 /* Ensure checkbox content (SVG) is clickable */
-.task-card .checkbox.tutorial-highlight-pulse svg,
-.task-card .checkbox.tutorial-highlight-pulse * {
+.checkbox.tutorial-highlight-pulse svg,
+.checkbox.tutorial-highlight-pulse * {
     pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Ensure edit buttons are clickable if highlighted */
+.edit-btn-img.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+    outline: 3px solid #10b981 !important;
+    outline-offset: 4px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.7) !important;
+    animation: editButtonPulse 1.2s ease-in-out infinite !important;
+}
+
+/* Ensure edit button content (image) is clickable */
+.edit-btn-img.tutorial-highlight-pulse img,
+.edit-btn-img.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Make the task card containing the highlighted edit button visible */
+.task-card:has(.edit-btn-img.tutorial-highlight-pulse) {
+    z-index: 99998 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    background: white !important;
+    pointer-events: none !important; /* Block clicks on the card itself */
+}
+
+/* Make all content inside task card visible but NOT clickable (except the edit button) */
+.task-card:has(.edit-btn-img.tutorial-highlight-pulse) * {
+    opacity: 1 !important;
+    pointer-events: none !important; /* Block all children by default */
+}
+
+/* Only the highlighted edit button and its children should be clickable */
+.task-card:has(.edit-btn-img.tutorial-highlight-pulse) .edit-btn-img.tutorial-highlight-pulse,
+.task-card:has(.edit-btn-img.tutorial-highlight-pulse) .edit-btn-img.tutorial-highlight-pulse * {
+    pointer-events: auto !important; /* Allow edit button clicks */
+}
+
+/* Edit button pulse animation */
+@keyframes editButtonPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(16, 185, 129, 1);
+        transform: scale(1.1);
+    }
+}
+
+/* Delete Task button styling when highlighted */
+.delete-task-btn.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    cursor: pointer !important;
+    outline: 3px solid #ef4444 !important;
+    outline-offset: 4px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.8) !important;
+    animation: deleteButtonPulse 1.2s ease-in-out infinite !important;
+}
+
+/* Ensure delete button children are also clickable */
+.delete-task-btn.tutorial-highlight-pulse * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Delete button pulse animation */
+@keyframes deleteButtonPulse {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(239, 68, 68, 1);
+        transform: scale(1.08);
+    }
+}
+
+/* Block modal close button during steps 4, 7, 10, and 22 (category and task creation) */
+body:has(#tutorial-robot[data-step="4"]) .modal .close-btn,
+body:has(#tutorial-robot[data-step="4"]) .modal .modal-close,
+body:has(#tutorial-robot[data-step="7"]) .modal .close-btn,
+body:has(#tutorial-robot[data-step="7"]) .modal .modal-close,
+body:has(#tutorial-robot[data-step="10"]) .modal .close-btn,
+body:has(#tutorial-robot[data-step="10"]) .modal .modal-close,
+body:has(#tutorial-robot[data-step="22"]) .modal .close-btn,
+body:has(#tutorial-robot[data-step="22"]) .modal .modal-close {
+    pointer-events: none !important;
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+}
+
+/* Block all modal inputs during step 18 except delete button */
+.modal:has(.delete-task-btn.tutorial-highlight-pulse) input,
+.modal:has(.delete-task-btn.tutorial-highlight-pulse) select,
+.modal:has(.delete-task-btn.tutorial-highlight-pulse) .modal-close,
+.modal:has(.delete-task-btn.tutorial-highlight-pulse) .close-btn,
+.modal:has(.delete-task-btn.tutorial-highlight-pulse) .btn-primary {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+}
+
+/* Ensure delete button is fully visible and clickable */
+.delete-task-btn.tutorial-highlight-pulse {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 99999 !important;
+}
+
+/* Checkbox pulse animation */
+@keyframes checkboxPulse {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(16, 185, 129, 1);
+        transform: scale(1.08);
+    }
 }
 
 /* Make the entire task card visible and bright when checkbox is highlighted */
@@ -86,13 +289,106 @@
     position: relative !important;
     opacity: 1 !important;
     background: white !important;
+    pointer-events: none !important; /* Block clicks on the card itself */
+}
+
+/* Make all content inside the highlighted task card visible but NOT clickable (except the checkbox) */
+.task-card:has(.checkbox.tutorial-highlight-pulse) * {
+    opacity: 1 !important;
+    pointer-events: none !important; /* Block all children by default */
+}
+
+/* Block all buttons within the task card during step 11 */
+.task-card:has(.checkbox.tutorial-highlight-pulse) button:not(.checkbox),
+.task-card:has(.checkbox.tutorial-highlight-pulse) .task-actions,
+.task-card:has(.checkbox.tutorial-highlight-pulse) .task-snooze-btn,
+.task-card:has(.checkbox.tutorial-highlight-pulse) .task-resume-btn,
+.task-card:has(.checkbox.tutorial-highlight-pulse) .edit-btn-img,
+.task-card:has(.checkbox.tutorial-highlight-pulse) .task-name {
+    pointer-events: none !important;
+}
+
+/* Only the highlighted checkbox and its children should be clickable */
+.task-card:has(.checkbox.tutorial-highlight-pulse) .checkbox.tutorial-highlight-pulse,
+.task-card:has(.checkbox.tutorial-highlight-pulse) .checkbox.tutorial-highlight-pulse * {
+    pointer-events: auto !important; /* Allow checkbox clicks */
+}
+
+/* Subtle highlight for freshness meter when in tutorial (Step 12) */
+.freshness-meter.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    position: relative !important;
+    outline: 3px solid #10b981 !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6) !important;
+    animation: freshnessMeterGlow 1.5s ease-in-out infinite !important;
+    pointer-events: none !important;
+    border-radius: 8px !important;
+}
+
+/* Ensure freshness meter and its contents can't be clicked */
+.freshness-meter.tutorial-highlight-pulse * {
+    pointer-events: none !important;
+}
+
+/* Subtle highlight for snoozed badge when in tutorial (Step 13) */
+.task-meta.tutorial-highlight-pulse {
+    z-index: 99999 !important;
+    position: relative !important;
+    outline: 3px solid #fbbf24 !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.5) !important;
+    animation: snoozeBadgeGlow 1.5s ease-in-out infinite !important;
+    pointer-events: none !important;
+}
+
+/* Make the task card containing the highlighted freshness meter visible */
+.task-card:has(.freshness-meter.tutorial-highlight-pulse) {
+    z-index: 99998 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    background: white !important;
+    pointer-events: none !important; /* Block clicks on the task card itself */
+}
+
+/* Make all content inside task card visible but NOT clickable when freshness meter is highlighted */
+.task-card:has(.freshness-meter.tutorial-highlight-pulse) * {
+    opacity: 1 !important;
+    pointer-events: none !important; /* Block all clicks within task card */
+}
+
+/* Glow animation for freshness meter */
+@keyframes freshnessMeterGlow {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    }
+    50% { 
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.9);
+    }
+}
+
+/* Make the task card containing the highlighted snoozed badge visible */
+.task-card:has(.task-meta.tutorial-highlight-pulse) {
+    z-index: 99998 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    background: white !important;
     pointer-events: auto !important;
 }
 
-/* Make all content inside the highlighted task card visible and clickable */
-.task-card:has(.checkbox.tutorial-highlight-pulse) * {
+/* Make all content inside task card visible when badge is highlighted */
+.task-card:has(.task-meta.tutorial-highlight-pulse) * {
     opacity: 1 !important;
-    pointer-events: auto !important;
+}
+
+/* Subtle glow animation for snoozed badge */
+@keyframes snoozeBadgeGlow {
+    0%, 100% { 
+        box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+    }
+    50% { 
+        box-shadow: 0 0 25px rgba(251, 191, 36, 0.8);
+    }
 }
 
 .tutorial-spotlight-overlay.active {
@@ -109,6 +405,68 @@
     z-index: 10001;
     pointer-events: none;
     animation: spotlightPulse 2s ease-in-out infinite;
+}
+
+/* Circular spotlight for checkbox on step 11 */
+.tutorial-spotlight[data-circular="true"] {
+    border: 4px solid #10b981 !important;
+    border-radius: 50% !important; /* Make it circular */
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.9),
+                inset 0 0 30px rgba(16, 185, 129, 0.5) !important;
+    animation: spotlightPulseCircular 1.2s ease-in-out infinite !important;
+}
+
+@keyframes spotlightPulseCircular {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.9),
+                    inset 0 0 30px rgba(16, 185, 129, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 45px rgba(16, 185, 129, 1),
+                    inset 0 0 45px rgba(16, 185, 129, 0.7);
+        transform: scale(1.05);
+    }
+}
+
+/* Green spotlight for freshness meter on step 12 */
+.tutorial-spotlight[data-green="true"] {
+    border: 3px solid #10b981 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.7),
+                inset 0 0 25px rgba(16, 185, 129, 0.4) !important;
+    animation: spotlightPulseGreen 1.5s ease-in-out infinite !important;
+}
+
+@keyframes spotlightPulseGreen {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.7),
+                    inset 0 0 25px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(16, 185, 129, 0.9),
+                    inset 0 0 35px rgba(16, 185, 129, 0.6);
+    }
+}
+
+/* Subtle golden spotlight for snoozed badge on step 13 */
+.tutorial-spotlight[data-golden="true"] {
+    border: 3px solid #fbbf24 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.6),
+                inset 0 0 20px rgba(251, 191, 36, 0.3) !important;
+    animation: spotlightPulseGold 2s ease-in-out infinite !important;
+}
+
+@keyframes spotlightPulseGold {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.6),
+                    inset 0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.8),
+                    inset 0 0 30px rgba(251, 191, 36, 0.5);
+    }
 }
 
 @keyframes spotlightPulse {
@@ -176,14 +534,26 @@
 
 /* TOP-RIGHT: For dashboard/overview steps - stays out of the way */
 .tutorial-robot.position-top {
-    top: 240px !important;
+    bottom: 20px !important;
+    top: auto !important;
     right: 10px !important;
     flex-direction: column !important;
-    transform: translateX(120%) translateY(-50%);
+    transform: translateX(120%) translateY(0);
     max-width: 280px;
 }
 
 .tutorial-robot.position-top.active {
+    transform: translateX(0) translateY(0);
+}
+
+/* Step 18: Position at very top of screen above edit modal */
+.tutorial-robot.position-top[data-step="18"] {
+    top: 10px !important;
+    bottom: auto !important;
+    right: 10px !important;
+}
+
+.tutorial-robot.position-top[data-step="18"].active {
     transform: translateX(0) translateY(0);
 }
 
@@ -363,7 +733,7 @@
     
     /* Step-specific positioning for speech bubbles */
     .tutorial-robot.position-top[data-step="2"] {
-        bottom: 240px !important;
+        bottom: 10px !important;
         top: auto !important;
     }
 
@@ -373,10 +743,11 @@
         top: auto !important;
     }
 
-    /* Steps 7, 10, 12: Position above task modal */
+    /* Steps 7, 10, 12, 18: Position above task modal */
     .tutorial-robot.position-top[data-step="7"],
     .tutorial-robot.position-top[data-step="10"],
-    .tutorial-robot.position-top[data-step="12"] {
+    .tutorial-robot.position-top[data-step="12"],
+    .tutorial-robot.position-top[data-step="18"] {
         top: 60px !important;
         bottom: auto !important;
         right: 10px !important;

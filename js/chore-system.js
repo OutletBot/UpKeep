@@ -3962,7 +3962,10 @@
             },
 
             deleteTask() {
-                if (!confirm('Are you sure you want to delete this task?')) return;
+                // Skip confirmation during tutorial
+                const skipConfirm = window.tutorialSystem && window.tutorialSystem.isActive && window.tutorialSystem.waitingForDelete;
+                if (!skipConfirm && !confirm('Are you sure you want to delete this task?')) return;
+                
                 const category = this.data.categories.find(c => c.id === this.data.currentCategoryId);
                 if (!category) return;
 
@@ -3994,6 +3997,12 @@
                     }
                 } else {
                     this.render();
+                }
+                
+                // TUTORIAL: Notify tutorial system if waiting for task deletion
+                const deletedTaskId = this.data.currentTaskId;
+                if (window.tutorialSystem && window.tutorialSystem.waitingForDelete) {
+                    window.tutorialSystem.onTaskDeleted(deletedTaskId);
                 }
                 
                 this.closeModal('editTaskModal');

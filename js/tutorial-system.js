@@ -5,8 +5,9 @@
 
 class TutorialSystem {
     constructor() {
+        this.steps = [];
         this.currentStep = 0;
-        this.totalSteps = 24; // Comprehensive tutorial with task management + PRO TIPS + auto-snooze
+        this.totalSteps = 29; // Comprehensive tutorial with task management + PRO TIPS + auto-snooze
         this.isActive = false;
         this.steps = this.defineSteps();
         this.speechSynthesis = window.speechSynthesis;
@@ -133,7 +134,7 @@ class TutorialSystem {
             {
                 id: 7,
                 title: "Create Your First Task",
-                message: "I filled in 'Wash dishes' for you!\n\nNow pick a decay time. Think about how often you actually do dishes, then add a day or two as a buffer.\n\nFor example: Do dishes daily? Try 2 or 3 days. Every few days? Try 4 or 5 days.\n\nThe buffer gives you breathing room if life gets busy.\n\nPick your time and click 'Create Task'!",
+                message: "I filled in 'Wash dishes' for you!\n\nNow pick a decay time. Think about how often you actually do dishes, then add a day or two as a buffer.\n\nIf you do dishes daily? Try 2 or 3 day decay time. Do the dishes every few days? Try 3 or maybe even 4.\n\nThe buffer gives you breathing room if life gets busy.\n\nPick your time and tap 'Create Task'!",
                 highlight: null,
                 robotPosition: "top",
                 action: "wait-for-task-create",
@@ -159,7 +160,7 @@ class TutorialSystem {
             {
                 id: 10,
                 title: "Fill Out Second Task",
-                message: "This time, you pick everything!\n\nChoose a task name and set the decay time. Think about how often you'd do this task, then add a bit more time to give yourself some leeway. Because let's face it, humans are 99 percent imperfect!\n\nWhen ready, click 'Create Task'!",
+                message: "Choose a new task name and enter it.\n\nNext, think about how often you'd do this task, and add a bit more time on top of that to give yourself some leeway. Then enter the decay time you decided on.\n\nWhen done, click 'Create Task'!",
                 highlight: null,
                 robotPosition: "top",
                 action: "wait-for-task-create",
@@ -168,7 +169,7 @@ class TutorialSystem {
             {
                 id: 11,
                 title: "Complete a Task",
-                message: "Great! Now you have tasks in your Kitchen category.\n\nLet's learn how to mark a task as complete. Click the checkbox to check it off!",
+                message: "Great! Now you have tasks in your Kitchen category.\n\nLet's mark one of the task as complete. Click the circle on dishes to see what happens.",
                 highlight: ".task-card:first-of-type .checkbox",
                 robotPosition: "top",
                 action: "wait-for-task-complete"
@@ -183,38 +184,14 @@ class TutorialSystem {
             },
             {
                 id: 13,
-                title: "Auto-Snooze Feature",
-                message: "Notice the Snoozed badge? Auto-Snooze is ON!\n\nWhen you complete a task, it automatically snoozes. Auto-Snooze prevents the freshness from immediately dropping.",
-                highlight: ".task-card:first-of-type",
-                robotPosition: "top",
-                action: "click-next"
-            },
-            {
-                id: 14,
-                title: "How Auto-Snooze Works",
-                message: "The snooze duration is based on the task's decay time.\n\nTasks that need doing more often get shorter snoozes, while less frequent tasks get longer snoozes.\n\nFor example: A weekly task snoozes for 24 hours. You can resume it early using the Resume button, or let it wake up automatically!",
-                highlight: ".task-card:first-of-type",
-                robotPosition: "top",
-                action: "click-next"
-            },
-            {
-                id: 15,
                 title: "What Are Bolts?",
-                message: "Bolts can be used to purchase other robots and other items!",
+                message: "Bolts are your in-game currency! You earn them by completing tasks. Use them to purchase unique robots with different looks and personalities!",
                 highlight: null,
                 robotPosition: "center",
                 action: "click-next"
             },
             {
-                id: 16,
-                title: "Delete a Task",
-                message: "Sometimes you need to remove a task from your list.\n\nTo delete a task, click the Edit button on any task. Then click the Delete Task button in the modal.\n\nClick Next to continue!",
-                highlight: ".edit-btn-img",
-                robotPosition: "top",
-                action: "click-next"
-            },
-            {
-                id: 17,
+                id: 14,
                 title: "Understanding Freshness",
                 message: "Each task has a freshness percentage that decays over time.\n\nWhen you complete a task, it resets to 100 percent. As time passes, it slowly drops based on your decay time setting.\n\nThis helps you see what needs attention!",
                 highlight: null,
@@ -222,7 +199,82 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
+                id: 15,
+                title: "Auto-Snooze Feature",
+                message: "Notice the Snoozed badge? Auto-Snooze is ON!\n\nWhen you complete a task, it automatically snoozes. Auto-Snooze prevents the freshness from immediately dropping.",
+                highlight: ".task-card:first-of-type",
+                robotPosition: "top",
+                action: "click-next"
+            },
+            {
+                id: 16,
+                title: "How Auto-Snooze Works",
+                message: "The snooze duration is based on the task's decay time.\n\nTasks that need doing more often get shorter snoozes, while less frequent tasks get longer snoozes.\n\nFor example: A weekly task snoozes for 24 hours. You can resume it early using the Resume button, or let it wake up automatically! You can also add a snooze to any task manually!",
+                highlight: ".task-card:first-of-type",
+                robotPosition: "top",
+                action: "click-next"
+            },
+            {
+                id: 17,
+                title: "Delete a Task",
+                message: "Sometimes you need to remove a task from your list.\n\nLet's learn how. Click the Edit button on the task above!",
+                highlight: ".task-card:first-of-type .edit-btn-img",
+                robotPosition: "top",
+                action: "wait-for-modal",
+                nextTrigger: "editTaskModal"
+            },
+            {
                 id: 18,
+                title: "Edit Task Modal",
+                message: "Welcome to the Edit Task modal!\n\nHere you can change the task name, adjust the decay time, or delete the task entirely.\n\nFor now, let's delete this task. Click the Delete Task button at the bottom!",
+                highlight: ".delete-task-btn",
+                robotPosition: "top",
+                action: "wait-for-delete"
+            },
+            {
+                id: 19,
+                title: "Back to Dashboard",
+                message: "Great work! Now let's head back to the main dashboard.\n\nClick the back button at the top left of the screen to return to your dashboard.",
+                highlight: ".back-btn",
+                robotPosition: "top",
+                action: "wait-for-back"
+            },
+            {
+                id: 20,
+                title: "Overall Freshness Score",
+                message: "Welcome back to your dashboard!\n\nSee the big score at the top? This is your overall home cleanliness score. It averages all your categories together to show how fresh your entire home is!",
+                highlight: ".content-top",
+                robotPosition: "top",
+                action: "click-next"
+            },
+            {
+                id: 21,
+                title: "Add Another Category",
+                message: "Let's add one more category to your home!\n\nClick the green plus button to create another category. Try 'Bathroom' or 'Living Room'!",
+                highlight: ".fab",
+                robotPosition: "bottom-right",
+                action: "wait-for-modal",
+                nextTrigger: "addCategoryModal"
+            },
+            {
+                id: 22,
+                title: "Fill Out Category Info",
+                message: "Great! Now create your category by clicking 'Create Category'!",
+                highlight: null,
+                robotPosition: "top",
+                action: "wait-for-category-create",
+                nextTrigger: "addCategoryModal"
+            },
+            {
+                id: 23,
+                title: "Freshness Score Changed",
+                message: "Notice how your overall score changed?\n\nWhen you add a new category with 0 percent cleanliness, it pulls down your overall average. As you complete tasks in this new category, your score will go back up!\n\nThis helps you see which areas need attention.",
+                highlight: ".content-top",
+                robotPosition: "top",
+                action: "click-next"
+            },
+            {
+                id: 24,
                 title: "Category Tabs",
                 message: "Great! Notice the tabs at the top? 📑\n\nYou can filter between Regular tasks, All tasks, and Group tasks. Try switching tabs!",
                 highlight: ".category-tabs",
@@ -230,7 +282,7 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
-                id: 19,
+                id: 25,
                 title: "PRO TIP: Testing Phase 🔬",
                 message: "Your first 2-3 weeks are for calibration!\n\nYour initial decay times are guesses. Watch which tasks stay red or green, then adjust. This is normal and expected!",
                 highlight: null,
@@ -238,7 +290,7 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
-                id: 20,
+                id: 26,
                 title: "PRO TIP: Done > Perfect ✅",
                 message: "Beat perfectionism with Minimum Viable Completion!\n\n'Wash dishes' = dishes clean. That's it! Counters, sink, stove are BONUS. Lower the bar to build consistency!",
                 highlight: null,
@@ -246,7 +298,7 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
-                id: 21,
+                id: 27,
                 title: "PRO TIP: Trust Your Eyes 👁️",
                 message: "Task shows 0% but room looks clean?\n\nThe app is a TIMER, not a sensor! Increase the decay time. Physical reality = ground truth. Adjust to match what you SEE.",
                 highlight: null,
@@ -254,7 +306,7 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
-                id: 22,
+                id: 28,
                 title: "Robot Companions",
                 message: "Collect robot companions! 🤖\n\nEarn currency by completing tasks and buy new robot friends in the Robot Factory!",
                 highlight: ".bottom-nav-item[onclick*='robots']",
@@ -262,7 +314,7 @@ class TutorialSystem {
                 action: "click-next"
             },
             {
-                id: 23,
+                id: 29,
                 title: "Tutorial Complete!",
                 message: "Awesome! You're a pro now! 🎉\n\nYou know the basics AND the pro tips! Remember: buffer zones, testing phase, done > perfect, and trust your eyes. I believe in you!",
                 highlight: null,
@@ -324,13 +376,31 @@ class TutorialSystem {
             }, 600); // Wait for category view to fully render
             return;
         }
+        
+        // Step 18 needs a delay to let modal fully render
+        if (step.id === 18) {
+            setTimeout(() => {
+                // Speak only the message (not the title)
+                this.speak(step.message);
+
+                // Create spotlight overlay
+                this.createSpotlight(step.highlight);
+
+                // Create robot and speech bubble
+                this.createRobotMascot(step);
+
+                // Setup action handlers
+                this.setupStepAction(step);
+            }, 400); // Wait for modal content to fully render
+            return;
+        }
 
         // Speak only the message (not the title)
         this.speak(step.message);
 
-        // For steps 12, 13, and 14, use the completed task ID to highlight the correct task
+        // For steps 12, 15, and 16, use the completed task ID to highlight the correct task
         let highlightTarget = step.highlight;
-        if ((step.id === 12 || step.id === 13 || step.id === 14) && this.completedTaskId) {
+        if ((step.id === 12 || step.id === 15 || step.id === 16) && this.completedTaskId) {
             // Find the checkbox with the completed task ID
             const checkboxSelector = `[onclick*="toggleTask(${this.completedTaskId})"]`;
             const checkbox = document.querySelector(checkboxSelector);
@@ -338,7 +408,26 @@ class TutorialSystem {
                 // Get the parent task card
                 const taskCard = checkbox.closest('.task-card');
                 if (taskCard) {
-                    highlightTarget = taskCard; // Pass the actual element
+                    // For step 12, highlight the freshness meter specifically
+                    if (step.id === 12) {
+                        const freshnessMeter = taskCard.querySelector('.freshness-meter');
+                        if (freshnessMeter) {
+                            highlightTarget = freshnessMeter; // Highlight the freshness meter
+                        } else {
+                            highlightTarget = taskCard; // Fallback to task card
+                        }
+                    }
+                    // For step 15, highlight the snoozed badge specifically
+                    else if (step.id === 15) {
+                        const snoozedBadge = taskCard.querySelector('.task-meta');
+                        if (snoozedBadge && snoozedBadge.textContent.includes('Snoozed')) {
+                            highlightTarget = snoozedBadge; // Highlight the snoozed badge
+                        } else {
+                            highlightTarget = taskCard; // Fallback to task card
+                        }
+                    } else {
+                        highlightTarget = taskCard; // Pass the actual element
+                    }
                 }
             }
         }
@@ -369,6 +458,11 @@ class TutorialSystem {
                     console.log('Tutorial: Auto-filled "Wash dishes" for step 7');
                 }
             }, 300); // Small delay to ensure modal is fully rendered
+        }
+        
+        // Step 22 specific: Disable Group Categories option but allow user to choose normal categories
+        if (step.id === 22) {
+            this.disableGroupCategoriesOptionStep22();
         }
     }
     
@@ -445,6 +539,48 @@ class TutorialSystem {
             option.style.textDecoration = '';
         });
     }
+    
+    /**
+     * Disable Group Categories and Self Care options during step 22
+     * Leave dropdown enabled so user can choose normal categories
+     */
+    disableGroupCategoriesOptionStep22() {
+        // Wait a bit for modal to fully load
+        setTimeout(() => {
+            const categorySelect = document.getElementById('categorySelect');
+            if (!categorySelect) return;
+            
+            // Get all options
+            const options = categorySelect.querySelectorAll('option');
+            
+            options.forEach(option => {
+                const value = option.value;
+                
+                // Disable Self Care
+                if (value === 'SELFCARE') {
+                    option.disabled = true;
+                    option.style.color = '#666';
+                    option.style.textDecoration = 'line-through';
+                }
+                
+                // Disable all Group Categories (start with "GROUP:")
+                if (value.startsWith('GROUP:')) {
+                    option.disabled = true;
+                    option.style.color = '#666';
+                    option.style.textDecoration = 'line-through';
+                }
+                
+                // Disable custom group category option
+                if (value === 'customgroup') {
+                    option.disabled = true;
+                    option.style.color = '#666';
+                    option.style.textDecoration = 'line-through';
+                }
+            });
+            
+            console.log('Tutorial: Disabled group categories for step 22 - user can choose normal categories');
+        }, 100); // Small delay to ensure modal is rendered
+    }
 
     /**
      * Create spotlight overlay that highlights specific element
@@ -472,6 +608,16 @@ class TutorialSystem {
                 spotlight.style.left = `${rect.left - 10}px`;
                 spotlight.style.width = `${rect.width + 20}px`;
                 spotlight.style.height = `${rect.height + 20}px`;
+                
+                // Add data attribute for special step styling
+                if (this.currentStep === 10) { // currentStep is 0-indexed, so step 11 is index 10
+                    spotlight.setAttribute('data-circular', 'true'); // Circular for checkbox
+                } else if (this.currentStep === 11) { // Step 12 is index 11
+                    spotlight.setAttribute('data-green', 'true'); // Green for freshness meter
+                } else if (this.currentStep === 12) { // Step 13 is index 12
+                    spotlight.setAttribute('data-golden', 'true'); // Golden for snoozed badge
+                }
+                
                 document.body.appendChild(spotlight);
 
                 // Add pulse effect to target
@@ -648,6 +794,42 @@ class TutorialSystem {
             this.waitingForTaskComplete = true;
             console.log('Tutorial: Waiting for user to complete a task');
         }
+        
+        if (step.action === "wait-for-delete") {
+            // Set flag to indicate we're waiting for task deletion
+            // The app's deleteTask function will check this and call onTaskDeleted()
+            this.waitingForDelete = true;
+            console.log('Tutorial: Waiting for user to delete a task');
+        }
+        
+        if (step.action === "wait-for-back") {
+            // Wait for back button click to return to dashboard
+            setTimeout(() => {
+                const backBtn = document.querySelector('.back-btn');
+                if (backBtn) {
+                    console.log('Tutorial: Found back button, attaching click listener');
+                    
+                    const clickHandler = (e) => {
+                        console.log('Tutorial: Back button clicked!');
+                        // Let the back button work normally
+                        
+                        // Back button clicked! Advance to next step after navigation
+                        backBtn.removeEventListener('click', clickHandler, true);
+                        
+                        setTimeout(() => {
+                            this.nextStep();
+                        }, 600); // Delay to let navigation complete
+                    };
+                    
+                    // Use capture phase to detect click
+                    backBtn.addEventListener('click', clickHandler, true);
+                    
+                    console.log('Tutorial: Click listener attached to back button');
+                } else {
+                    console.error('Tutorial: Could not find back button with selector .back-btn');
+                }
+            }, 300); // Wait for back button to render
+        }
     }
     
     /**
@@ -661,6 +843,19 @@ class TutorialSystem {
             setTimeout(() => {
                 this.nextStep();
             }, 800); // Delay to let completion animation play
+        }
+    }
+    
+    /**
+     * Called by the app when a task is deleted during tutorial
+     */
+    onTaskDeleted(taskId) {
+        if (this.waitingForDelete && this.isActive) {
+            this.waitingForDelete = false;
+            console.log('Tutorial: Task deleted (ID:', taskId, '), advancing to next step');
+            setTimeout(() => {
+                this.nextStep();
+            }, 500); // Delay to let deletion complete
         }
     }
 
